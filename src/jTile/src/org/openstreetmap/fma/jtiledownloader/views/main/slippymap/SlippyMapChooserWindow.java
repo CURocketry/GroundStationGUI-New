@@ -11,7 +11,7 @@ import javax.swing.WindowConstants;
 
 import jTile.src.org.openstreetmap.fma.jtiledownloader.datatypes.TileProviderIf;
 import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.inputpanel.BBoxLatLonPanel;
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import jTile.src.org.openstreetmap.gui.jmapviewer.JMapViewer;
 
 /**
  * 

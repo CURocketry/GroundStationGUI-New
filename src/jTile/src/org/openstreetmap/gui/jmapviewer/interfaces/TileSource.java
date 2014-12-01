@@ -1,6 +1,6 @@
 package jTile.src.org.openstreetmap.gui.jmapviewer.interfaces;
 
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import jTile.src.org.openstreetmap.gui.jmapviewer.JMapViewer;
 
 //License: GPL. Copyright 2008 by Jan Peter Stotz
 

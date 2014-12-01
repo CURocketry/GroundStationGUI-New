@@ -35,7 +35,7 @@ import jTile.src.org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
  * @author Jan Peter Stotz
  * 
  */
-public class JMapViewer extends JPanel implements TileLoaderListener {
+public class JMapViewer extends JPanel implements jTile.src.org.openstreetmap.gui.jmapviewer.interfaces.TileLoaderListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -555,5 +555,6 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     public void tileLoadingFinished(Tile tile, boolean success) {
         repaint();
     }
+
 
 }

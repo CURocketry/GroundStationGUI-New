@@ -2,6 +2,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -48,6 +50,9 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
     private static final long serialVersionUID = 1L;
 
     private JMapViewerTree treeMap = null;
+    
+    private JPanel controlPanel = new JPanel ();
+    private JPanel downloadPanel = new JPanel ();
 
     private JLabel zoomLabel=null;
     private JLabel zoomValue=null;
@@ -59,7 +64,7 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
      * Constructs the {@code Demo}.
      */
     public GuiMain() {
-        super("JMapViewer Demo");
+        super("CURocketry Ground Station GUI");
         setSize(500, 500);
         
         
@@ -87,12 +92,12 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         
         JTabbedPane tabbedPane = new JTabbedPane();
         
-        JPanel controlPanel = new JPanel();
         
-        controlPanel.setLayout(null);
+        controlPanel.setBackground(Color.GREEN);
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         JLabel label = new JLabel("Welcome");                       
         label.setFont(new Font("Helvetica", Font.ROMAN_BASELINE, 13));          
-        controlPanel.add(label);         
+        controlPanel.add(label, BorderLayout.CENTER);         
         JButton startButton = new JButton("Start");
         JButton stopButton = new JButton("Stop");
         //startButton.addActionListener(this);
@@ -102,14 +107,22 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         stopButton.setActionCommand("enable");
         controlPanel.add(stopButton); 
         
+        startButton.setVisible(true);
+        stopButton.setVisible(true);
+        controlPanel.setVisible(true);
+        
+        controlPanel.validate();
         
         tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
         tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
+        tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
         
         setContentPane(tabbedPane);
         //getContentPane().addChild(tabbedPane);
         
         ///////////////////////////////////////
+        
+        
         mperpLabelName=new JLabel("Meters/Pixels: ");
         mperpLabelValue=new JLabel(String.format("%s",map().getMeterPerPixel()));
 
@@ -206,8 +219,10 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         panelTop.add(zoomValue);
         panelTop.add(mperpLabelName);
         panelTop.add(mperpLabelValue);
-
-        //add(treeMap, BorderLayout.CENTER); //un-comment this
+        
+        //This line was previously necessary as the treeMap (the map portion of the GUI) 
+        //took up the entire display. Now, it is part of a tab, so it is added as such instead.
+        //add(treeMap, BorderLayout.CENTER);
         
 
 /***** Adding Markers & Sections to Map -- Remove for our implementation *****/

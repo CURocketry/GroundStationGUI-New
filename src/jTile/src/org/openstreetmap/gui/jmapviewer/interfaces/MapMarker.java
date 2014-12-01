@@ -5,7 +5,7 @@ package jTile.src.org.openstreetmap.gui.jmapviewer.interfaces;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import jTile.src.org.openstreetmap.gui.jmapviewer.JMapViewer;
 
 /**
  * Interface to be implemented by all elements that can be displayed on the map.
