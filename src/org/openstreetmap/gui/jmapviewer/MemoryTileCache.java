@@ -35,6 +35,22 @@ public class MemoryTileCache implements TileCache {
         hash = new HashMap<>(cacheSize);
         lruTiles = new CacheLinkedListElement();
     }
+    
+    /** 
+     * Alternate constructor for use in the CURocketry Ground Station GUI.
+     * This constructor allows us to manually set the maximum size of the
+     * cache. The default constructor sets the maximum at 200 tiles.
+     * 
+     * @param size the maximum number of Tiles to be stored at once in this cache
+     */
+    public MemoryTileCache(int size) {
+    	if (size <= 0) {
+    		System.err.println("Cache size initialized to " + size + ". Must be >0");
+    	}
+    	else cacheSize = size;
+    	hash = new HashMap<>(cacheSize);
+    	lruTiles = new CacheLinkedListElement();
+    }
 
     @Override
     public synchronized void addTile(Tile tile) {

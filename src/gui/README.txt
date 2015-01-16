@@ -9,6 +9,11 @@ JTileDownloader: http://wiki.openstreetmap.org/wiki/JTileDownloader
 
 
 ************IMPLEMENTATION NOTES************
+IMPORTANT - Do not import jTile.src.* for ANYTHING other than files also in
+   a jTile.src.* directory. The files appear the same (e.g. jTile.src.org...JMapViewer
+   and org...JMapViewer, but they are not! Importing the wrong file will 
+   cause dependency errors :O.
+
 Idea for implementing the equivalent of a LocalTileSource:
  - The constructor for a JMapViewer in src.org.openstreetmap.gui.jmapviewer
    takes in a MemoryTileCache object, which stores local copies of tiles so
