@@ -39,13 +39,15 @@ import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOpenAerialTileSource
 import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOsmTileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
+import gui.Handler;
+
 /**
  * Demonstrates the usage of {@link JMapViewer}
  *
  * @author Jan Peter Stotz
  *
  */
-public class GuiMain extends JFrame implements JMapViewerEventListener  {
+public class GuiMain extends JFrame implements JMapViewerEventListener, ActionListener  {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +61,8 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
 
     private JLabel mperpLabelName=null;
     private JLabel mperpLabelValue = null;
+    
+    private Handler handler;
 
     /**
      * Constructs the {@code Demo}.
@@ -68,7 +72,6 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         setSize(500, 500);
         
         
-
         treeMap = new JMapViewerTree("Zones", false);
 
         // Listen to the map viewer for user operations so components will
@@ -88,35 +91,44 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         JPanel helpPanel = new JPanel();
         
         
-        ///////////EXPERIMENTATION/////////////
         
-        JTabbedPane tabbedPane = new JTabbedPane();
-        
-        
-        controlPanel.setBackground(Color.GREEN);
+        /* **** Building the Control Panel **** */
+        controlPanel.setBackground(Color.WHITE);
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-        JLabel label = new JLabel("Welcome");                       
-        label.setFont(new Font("Helvetica", Font.ROMAN_BASELINE, 13));          
-        controlPanel.add(label, BorderLayout.CENTER);         
-        JButton startButton = new JButton("Start");
-        JButton stopButton = new JButton("Stop");
-        //startButton.addActionListener(this);
-        startButton.setActionCommand("enable");
-        controlPanel.add(startButton);
-        //stopButton.addActionListener(this);
-        stopButton.setActionCommand("enable");
-        controlPanel.add(stopButton); 
         
-        startButton.setVisible(true);
-        stopButton.setVisible(true);
+        JLabel label = new JLabel("Welcome");          
+        label.setFont(new Font("Helvetica", Font.ROMAN_BASELINE, 13));          
+        controlPanel.add(label, BorderLayout.CENTER); 
+        
+        //Sequence Button
+        JButton sequenceButton = new JButton("Start Sequence");
+        sequenceButton.addActionListener(this);
+        sequenceButton.setActionCommand("sequence");
+        controlPanel.add(sequenceButton);
+        sequenceButton.setVisible(true);
+        
+        //Payload Button
+        JButton payloadButton = new JButton("Enable Payload");       
+        //payloadButton.addActionListener(this);
+        payloadButton.setActionCommand("payload");
+        controlPanel.add(payloadButton); 
+        payloadButton.setVisible(true);
+        
+
+        
         controlPanel.setVisible(true);
         
         controlPanel.validate();
         
+        
+        
+        /* **** Create Tabbed Pane & Add Tabs **** */        
+        JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
         tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
         tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
         
+        /* **** Activate the Tabbed Pane **** */
         setContentPane(tabbedPane);
         //getContentPane().addChild(tabbedPane);
         
@@ -225,7 +237,7 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         //add(treeMap, BorderLayout.CENTER);
         
 
-/***** Adding Markers & Sections to Map -- Remove for our implementation *****/
+/* **** Adding Markers & Sections to Map -- Remove for our implementation **** */
         /*
         LayerGroup germanyGroup = new LayerGroup("Germany");
         Layer germanyWestLayer = germanyGroup.addLayer("Germany West");
@@ -296,6 +308,24 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         return new Coordinate(lat, lon);
     }
     
+/***** Defining Button Actions *****/
+    
+    @Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		switch (e.getActionCommand()) {
+		case "sequence":
+			Handler.handler.hitSequence();
+			break;
+		case "payload":
+			Handler.handler.hitSequence();
+			break;
+		default:
+			System.err.println("gui.GuiMain#actionPerformed: button command not recognized");
+		
+		}
+	}
+    
 /***** Main Function *****/
 
     /**
@@ -323,4 +353,6 @@ public class GuiMain extends JFrame implements JMapViewerEventListener  {
         }
     }
 
+
+	
 }

@@ -55,7 +55,7 @@ public class Utils {
 			System.err.println("You fail here too.");
 		}
 		
-		return new MemoryTileCache();
+		return new MemoryTileCache(); //stub return
 	}
 	
 	/**
@@ -110,12 +110,13 @@ public class Utils {
 		
 		//get the tile image from the file
 		try {
-			image = ImageIO.read(Utils.class.getResourceAsStream(f.toString()));
+			image = ImageIO.read(Utils.class.getClass().getResourceAsStream(f.toString()));
 		} catch (IOException ioe) {
 			System.err.println("COULD NOT FIND FILE: " + f.toString());
 			//ioe.printStackTrace();
 		} catch (IllegalArgumentException iae) {
 			System.err.println("COULD NOT FIND FILE2: " + f.toString());
+			iae.printStackTrace();
 		}
 		
 		//finally, create the file with the appropriate image.
