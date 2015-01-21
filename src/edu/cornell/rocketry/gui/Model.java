@@ -1,4 +1,4 @@
-package gui;
+package edu.cornell.rocketry.gui;
 
 import java.util.LinkedList;
 
@@ -38,7 +38,8 @@ public class Model {
 		return rocket_pos;
 	}
 	
-	public void updatePosition(Position p) {
+	public void updatePosition(double x, double y, double z) {
+		Position p = new Position(x,y,z);
 		rocket_past_pos.add(p);
 		rocket_pos = p;
 	}
@@ -71,6 +72,7 @@ public class Model {
 			z_pos = z;
 			bounds_check();
 		}
+		
 		
 		public double x() { return x_pos; }
 		public double y() { return y_pos; }

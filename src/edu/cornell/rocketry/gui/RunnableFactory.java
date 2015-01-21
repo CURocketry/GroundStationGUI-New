@@ -1,4 +1,4 @@
-package gui;
+package edu.cornell.rocketry.gui;
 
 public class RunnableFactory {
 	
@@ -29,36 +29,36 @@ public class RunnableFactory {
 	
 	private class StartRunnable implements Runnable {
 		public void run () {
-			Response r = Handler.runStartSequence();
+			CommandResponse r = Handler.handler.runStartSequence();
 			synchronized (Handler.handler) { 
-				Handler.acceptResponse(r);
+				Handler.handler.acceptCommandResponse(r);
 			}
 		}
 	}
 	
 	private class StopRunnable implements Runnable {
 		public void run () {
-			Response r = Handler.runStopSequence();
+			CommandResponse r = Handler.handler.runStopSequence();
 			synchronized (Handler.handler) { 
-				Handler.acceptResponse(r);
+				Handler.handler.acceptCommandResponse(r);
 			}
 		}
 	}
 	
 	private class EnableRunnable implements Runnable {
 		public void run() {
-			Response r = Handler.runEnablePayload();
+			CommandResponse r = Handler.handler.runEnablePayload();
 			synchronized (Handler.handler) { 
-				Handler.acceptResponse(r);
+				Handler.handler.acceptCommandResponse(r);
 			}
 		}
 	}
 	
 	private class DisableRunnable implements Runnable {
 		public void run() {
-			Response r = Handler.runDisablePayload();
+			CommandResponse r = Handler.handler.runDisablePayload();
 			synchronized (Handler.handler) { 
-				Handler.acceptResponse(r);
+				Handler.handler.acceptCommandResponse(r);
 			}
 		}
 	}

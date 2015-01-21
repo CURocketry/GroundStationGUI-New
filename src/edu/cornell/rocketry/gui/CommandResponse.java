@@ -1,4 +1,4 @@
-package gui;
+package edu.cornell.rocketry.gui;
 
 /**
  * A class for creating immutable response objects that contain
@@ -7,11 +7,11 @@ package gui;
  * @author Gus
  *
  */
-public class Response {
+public class CommandResponse {
 	
 	private boolean successful;
 	private long responseTime;
-	private String task;
+	private Task task;
 	private String message;
 	
 	/** 
@@ -21,7 +21,7 @@ public class Response {
 	 * @param time (ms) taken for operation
 	 * @param message error/info message
 	 */
-	public Response (String task, boolean success, long time, String message) {
+	public CommandResponse (Task task, boolean success, long time, String message) {
 		this.task = task;
 		successful = success;
 		responseTime = time;
@@ -34,18 +34,18 @@ public class Response {
 	 * @param success success of the operation
 	 * @param time (ms) taken for operation
 	 */
-	public Response (String task, boolean success, long time) {
+	public CommandResponse (Task task, boolean success, long time) {
 		this.task = task;
 		successful = success;
 		responseTime = time;
-		message = "";
+		message = "no response message";
 	}
 	
 	/**
 	 * Returns the task from which this response originated.
 	 */
 	
-	public String task() { return task; }
+	public Task task() { return task; }
 	
 	/**
 	 * Returns whether or not the operation was successful.
@@ -61,5 +61,48 @@ public class Response {
 	 * Returns the optional response message.
 	 */
 	public String message() { return message; }
+	
+	enum Task {
+		SendTest,
+		SendData,
+		EnablePayload,
+		DisablePayload,
+		InitializeXBee,
+		RefreshPortList,
+		ChangeBaudRate,
+		ChangeAddress,
+		ChangePort,
+		StartSequence,
+		StopSequence;
+		
+		public String toString(Task t) {
+			switch (t) {
+			case SendTest:
+				return "SendTest";
+			case SendData:
+				return "SendData";
+			case EnablePayload:
+				return "EnablePayload";
+			case DisablePayload:
+				return "DisablePayload";
+			case InitializeXBee:
+				return "InitializeXBee";
+			case RefreshPortList:
+				return "RefreshportList";
+			case ChangeBaudRate:
+				return "ChangeBaudRate";
+			case ChangeAddress:
+				return "ChangeAddress";
+			case ChangePort:
+				return "ChangePort";
+			case StartSequence:
+				return "StartSequence";
+			case StopSequence:
+				return "StartSequence";
+			default:
+				throw new IllegalArgumentException();
+			}
+		}
+	}
 	
 }

@@ -1,41 +1,41 @@
-package gui;
+package edu.cornell.rocketry.gui;
 
 public class Signaller {
 
 	
 	public void sendStart() { 
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return;
 		}
 	}
 	
 	public void sendStop() {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return;
 		}
 	}
 	
 	public void sendEnable() {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return;
 		}
 	}
 	
 	public void sendDisable() {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return;
 		}
 	}
 	

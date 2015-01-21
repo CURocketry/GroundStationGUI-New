@@ -1,4 +1,4 @@
-package gui;
+package edu.cornell.rocketry.gui;
 
 
 import java.awt.image.BufferedImage;

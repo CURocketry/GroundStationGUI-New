@@ -1,5 +1,5 @@
 // License: GPL. For details, see Readme.txt file.
-package gui;
+package edu.cornell.rocketry.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,7 +39,7 @@ import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOpenAerialTileSource
 import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOsmTileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
-import gui.Handler;
+import edu.cornell.rocketry.gui.Handler;
 
 /**
  * Demonstrates the usage of {@link JMapViewer}
@@ -47,7 +47,7 @@ import gui.Handler;
  * @author Jan Peter Stotz
  *
  */
-public class GuiMain extends JFrame implements JMapViewerEventListener, ActionListener  {
+public class GSGui extends JFrame implements JMapViewerEventListener /*, ActionListener*/  {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,6 +55,7 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
     
     private JPanel controlPanel = new JPanel ();
     private JPanel downloadPanel = new JPanel ();
+    private JPanel xbeePanel = new JPanel ();
 
     private JLabel zoomLabel=null;
     private JLabel zoomValue=null;
@@ -63,11 +64,19 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
     private JLabel mperpLabelValue = null;
     
     private Handler handler;
+    
+    JPanel panel = new JPanel();
+    JPanel panelTop = new JPanel();
+    JPanel panelBottom = new JPanel();
+    JPanel helpPanel = new JPanel();
+    
+    JButton sequenceButton = new JButton("Start Sequence");
+    JButton payloadButton = new JButton("Enable Payload");
 
     /**
      * Constructs the {@code Demo}.
      */
-    public GuiMain() {
+    public GSGui() {
         super("CURocketry Ground Station GUI");
         setSize(500, 500);
         
@@ -85,14 +94,11 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        JPanel panel = new JPanel();
-        JPanel panelTop = new JPanel();
-        JPanel panelBottom = new JPanel();
-        JPanel helpPanel = new JPanel();
         
         
         
-        /* **** Building the Control Panel **** */
+        
+        /*--------------------------- Control Tab ---------------------------*/
         controlPanel.setBackground(Color.WHITE);
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         
@@ -101,18 +107,38 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
         controlPanel.add(label, BorderLayout.CENTER); 
         
         //Sequence Button
-        JButton sequenceButton = new JButton("Start Sequence");
-        sequenceButton.addActionListener(this);
+        
+        //sequenceButton.addActionListener(this);
         sequenceButton.setActionCommand("sequence");
         controlPanel.add(sequenceButton);
         sequenceButton.setVisible(true);
         
+        sequenceButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    Handler.handler.hitSequence();
+                    
+                }
+            }
+        });
+        
         //Payload Button
-        JButton payloadButton = new JButton("Enable Payload");       
+               
         //payloadButton.addActionListener(this);
         payloadButton.setActionCommand("payload");
         controlPanel.add(payloadButton); 
         payloadButton.setVisible(true);
+        
+        payloadButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    Handler.handler.hitPayload();
+                    
+                }
+            }
+        });
         
 
         
@@ -120,20 +146,9 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
         
         controlPanel.validate();
         
+        /*-------------------------- Tracking Tab ---------------------------*/
         
-        
-        /* **** Create Tabbed Pane & Add Tabs **** */        
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
-        tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
-        tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
-        
-        /* **** Activate the Tabbed Pane **** */
-        setContentPane(tabbedPane);
-        //getContentPane().addChild(tabbedPane);
-        
-        ///////////////////////////////////////
-        
+
         
         mperpLabelName=new JLabel("Meters/Pixels: ");
         mperpLabelValue=new JLabel(String.format("%s",map().getMeterPerPixel()));
@@ -296,10 +311,47 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
                 if(showToolTip.isSelected()) map().setToolTipText(map().getPosition(p).toString());
             }
         });
+    
+        
+        
+        
+        
+        
+        
+        /*-------------------------- Download Tab ---------------------------*/
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*---------------------------- XBee Tab -----------------------------*/
+        
+        
+        
+        
+        
+        
+        /*------------------ Create Tabbed Pane & Add Tabs ------------------*/   
+        
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
+        tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
+        tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
+        
+        /* Activate the Tabbed Pane */
+        setContentPane(tabbedPane);
+        //getContentPane().addChild(tabbedPane);
+        
+        ///////////////////////////////////////
+        
     }
     
-    
-/***** Aliases *****/
+    /*------------------------------ Aliases --------------------------------*/
     
     private JMapViewer map(){
         return treeMap.getViewer();
@@ -310,6 +362,7 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
     
 /***** Defining Button Actions *****/
     
+    /*
     @Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -318,26 +371,16 @@ public class GuiMain extends JFrame implements JMapViewerEventListener, ActionLi
 			Handler.handler.hitSequence();
 			break;
 		case "payload":
-			Handler.handler.hitSequence();
+			Handler.handler.hitPayload();
 			break;
 		default:
 			System.err.println("gui.GuiMain#actionPerformed: button command not recognized");
 		
 		}
 	}
+	*/
     
-/***** Main Function *****/
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // java.util.Properties systemProperties = System.getProperties();
-        // systemProperties.setProperty("http.proxyHost", "localhost");
-        // systemProperties.setProperty("http.proxyPort", "8008");
-        new GuiMain().setVisible(true);
-    }
-
+    
     private void updateZoomParameters() {
         if (mperpLabelValue!=null)
             mperpLabelValue.setText(String.format("%s",map().getMeterPerPixel()));
