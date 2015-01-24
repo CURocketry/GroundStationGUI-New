@@ -1,13 +1,17 @@
-package edu.cornell.rocketry.gui;
+package edu.cornell.rocketry.util;
+
+import edu.cornell.rocketry.gui.Controller;
 
 public class RunnableFactory {
 	
-	public static RunnableFactory r = new RunnableFactory();
+	Controller handler;
 	
-	private RunnableFactory () {
-		
+	
+	public RunnableFactory (Controller h) {
+		handler = h;
 	}
 	
+	/*
 	public Runnable getStartRunnable() {
 		return new StartRunnable();
 	}
@@ -26,41 +30,41 @@ public class RunnableFactory {
 	
 /* Classes for running tasks in new threads */
 	
-	
+	/*
 	private class StartRunnable implements Runnable {
 		public void run () {
-			CommandResponse r = Handler.handler.runStartSequence();
-			synchronized (Handler.handler) { 
-				Handler.handler.acceptCommandResponse(r);
+			CommandResponse r = handler.runStartSequence();
+			synchronized (handler) { 
+				handler.acceptCommandResponse(r);
 			}
 		}
 	}
 	
 	private class StopRunnable implements Runnable {
 		public void run () {
-			CommandResponse r = Handler.handler.runStopSequence();
-			synchronized (Handler.handler) { 
-				Handler.handler.acceptCommandResponse(r);
+			CommandResponse r = handler.runStopSequence();
+			synchronized (handler) { 
+				handler.acceptCommandResponse(r);
 			}
 		}
 	}
 	
 	private class EnableRunnable implements Runnable {
 		public void run() {
-			CommandResponse r = Handler.handler.runEnablePayload();
-			synchronized (Handler.handler) { 
-				Handler.handler.acceptCommandResponse(r);
+			CommandResponse r = handler.runEnablePayload();
+			synchronized (handler) { 
+				handler.acceptCommandResponse(r);
 			}
 		}
 	}
 	
 	private class DisableRunnable implements Runnable {
 		public void run() {
-			CommandResponse r = Handler.handler.runDisablePayload();
-			synchronized (Handler.handler) { 
-				Handler.handler.acceptCommandResponse(r);
+			CommandResponse r = handler.runDisablePayload();
+			synchronized (handler) { 
+				handler.acceptCommandResponse(r);
 			}
 		}
 	}
-
+	*/
 }

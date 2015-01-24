@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.gui;
+package edu.cornell.rocketry.util;
 
 
 import java.awt.image.BufferedImage;
@@ -22,7 +22,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
  * @author Gus
  *
  */
-public class Utils {
+public class LocalLoader {
 	
 	/** 
 	 * Creates a cache for use in JMapViewer that contains all tiles stored
@@ -49,7 +49,7 @@ public class Utils {
 		
 		File f = new File("tiles/12/2243/1416");
 		try {
-			ImageIO.read(Utils.class.getResourceAsStream(f.toString()));
+			ImageIO.read(LocalLoader.class.getResourceAsStream(f.toString()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.err.println("You fail here too.");
@@ -110,7 +110,7 @@ public class Utils {
 		
 		//get the tile image from the file
 		try {
-			image = ImageIO.read(Utils.class.getClass().getResourceAsStream(f.toString()));
+			image = ImageIO.read(LocalLoader.class.getClass().getResourceAsStream(f.toString()));
 		} catch (IOException ioe) {
 			System.err.println("COULD NOT FIND FILE: " + f.toString());
 			//ioe.printStackTrace();
