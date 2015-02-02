@@ -41,6 +41,10 @@ public class Model {
 		return rocket_pos;
 	}
 	
+	public LinkedList<Position> getPastRocketPositions(){
+		return rocket_past_pos;
+	}
+	
 	public void updatePosition(double x, double y, double z) {
 		Position p = new Position(x,y,z, System.currentTimeMillis());
 		rocket_past_pos.add(p);
