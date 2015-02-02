@@ -39,6 +39,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.math.plot.Plot3DPanel;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
@@ -107,6 +108,9 @@ public class GSGui extends JFrame
     JButton settings = new JButton ("Settings");
     JButton sequenceButton = new JButton("Start Sequence");
     JButton payloadButton = new JButton("Enable Payload");
+    
+    private Plot3DPanel trajectoryplot = new Plot3DPanel();
+
 
     /*------------------------ Recovery Tab Fields --------------------------*/
     private JLabel zoomLabel=null;
@@ -292,6 +296,15 @@ public class GSGui extends JFrame
         c.anchor = GridBagConstraints.PAGE_END;
         c.fill = GridBagConstraints.HORIZONTAL;
         	controlPanel.add(infologpanel, c);
+        c.gridx = 8; c.gridy = 5;
+        c.gridwidth = 1;
+        c.gridheight = 5;
+        c.ipadx = 0; c.ipady = 0;
+        c.anchor = GridBagConstraints.LINE_END;
+        JPanel trajpanel = new JPanel(new BorderLayout()); 
+        trajpanel.add(trajectoryplot,BorderLayout.CENTER);
+        trajpanel.setPreferredSize(new Dimension(300,200));
+        controlPanel.add(trajpanel,c);
         
         controlPanel.setVisible(true);
         
@@ -702,6 +715,10 @@ public class GSGui extends JFrame
     }
     
     /*------------------------------ Aliases --------------------------------*/
+    
+    public Plot3DPanel getTrajectoryPlot(){
+    	return trajectoryplot;
+    }
     
     private JMapViewer map(){
         return treeMap.getViewer();

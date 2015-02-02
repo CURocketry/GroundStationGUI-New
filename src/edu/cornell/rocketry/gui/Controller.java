@@ -1,8 +1,12 @@
 package edu.cornell.rocketry.gui;
 
+import java.awt.Color;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
+
+import org.math.plot.Plot3DPanel;
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
@@ -72,10 +76,33 @@ public class Controller {
 	
 	
 	/*------------------ Control & Tracking Update Methods ------------------*/
+	
+	void updateRocketTrajectory(){
+		LinkedList<Position> rocket_past_pos = model(testing).getPastRocketPositions();
+		int nPositions = rocket_past_pos.size();
+		if (nPositions> 1){
+			double[] lat = {rocket_past_pos.get(nPositions-2).lat(), rocket_past_pos.get(nPositions-1).lat()};
+			double[] lon = {rocket_past_pos.get(nPositions-2).lon(), rocket_past_pos.get(nPositions-1).lon()};
+			double[] alt = {rocket_past_pos.get(nPositions-2).alt(), rocket_past_pos.get(nPositions-1).alt()};
+	
+			Plot3DPanel plot = mainWindow.getTrajectoryPlot();
+			plot.addLinePlot(
+                "Rocket Trajectory",
+                Color.red,
+               	lat,lon,alt);
+
+//        //Adjust bounds to keep them constant...
+//        plot.setFixedBounds(0,model.minLat,model.maxLat);
+//        plot.setFixedBounds(1,model.minLng,model.maxLng);
+//        plot.setFixedBounds(2,model.minAlt,model.maxAlt);
+		}
+		
+	}
 
     void updateRocketPosition (Position p) {
     	mainWindow.addMapMarkerDot
     		(""+Position.millisToTime(p.time()), p.lat(), p.lon());
+    	updateRocketTrajectory();
     }
     
     void updateRocketPositionFull (LinkedList<Position> ps) {
@@ -110,6 +137,8 @@ public class Controller {
     public void sendCommand (CommandTask task) {
     	sender().send(task, null);
     }
+    
+    
 	
 	
 	public synchronized void acceptCommandReceipt (CommandReceipt r) {
@@ -145,7 +174,7 @@ public class Controller {
 			ilog("inaccurate data received");
 		}
 	}
-	
+		
 	
 	/**
 	 * Returns whether or not the given GPSResponse contains 
