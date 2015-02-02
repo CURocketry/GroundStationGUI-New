@@ -89,8 +89,8 @@ public class GSGui extends JFrame
     private JPanel downloadPanel;
     private JPanel xbeePanel;
     
-    //controller (here called handler)
-    private Controller handler = new Controller(this);
+    //controller (here called controller)
+    private Controller controller = new Controller(this);
     
     /*------------------------ Control Tab Fields ---------------------------*/
     JPanel minimap;
@@ -231,9 +231,10 @@ public class GSGui extends JFrame
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    //handler.hitSequence();
-                	
-                	handler.sendCommand (CommandTask.StartTestSequence);
+                    //controller.hitSequence();
+                	clearMapMarkers();
+                	controller.sendCommand (CommandTask.StopTestSequence);
+                	controller.sendCommand (CommandTask.StartTestSequence);
                 }
             }
         });
@@ -244,7 +245,7 @@ public class GSGui extends JFrame
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    handler.sendCommand (CommandTask.EnablePayload);
+                    controller.sendCommand (CommandTask.EnablePayload);
                 }
             }
         });
@@ -718,10 +719,10 @@ public class GSGui extends JFrame
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
 		case "sequence":
-			Handler.handler.hitSequence();
+			controller.controller.hitSequence();
 			break;
 		case "payload":
-			Handler.handler.hitPayload();
+			controller.controller.hitPayload();
 			break;
 		default:
 			System.err.println("gui.GuiMain#actionPerformed: button command not recognized");
@@ -743,7 +744,7 @@ public class GSGui extends JFrame
 
 		System.out.println(selSerial);
 		xbee.open(selSerial, selectedBaud); //open port
-		xbeeListener = new XBeeListenerThread(handler.receiver(false)); //init a new listener thread
+		xbeeListener = new XBeeListenerThread(controller.receiver(false)); //init a new listener thread
 		xbeeListener.start();
 
 		resetPacketCounters();

@@ -18,19 +18,27 @@ public class TestSender implements Sender {
 	}
 	
 	public void send (CommandTask task, String[] args) {
-		switch (task) {
-		case StartTestSequence:
-			gspoof.start();
-			controller.acceptCommandReceipt(
-				new CommandReceipt(task, true, "<no message>"));
-			break;
-		case StopTestSequence:
-			gspoof.stop();
-			gspoof.reset();
-			break;
-		default:
-			throw new UnsupportedOperationException(task.toString());
+		try {
+			switch (task) {
+			case StartTestSequence:
+				gspoof.start();
+				break;
+			case StopTestSequence:
+				gspoof.stop();
+				gspoof.reset();
+				break;
+			default:
+				throw new UnsupportedOperationException(task.toString());
+			}
+			receipt(task, true, "");
+		} catch (Exception e) {
+			receipt(task, false, "Unrecoverable: " + e.toString());
 		}
+	}
+	
+	private void receipt (CommandTask t, boolean s, String m) {
+		controller.acceptCommandReceipt(
+			new CommandReceipt(t, s, m));
 	}
 	
 	

@@ -118,12 +118,12 @@ public class Controller {
 				(r.task().toString() + " successfully sent.") :
 				("COULD NOT SEND " + r.task().toString() + 
 					". \n -> " + r.message());
-		ilog("Command Response Received:");
+		ilog("\nCommand Response Received:");
 		ilog(message);
 	}
 	
 	public synchronized void acceptCommandResponse (CommandResponse r, boolean test) {
-		ilog("Command Response Received:");
+		ilog("\nCommand Response Received:");
 		ilog(r.task().toString());
 		ilog(r.successful() ? "Successful" : "Unsuccessful");
 		ilog(r.message());
@@ -132,7 +132,7 @@ public class Controller {
 	}
 	
 	public synchronized void acceptGPSResponse (GPSResponse r, boolean test) {
-		ilog("GPS Response Received:");
+		ilog("\nGPS Response Received:");
 		if (gpsCheck(r)) {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
