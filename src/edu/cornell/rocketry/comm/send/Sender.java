@@ -1,9 +1,9 @@
 package edu.cornell.rocketry.comm.send;
 
-import edu.cornell.rocketry.util.CommandTask;
+import edu.cornell.rocketry.util.Command;
 
 public interface Sender {
 	
-	public void send (CommandTask t, String[] args);
+	public void send (Command c);
 	
 }

@@ -1,7 +1,6 @@
 CURocketry Ground Station GUI
 
 Gus Donnelly (gmd68@cornell.edu)
-Jerome Francis
 
 Source code drawn heavily from:
 JMapViewer:      http://wiki.openstreetmap.org/wiki/JMapViewer

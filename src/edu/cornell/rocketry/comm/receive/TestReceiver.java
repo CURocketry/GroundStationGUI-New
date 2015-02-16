@@ -3,31 +3,31 @@ package edu.cornell.rocketry.comm.receive;
 import edu.cornell.rocketry.gui.Controller;
 import edu.cornell.rocketry.util.CommandResponse;
 import edu.cornell.rocketry.util.GPSResponse;
-import edu.cornell.rocketry.util.GPSSpoofer;
+import edu.cornell.rocketry.util.RocketSimulator;
 
 
 
 public class TestReceiver implements Receiver {
 	
-	private Controller handler;
+	private Controller controller;
 	
-	private GPSSpoofer spoofGPS;
+	private RocketSimulator rsim;
 
 	public TestReceiver (Controller h) {
-		handler = h;
+		controller = h;
 	}
 	
 	public synchronized void acceptCommandResponse(CommandResponse cr) {
-		// TODO Auto-generated method stub
-		
+		controller.acceptCommandResponse(cr, true);
 	}
 
 	public synchronized void acceptGPSResponse(GPSResponse gr) {
-		handler.acceptGPSResponse(gr, true);
+		controller.acceptGPSResponse(gr, true);
 	}
 	
-	public void setGPSSpoofer (GPSSpoofer gs) {
-		spoofGPS = gs;
+	public void setGPSSpoofer (RocketSimulator gs) {
+		rsim = gs;
 	}
+	
 
 }
