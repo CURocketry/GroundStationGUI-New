@@ -47,9 +47,11 @@ public class LocalLoader {
 		
 		//Create a MemoryTileCache to hold Tiles that we get from the system.
 		
-		File f = new File("tiles/12/2243/1416");
+		File f = new File("tiles\\0\\0\\0.png");
+		System.out.println(f);
 		try {
-			ImageIO.read(LocalLoader.class.getResourceAsStream(f.toString()));
+			//ImageIO.read(LocalLoader.class.getResourceAsStream(f.toString()));
+			ImageIO.read(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.err.println("You fail here too.");
@@ -99,7 +101,11 @@ public class LocalLoader {
 		System.out.println ("Creating tile from file: " + f.toString());
 		//dir.toString() will print out tiles/12  /345 /234 .png, for example.
 		//parsed below as:              tiles/zoom/num1/num2.png
-		String[] addressArray = f.toString().split("/");
+		String sep = File.separator;
+		if(sep.equals("\\")) {
+			sep = "\\\\";
+		}
+		String[] addressArray = f.toString().split(sep);
 		
 		int zoom = Integer.parseInt(addressArray[1]);
 		int num1 = Integer.parseInt(addressArray[2]);
@@ -110,7 +116,11 @@ public class LocalLoader {
 		
 		//get the tile image from the file
 		try {
-			image = ImageIO.read(LocalLoader.class.getClass().getResourceAsStream(f.toString()));
+			/*System.out.println(f.toString());
+			System.out.println(LocalLoader.class.getClass());
+			System.out.println(LocalLoader.class.getClass().getResourceAsStream(f.));
+			image = ImageIO.read(LocalLoader.class.getClass().getResourceAsStream(f.toString()));*/
+			image = ImageIO.read(f);
 		} catch (IOException ioe) {
 			System.err.println("COULD NOT FIND FILE: " + f.toString());
 			//ioe.printStackTrace();
@@ -120,6 +130,11 @@ public class LocalLoader {
 		}
 		
 		//finally, create the file with the appropriate image.
+		/*System.out.println(src);
+		System.out.println(num1);
+		System.out.println(num2);
+		System.out.println(zoom);
+		System.out.println(image);*/
 		Tile t = new Tile(src, num1, num2, zoom, image);
 		
 		return t;

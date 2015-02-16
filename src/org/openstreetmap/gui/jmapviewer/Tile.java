@@ -68,7 +68,7 @@ public class Tile {
         this.ytile = ytile;
         this.zoom = zoom;
         this.image = LOADING_IMAGE;
-        this.key = getTileKey(source, xtile, ytile, zoom);
+        //this.key = getTileKey(source, xtile, ytile, zoom);
     }
 
     public Tile(TileSource source, int xtile, int ytile, int zoom, BufferedImage image) {
