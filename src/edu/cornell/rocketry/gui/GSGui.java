@@ -39,7 +39,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.math.plot.Plot3DPanel;
+//import org.math.plot.Plot3DPanel; //FIXME
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
@@ -64,7 +64,7 @@ import com.rapplogic.xbee.api.XBeeException;
 import edu.cornell.rocketry.gui.Controller;
 import edu.cornell.rocketry.util.CommandTask;
 import edu.cornell.rocketry.util.GPSResponse;
-import edu.cornell.rocketry.util.GPSSpoofer;
+import edu.cornell.rocketry.util.RocketSimulator;
 import edu.cornell.rocketry.util.PayloadStatus;
 import edu.cornell.rocketry.xbee.OutgoingPacket;
 import edu.cornell.rocketry.xbee.OutgoingPacketType;
@@ -109,7 +109,7 @@ public class GSGui extends JFrame
     JButton sequenceButton = new JButton("Start Sequence");
     JButton payloadButton = new JButton("Enable Payload");
     
-    private Plot3DPanel trajectoryplot = new Plot3DPanel();
+    //private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
 
 
     /*------------------------ Recovery Tab Fields --------------------------*/
@@ -301,10 +301,10 @@ public class GSGui extends JFrame
         c.gridheight = 5;
         c.ipadx = 0; c.ipady = 0;
         c.anchor = GridBagConstraints.LINE_END;
-        JPanel trajpanel = new JPanel(new BorderLayout()); 
+        /*JPanel trajpanel = new JPanel(new BorderLayout()); 
         trajpanel.add(trajectoryplot,BorderLayout.CENTER);
         trajpanel.setPreferredSize(new Dimension(300,200));
-        controlPanel.add(trajpanel,c);
+        controlPanel.add(trajpanel,c);*/ //FIXME
         
         controlPanel.setVisible(true);
         
@@ -716,9 +716,9 @@ public class GSGui extends JFrame
     
     /*------------------------------ Aliases --------------------------------*/
     
-    public Plot3DPanel getTrajectoryPlot(){
+    /*public Plot3DPanel getTrajectoryPlot(){
     	return trajectoryplot;
-    }
+    }*/ //FIXME
     
     private JMapViewer map(){
         return treeMap.getViewer();

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
-import org.math.plot.Plot3DPanel;
+//import org.math.plot.Plot3DPanel; //FIXME
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
@@ -18,6 +18,7 @@ import edu.cornell.rocketry.comm.send.RealSender;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
 import edu.cornell.rocketry.gui.Model;
+import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
 import edu.cornell.rocketry.util.CommandResponse;
 import edu.cornell.rocketry.util.CommandTask;
@@ -77,7 +78,7 @@ public class Controller {
 	
 	/*------------------ Control & Tracking Update Methods ------------------*/
 	
-	void updateRocketTrajectory(){
+	/*void updateRocketTrajectory(){
 		LinkedList<Position> rocket_past_pos = model(testing).getPastRocketPositions();
 		int nPositions = rocket_past_pos.size();
 		if (nPositions> 1){
@@ -97,12 +98,12 @@ public class Controller {
 //        plot.setFixedBounds(2,model.minAlt,model.maxAlt);
 		}
 		
-	}
+	}*/ //FIXME
 
     void updateRocketPosition (Position p) {
     	mainWindow.addMapMarkerDot
     		(""+Position.millisToTime(p.time()), p.lat(), p.lon());
-    	updateRocketTrajectory();
+    	//updateRocketTrajectory(); //FIXME
     }
     
     void updateRocketPositionFull (LinkedList<Position> ps) {
@@ -113,7 +114,8 @@ public class Controller {
     }
     
     void updatePayloadStatus (PayloadStatus st) {
-    	ImageIcon i;
+    	mainWindow.setPayloadStatus(st);
+    	/*ImageIcon i;
     	switch (st) {
     	case Enabled:
     		i = new ImageIcon("./assets/green_square_20_20");
@@ -127,7 +129,7 @@ public class Controller {
     	default:
     		throw new IllegalArgumentException (st.toString());
     	}
-    	mainWindow.payloadStatus.setIcon(i);
+    	mainWindow.payloadStatus.setIcon(i);*/
     }
     
     public void clearMapMarkers () {
@@ -135,29 +137,48 @@ public class Controller {
     }
     
     public void sendCommand (CommandTask task) {
-    	sender().send(task, null);
+    	Command c = new Command(task, System.currentTimeMillis());
+    	sender().send(c);
     }
     
     
 	
 	
 	public synchronized void acceptCommandReceipt (CommandReceipt r) {
+		//display receipt
 		String message = 
 			r.success() ? 
 				(r.task().toString() + " successfully sent.") :
 				("COULD NOT SEND " + r.task().toString() + 
 					". \n -> " + r.message());
-		ilog("\nCommand Response Received:");
+		ilog("\nCommand Receipt Received:");
 		ilog(message);
+		
+		//process receipt
+		if (r.task() == CommandTask.EnablePayload
+			|| r.task() == CommandTask.DisablePayload) {
+			updatePayloadStatus(PayloadStatus.Busy);
+		}
 	}
 	
 	public synchronized void acceptCommandResponse (CommandResponse r, boolean test) {
+		//display response
 		ilog("\nCommand Response Received:");
 		ilog(r.task().toString());
 		ilog(r.successful() ? "Successful" : "Unsuccessful");
 		ilog(r.message());
 		ilog("elapsed time: " + r.time() + " ms");
 		
+		//process response
+		if (r.task() == CommandTask.EnablePayload
+			|| r.task() == CommandTask.DisablePayload) {
+			if (r.successful()) {
+				PayloadStatus ps = r.task() == CommandTask.EnablePayload ? PayloadStatus.Enabled : PayloadStatus.Disabled;
+				updatePayloadStatus(ps);
+			} else {
+				
+			}
+		}
 	}
 	
 	public synchronized void acceptGPSResponse (GPSResponse r, boolean test) {
