@@ -48,6 +48,7 @@ public class RocketSimulator {
 	}
 	
 	public void enablePayload(long requestStartTime) {
+		final long st = requestStartTime;
 		if (pworker != null) pworker.interrupt();
 		pworker = new Thread(
 			new Runnable () {
@@ -70,21 +71,21 @@ public class RocketSimulator {
 					
 					if (p < pr_success) {
 						long ft = System.currentTimeMillis();
-						long et = ft - requestStartTime;
+						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.EnablePayload, true, et, "");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					else if (p < pr_comm_fail) {
 						long ft = System.currentTimeMillis();
-						long et = ft - requestStartTime;
+						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.EnablePayload, false, et, "failure: could not connect");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					else if (p < pr_unknown_fail) {
 						long ft = System.currentTimeMillis();
-						long et = ft - requestStartTime;
+						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.EnablePayload, false, et, "failure: unknown");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
@@ -96,6 +97,7 @@ public class RocketSimulator {
 	}
 	
 	public void disablePayload(long requestStartTime) {
+		final long st = requestStartTime;
 		if (pworker != null) pworker.interrupt();
 		pworker = new Thread(
 			new Runnable () {
@@ -118,21 +120,21 @@ public class RocketSimulator {
 					
 					if (p < pr_success) {
 						long ft = System.currentTimeMillis();
-						long et = ft - requestStartTime;
+						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, true, et, "");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					if (p < pr_comm_fail) {
 						long ft = System.currentTimeMillis();
-						long et = ft - requestStartTime;
+						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, false, et, "failure: could not connect");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					if (p < pr_unknown_fail) {
 						long ft = System.currentTimeMillis();
-						long et = ft - requestStartTime;
+						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, false, et, "failure: unknown");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
