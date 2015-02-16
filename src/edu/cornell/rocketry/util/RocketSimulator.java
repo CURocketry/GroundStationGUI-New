@@ -67,7 +67,7 @@ public class RocketSimulator {
 					int pr_comm_fail = 9;
 					int pr_unknown_fail = 10;
 					
-					int p = r.nextInt() % 10 + 1;
+					int p = r.nextInt() % 10;
 					
 					if (p < pr_success) {
 						long ft = System.currentTimeMillis();
