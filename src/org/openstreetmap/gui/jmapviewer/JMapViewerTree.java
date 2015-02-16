@@ -46,7 +46,8 @@ public class JMapViewerTree extends JPanel{
         treePanel.setLayout(new BorderLayout());
         treePanel.add(tree, BorderLayout.CENTER);
         treePanel.add(new JLabel("<html><center>Use right mouse button to<br />show/hide texts</center></html>"), BorderLayout.SOUTH);
-        map = new JMapViewer();
+        //map = new JMapViewer();//TODO
+        map = new JMapViewer(new MemoryTileCache(), 0);
 
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(150);

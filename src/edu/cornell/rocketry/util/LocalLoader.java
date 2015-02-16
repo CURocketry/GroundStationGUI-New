@@ -43,21 +43,16 @@ public class LocalLoader {
 		//for constant add/remove complexity
 		LinkedList<Tile> tiles = new LinkedList<Tile>();
 		
+		//currently, adds all files found in the directory
 		buildTileList(tiles, tileDirectory, src);
 		
-		//Create a MemoryTileCache to hold Tiles that we get from the system.
+		//Create a MemoryTileCache and add the Tiles that we get from the system.
 		
-		File f = new File("tiles\\0\\0\\0.png");
-		System.out.println(f);
-		try {
-			//ImageIO.read(LocalLoader.class.getResourceAsStream(f.toString()));
-			ImageIO.read(f);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.err.println("You fail here too.");
+		MemoryTileCache returnObject = new MemoryTileCache(512);
+		for(Tile tile: tiles) {
+			returnObject.addTile(tile);
 		}
-		
-		return new MemoryTileCache(); //stub return
+		return returnObject;
 	}
 	
 	/**
@@ -80,7 +75,6 @@ public class LocalLoader {
 		} else {
 			//this is a directory, so build on each of sub-directories/files
 			for (int i = 0; i < contents.length; i++) {
-				//add one to level depth, because we've gone one level down in directory.
 				buildTileList (acc, contents[i], src);
 			}
 		}
@@ -103,6 +97,7 @@ public class LocalLoader {
 		//parsed below as:              tiles/zoom/num1/num2.png
 		String sep = File.separator;
 		if(sep.equals("\\")) {
+			//regex needs backslashes to be escaped
 			sep = "\\\\";
 		}
 		String[] addressArray = f.toString().split(sep);
@@ -116,10 +111,6 @@ public class LocalLoader {
 		
 		//get the tile image from the file
 		try {
-			/*System.out.println(f.toString());
-			System.out.println(LocalLoader.class.getClass());
-			System.out.println(LocalLoader.class.getClass().getResourceAsStream(f.));
-			image = ImageIO.read(LocalLoader.class.getClass().getResourceAsStream(f.toString()));*/
 			image = ImageIO.read(f);
 		} catch (IOException ioe) {
 			System.err.println("COULD NOT FIND FILE: " + f.toString());
@@ -130,13 +121,7 @@ public class LocalLoader {
 		}
 		
 		//finally, create the file with the appropriate image.
-		/*System.out.println(src);
-		System.out.println(num1);
-		System.out.println(num2);
-		System.out.println(zoom);
-		System.out.println(image);*/
 		Tile t = new Tile(src, num1, num2, zoom, image);
-		
 		return t;
 	}
 	

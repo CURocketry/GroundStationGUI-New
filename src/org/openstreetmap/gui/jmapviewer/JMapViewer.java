@@ -121,6 +121,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         setPreferredSize(new Dimension(400, 400));
         setDisplayPosition(new Coordinate(50, 9), 3);
         //setToolTipText("");
+        new DefaultMapController(this); //TODO
     }
 
     @Override
