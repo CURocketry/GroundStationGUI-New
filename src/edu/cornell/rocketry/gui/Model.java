@@ -9,35 +9,35 @@ import edu.cornell.rocketry.util.PayloadStatus;
 public class Model {
 	
 	private PayloadStatus pl_status;
-	private PayloadStatus sq_status;
+	private PayloadStatus prev_stable_pl_status;
 	private Position rocket_pos;
 	private LinkedList<Position> rocket_past_pos;
 	
 	
 	public Model () {
 		pl_status = PayloadStatus.Disabled;
-		sq_status = PayloadStatus.Disabled;
+		prev_stable_pl_status = PayloadStatus.Disabled;
 		rocket_pos = new Position (0,0,0, 0); //there might be better stub values...
 		rocket_past_pos = new LinkedList<Position>();
 	}
 	
-	public PayloadStatus payload() {
+	public PayloadStatus payload () {
 		return pl_status;
 	}
 	
+	public PayloadStatus prevPayload () {
+		return prev_stable_pl_status;
+	}
+	
 	public void setPayload (PayloadStatus st) {
+		//make sure prev_stable_pl_status is never Busy - that's not a stable state!
+		if (pl_status != PayloadStatus.Busy) {
+			prev_stable_pl_status = pl_status;
+		}
 		pl_status = st;
 	}
 	
-	public PayloadStatus sequence() {
-		return sq_status;
-	}
-	
-	public void setSequence(PayloadStatus st) {
-		sq_status = st;
-	}
-	
-	public Position position() {
+	public Position position () {
 		return rocket_pos;
 	}
 	

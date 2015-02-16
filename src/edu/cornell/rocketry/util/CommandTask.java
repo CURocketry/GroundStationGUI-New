@@ -34,9 +34,9 @@ public enum CommandTask {
 		case ChangePort:
 			return "ChangePort";
 		case StartTestSequence:
-			return "StartSequence";
+			return "StartTestSequence";
 		case StopTestSequence:
-			return "StartSequence";
+			return "StopTestSequence";
 		default:
 			throw new IllegalArgumentException();
 		}

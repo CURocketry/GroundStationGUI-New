@@ -35,8 +35,7 @@ public class TestSender implements Sender {
 				rsim.disablePayload(c.time());
 				break;
 			default:
-				//throw new UnsupportedOperationException(c.task().toString());
-				System.out.println("LOL");
+				throw new UnsupportedOperationException(c.task().toString());
 			}
 			receipt(c.task(), true, "");
 		} catch (Exception e) {

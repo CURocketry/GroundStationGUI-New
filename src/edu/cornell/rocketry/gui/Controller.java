@@ -2,11 +2,13 @@ package edu.cornell.rocketry.gui;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
 //import org.math.plot.Plot3DPanel; //FIXME
+
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
@@ -106,7 +108,7 @@ public class Controller {
     	//updateRocketTrajectory(); //FIXME
     }
     
-    void updateRocketPositionFull (LinkedList<Position> ps) {
+    void updateRocketPositionFull (Collection<Position> ps) {
     	mainWindow.clearMapMarkers();
     	for (Position p : ps) {
     		updateRocketPosition(p);
@@ -114,22 +116,10 @@ public class Controller {
     }
     
     void updatePayloadStatus (PayloadStatus st) {
-    	mainWindow.setPayloadStatus(st);
-    	/*ImageIcon i;
-    	switch (st) {
-    	case Enabled:
-    		i = new ImageIcon("./assets/green_square_20_20");
-    		break;
-    	case Busy:
-    		i = new ImageIcon("./assets/yellow_square_20_20");
-    		break;
-    	case Disabled:
-    		i = new ImageIcon("./assets/red_square_20_20");
-    		break;
-    	default:
-    		throw new IllegalArgumentException (st.toString());
-    	}
-    	mainWindow.payloadStatus.setIcon(i);*/
+    	//System.out.println("Updating Payload Status: " + st.toString());
+    	model(testing).setPayload(st);
+    	mainWindow.setPayloadStatus(model(testing).payload());
+    	//System.out.println("Updated Payload Status: " + model(testing).payload().toString());
     }
     
     public void clearMapMarkers () {
@@ -175,8 +165,9 @@ public class Controller {
 			if (r.successful()) {
 				PayloadStatus ps = r.task() == CommandTask.EnablePayload ? PayloadStatus.Enabled : PayloadStatus.Disabled;
 				updatePayloadStatus(ps);
-			} else {
-				
+			} else { //we failed to complete task
+				//reset to what it was before failed attempt
+				updatePayloadStatus(model(testing).prevPayload());
 			}
 		}
 	}

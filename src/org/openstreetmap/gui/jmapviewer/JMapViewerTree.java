@@ -138,6 +138,13 @@ public class JMapViewerTree extends JPanel{
     public JMapViewer getViewer(){
         return map;
     }
+    public void setViewer (JMapViewer m) {
+    	map = m;
+    	setTreeVisible(false);
+    	//FIXME: SHOULD MAINTAIN LAYOUT (map should not take whole screen)
+    	//revalidate();
+    	//repaint();
+    }
     public CheckBoxTree getTree(){
         return tree;
     }

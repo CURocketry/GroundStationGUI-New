@@ -36,6 +36,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -93,9 +95,13 @@ public class GSGui extends JFrame
     //controller (here called controller)
     private Controller controller = new Controller(this);
     
+    JTabbedPane tabbedPane = new JTabbedPane();
+    
     /*------------------------ Control Tab Fields ---------------------------*/
     JPanel minimap;
     JPanel status;
+    JPanel gpsControls;
+    JPanel payloadControls;
     JPanel controls;
     JPanel infologpanel;
     
@@ -106,8 +112,11 @@ public class GSGui extends JFrame
     JLabel payloadStatus;
     
     JButton settings = new JButton ("Settings");
-    JButton sequenceButton = new JButton("Start Sequence");
-    JButton payloadButton = new JButton("Enable Payload");
+    JButton startTestGPSButton = new JButton("Start GPS Test");
+    JButton stopTestGPSButton = new JButton("Stop GPS Test");
+    
+    JButton enablePayloadButton = new JButton("Enable Payload");
+    JButton disablePayloadButton = new JButton("Disable Payload");
     
     //private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
 
@@ -204,7 +213,6 @@ public class GSGui extends JFrame
         
         
         
-        
         /*--------------------------- Control Tab ---------------------------*/
         
         //general
@@ -222,30 +230,41 @@ public class GSGui extends JFrame
         payloadStatusLabel.setForeground(Color.WHITE);
         payloadStatus = new JLabel();
         payloadStatus.setIcon(new ImageIcon ("./assets/red_icon_20_20.jpg"));
-        payloadStatus.setOpaque(true);
+        payloadStatus.setOpaque(false);
         status.setOpaque(false);
-        status.add(payloadStatusLabel, BorderLayout.NORTH);
-        status.add(payloadStatus, BorderLayout.SOUTH);
+        status.add(payloadStatusLabel, BorderLayout.WEST);
+        status.add(payloadStatus, BorderLayout.EAST);
         
         //controls
         controls = new JPanel(new BorderLayout());
-        //sequence button
-        sequenceButton.setVisible(true);
-        sequenceButton.addMouseListener(new MouseAdapter() {
+        
+        gpsControls = new JPanel(new BorderLayout());
+        payloadControls = new JPanel(new BorderLayout());
+        
+        //start GPS Test button
+        startTestGPSButton.setVisible(true);
+        startTestGPSButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    //controller.hitSequence();
                 	clearMapMarkers();
                 	controller.sendCommand (CommandTask.StopTestSequence);
                 	controller.sendCommand (CommandTask.StartTestSequence);
                 }
             }
         });
-        //payload button     
-        payloadButton.setActionCommand("payload");
-        payloadButton.setVisible(true);
-        payloadButton.addMouseListener(new MouseAdapter() {
+        //stop GPS Test button
+        stopTestGPSButton.setVisible(true);
+        stopTestGPSButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			controller.sendCommand(CommandTask.StopTestSequence);
+        		}
+        	}
+        });
+        //enable payload button
+        enablePayloadButton.setVisible(true);
+        enablePayloadButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -253,8 +272,24 @@ public class GSGui extends JFrame
                 }
             }
         });
-        controls.add(sequenceButton, BorderLayout.LINE_START);
-        controls.add(payloadButton, BorderLayout.LINE_END);
+        //disable payload button
+        disablePayloadButton.setVisible(true);
+        disablePayloadButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1){
+        			controller.sendCommand (CommandTask.DisablePayload);
+        		}
+        	}
+        });
+        
+        gpsControls.add(startTestGPSButton, BorderLayout.LINE_START);
+        gpsControls.add(stopTestGPSButton, BorderLayout.LINE_END);
+        payloadControls.add(enablePayloadButton, BorderLayout.LINE_START);
+        payloadControls.add(disablePayloadButton, BorderLayout.LINE_END);
+        controls.add(gpsControls, BorderLayout.PAGE_START);
+        controls.add(payloadControls, BorderLayout.PAGE_END);
+        gpsControls.setOpaque(false);
+        payloadControls.setOpaque(false);
         controls.setOpaque(false);
         
         //info log
@@ -270,8 +305,10 @@ public class GSGui extends JFrame
         
         //minimap
         minimap = new JPanel(new BorderLayout ());
-        JLabel tmp = new JLabel("minimap");
-        minimap.add(tmp);
+        /*JLabel tmp = new JLabel("minimap");
+        minimap.add(tmp);*/
+        //minimap.add(treeMap.getViewer(), BorderLayout.CENTER);
+        
         
         //add sections to display
         GridBagConstraints c = new GridBagConstraints();
@@ -414,6 +451,26 @@ public class GSGui extends JFrame
         //This line was previously necessary as the treeMap (the map portion of the GUI) 
         //took up the entire display. Now, it is part of a tab, so it is added as such instead.
         //add(treeMap, BorderLayout.CENTER);
+        
+        /*---------------------LISTEN FOR TAB CHANGE-------------------------*/
+        final JMapViewer map = treeMap.getViewer();
+        
+        ChangeListener changeListener = new ChangeListener() {
+            public void stateChanged(ChangeEvent changeEvent) {
+              JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+              int index = sourceTabbedPane.getSelectedIndex();
+              String tab = sourceTabbedPane.getTitleAt(index).toString();
+              if (tab.equals("Control")) {
+            	  System.out.println("Giving to Control");
+            	  minimap.add(map);
+              } else if (tab.equals("Recovery")) {
+            	  System.out.println("Giving to Recovery");
+            	  treeMap.setViewer(map);
+            	  treeMap.setTreeVisible(false);
+              }
+            }
+          };
+          tabbedPane.addChangeListener(changeListener);
         
 
 /* **** Adding Markers & Sections to Map -- Remove for our implementation **** */
@@ -690,7 +747,7 @@ public class GSGui extends JFrame
         
         /*------------------ Create Tabbed Pane & Add Tabs ------------------*/   
         
-        JTabbedPane tabbedPane = new JTabbedPane();
+        
         tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
         tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
         tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");

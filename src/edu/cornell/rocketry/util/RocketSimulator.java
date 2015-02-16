@@ -116,7 +116,7 @@ public class RocketSimulator {
 					int pr_comm_fail = 9;
 					int pr_unknown_fail = 10;
 					
-					int p = r.nextInt() % 10 + 1;
+					int p = r.nextInt() % 10;
 					
 					if (p < pr_success) {
 						long ft = System.currentTimeMillis();
@@ -125,14 +125,14 @@ public class RocketSimulator {
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
-					if (p < pr_comm_fail) {
+					else if (p < pr_comm_fail) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, false, et, "failure: could not connect");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
-					if (p < pr_unknown_fail) {
+					else if (p < pr_unknown_fail) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
 						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, false, et, "failure: unknown");
