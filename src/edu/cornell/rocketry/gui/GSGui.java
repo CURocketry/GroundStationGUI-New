@@ -24,11 +24,13 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -83,6 +85,13 @@ import gnu.io.CommPortIdentifier;
  */
 public class GSGui extends JFrame 
 			implements JMapViewerEventListener /*, ActionListener*/  {
+	
+	
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+     *                                                                       *
+     *                     .: GUI FIELD DECLARATION :.                       *
+     *                                                                       *
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     private static final long serialVersionUID = 1L;
 
@@ -91,6 +100,7 @@ public class GSGui extends JFrame
     private JPanel controlPanel;
     private JPanel downloadPanel;
     private JPanel xbeePanel;
+    private JPanel settingsPanel;
     
     //controller (here called controller)
     private Controller controller = new Controller(this);
@@ -179,15 +189,30 @@ public class GSGui extends JFrame
 	private static Logger log = Logger.getLogger(GSGui.class.getName());
 	
 	
-	/* Getters and Setters for packet counters*/
-	public int getNumSent() { return numSent;}
-	public void incNumSent() { numSent++; }
-	public int getNumRec() { return numRec; }
-	public void incNumRec() { numRec++; }
-	public int getNumError() { return numErr; }
-	public void incNumError() { numErr++; }
-	public void resetPacketCounters() { numSent=0; numRec=0; numErr=0; }
 	
+	
+	/* ------------------------ Settings Tab Fields ------------------------ */
+	
+	//testing
+	private JPanel testingSettingsPanel;
+	private JCheckBox testingCheckBox;
+	private JCheckBox debugPrintoutsCheckBox;
+	private JFileChooser gpsSimFileChooser;
+	
+	
+	//map
+	private JPanel mapSettingsPanel;
+	private JFileChooser tileLocationChooser;
+	private JCheckBox showMinimapCheckBox;
+	private JComboBox minimapSizeChooser;
+	private JComboBox defaultLocationChooser;
+	
+
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+     *                                                                       *
+     *                         .: CONSTRUCTOR :.                             *
+     *                                                                       *
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     /**
      * Constructs the Rocketry GS Gui.
@@ -212,10 +237,81 @@ public class GSGui extends JFrame
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         
+        initializeControlTab();
         
-        /*--------------------------- Control Tab ---------------------------*/
+        initializeRecoveryTab();
         
-        //general
+        initializeDownloadTab();
+        
+        initializeXBeeTab();
+        
+        initializeSettingsTab();
+        
+        /*------------------ Create Tabbed Pane & Add Tabs ------------------*/   
+        
+        
+        tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
+        tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
+        tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
+        tabbedPane.addTab("XBee", null, xbeePanel, "XBee Setup Tab");
+        tabbedPane.addTab("Settings", null, settingsPanel, "Settings Tab");
+        
+        /* Activate the Tabbed Pane */
+        setContentPane(tabbedPane);
+        //getContentPane().addChild(tabbedPane);
+        
+        setVisible(true);        
+       
+        
+        /*---------------------LISTEN FOR TAB CHANGE-------------------------*/
+        final JMapViewer map = treeMap.getViewer();
+        
+        ChangeListener changeListener = new ChangeListener() {
+            public void stateChanged(ChangeEvent changeEvent) {
+              JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+              int index = sourceTabbedPane.getSelectedIndex();
+              String tab = sourceTabbedPane.getTitleAt(index).toString();
+              if (tab.equals("Control")) {
+            	  System.out.println("Giving to Control");
+            	  minimap.add(map);
+              } else if (tab.equals("Recovery")) {
+            	  System.out.println("Giving to Recovery");
+            	  treeMap.setViewer(map);
+            	  treeMap.setTreeVisible(false);
+              }
+            }
+          };
+          tabbedPane.addChangeListener(changeListener);
+        
+        /*---------------------------- Other --------------------------------*/
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultLookAndFeelDecorated(true);
+        
+    }
+    
+    /*------------------------------ Aliases --------------------------------*/
+    
+    /*public Plot3DPanel getTrajectoryPlot(){
+    	return trajectoryplot;
+    }*/ //FIXME
+    
+    private JMapViewer map(){
+        return treeMap.getViewer();
+    }
+    @SuppressWarnings("unused")
+	private static Coordinate c (double lat, double lon){
+        return new Coordinate(lat, lon);
+    }
+
+    
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+     *                                                                       *
+     *                 .: GUI INITIALIZATION FUNCTIONS :.                    *
+     *                                                                       *
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    
+    private void initializeControlTab() {
+    	//general
         controlPanel = new BackgroundJPanel("./assets/black_wood_background.jpg");
         
         //controlPanel.setBackground(Color.WHITE);
@@ -346,12 +442,10 @@ public class GSGui extends JFrame
         controlPanel.setVisible(true);
         
         controlPanel.validate();
-        
-        /*-------------------------- Tracking Tab ---------------------------*/
-        
-
-        
-        mperpLabelName=new JLabel("Meters/Pixels: ");
+    }
+    
+    private void initializeRecoveryTab() {
+    	mperpLabelName=new JLabel("Meters/Pixels: ");
         mperpLabelValue=new JLabel(String.format("%s",map().getMeterPerPixel()));
 
         zoomLabel=new JLabel("Zoom: ");
@@ -452,25 +546,6 @@ public class GSGui extends JFrame
         //took up the entire display. Now, it is part of a tab, so it is added as such instead.
         //add(treeMap, BorderLayout.CENTER);
         
-        /*---------------------LISTEN FOR TAB CHANGE-------------------------*/
-        final JMapViewer map = treeMap.getViewer();
-        
-        ChangeListener changeListener = new ChangeListener() {
-            public void stateChanged(ChangeEvent changeEvent) {
-              JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-              int index = sourceTabbedPane.getSelectedIndex();
-              String tab = sourceTabbedPane.getTitleAt(index).toString();
-              if (tab.equals("Control")) {
-            	  System.out.println("Giving to Control");
-            	  minimap.add(map);
-              } else if (tab.equals("Recovery")) {
-            	  System.out.println("Giving to Recovery");
-            	  treeMap.setViewer(map);
-            	  treeMap.setTreeVisible(false);
-              }
-            }
-          };
-          tabbedPane.addChangeListener(changeListener);
         
 
 /* **** Adding Markers & Sections to Map -- Remove for our implementation **** */
@@ -533,25 +608,14 @@ public class GSGui extends JFrame
             }
         });
     
-        
-        
-        
-        
-        
-        
-        /*-------------------------- Download Tab ---------------------------*/
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /*---------------------------- XBee Tab -----------------------------*/
-        
-        PropertyConfigurator.configure("./lib/log4j.properties");
+    }
+    
+    private void initializeDownloadTab() {
+    	//TODO
+    }
+    
+    private void initializeXBeeTab() {
+    	PropertyConfigurator.configure("./lib/log4j.properties");
 
 		// Layout GUI
 		xbeePanel = new JPanel(new BorderLayout());
@@ -741,69 +805,63 @@ public class GSGui extends JFrame
 	
 		
 		// Text area stuff...
-        
-        
-        
-        
-        /*------------------ Create Tabbed Pane & Add Tabs ------------------*/   
-        
-        
-        tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
-        tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
-        tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
-        tabbedPane.addTab("XBee", null, xbeePanel, "XBee Setup Tab");
-        
-        /* Activate the Tabbed Pane */
-        setContentPane(tabbedPane);
-        //getContentPane().addChild(tabbedPane);
-        
-        setVisible(true);
-        
-        
-        ///////////////////////////////////////
-        
-        
-        
-        /*---------------------------- Other --------------------------------*/
-        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setDefaultLookAndFeelDecorated(true);
-        
     }
     
-    /*------------------------------ Aliases --------------------------------*/
-    
-    /*public Plot3DPanel getTrajectoryPlot(){
-    	return trajectoryplot;
-    }*/ //FIXME
-    
-    private JMapViewer map(){
-        return treeMap.getViewer();
+    private void initializeSettingsTab() {
+    	/*//testing
+    	private JCheckBox testingCheckBox;
+    	private JCheckBox debugPrintoutsCheckBox;
+    	private JFileChooser gpsSimFileChooser;
+    	
+    	
+    	//map
+    	private JFileChooser tileLocationChooser;
+    	private JCheckBox showMinimapCheckBox;
+    	private JComboBox minimapSizeChooser;
+    	private JComboBox defaultLocationChooser;*/
+    	
+    	//initialize elements
+    	
+    	testingCheckBox = new JCheckBox("Enable Testing Mode");
+    	ActionListener testingCheckBoxActionListener = new ActionListener() {
+    	      public void actionPerformed(ActionEvent actionEvent) {
+    	        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+    	        boolean selected = abstractButton.getModel().isSelected();
+    	        controller.testing = selected;
+    	      }
+    	};
+    	testingCheckBox.addActionListener(testingCheckBoxActionListener);
+    	
+    	debugPrintoutsCheckBox = new JCheckBox("Show Debug Printouts");
+    	ActionListener debugPrintoutsCheckBoxActionListener = new ActionListener() {
+    	      public void actionPerformed(ActionEvent actionEvent) {
+    	        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+    	        boolean selected = abstractButton.getModel().isSelected();
+    	        infologpanel.setVisible(selected);
+    	      }
+    	};
+    	debugPrintoutsCheckBox.addActionListener(debugPrintoutsCheckBoxActionListener);
+    	
+    	gpsSimFileChooser = new JFileChooser();
+    	
+    	
+    	//add elements to screen
+    	testingSettingsPanel = new JPanel();
+    	testingSettingsPanel.setLayout(new BoxLayout(testingSettingsPanel, BoxLayout.Y_AXIS));
+    	testingSettingsPanel.add(testingCheckBox);
+    	testingSettingsPanel.add(debugPrintoutsCheckBox);
+    	testingSettingsPanel.add(gpsSimFileChooser);
+    	
+    	settingsPanel = new JPanel(new BorderLayout());
+    	//settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
+    	settingsPanel.add(testingSettingsPanel, BorderLayout.WEST);
     }
-    @SuppressWarnings("unused")
-	private static Coordinate c (double lat, double lon){
-        return new Coordinate(lat, lon);
-    }
     
-/***** Defining Button Actions *****/
-    
-    /*
-    @Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		switch (e.getActionCommand()) {
-		case "sequence":
-			controller.controller.hitSequence();
-			break;
-		case "payload":
-			controller.controller.hitPayload();
-			break;
-		default:
-			System.err.println("gui.GuiMain#actionPerformed: button command not recognized");
-		
-		}
-	}
-	*/
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+     *                                                                       *
+     *                       .: UILITY FUNCTIONS :.                          *
+     *                                                                       *
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     
     public void initXbee() throws XBeeException {
 
@@ -840,6 +898,14 @@ public class GSGui extends JFrame
 		}
 	}
 	
+	/* Getters and Setters for packet counters*/
+	public int getNumSent() { return numSent;}
+	public void incNumSent() { numSent++; }
+	public int getNumRec() { return numRec; }
+	public void incNumRec() { numRec++; }
+	public int getNumError() { return numErr; }
+	public void incNumError() { numErr++; }
+	public void resetPacketCounters() { numSent=0; numRec=0; numErr=0; }
 	
 	//get updated data from XBee and display it
 	public void updateXBeeData (String updateLat, String updateLongi, String updateAlt, String updateFlag) {

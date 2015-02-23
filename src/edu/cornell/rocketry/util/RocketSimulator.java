@@ -40,7 +40,7 @@ public class RocketSimulator {
 	public RocketSimulator (String path, Receiver r, int frequency) {
 		this.GPSfilepath = path;
 		receiver = r;
-		this.frequency = frequency;
+		setFrequency(frequency);
 		index = 0;
 		positions = new ArrayList<Position>();
 		GPSflag = 0xf;
@@ -102,8 +102,9 @@ public class RocketSimulator {
 		pworker = new Thread(
 			new Runnable () {
 				public void run() {
+					int sleep_time = (int) Math.random() * 1000;
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(sleep_time);
 					} catch (InterruptedException ie) {
 						return;
 					}
@@ -180,7 +181,7 @@ public class RocketSimulator {
 	}
 	
 	public void resetGPS() {
-		if (gworker != null) gworker.interrupt();
+		stopGPS();
 		index = 0;
 	}
 	
@@ -191,7 +192,7 @@ public class RocketSimulator {
 	
 	
 	private void readGPSFile () {
-		parseCSV ();
+		parseCSV();
 	}
 	
 	
