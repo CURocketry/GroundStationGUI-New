@@ -1,6 +1,7 @@
 // License: GPL. For details, see LICENSE file.
 package edu.cornell.rocketry.xbee;
 import com.rapplogic.xbee.api.ApiId;
+import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.XBeeTimeoutException;
@@ -17,10 +18,13 @@ public class XBeeListenerThread extends Thread {
 	private boolean receiving = false;
 	
 	private Receiver receiver;
-	private /*XBeeListenerGui*/ GSGui mainWindow;
+	private GSGui mainWindow;
+	private XBee xbee;
 	
-	public XBeeListenerThread (Receiver r) {
+	public XBeeListenerThread (Receiver r, XBee xb, GSGui mw) {
 		receiver = r;
+		xbee = xb;
+		mainWindow = mw;
 		keepListening = true;
 	}
 	
@@ -31,7 +35,7 @@ public class XBeeListenerThread extends Thread {
 	public void run() {
 		while (keepListening) {
 			try {
-				XBeeResponse response = mainWindow.xbee.getResponse();
+				XBeeResponse response = xbee.getResponse();
 				
 				if (response.getApiId() == ApiId.ZNET_RX_RESPONSE) {
 
