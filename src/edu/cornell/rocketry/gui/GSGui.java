@@ -166,11 +166,6 @@ public class GSGui extends JFrame
 		  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0xa7),
 		  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0x6f)
 	};
-	private int selectedBaud = 57600; //serial comm rate
-	private XBeeAddress64 selectedAddress;				//selected address
-	
-	public XBee xbee; //keep as public reference @see XBeeListenerThread.java
-	XBeeListenerThread xbeeListener;
 	
 	private int numRec = 0; 	//number received packets
 	private int numSent = 0;	//number sent packets
@@ -185,8 +180,8 @@ public class GSGui extends JFrame
 	private final static Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private final static Font textAreaFont = new Font("Arial", Font.PLAIN, 10);
 
-	private JComboBox<String> serialPortsList, addressesList;
-	private JComboBox<Integer> baudList;
+	protected JComboBox<String> serialPortsList, addressesList;
+	protected JComboBox<Integer> baudList;
 	
 	private JPanel statusPanel, dataPanel, tablePanel;
 	private static JLabel lat,longi,alt,flag;
@@ -640,7 +635,7 @@ public class GSGui extends JFrame
 
 		//Serial port dropdown
 		serialPortsList = new JComboBox<String>(); //initialize empty dropdown
-		updateSerialPortsList();
+		controller.updateSerialPortsList();
 		serialPortsList.setSelectedIndex(serialPortsList.getItemCount() - 1);
 
 		//Refresh serial ports button
@@ -648,7 +643,7 @@ public class GSGui extends JFrame
 		JButton refreshPortsBtn = new JButton("Refresh");
 		refreshPortsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateSerialPortsList();
+				controller.updateSerialPortsList();
 			}
 		});
 		serialPortPanel.add(refreshPortsBtn, BorderLayout.EAST);
@@ -659,10 +654,10 @@ public class GSGui extends JFrame
 		addressPanel.add(new JLabel("Remote XBee Address: "), BorderLayout.WEST);
 		addressesList = new JComboBox<String>(addresses);
 		addressesList.setSelectedIndex(0);
-		selectedAddress = addr[addressesList.getSelectedIndex()]; //set default address
+		controller.updateSelectedAddress();
 		addressesList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectedAddress = addr[addressesList.getSelectedIndex()]; //set active address
+				controller.updateSelectedAddress();
 			}
 		});
 		addressPanel.add(addressesList, BorderLayout.CENTER);
@@ -673,10 +668,10 @@ public class GSGui extends JFrame
 		baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
 		baudList = new JComboBox<Integer>(baudRates);
 		baudList.setSelectedIndex(4);
-		selectedBaud = (int) baudList.getSelectedItem(); //set default address
+		controller.updateSelectedBaudRate();
 		addressesList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectedBaud = (int) baudList.getSelectedItem(); //set active address
+				controller.updateSelectedBaudRate();
 			}
 		});
 		baudPanel.add(baudList, BorderLayout.CENTER);
@@ -688,22 +683,21 @@ public class GSGui extends JFrame
 		initXBeeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					initXbee();
+					controller.initXbee();
 					addToReceiveText("Success! Initialized GS XBee :)");
 					addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 							+ System.getProperty("line.separator"));
 				} catch (XBeeException e1) {
-				e1.printStackTrace();
+					e1.printStackTrace();
 					numErr++;
 					addToReceiveText("Error ("
 							+ numErr
-							+ "): Could not connect to XBee :( make sure port isn't being used by another program (including this one)!");
+							+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
 				}
 			}
 		});
 		xbeeInitGrid.add(initXBeeButton);
 		xbeeInitPanel.add(xbeeInitGrid, BorderLayout.CENTER);
-
 		
 		//Send Packet Title and Button
 		JPanel sendPacketsPanel = new JPanel(new BorderLayout());
@@ -716,7 +710,7 @@ public class GSGui extends JFrame
 		JButton testSendBtn = new JButton("Send Test");
 		testSendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sendXBeePacket("(Test Packet)");
+				controller.sendXBeePacket("(Test Packet)");
 			}
 		});
 		sendPacketsGrid.add(testSendBtn);
@@ -725,7 +719,7 @@ public class GSGui extends JFrame
 		JButton customDataBtn = new JButton("Send Data");
 		customDataBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sendXBeePacket(sendEdit.getText());
+				controller.sendXBeePacket(sendEdit.getText());
 			}
 
 		});
@@ -781,7 +775,7 @@ public class GSGui extends JFrame
 		JLabel enableTitle = new JLabel ("Enabled (Yes/No)",JLabel.LEFT);
 		enableTitle.setFont(titleFont);
 
-		tablePanel.add(new JLabel("", JLabel.LEFT));
+		tablePanel.add(new JLabel("", JLabel.LEFT)); //TODO!!!
 		tablePanel.add(latTitle);
 		tablePanel.add(longTitle);
 		tablePanel.add(altTitle);
@@ -799,7 +793,7 @@ public class GSGui extends JFrame
 		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
 		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
 		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-		tablePanel.add(new JLabel("N/A", JLabel.LEFT));	
+		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
 		
 		dataPanel.add(statusPanel, BorderLayout.NORTH);
 		dataPanel.add(tablePanel, BorderLayout.SOUTH);
@@ -868,41 +862,6 @@ public class GSGui extends JFrame
      *                       .: UILITY FUNCTIONS :.                          *
      *                                                                       *
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-    
-    public void initXbee() throws XBeeException {
-
-		// get selected serial port...
-		String selSerial = (String) serialPortsList.getSelectedItem();
-
-		if (xbee != null && xbee.isConnected()) {
-			xbee.close();
-			xbeeListener.stopListening();
-		}
-		
-
-		System.out.println(selSerial);
-		xbee.open(selSerial, selectedBaud); //open port
-		xbeeListener = new XBeeListenerThread(controller.receiver(false)); //init a new listener thread
-		xbeeListener.start();
-
-		resetPacketCounters();
-	}
-    
-	
-	public boolean sendXBeePacket(String msg) {
-		OutgoingPacket payload = new OutgoingPacket(OutgoingPacketType.TEST);
-		try {
-			XBeeSender mailman = new XBeeSender(xbee, selectedAddress, payload);
-			mailman.send();
-			addToReceiveText("Sent (" + numSent + "): " + msg);
-			return true;
-		}
-		catch (XBeeSenderException e) {
-			addToReceiveText("Error (" + numErr + "): " + e.getMessage());
-			incNumError();
-			return false;
-		}
-	}
 	
 	/* Getters and Setters for packet counters*/
 	public int getNumSent() { return numSent;}
@@ -919,31 +878,6 @@ public class GSGui extends JFrame
 		longi.setText(""+updateLongi);
 		alt.setText(""+updateAlt);
 		flag.setText(""+updateFlag);
-	}
-
-	
-	/**
-	 * updated the Serial Port List (i.e. after a refresh)
-	 * @void
-	 */
-	public void updateSerialPortsList() {
-		ArrayList<String> comboBoxList = new ArrayList<String>();
-		Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
-		while (portList.hasMoreElements()) {
-			CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
-			if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-				comboBoxList.add(portId.getName());
-				// System.out.println(portId.getName());
-			} else {
-				// System.out.println(portId.getName());
-			}
-		}
-
-		// update list...
-		serialPortsList.removeAllItems();
-		for (String s : comboBoxList) {
-			serialPortsList.addItem(s);
-		}
 	}
 
 	/**

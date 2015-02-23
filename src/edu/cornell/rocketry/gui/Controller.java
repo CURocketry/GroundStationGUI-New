@@ -1,8 +1,10 @@
 package edu.cornell.rocketry.gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
@@ -10,8 +12,13 @@ import javax.swing.ImageIcon;
 //import org.math.plot.Plot3DPanel; //FIXME
 
 
+
+
+
+
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
+import com.rapplogic.xbee.api.XBeeResponse;
 
 import edu.cornell.rocketry.comm.receive.RealReceiver;
 import edu.cornell.rocketry.comm.receive.Receiver;
@@ -28,7 +35,12 @@ import edu.cornell.rocketry.util.GPSResponse;
 import edu.cornell.rocketry.util.Position;
 import edu.cornell.rocketry.util.PayloadStatus;
 import edu.cornell.rocketry.util.RunnableFactory;
+import edu.cornell.rocketry.xbee.OutgoingPacket;
+import edu.cornell.rocketry.xbee.OutgoingPacketType;
 import edu.cornell.rocketry.xbee.XBeeListenerThread;
+import edu.cornell.rocketry.xbee.XBeeSender;
+import edu.cornell.rocketry.xbee.XBeeSenderException;
+import gnu.io.CommPortIdentifier;
 
 public class Controller {
 	
@@ -58,7 +70,7 @@ public class Controller {
 		testModel = new Model();
 		realModel = new Model();
 		testReceiver = new TestReceiver(this);
-		realReceiver = new RealReceiver(this, mainWindow.xbeeListener);
+		realReceiver = new RealReceiver(this, realModel.xbeeListener);
 		testSender = new TestSender(this);
 		realSender = new RealSender(this);
 		r = new RunnableFactory(this);
@@ -216,4 +228,74 @@ public class Controller {
 		mainWindow.updateXBeeData(lat, lon, alt, flag);
 	}
 	
+
+	/**
+	 * updated the Serial Port List (i.e. after a refresh)
+	 * @void
+	 */
+	public void updateSerialPortsList() {
+		ArrayList<String> comboBoxList = new ArrayList<String>();
+		Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
+		while (portList.hasMoreElements()) {
+			CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
+			if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+				comboBoxList.add(portId.getName());
+				// System.out.println(portId.getName());
+			} else {
+				// System.out.println(portId.getName());
+			}
+		}
+
+		// update list...
+		mainWindow.serialPortsList.removeAllItems();
+		for (String s : comboBoxList) {
+			mainWindow.serialPortsList.addItem(s);
+		}
+	}
+
+	public void updateSelectedAddress() {
+		model(false).selectedAddress = GSGui.addr[mainWindow.addressesList.getSelectedIndex()]; //set active address
+	}
+	
+	public void updateSelectedBaudRate() {
+		model(false).selectedBaud = (int) mainWindow.baudList.getSelectedItem(); //set active rate
+	}
+
+    public void initXbee() throws XBeeException {
+    	XBee xbee = model(false).xbee;
+    	XBeeListenerThread xbeeListener = model(false).xbeeListener;
+
+		// get selected serial port...
+		String selSerial = (String) mainWindow.serialPortsList.getSelectedItem();
+
+		if (xbee != null && xbee.isConnected()) {
+			xbee.close();
+			xbeeListener.stopListening();
+		}
+		
+
+		System.out.println(selSerial);
+		xbee.open(selSerial, model(false).selectedBaud); //open port
+		xbeeListener = new XBeeListenerThread(receiver(false), xbee, mainWindow); //init a new listener thread
+		xbeeListener.start();
+
+		mainWindow.resetPacketCounters();
+	}
+
+	public boolean sendXBeePacket(String msg) {
+    	XBee xbee = model(false).xbee;
+    	
+		OutgoingPacket payload = new OutgoingPacket(OutgoingPacketType.TEST);
+		try {
+			XBeeSender mailman = new XBeeSender(xbee, model(false).selectedAddress, payload);
+			mailman.send();
+			mainWindow.addToReceiveText("Sent (" + mainWindow.getNumSent() + "): " + msg);
+			return true;
+		}
+		catch (XBeeSenderException e) {
+			mainWindow.addToReceiveText("Error (" + mainWindow.getNumError() + "): " + e.getMessage());
+			mainWindow.incNumError();
+			return false;
+		}
+	}
 }
