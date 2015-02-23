@@ -1,6 +1,10 @@
 // License: GPL. For details, see Readme.txt file.
 package edu.cornell.rocketry.gui;
 
+import jTile.src.org.openstreetmap.fma.jtiledownloader.config.AppConfiguration;
+import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.JTileDownloaderMainViewPanel;
+import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.MainPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;

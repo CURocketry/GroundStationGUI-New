@@ -35,11 +35,12 @@ import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -101,7 +102,8 @@ public class MainPanel
     private JButton _buttonLoadJob = new JButton("Load Job");
     private JButton _buttonExport = new JButton("Export Tilelist");
 
-    private final JTileDownloaderMainView _mainView;
+    //private final JTileDownloaderMainView _mainView;
+    private final JFrame _mainView; //TODO
 
     private TileProviderIf[] _tileProviders;
 
@@ -114,7 +116,7 @@ public class MainPanel
      * @param tabIndex tab to select at start up
      * 
      */
-    public MainPanel(JTileDownloaderMainView mainView, int tabIndex)
+    public MainPanel(JFrame mainView, int tabIndex)//TODO
     {
         super();
 
