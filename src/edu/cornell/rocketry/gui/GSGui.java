@@ -149,6 +149,8 @@ public class GSGui extends JFrame
     
     /*------------------------- Download Tab Fields -------------------------*/
     
+    
+    
     /*--------------------------- XBee Tab Fields ---------------------------*/
     
     public static final Integer[] baudRates = {4800, 9600, 19200, 38400, 57600, 115200};
@@ -615,7 +617,7 @@ public class GSGui extends JFrame
     }
     
     private void initializeDownloadTab() {
-    	//TODO
+    	downloadPanel = new JTileDownloaderMainViewPanel(this);
     }
     
     private void initializeXBeeTab() {
