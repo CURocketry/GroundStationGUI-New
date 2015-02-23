@@ -1,6 +1,7 @@
 package edu.cornell.rocketry.gui;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
 //import org.math.plot.Plot3DPanel; //FIXME
+
 
 
 import com.rapplogic.xbee.api.XBee;
@@ -64,7 +66,7 @@ public class Controller {
 		r = new RunnableFactory(this);
 		//xbee = new XBee();
 		
-		testing = true;	//default for now	
+		testing = false;	//default for now	
 	}
 	
 	/*------------------------- Getters & Setters ---------------------------*/
@@ -75,6 +77,19 @@ public class Controller {
 	
 	public Receiver getReceiver (boolean test) {
 		return test? testReceiver : realReceiver;
+	}
+	
+	public void refreshAll () {
+		//re-load markers on 
+		Collection<Position> all_rocket_positions = 
+			model(testing).getPastRocketPositions();
+		updateRocketPositionFull(all_rocket_positions);
+		
+		mainWindow.setPayloadStatus(model(testing).payload());
+		
+		Position current = model(testing).position();
+		if (testing) updateXBeeDisplayFields("--", "--", "--", "--");
+		else updateXBeeDisplayFields(current.lat()+"", current.lon()+"", current.alt()+"", "--");
 	}
 	
 	
@@ -109,7 +124,7 @@ public class Controller {
     }
     
     void updateRocketPositionFull (Collection<Position> ps) {
-    	mainWindow.clearMapMarkers();
+    	clearMapMarkers();
     	for (Position p : ps) {
     		updateRocketPosition(p);
     	}
@@ -179,8 +194,8 @@ public class Controller {
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
 			// Update model
 			model(test).updatePosition(r.lat(), r.lon(), r.alt(), r.time());
-			updateRocketPosition (model(test).position());
-			updateXBeeDisplayFields (
+			if (test == testing) updateRocketPosition (model(test).position());
+			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 		} else {
 			ilog("inaccurate data received");
@@ -206,6 +221,10 @@ public class Controller {
 	private void ilog (String s) {
 		mainWindow.controlLog("- " + s);
 		System.out.println("logged: " + s);
+	}
+	
+	public void resetTestSender (File f) {
+		testSender = new TestSender(this, f);
 	}
 	
 	/*------------------------ XBee Methods -------------------------*/

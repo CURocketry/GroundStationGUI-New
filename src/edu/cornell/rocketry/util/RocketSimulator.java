@@ -13,6 +13,7 @@ import edu.cornell.rocketry.gui.Controller;
 public class RocketSimulator {
 	
 	private String GPSfilepath;
+	private File file = null;
 	
 	private Thread gworker;
 	private Thread pworker;
@@ -37,10 +38,9 @@ public class RocketSimulator {
 		readGPSFile();
 	}
 	
-	public RocketSimulator (String path, Receiver r, int frequency) {
-		this.GPSfilepath = path;
+	public RocketSimulator (File f, Receiver r) {
+		this.file = f;
 		receiver = r;
-		setFrequency(frequency);
 		index = 0;
 		positions = new ArrayList<Position>();
 		GPSflag = 0xf;
@@ -208,12 +208,17 @@ public class RocketSimulator {
 	
 	private void parseCSV () {
 		try {
-			Scanner sc = new Scanner (new File (GPSfilepath));
+			Scanner sc;
+			if (file == null)
+				sc = new Scanner(new File (GPSfilepath));
+			else sc = new Scanner(file);
 			String line;
 			String [] components;
 			Position p;
 			while (sc.hasNextLine()) {
+				
 				line = sc.nextLine();
+				System.out.println("Line: " + line);
 				components = line.split(",");
 				p = new Position (
 					Double.parseDouble(components[0]),

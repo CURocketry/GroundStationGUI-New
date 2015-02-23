@@ -23,6 +23,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -44,6 +45,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -106,7 +108,6 @@ public class GSGui extends JFrame
     private JPanel xbeePanel;
     private JPanel settingsPanel;
     
-    //controller (here called controller)
     private Controller controller = new Controller(this);
     
     JTabbedPane tabbedPane = new JTabbedPane();
@@ -204,6 +205,7 @@ public class GSGui extends JFrame
 	private JCheckBox testingCheckBox;
 	private JCheckBox debugPrintoutsCheckBox;
 	private JFileChooser gpsSimFileChooser;
+	private JButton gpsSimFileChooserButton;
 	
 	
 	//map
@@ -272,6 +274,8 @@ public class GSGui extends JFrame
         /*---------------------LISTEN FOR TAB CHANGE-------------------------*/
         final JMapViewer map = treeMap.getViewer();
         
+        //change the parent of the map back and forth so that it is accessible 
+        //in both the control and recovery tabs.
         ChangeListener changeListener = new ChangeListener() {
             public void stateChanged(ChangeEvent changeEvent) {
               JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
@@ -834,9 +838,11 @@ public class GSGui extends JFrame
     	        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
     	        boolean selected = abstractButton.getModel().isSelected();
     	        controller.testing = selected;
+    	        controller.refreshAll();
     	      }
     	};
     	testingCheckBox.addActionListener(testingCheckBoxActionListener);
+    	testingCheckBox.setSelected(false);
     	
     	debugPrintoutsCheckBox = new JCheckBox("Show Debug Printouts");
     	ActionListener debugPrintoutsCheckBoxActionListener = new ActionListener() {
@@ -847,8 +853,32 @@ public class GSGui extends JFrame
     	      }
     	};
     	debugPrintoutsCheckBox.addActionListener(debugPrintoutsCheckBoxActionListener);
+    	debugPrintoutsCheckBox.setSelected(false);
     	
     	gpsSimFileChooser = new JFileChooser();
+    	gpsSimFileChooserButton = new JButton("Choose GPS Simulation File");
+    	
+    	gpsSimFileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "GPSIM files only", "gpsim");
+        gpsSimFileChooser.setFileFilter(filter);
+        final GSGui view = this;
+        gpsSimFileChooserButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                	gpsSimFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                	int returnVal = gpsSimFileChooser.showOpenDialog(view);
+                    if(returnVal == JFileChooser.APPROVE_OPTION) {
+                       System.out.println("You have elected to use this GPS simulation file: " +
+                            gpsSimFileChooser.getSelectedFile().getName());
+                       File f = gpsSimFileChooser.getSelectedFile();
+                       controller.resetTestSender(f);
+                    }
+                }
+            }
+        });
+        
     	
     	
     	//add elements to screen
@@ -856,7 +886,7 @@ public class GSGui extends JFrame
     	testingSettingsPanel.setLayout(new BoxLayout(testingSettingsPanel, BoxLayout.Y_AXIS));
     	testingSettingsPanel.add(testingCheckBox);
     	testingSettingsPanel.add(debugPrintoutsCheckBox);
-    	testingSettingsPanel.add(gpsSimFileChooser);
+    	testingSettingsPanel.add(gpsSimFileChooserButton);
     	
     	settingsPanel = new JPanel(new BorderLayout());
     	//settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
@@ -915,10 +945,10 @@ public class GSGui extends JFrame
 	
 	//get updated data from XBee and display it
 	public void updateXBeeData (String updateLat, String updateLongi, String updateAlt, String updateFlag) {
-		lat.setText(""+updateLat);
-		longi.setText(""+updateLongi);
-		alt.setText(""+updateAlt);
-		flag.setText(""+updateFlag);
+		lat.setText(updateLat);
+		longi.setText(updateLongi);
+		alt.setText(updateAlt);
+		flag.setText(updateFlag);
 	}
 
 	

@@ -1,5 +1,7 @@
 package edu.cornell.rocketry.comm.send;
 
+import java.io.File;
+
 import edu.cornell.rocketry.gui.Controller;
 import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
@@ -14,9 +16,16 @@ public class TestSender implements Sender {
 	
 	public TestSender (Controller c) {
 		controller = c;
-		String path = "./assets/gps_spoof_west_campus.csv";
+		String path = "./assets/gps_spoof_west_campus.gpsim";
 		rsim = new RocketSimulator(path, controller.getReceiver(true));
 	}
+	
+	public TestSender (Controller c, File f) {
+		controller = c;
+		rsim = new RocketSimulator(f, controller.getReceiver(true));
+	}
+	
+	public void switchFile (String s) {}; //todo
 	
 	public void send (Command c) {
 		try {
