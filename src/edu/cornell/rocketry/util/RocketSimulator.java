@@ -218,7 +218,6 @@ public class RocketSimulator {
 			while (sc.hasNextLine()) {
 				
 				line = sc.nextLine();
-				System.out.println("Line: " + line);
 				components = line.split(",");
 				p = new Position (
 					Double.parseDouble(components[0]),

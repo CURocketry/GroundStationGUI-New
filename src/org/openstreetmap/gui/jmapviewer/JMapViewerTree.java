@@ -20,6 +20,7 @@ import javax.swing.event.TreeModelListener;
 import org.openstreetmap.gui.jmapviewer.checkBoxTree.CheckBoxNodePanel;
 import org.openstreetmap.gui.jmapviewer.checkBoxTree.CheckBoxTree;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapObject;
+import org.openstreetmap.gui.jmapviewer.interfaces.TileCache;
 
 /**
  * Tree of layers for JMapViewer component
@@ -33,12 +34,9 @@ public class JMapViewerTree extends JPanel{
     private CheckBoxTree tree;
     private JPanel treePanel;
     private JSplitPane splitPane;
-
-    public JMapViewerTree(String name){
-        this(name, false);
-    }
-    public JMapViewerTree(String name, boolean treeVisible){
-        super();
+    
+    public JMapViewerTree(String name, boolean treeVisible, MemoryTileCache cache) {
+    	super();
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         
         tree = new CheckBoxTree(name);
@@ -47,7 +45,8 @@ public class JMapViewerTree extends JPanel{
         treePanel.add(tree, BorderLayout.CENTER);
         treePanel.add(new JLabel("<html><center>Use right mouse button to<br />show/hide texts</center></html>"), BorderLayout.SOUTH);
         //map = new JMapViewer();//TODO
-        map = new JMapViewer(new MemoryTileCache(), 0);
+        if (cache != null) map = new JMapViewer(cache, 0);
+        else map = new JMapViewer(new MemoryTileCache(), 0);
 
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(150);
@@ -75,6 +74,13 @@ public class JMapViewerTree extends JPanel{
                 }
             }
         });
+    }
+
+    public JMapViewerTree(String name){
+        this(name, false);
+    }
+    public JMapViewerTree(String name, boolean treeVisible){
+        this(name, treeVisible, null);
     }
     private JPopupMenu createPopupMenu(final AbstractLayer layer) {
         JMenuItem menuItemShow = new JMenuItem("show texts");

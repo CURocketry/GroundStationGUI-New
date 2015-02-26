@@ -71,7 +71,8 @@ public class LocalLoader {
 		if (contents == null) {
 			//if this is actually a file, then create a tile, add to acc
 			Tile t = tileFromFile(dir, src);
-			acc.add(t);			
+			if (t != null)
+				acc.add(t);			
 		} else {
 			//this is a directory, so build on each of sub-directories/files
 			for (int i = 0; i < contents.length; i++) {
@@ -92,37 +93,50 @@ public class LocalLoader {
 	 * @return Tile created as above
 	 */
 	public static Tile tileFromFile (File f, TileSource src) {
-		System.out.println ("Creating tile from file: " + f.toString());
-		//dir.toString() will print out tiles/12  /345 /234 .png, for example.
-		//parsed below as:              tiles/zoom/num1/num2.png
-		String sep = File.separator;
-		if(sep.equals("\\")) {
-			//regex needs backslashes to be escaped
-			sep = "\\\\";
-		}
-		String[] addressArray = f.toString().split(sep);
-		
-		int zoom = Integer.parseInt(addressArray[1]);
-		int num1 = Integer.parseInt(addressArray[2]);
-		int num2 = Integer.parseInt(addressArray[3].split("\\.")[0]);
-		
-		//placeholder, and in case cannot find file
-		BufferedImage image = Tile.LOADING_IMAGE; 
-		
-		//get the tile image from the file
 		try {
-			image = ImageIO.read(f);
-		} catch (IOException ioe) {
-			System.err.println("COULD NOT FIND FILE: " + f.toString());
-			//ioe.printStackTrace();
-		} catch (IllegalArgumentException iae) {
-			System.err.println("COULD NOT FIND FILE2: " + f.toString());
-			iae.printStackTrace();
+			System.out.println ("Creating tile from file: " + f.toString());
+			//dir.toString() will print out tiles/12  /345 /234 .png, for example.
+			//parsed below as:              tiles/zoom/num1/num2.png
+			String sep = File.separator;
+			if(sep.equals("\\")) {
+				//regex needs backslashes to be escaped
+				sep = "\\\\";
+			}
+			String[] addressArray = f.toString().split(sep);
+			
+			int index = -1;
+			for (int i = 0; i < addressArray.length; i++) {
+				if (addressArray[i].equals("tiles")) index = i;
+			}
+			if (index == -1) throw new IllegalArgumentException ("Tile root directory must be named 'tiles'");
+			
+			int zoom = Integer.parseInt(addressArray[index+1]);
+			int num1 = Integer.parseInt(addressArray[index+2]);
+			int num2 = Integer.parseInt(addressArray[index+3].split("\\.")[0]);
+			
+			//placeholder, and in case cannot find file
+			BufferedImage image = Tile.LOADING_IMAGE; 
+			
+			//get the tile image from the file
+			try {
+				image = ImageIO.read(f);
+			} catch (IOException ioe) {
+				System.err.println("COULD NOT FIND FILE: " + f.toString());
+				//ioe.printStackTrace();
+			} catch (IllegalArgumentException iae) {
+				System.err.println("COULD NOT FIND FILE2: " + f.toString());
+				iae.printStackTrace();
+			}
+			
+			//finally, create the file with the appropriate image.
+			Tile t = new Tile(src, num1, num2, zoom, image);
+			return t;
+		} catch (Exception e) {
+			System.out.println("LocalLoader#tileFromFile(..): Error creating tile from file:");
+			System.out.println(f.toString());
+			//e.printStackTrace();
 		}
-		
-		//finally, create the file with the appropriate image.
-		Tile t = new Tile(src, num1, num2, zoom, image);
-		return t;
+		return null;
 	}
 	
 	

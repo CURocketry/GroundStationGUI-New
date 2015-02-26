@@ -1,5 +1,7 @@
 package edu.cornell.rocketry.gui;
 
+//import jTile.src.org.openstreetmap.gui.jmapviewer.JMapViewer;
+
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -17,6 +19,15 @@ import javax.swing.ImageIcon;
 
 
 
+
+
+
+
+
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
+import org.openstreetmap.gui.jmapviewer.Tile;
+import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
@@ -37,6 +48,7 @@ import edu.cornell.rocketry.util.GPSResponse;
 import edu.cornell.rocketry.util.Position;
 import edu.cornell.rocketry.util.PayloadStatus;
 import edu.cornell.rocketry.util.RunnableFactory;
+import edu.cornell.rocketry.util.LocalLoader;
 import edu.cornell.rocketry.xbee.OutgoingPacket;
 import edu.cornell.rocketry.xbee.OutgoingPacketType;
 import edu.cornell.rocketry.xbee.XBeeListenerThread;
@@ -74,7 +86,7 @@ public class Controller {
 		testReceiver = new TestReceiver(this);
 		realReceiver = new RealReceiver(this, realModel.xbeeListener);
 		testSender = new TestSender(this);
-		realSender = new RealSender(this);
+		realSender = new RealSender(this, model(false).xbee(), model(false).address());
 		r = new RunnableFactory(this);
 		//xbee = new XBee();
 		
@@ -91,17 +103,17 @@ public class Controller {
 		return test? testReceiver : realReceiver;
 	}
 	
-	public void refreshAll () {
-		//re-load markers on 
+	public void refreshDisplay () {
+		//re-load markers on map
 		Collection<Position> all_rocket_positions = 
 			model(testing).getPastRocketPositions();
 		updateRocketPositionFull(all_rocket_positions);
 		
 		mainWindow.setPayloadStatus(model(testing).payload());
 		
-		Position current = model(testing).position();
-		if (testing) updateXBeeDisplayFields("--", "--", "--", "--");
-		else updateXBeeDisplayFields(current.lat()+"", current.lon()+"", current.alt()+"", "--");
+		//Position current = model(testing).position();
+		//if (testing) updateXBeeDisplayFields("--", "--", "--", "--");
+		//else updateXBeeDisplayFields(current.lat()+"", current.lon()+"", current.alt()+"", "--");
 	}
 	
 	
@@ -128,6 +140,39 @@ public class Controller {
 		}
 		
 	}*/ //FIXME
+	
+	/** 
+	 * Ensures that the map (present in the minimap in the control tab 
+	 * and the recovery tab) is properly set to include the tiles from
+	 * the current directory.
+	 */
+	public void addTilesToMap(File f) {
+		//reset map to one with all of the tiles in cache.
+		MemoryTileCache cache = (MemoryTileCache) mainWindow.map().getTileCache();
+		TileSource source = mainWindow.map().getTileController().getTileSource();
+		
+		addTilesToCacheFromFile(cache, source, f);
+		
+		mainWindow.map().getTileController().setTileCache(cache);
+		
+		//re-add map markers
+		refreshDisplay();
+	}
+	
+	private void addTilesToCacheFromFile(MemoryTileCache cache, TileSource source, File f) {
+		LinkedList<Tile> acc = new LinkedList<Tile>();
+		LocalLoader.buildTileList(acc, f, source);
+		for (Tile t : acc) {
+			cache.addTile(t);
+		}
+	}
+	
+	/**
+	 * Removes all tiles from the current map's cache.
+	 */
+	public void resetMapTiles() {
+		mainWindow.map().getTileController().setTileCache(new MemoryTileCache());
+	}
 
     void updateRocketPosition (Position p) {
     	mainWindow.addMapMarkerDot

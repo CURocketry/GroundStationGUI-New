@@ -45,6 +45,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
@@ -100,9 +101,12 @@ public class GSGui extends JFrame
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
     private static final long serialVersionUID = 1L;
+    
+
+    final GSGui view = this;
 
     
-    private JMapViewerTree treeMap = null;
+    JMapViewerTree treeMap = null;
     private JPanel controlPanel;
     private JPanel downloadPanel;
     private JPanel xbeePanel;
@@ -195,20 +199,36 @@ public class GSGui extends JFrame
 	
 	/* ------------------------ Settings Tab Fields ------------------------ */
 	
-	//testing
+	/* TESTING */
+	//container
 	private JPanel testingSettingsPanel;
+	//label
+	private JLabel testingSettingsPanelLabel;
+	//elements
 	private JCheckBox testingCheckBox;
 	private JCheckBox debugPrintoutsCheckBox;
 	private JFileChooser gpsSimFileChooser;
 	private JButton gpsSimFileChooserButton;
 	
-	
-	//map
+	/* MAP */
+	//container
 	private JPanel mapSettingsPanel;
+	//label
+	private JLabel mapSettingsPanelLabel;
+	//elements
+	private JButton tileLocationChooserButton;
 	private JFileChooser tileLocationChooser;
 	private JCheckBox showMinimapCheckBox;
 	private JComboBox minimapSizeChooser;
-	private JComboBox defaultLocationChooser;
+	private JButton defaultLocationChooser;
+	
+	/* OTHER */
+	//container
+	private JPanel otherSettingsPanel;
+	//label
+	private JLabel otherSettingsPanelLabel;
+	//elements
+	private JCheckBox autoRetryOnCommFailureCheckBox;
 	
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -300,7 +320,7 @@ public class GSGui extends JFrame
     	return trajectoryplot;
     }*/ //FIXME
     
-    private JMapViewer map(){
+    JMapViewer map(){
         return treeMap.getViewer();
     }
     @SuppressWarnings("unused")
@@ -812,27 +832,51 @@ public class GSGui extends JFrame
     }
     
     private void initializeSettingsTab() {
-    	/*//testing
-    	private JCheckBox testingCheckBox;
-    	private JCheckBox debugPrintoutsCheckBox;
-    	private JFileChooser gpsSimFileChooser;
+//    	/* TESTING */
+//    	//container
+//    	private JPanel testingSettingsPanel;
+//    	//label
+//    	private JLabel testingSettingsPanelLabel;
+//    	//elements
+//    	private JCheckBox testingCheckBox;
+//    	private JCheckBox debugPrintoutsCheckBox;
+//    	private JFileChooser gpsSimFileChooser;
+//    	private JButton gpsSimFileChooserButton;
+//    	
+//    	/* MAP */
+//    	//container
+//    	private JPanel mapSettingsPanel;
+//    	//label
+//    	private JLabel mapSettingsPanelLabel;
+//    	//elements
+//    	private JButton tileLocationChooserButton;
+//    	private JFileChooser tileLocationChooser;
+//    	private JCheckBox showMinimapCheckBox;
+//    	private JComboBox minimapSizeChooser;
+//    	private JButton defaultLocationChooser;
+//    	
+//    	/* OTHER */
+//    	//container
+//    	private JPanel otherSettingsPanel;
+//    	//label
+//    	private JLabel otherSettingsPanelLabel;
+//    	//elements
+//    	private JCheckBox autoRetryOnCommFailureCheckBox;
     	
     	
-    	//map
-    	private JFileChooser tileLocationChooser;
-    	private JCheckBox showMinimapCheckBox;
-    	private JComboBox minimapSizeChooser;
-    	private JComboBox defaultLocationChooser;*/
-    	
-    	//initialize elements
-    	
+    	/* TESTING */
+    	//container
+    	testingSettingsPanel = new JPanel();
+    	//label
+    	testingSettingsPanelLabel = new JLabel("Testing");
+    	//elements
     	testingCheckBox = new JCheckBox("Enable Testing Mode");
     	ActionListener testingCheckBoxActionListener = new ActionListener() {
     	      public void actionPerformed(ActionEvent actionEvent) {
     	        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
     	        boolean selected = abstractButton.getModel().isSelected();
     	        controller.testing = selected;
-    	        controller.refreshAll();
+    	        controller.refreshDisplay();
     	      }
     	};
     	testingCheckBox.addActionListener(testingCheckBoxActionListener);
@@ -849,14 +893,12 @@ public class GSGui extends JFrame
     	debugPrintoutsCheckBox.addActionListener(debugPrintoutsCheckBoxActionListener);
     	debugPrintoutsCheckBox.setSelected(false);
     	
-    	gpsSimFileChooser = new JFileChooser();
-    	gpsSimFileChooserButton = new JButton("Choose GPS Simulation File");
     	
+    	gpsSimFileChooserButton = new JButton("Choose GPS Simulation File");
     	gpsSimFileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
             "GPSIM files only", "gpsim");
         gpsSimFileChooser.setFileFilter(filter);
-        final GSGui view = this;
         gpsSimFileChooserButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -873,18 +915,86 @@ public class GSGui extends JFrame
             }
         });
         
-    	
-    	
-    	//add elements to screen
-    	testingSettingsPanel = new JPanel();
-    	testingSettingsPanel.setLayout(new BoxLayout(testingSettingsPanel, BoxLayout.Y_AXIS));
+    	//add elements to container
+        testingSettingsPanel.setLayout(new BoxLayout(testingSettingsPanel, BoxLayout.Y_AXIS));
+        testingSettingsPanel.add(testingSettingsPanelLabel);
     	testingSettingsPanel.add(testingCheckBox);
     	testingSettingsPanel.add(debugPrintoutsCheckBox);
     	testingSettingsPanel.add(gpsSimFileChooserButton);
     	
+    	
+    	
+    	/* MAP */
+    	//container
+    	mapSettingsPanel = new JPanel();
+    	//label
+    	mapSettingsPanelLabel = new JLabel("Map");
+    	//elements
+    	tileLocationChooser = new JFileChooser();
+    	tileLocationChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    	tileLocationChooser.setFileFilter(new FileFilter() {
+    		@Override
+    	      public boolean accept( File file ) {
+    	        return file.isDirectory();
+    	      }
+
+    	      @Override
+    	      public String getDescription() {
+    	        return "Directories Only";
+    	      }
+    	});
+    	tileLocationChooserButton = new JButton("Load Map Tiles");
+    	tileLocationChooserButton.addMouseListener(new MouseAdapter() {
+    		@Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                	//set default directory to 
+                	tileLocationChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                	int returnVal = tileLocationChooser.showOpenDialog(view);
+                    if(returnVal == JFileChooser.APPROVE_OPTION) {
+                       System.out.println("You have elected to use the following tile source folder: " +
+                            tileLocationChooser.getSelectedFile().getName());
+                       File f = tileLocationChooser.getSelectedFile();
+                       controller.addTilesToMap(f);
+                    }
+                }
+            }
+    	});
+//    	private JFileChooser tileLocationChooser;
+//    	private JCheckBox showMinimapCheckBox;
+//    	private JComboBox minimapSizeChooser;
+//    	private JButton defaultLocationChooser;
+    	
+    	showMinimapCheckBox = new JCheckBox("Show Minimap");
+    	
+    	minimapSizeChooser = new JComboBox<>();
+    	
+    	defaultLocationChooser = new JButton("Set Default Map Location");
+    	
+    	
+    	//add elements to container
+    	mapSettingsPanel.setLayout(new BoxLayout(mapSettingsPanel, BoxLayout.Y_AXIS));
+    	mapSettingsPanel.add(mapSettingsPanelLabel);
+    	mapSettingsPanel.add(tileLocationChooserButton);
+    	mapSettingsPanel.add(showMinimapCheckBox);
+    	mapSettingsPanel.add(minimapSizeChooser);
+    	mapSettingsPanel.add(defaultLocationChooser);
+    	
+    	/* OTHER */
+    	//container
+    	otherSettingsPanel = new JPanel(new BorderLayout());
+    	//label
+    	otherSettingsPanelLabel = new JLabel("Other");
+    	//elements
+    	//add elements to container
+    	otherSettingsPanel.setLayout(new BoxLayout(otherSettingsPanel, BoxLayout.Y_AXIS));
+    	otherSettingsPanel.add(otherSettingsPanelLabel);
+    	
     	settingsPanel = new JPanel(new BorderLayout());
     	//settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
-    	settingsPanel.add(testingSettingsPanel, BorderLayout.WEST);
+    	settingsPanel.add(testingSettingsPanel, BorderLayout.LINE_START);
+    	settingsPanel.add(mapSettingsPanel, BorderLayout.CENTER);
+    	settingsPanel.add(otherSettingsPanel, BorderLayout.LINE_END);
     }
     
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -910,6 +1020,10 @@ public class GSGui extends JFrame
 		flag.setText(updateFlag);
 	}
 
+	public void updateViewerTree(JMapViewerTree tree) {
+		treeMap = tree;
+		
+	}
 	
 	/**
 	 * updated the Serial Port List (i.e. after a refresh)

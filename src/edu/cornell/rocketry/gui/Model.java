@@ -66,4 +66,12 @@ public class Model {
 		rocket_past_pos.add(p);
 		rocket_pos = p;
 	}
+	
+	public XBee xbee() {
+		return xbee;
+	}
+	
+	public XBeeAddress64 address() {
+		return selectedAddress;
+	}
 }
