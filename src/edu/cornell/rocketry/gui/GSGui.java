@@ -30,6 +30,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -50,7 +51,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-//import org.math.plot.Plot3DPanel; //FIXME
+import org.math.plot.Plot3DPanel; //FIXME
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
@@ -124,6 +125,12 @@ public class GSGui extends JFrame
     JPanel controls;
     JPanel infologpanel;
     
+    JPanel statusSection;
+    JPanel controlsSection;
+    JPanel plotSection;
+    JPanel minimapSection;
+    JPanel logSection;
+    
     JScrollPane infologscrollpane;
     JTextArea infolog;
     
@@ -137,7 +144,7 @@ public class GSGui extends JFrame
     JButton enablePayloadButton = new JButton("Enable Payload");
     JButton disablePayloadButton = new JButton("Disable Payload");
     
-    //private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
+    private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
 
 
     /*------------------------ Recovery Tab Fields --------------------------*/
@@ -316,9 +323,9 @@ public class GSGui extends JFrame
     
     /*------------------------------ Aliases --------------------------------*/
     
-    /*public Plot3DPanel getTrajectoryPlot(){
+    public Plot3DPanel getTrajectoryPlot(){
     	return trajectoryplot;
-    }*/ //FIXME
+    } //FIXME
     
     JMapViewer map(){
         return treeMap.getViewer();
@@ -342,7 +349,7 @@ public class GSGui extends JFrame
         //controlPanel.setBackground(Color.WHITE);
         //Image background = Toolkit.getDefaultToolkit().createImage("./assets/black_wood_background.jpg");
         //controlPanel.drawImage(background, 0, 0, null);
-        controlPanel.setLayout(new GridBagLayout());
+        controlPanel.setLayout(new BorderLayout());
         
         //status indicators
         status = new JPanel(new BorderLayout());
@@ -430,39 +437,93 @@ public class GSGui extends JFrame
         minimap.add(tmp);*/
         //minimap.add(treeMap.getViewer(), BorderLayout.CENTER);
         
+        //3D Plot
+        JPanel trajpanel = new JPanel(new BorderLayout()); 
+        trajpanel.add(trajectoryplot,BorderLayout.CENTER);
+        trajpanel.setPreferredSize(new Dimension(400,300));
+        
+//        JPanel statusSection;
+//        JPanel controlsSection;
+//        JPanel plotSection;
+//        JPanel minimapSection;
+//        JPanel logSection;
+        
+        
+        //construct sections
+        
+        
+        
+        statusSection = new JPanel();
+        controlsSection = new JPanel();
+        plotSection = new JPanel();
+        minimapSection = new JPanel();
+        logSection = new JPanel();
+        
+        statusSection.add(status);
+        controlsSection.add(controls);
+        plotSection.add(trajpanel);
+        minimapSection.add(minimap);
+        logSection.add(infologpanel);
+        
+        statusSection.setOpaque(false);
+        controlsSection.setOpaque(false);
+        plotSection.setOpaque(false);
+        minimapSection.setOpaque(false);
+        logSection.setOpaque(false);
+        
+        
+        
+
+        //add borders for debugging
+        statusSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        controlsSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        plotSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        minimapSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        logSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        
+        //add sections
+        
+        controlPanel.add(statusSection, BorderLayout.PAGE_START);
+        controlPanel.add(controlsSection, BorderLayout.LINE_START);
+        controlPanel.add(plotSection, BorderLayout.CENTER);
+        controlPanel.add(minimapSection, BorderLayout.LINE_END);
+        controlPanel.add(logSection, BorderLayout.PAGE_END);
+        
+        
         
         //add sections to display
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0; c.gridy = 0;
-        c.ipadx = 0; c.ipady = 0;
-        c.anchor = GridBagConstraints.CENTER;
-        c.weightx = 0.1; c.weighty = 0.1;
-        	controlPanel.add(status, c);
-        c.gridx = 0; c.gridy = 1;
-        c.ipadx = 0; c.ipady = 0;
-        c.anchor = GridBagConstraints.CENTER;
-        c.weightx = 0.1; c.weighty = 0.1;
-        	controlPanel.add(controls, c);
-        c.gridx = 2; c.gridy = 0;
-        c.ipadx = 10; c.ipady = 10;
-        c.anchor = GridBagConstraints.FIRST_LINE_END;
-        c.weightx = 0.5; c.weighty = 0.5;
-        	controlPanel.add(minimap, c);
-        c.gridx = 0; c.gridy = 10;
-        c.gridwidth = 3;
-        c.ipadx = 0; c.ipady = 0;
-        c.anchor = GridBagConstraints.PAGE_END;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        	controlPanel.add(infologpanel, c);
-        c.gridx = 8; c.gridy = 5;
-        c.gridwidth = 1;
-        c.gridheight = 5;
-        c.ipadx = 0; c.ipady = 0;
-        c.anchor = GridBagConstraints.LINE_END;
-        /*JPanel trajpanel = new JPanel(new BorderLayout()); 
-        trajpanel.add(trajectoryplot,BorderLayout.CENTER);
-        trajpanel.setPreferredSize(new Dimension(300,200));
-        controlPanel.add(trajpanel,c);*/ //FIXME
+//        GridBagConstraints c = new GridBagConstraints();
+//        c.gridx = 0; c.gridy = 0;
+//        c.ipadx = 0; c.ipady = 0;
+//        c.anchor = GridBagConstraints.CENTER;
+//        c.weightx = 0.1; c.weighty = 0.1;
+//        	controlPanel.add(status, c);
+//        c.gridx = 0; c.gridy = 1;
+//        c.ipadx = 0; c.ipady = 0;
+//        c.anchor = GridBagConstraints.CENTER;
+//        c.weightx = 0.1; c.weighty = 0.1;
+//        	controlPanel.add(controls, c);
+//        c.gridx = 2; c.gridy = 0;
+//        c.ipadx = 10; c.ipady = 10;
+//        c.anchor = GridBagConstraints.FIRST_LINE_END;
+//        c.weightx = 0.5; c.weighty = 0.5;
+//        	controlPanel.add(minimap, c);
+//        c.gridx = 0; c.gridy = 10;
+//        c.gridwidth = 3;
+//        c.ipadx = 0; c.ipady = 0;
+//        c.anchor = GridBagConstraints.PAGE_END;
+//        c.fill = GridBagConstraints.HORIZONTAL;
+//        	controlPanel.add(infologpanel, c);
+//        c.gridx = 8; c.gridy = 5;
+//        c.gridwidth = 1;
+//        c.gridheight = 5;
+//        c.ipadx = 0; c.ipady = 0;
+//        c.anchor = GridBagConstraints.LINE_END;
+//        
+//        JPanel trajpanel = new JPanel(new BorderLayout()); 
+//        trajpanel.add(trajectoryplot,BorderLayout.CENTER);
+//        trajpanel.setPreferredSize(new Dimension(300,200));
+//        controlPanel.add(trajpanel,c); //FIXME
         
         controlPanel.setVisible(true);
         

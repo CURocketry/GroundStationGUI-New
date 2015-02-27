@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
-//import org.math.plot.Plot3DPanel; //FIXME
+import org.math.plot.Plot3DPanel; //FIXME
 
 
 
@@ -111,15 +111,12 @@ public class Controller {
 		
 		mainWindow.setPayloadStatus(model(testing).payload());
 		
-		//Position current = model(testing).position();
-		//if (testing) updateXBeeDisplayFields("--", "--", "--", "--");
-		//else updateXBeeDisplayFields(current.lat()+"", current.lon()+"", current.alt()+"", "--");
 	}
 	
 	
 	/*------------------ Control & Tracking Update Methods ------------------*/
 	
-	/*void updateRocketTrajectory(){
+	void updateRocketTrajectory(){
 		LinkedList<Position> rocket_past_pos = model(testing).getPastRocketPositions();
 		int nPositions = rocket_past_pos.size();
 		if (nPositions> 1){
@@ -139,7 +136,7 @@ public class Controller {
 //        plot.setFixedBounds(2,model.minAlt,model.maxAlt);
 		}
 		
-	}*/ //FIXME
+	} //FIXME
 	
 	/** 
 	 * Ensures that the map (present in the minimap in the control tab 
@@ -177,7 +174,7 @@ public class Controller {
     void updateRocketPosition (Position p) {
     	mainWindow.addMapMarkerDot
     		(""+Position.millisToTime(p.time()), p.lat(), p.lon());
-    	//updateRocketTrajectory(); //FIXME
+    	updateRocketTrajectory(); //FIXME
     }
     
     void updateRocketPositionFull (Collection<Position> ps) {
