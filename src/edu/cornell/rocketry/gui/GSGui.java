@@ -91,8 +91,7 @@ import gnu.io.CommPortIdentifier;
  * @author Jan Peter Stotz
  *
  */
-public class GSGui extends JFrame 
-			implements JMapViewerEventListener /*, ActionListener*/  {
+public class GSGui extends JFrame implements JMapViewerEventListener {
 	
 	
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -105,15 +104,15 @@ public class GSGui extends JFrame
     
 
     final GSGui view = this;
-
     
+    private Controller controller = new Controller(this);
+
+    //tab panel declarations
     JMapViewerTree treeMap = null;
     private JPanel controlPanel;
     private JPanel downloadPanel;
     private JPanel xbeePanel;
     private JPanel settingsPanel;
-    
-    private Controller controller = new Controller(this);
     
     JTabbedPane tabbedPane = new JTabbedPane();
     
@@ -159,6 +158,15 @@ public class GSGui extends JFrame
     JPanel panelBottom = new JPanel();
     JPanel helpPanel = new JPanel();
     
+    JTextField lonInput = new JTextField();
+    JTextField latInput = new JTextField();
+    JLabel lonLabel = new JLabel("Longitude: ");
+    JLabel latLabel = new JLabel("Latitude: ");
+    JButton manualInputButton = new JButton("Add Map Marker");
+    JButton clearMapMarkersButton = new JButton("Clear Map Markers");
+    
+    JPanel manualInputPanel = new JPanel(new GridBagLayout());
+    
     /*------------------------- Download Tab Fields -------------------------*/
     
     
@@ -200,7 +208,7 @@ public class GSGui extends JFrame
 	
 	
 	private static Logger log = Logger.getLogger(GSGui.class.getName());
-	
+    
 	
 	
 	
@@ -226,8 +234,8 @@ public class GSGui extends JFrame
 	private JButton tileLocationChooserButton;
 	private JFileChooser tileLocationChooser;
 	private JCheckBox showMinimapCheckBox;
-	private JComboBox minimapSizeChooser;
 	private JButton defaultLocationChooser;
+	private JCheckBox manualPointEntryCheckBox;
 	
 	/* OTHER */
 	//container
@@ -304,12 +312,9 @@ public class GSGui extends JFrame
               int index = sourceTabbedPane.getSelectedIndex();
               String tab = sourceTabbedPane.getTitleAt(index).toString();
               if (tab.equals("Control")) {
-            	  System.out.println("Giving to Control");
             	  minimap.add(map);
               } else if (tab.equals("Recovery")) {
-            	  System.out.println("Giving to Recovery");
             	  treeMap.setViewer(map);
-            	  treeMap.setTreeVisible(false);
               }
             }
           };
@@ -532,10 +537,85 @@ public class GSGui extends JFrame
     
     private void initializeRecoveryTab() {
     	mperpLabelName=new JLabel("Meters/Pixels: ");
-        mperpLabelValue=new JLabel(String.format("%s",map().getMeterPerPixel()));
+        mperpLabelValue=new JLabel(String.format("%.2f",map().getMeterPerPixel()));
 
         zoomLabel=new JLabel("Zoom: ");
         zoomValue=new JLabel(String.format("%s", map().getZoom()));
+        
+        /* ~~~~~~~~~ Manual Input Initialization ~~~~~~~~~ */
+        manualInputButton.addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+	                try {
+	                	Double lat = Double.parseDouble(latInput.getText());
+	                	Double lon = Double.parseDouble(lonInput.getText());
+	                	MapMarkerDot m = new MapMarkerDot(Color.RED, lat, lon);
+	                	map().addMapMarker(m);
+	                } catch (Exception ex) {
+	                	System.out.println("Only number inputs allowed.");
+	                }
+                }
+            }
+        });
+        
+        clearMapMarkersButton.addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+	                controller.clearMapMarkers();
+                }
+            }
+        });
+        
+        /*
+	    JTextField lonInput = new JTextField();
+	    JTextField latInput = new JTextField();
+	    JLabel lonLabel = new JLabel("Longitude: ");
+	    JLabel latLabel = new JLabel("Latitude: ");
+	    JButton manualInputButton = new JButton("Add Map Marker");
+	    JButton clearMapMarkersButton = new JButton("Clear Map Markers");
+	    
+	    JPanel manualInputPanel = new JPanel(new GridBagLayout());
+         */
+        
+        lonInput.setPreferredSize(new Dimension(100, 20));
+        latInput.setPreferredSize(new Dimension(100, 20));
+        
+        GridBagConstraints c = new GridBagConstraints();
+        
+        c.ipadx = 5; c.ipady = 5;
+        
+        c.gridx = 0; c.gridy = 0;
+        manualInputPanel.add(latLabel, c);
+        
+        c.gridx = 0; c.gridy = 1;
+        manualInputPanel.add(latInput, c);
+        
+        c.gridx = 1; c.gridy = 0;
+        manualInputPanel.add(lonLabel, c);
+        
+        c.gridx = 1; c.gridy = 1;
+        manualInputPanel.add(lonInput, c);
+        
+        c.gridx = 2; c.gridy = 0;
+        manualInputPanel.add(manualInputButton, c);
+        
+        c.gridx = 2; c.gridy = 1;
+        manualInputPanel.add(clearMapMarkersButton, c);
+        
+        
+        panelTop.add(manualInputPanel);
+        
+        
+        /* ~~~~~~~ End Manual Input Initialization ~~~~~~~ */
+        
+        
+        //allow for constant horizontal scrolling (why not?)
+        map().setScrollWrapEnabled(true);
+        
+        //use cyclemaps as default b/c contains street & topo information
+        map().setTileSource(new OsmTileSource.CycleMap());
 
         treeMap.add(panel, BorderLayout.NORTH); //remove treeMap for this and one below
         treeMap.add(helpPanel, BorderLayout.SOUTH);
@@ -545,20 +625,21 @@ public class GSGui extends JFrame
         JLabel helpLabel = new JLabel("Use right mouse button to move,\n "
                 + "left double click or mouse wheel to zoom.");
         helpPanel.add(helpLabel);
-        JButton button = new JButton("setDisplayToFitMapMarkers");
+        JButton button = new JButton("Zoom to Markers");
         button.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 map().setDisplayToFitMapMarkers();
             }
         });
-        JComboBox<TileSource> tileSourceSelector = new JComboBox<>(new TileSource[] { new OsmTileSource.Mapnik(),
+        /*JComboBox<TileSource> tileSourceSelector = new JComboBox<>(new TileSource[] { new OsmTileSource.Mapnik(),
                 new OsmTileSource.CycleMap(), new BingAerialTileSource(), new MapQuestOsmTileSource(), new MapQuestOpenAerialTileSource() });
         tileSourceSelector.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 map().setTileSource((TileSource) e.getItem());
             }
         });
+        panelTop.add(tileSourceSelector);*/
         JComboBox<TileLoader> tileLoaderSelector;
         try {
             tileLoaderSelector = new JComboBox<>(new TileLoader[] { new OsmFileCacheTileLoader(map()), new OsmTileLoader(map()) });
@@ -571,8 +652,9 @@ public class GSGui extends JFrame
             }
         });
         map().setTileLoader((TileLoader) tileLoaderSelector.getSelectedItem());
-        panelTop.add(tileSourceSelector);
-        panelTop.add(tileLoaderSelector);
+        
+        //panelTop.add(tileLoaderSelector); do not display for now. Use whichever one is possible (pref. Cache Loader)
+        
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
         showMapMarker.setSelected(map().getMapMarkersVisible());
         showMapMarker.addActionListener(new ActionListener() {
@@ -581,22 +663,6 @@ public class GSGui extends JFrame
             }
         });
         panelBottom.add(showMapMarker);
-        ///
-        final JCheckBox showTreeLayers = new JCheckBox("Tree Layers visible");
-        showTreeLayers.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                treeMap.setTreeVisible(showTreeLayers.isSelected());
-            }
-        });
-        panelBottom.add(showTreeLayers);
-        ///
-        final JCheckBox showToolTip = new JCheckBox("ToolTip visible");
-        showToolTip.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                map().setToolTipText(null);
-            }
-        });
-        panelBottom.add(showToolTip);
         ///
         final JCheckBox showTileGrid = new JCheckBox("Tile grid visible");
         showTileGrid.setSelected(map().isTileGridVisible());
@@ -614,13 +680,6 @@ public class GSGui extends JFrame
             }
         });
         panelBottom.add(showZoomControls);
-        final JCheckBox scrollWrapEnabled = new JCheckBox("Scrollwrap enabled");
-        scrollWrapEnabled.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                map().setScrollWrapEnabled(scrollWrapEnabled.isSelected());
-            }
-        });
-        panelBottom.add(scrollWrapEnabled);
         panelBottom.add(button);
 
         panelTop.add(zoomLabel);
@@ -628,48 +687,6 @@ public class GSGui extends JFrame
         panelTop.add(mperpLabelName);
         panelTop.add(mperpLabelValue);
         
-        //This line was previously necessary as the treeMap (the map portion of the GUI) 
-        //took up the entire display. Now, it is part of a tab, so it is added as such instead.
-        //add(treeMap, BorderLayout.CENTER);
-        
-        
-
-/* **** Adding Markers & Sections to Map -- Remove for our implementation **** */
-        /*
-        LayerGroup germanyGroup = new LayerGroup("Germany");
-        Layer germanyWestLayer = germanyGroup.addLayer("Germany West");
-        Layer germanyEastLayer = germanyGroup.addLayer("Germany East");
-        MapMarkerDot eberstadt = new MapMarkerDot(germanyEastLayer, "Eberstadt", 49.814284999, 8.642065999);
-        MapMarkerDot ebersheim = new MapMarkerDot(germanyWestLayer, "Ebersheim", 49.91, 8.24);
-        MapMarkerDot empty = new MapMarkerDot(germanyEastLayer, 49.71, 8.64);
-        MapMarkerDot darmstadt = new MapMarkerDot(germanyEastLayer, "Darmstadt", 49.8588, 8.643);
-        map().addMapMarker(eberstadt);
-        map().addMapMarker(ebersheim);
-        map().addMapMarker(empty);
-        Layer franceLayer = treeMap.addLayer("France");
-        map().addMapMarker(new MapMarkerDot(franceLayer, "La Gallerie", 48.71, -1));
-        map().addMapMarker(new MapMarkerDot(43.604, 1.444));
-        map().addMapMarker(new MapMarkerCircle(53.343, -6.267, 0.666));
-        map().addMapRectangle(new MapRectangleImpl(new Coordinate(53.343, -6.267), new Coordinate(43.604, 1.444)));
-        map().addMapMarker(darmstadt);
-        treeMap.addLayer(germanyWestLayer);
-        treeMap.addLayer(germanyEastLayer);
-
-        MapPolygon bermudas = new MapPolygonImpl(c(49,1), c(45,10), c(40,5));
-        map().addMapPolygon( bermudas );
-        map().addMapPolygon( new MapPolygonImpl(germanyEastLayer, "Riedstadt", ebersheim, darmstadt, eberstadt, empty));
-
-        map().addMapMarker(new MapMarkerCircle(germanyWestLayer, "North of Suisse", new Coordinate(48, 7), .5));
-        Layer spain = treeMap.addLayer("Spain");
-        map().addMapMarker(new MapMarkerCircle(spain, "La Garena", new Coordinate(40.4838, -3.39), .002));
-        spain.setVisible(false);
-
-        Layer wales = treeMap.addLayer("UK");
-        map().addMapRectangle(new MapRectangleImpl(wales, "Wales", c(53.35,-4.57), c(51.64,-2.63)));
-
-        // map.setDisplayPosition(new Coordinate(49.807, 8.6), 11);
-        // map.setTileGridVisible(true);
-		*/
         
         map().addMouseListener(new MouseAdapter() {
             @Override
@@ -690,7 +707,6 @@ public class GSGui extends JFrame
                 } else {
                     map().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
-                if(showToolTip.isSelected()) map().setToolTipText(map().getPosition(p).toString());
             }
         });
     
@@ -893,39 +909,8 @@ public class GSGui extends JFrame
     }
     
     private void initializeSettingsTab() {
-//    	/* TESTING */
-//    	//container
-//    	private JPanel testingSettingsPanel;
-//    	//label
-//    	private JLabel testingSettingsPanelLabel;
-//    	//elements
-//    	private JCheckBox testingCheckBox;
-//    	private JCheckBox debugPrintoutsCheckBox;
-//    	private JFileChooser gpsSimFileChooser;
-//    	private JButton gpsSimFileChooserButton;
-//    	
-//    	/* MAP */
-//    	//container
-//    	private JPanel mapSettingsPanel;
-//    	//label
-//    	private JLabel mapSettingsPanelLabel;
-//    	//elements
-//    	private JButton tileLocationChooserButton;
-//    	private JFileChooser tileLocationChooser;
-//    	private JCheckBox showMinimapCheckBox;
-//    	private JComboBox minimapSizeChooser;
-//    	private JButton defaultLocationChooser;
-//    	
-//    	/* OTHER */
-//    	//container
-//    	private JPanel otherSettingsPanel;
-//    	//label
-//    	private JLabel otherSettingsPanelLabel;
-//    	//elements
-//    	private JCheckBox autoRetryOnCommFailureCheckBox;
     	
-    	
-    	/* TESTING */
+    	/* ~~~~~~ TESTING SETTINGS ~~~~~~ */
     	//container
     	testingSettingsPanel = new JPanel();
     	//label
@@ -982,15 +967,16 @@ public class GSGui extends JFrame
     	testingSettingsPanel.add(testingCheckBox);
     	testingSettingsPanel.add(debugPrintoutsCheckBox);
     	testingSettingsPanel.add(gpsSimFileChooserButton);
+    	/* ~~~~ END TESTING SETTINGS ~~~~ */
     	
     	
-    	
-    	/* MAP */
+    	/* ~~~~~~~~ MAP SETTINGS ~~~~~~~~ */
     	//container
     	mapSettingsPanel = new JPanel();
     	//label
     	mapSettingsPanelLabel = new JLabel("Map");
     	//elements
+    	manualPointEntryCheckBox = new JCheckBox("Enable Manual Coordinate Entry");
     	tileLocationChooser = new JFileChooser();
     	tileLocationChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     	tileLocationChooser.setFileFilter(new FileFilter() {
@@ -1021,14 +1007,8 @@ public class GSGui extends JFrame
                 }
             }
     	});
-//    	private JFileChooser tileLocationChooser;
-//    	private JCheckBox showMinimapCheckBox;
-//    	private JComboBox minimapSizeChooser;
-//    	private JButton defaultLocationChooser;
     	
     	showMinimapCheckBox = new JCheckBox("Show Minimap");
-    	
-    	minimapSizeChooser = new JComboBox<>();
     	
     	defaultLocationChooser = new JButton("Set Default Map Location");
     	
@@ -1038,24 +1018,46 @@ public class GSGui extends JFrame
     	mapSettingsPanel.add(mapSettingsPanelLabel);
     	mapSettingsPanel.add(tileLocationChooserButton);
     	mapSettingsPanel.add(showMinimapCheckBox);
-    	mapSettingsPanel.add(minimapSizeChooser);
     	mapSettingsPanel.add(defaultLocationChooser);
+    	mapSettingsPanel.add(manualPointEntryCheckBox);
+    	/* ~~~~~~ END MAP SETTINGS ~~~~~~ */
     	
-    	/* OTHER */
+    	/* ~~~~~~~ OTHER SETTINGS ~~~~~~~ */
     	//container
     	otherSettingsPanel = new JPanel(new BorderLayout());
     	//label
     	otherSettingsPanelLabel = new JLabel("Other");
     	//elements
+    	autoRetryOnCommFailureCheckBox = new JCheckBox("Auto Retry on Comm Failure");
     	//add elements to container
     	otherSettingsPanel.setLayout(new BoxLayout(otherSettingsPanel, BoxLayout.Y_AXIS));
     	otherSettingsPanel.add(otherSettingsPanelLabel);
+    	otherSettingsPanel.add(autoRetryOnCommFailureCheckBox);
+    	/* ~~~~~ END OTHER SETTINGS ~~~~~ */
     	
-    	settingsPanel = new JPanel(new BorderLayout());
-    	//settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
-    	settingsPanel.add(testingSettingsPanel, BorderLayout.LINE_START);
-    	settingsPanel.add(mapSettingsPanel, BorderLayout.CENTER);
-    	settingsPanel.add(otherSettingsPanel, BorderLayout.LINE_END);
+    	
+    	//add borders for testing
+    	testingSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+    	mapSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+    	otherSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+    	
+    	
+    	/* ~~~~~~~ FINAL ASSEMBLY ~~~~~~~ */
+    	settingsPanel = new JPanel(new GridBagLayout());
+    	GridBagConstraints c = new GridBagConstraints();
+    	c.ipadx = 50; c.ipady = 50;
+    	c.weightx = 0.2;
+    	c.gridy = 0; c.gridx = 0;
+    	c.anchor = GridBagConstraints.LINE_START;
+    	settingsPanel.add(testingSettingsPanel, c);
+    	c.weightx = 0.2;
+    	c.gridy = 0; c.gridx = 1;
+    	c.anchor = GridBagConstraints.CENTER;
+    	settingsPanel.add(mapSettingsPanel, c);
+    	c.weightx = 0.2;
+    	c.gridy = 0; c.gridx = 2;
+    	c.anchor = GridBagConstraints.LINE_END;
+    	settingsPanel.add(otherSettingsPanel, c);
     }
     
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -1146,7 +1148,7 @@ public class GSGui extends JFrame
     
     private void updateZoomParameters() {
         if (mperpLabelValue!=null)
-            mperpLabelValue.setText(String.format("%s",map().getMeterPerPixel()));
+            mperpLabelValue.setText(String.format("%.2f",map().getMeterPerPixel()));
         if (zoomValue!=null)
             zoomValue.setText(String.format("%s", map().getZoom()));
     }

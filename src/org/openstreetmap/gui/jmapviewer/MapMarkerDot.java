@@ -32,6 +32,7 @@ public class MapMarkerDot extends MapMarkerCircle {
     public MapMarkerDot(Color color, double lat, double lon) {
         this(null, null, lat, lon);
         setColor(color);
+        setBackColor(color);
     }
     public MapMarkerDot(double lat, double lon) {
         this(null, null, lat, lon);

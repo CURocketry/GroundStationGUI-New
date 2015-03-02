@@ -1,6 +1,7 @@
 package edu.cornell.rocketry.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,13 +17,34 @@ public class BackgroundJPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
     private static final Color BACKGROUND      = Color.black;
     private static final Color BACKGROUND_2    = Color.WHITE;
-    String path;
     
-    public BackgroundJPanel (String path) {
-    	this.path = path;
+    //String path;
+    
+    private Image img;
+
+    public BackgroundJPanel(String img) {
+      this(new ImageIcon(img).getImage());
     }
 
-   @Override
+    public BackgroundJPanel(Image img) {
+      this.img = img;
+      Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
+      setPreferredSize(size);
+      setMinimumSize(size);
+      setMaximumSize(size);
+      setSize(size);
+      setLayout(null);
+    }
+
+    public void paintComponent(Graphics g) {
+      g.drawImage(img, 0, 0, null);
+    }
+    
+    /*public BackgroundJPanel (String path) {
+    	this.path = path;
+    }*/
+
+   /*@Override
    protected void paintComponent(Graphics g) {
        Graphics2D graphics = (Graphics2D) g.create();        
        int midY = 100;
@@ -38,7 +60,7 @@ public class BackgroundJPanel extends JPanel {
        //graphics.drawImage(img, (getWidth() - imgX) / 2, (getHeight() - imgY) / 2, imgX, imgY, null);
        graphics.drawImage(img, 0, 0, null);
      //  graphics.dispose();
-   }
+   }*/
    
 }
 

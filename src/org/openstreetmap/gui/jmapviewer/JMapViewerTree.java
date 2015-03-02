@@ -159,7 +159,7 @@ public class JMapViewerTree extends JPanel{
         
     }
     public void setTreeVisible(boolean visible){
-        removeAll();
+        //removeAll();
         revalidate();
         if(visible){
             splitPane.setLeftComponent(treePanel);
