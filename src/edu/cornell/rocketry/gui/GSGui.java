@@ -7,6 +7,7 @@ import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.MainPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,10 +16,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
@@ -92,7 +97,7 @@ import gnu.io.CommPortIdentifier;
  *
  */
 public class GSGui extends JFrame 
-			implements JMapViewerEventListener /*, ActionListener*/  {
+			implements JMapViewerEventListener /*, ActionListener*/{
 	
 	
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -118,18 +123,14 @@ public class GSGui extends JFrame
     JTabbedPane tabbedPane = new JTabbedPane();
     
     /*------------------------ Control Tab Fields ---------------------------*/
-    JPanel minimap;
     JPanel status;
     JPanel gpsControls;
     JPanel payloadControls;
-    JPanel controls;
-    JPanel infologpanel;
+    
     
     JPanel statusSection;
     JPanel controlsSection;
-    JPanel plotSection;
-    JPanel minimapSection;
-    JPanel logSection;
+    JPanel trajpanel;
     
     JScrollPane infologscrollpane;
     JTextArea infolog;
@@ -305,7 +306,18 @@ public class GSGui extends JFrame
               String tab = sourceTabbedPane.getTitleAt(index).toString();
               if (tab.equals("Control")) {
             	  System.out.println("Giving to Control");
-            	  minimap.add(map);
+                  GridBagConstraints c = new GridBagConstraints();
+                  c.fill = GridBagConstraints.BOTH;
+                  c.anchor = GridBagConstraints.CENTER;
+                  c.ipadx = 10;
+                  c.ipady = 10;
+                  c.insets = new Insets(10, 10, 10, 10);
+                  c.gridwidth = 2;
+                  c.weightx = 1.0;
+                  c.weighty = 0.9;
+                  c.gridx = 2;
+                  c.gridy = 2;
+                  controlPanel.add(treeMap.getViewer(), c);
               } else if (tab.equals("Recovery")) {
             	  System.out.println("Giving to Recovery");
             	  treeMap.setViewer(map);
@@ -314,6 +326,7 @@ public class GSGui extends JFrame
             }
           };
           tabbedPane.addChangeListener(changeListener);
+          
         
         /*---------------------------- Other --------------------------------*/
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -349,7 +362,7 @@ public class GSGui extends JFrame
         //controlPanel.setBackground(Color.WHITE);
         //Image background = Toolkit.getDefaultToolkit().createImage("./assets/black_wood_background.jpg");
         //controlPanel.drawImage(background, 0, 0, null);
-        controlPanel.setLayout(new BorderLayout());
+        controlPanel.setLayout(new GridBagLayout());
         
         //status indicators
         status = new JPanel(new BorderLayout());
@@ -363,11 +376,6 @@ public class GSGui extends JFrame
         status.add(payloadStatusLabel, BorderLayout.WEST);
         status.add(payloadStatus, BorderLayout.EAST);
         
-        //controls
-        controls = new JPanel(new BorderLayout());
-        
-        gpsControls = new JPanel(new BorderLayout());
-        payloadControls = new JPanel(new BorderLayout());
         
         //start GPS Test button
         startTestGPSButton.setVisible(true);
@@ -410,123 +418,86 @@ public class GSGui extends JFrame
         	}
         });
         
-        gpsControls.add(startTestGPSButton, BorderLayout.LINE_START);
-        gpsControls.add(stopTestGPSButton, BorderLayout.LINE_END);
-        payloadControls.add(enablePayloadButton, BorderLayout.LINE_START);
-        payloadControls.add(disablePayloadButton, BorderLayout.LINE_END);
-        controls.add(gpsControls, BorderLayout.PAGE_START);
-        controls.add(payloadControls, BorderLayout.PAGE_END);
-        gpsControls.setOpaque(false);
-        payloadControls.setOpaque(false);
-        controls.setOpaque(false);
-        
         //info log
-        infologpanel = new JPanel(new BorderLayout ());
         infolog = new JTextArea (); 
         infolog.setLineWrap(true);
         infolog.setEditable(false);
         infolog.setWrapStyleWord(true);
         infologscrollpane = new JScrollPane(infolog);
-        infologscrollpane.setPreferredSize(new Dimension(150, 150));
-        infologpanel.add(infologscrollpane);
-        
-        
-        //minimap
-        minimap = new JPanel(new BorderLayout ());
-        /*JLabel tmp = new JLabel("minimap");
-        minimap.add(tmp);*/
-        //minimap.add(treeMap.getViewer(), BorderLayout.CENTER);
         
         //3D Plot
-        JPanel trajpanel = new JPanel(new BorderLayout()); 
+        trajpanel = new JPanel(new BorderLayout()); 
         trajpanel.add(trajectoryplot,BorderLayout.CENTER);
-        trajpanel.setPreferredSize(new Dimension(400,300));
-        
-//        JPanel statusSection;
-//        JPanel controlsSection;
-//        JPanel plotSection;
-//        JPanel minimapSection;
-//        JPanel logSection;
         
         
         //construct sections
-        
-        
-        
         statusSection = new JPanel();
-        controlsSection = new JPanel();
-        plotSection = new JPanel();
-        minimapSection = new JPanel();
-        logSection = new JPanel();
         
         statusSection.add(status);
-        controlsSection.add(controls);
-        plotSection.add(trajpanel);
-        minimapSection.add(minimap);
-        logSection.add(infologpanel);
         
         statusSection.setOpaque(false);
-        controlsSection.setOpaque(false);
-        plotSection.setOpaque(false);
-        minimapSection.setOpaque(false);
-        logSection.setOpaque(false);
-        
-        
-        
-
-        //add borders for debugging
-        statusSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-        controlsSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-        plotSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-        minimapSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-        logSection.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        infologscrollpane.setOpaque(false);
         
         //add sections
         
-        controlPanel.add(statusSection, BorderLayout.PAGE_START);
-        controlPanel.add(controlsSection, BorderLayout.LINE_START);
-        controlPanel.add(plotSection, BorderLayout.CENTER);
-        controlPanel.add(minimapSection, BorderLayout.LINE_END);
-        controlPanel.add(logSection, BorderLayout.PAGE_END);
+        GridBagConstraints c = new GridBagConstraints();
         
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.CENTER;
+        c.ipadx = 10;
+        c.ipady = 10;
+        c.insets = new Insets(10, 10, 10, 10);
+
         
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 4;
+        c.weightx = 1.0;
+        c.weighty = 0.0;
+        controlPanel.add(statusSection, c);
+
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 2;
+        c.weightx = 1.0;
+        c.weighty = 0.9;
+        controlPanel.add(trajpanel, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        controlPanel.add(treeMap.getViewer(), c);
+
+        c.gridx = 0;
+        c.gridy = 3;
+        c.gridwidth = 4;
+        c.gridheight = 1;
+        c.weightx = 1.0;
+        c.weighty = 0.15;
+        c.anchor = GridBagConstraints.PAGE_END;
+        controlPanel.add(infologscrollpane, c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.weightx = 0.1;
+        c.weighty = 0.0;
+        c.gridx = 0;
+        c.gridy = 1;
+        controlPanel.add(startTestGPSButton, c);
         
-        //add sections to display
-//        GridBagConstraints c = new GridBagConstraints();
-//        c.gridx = 0; c.gridy = 0;
-//        c.ipadx = 0; c.ipady = 0;
-//        c.anchor = GridBagConstraints.CENTER;
-//        c.weightx = 0.1; c.weighty = 0.1;
-//        	controlPanel.add(status, c);
-//        c.gridx = 0; c.gridy = 1;
-//        c.ipadx = 0; c.ipady = 0;
-//        c.anchor = GridBagConstraints.CENTER;
-//        c.weightx = 0.1; c.weighty = 0.1;
-//        	controlPanel.add(controls, c);
-//        c.gridx = 2; c.gridy = 0;
-//        c.ipadx = 10; c.ipady = 10;
-//        c.anchor = GridBagConstraints.FIRST_LINE_END;
-//        c.weightx = 0.5; c.weighty = 0.5;
-//        	controlPanel.add(minimap, c);
-//        c.gridx = 0; c.gridy = 10;
-//        c.gridwidth = 3;
-//        c.ipadx = 0; c.ipady = 0;
-//        c.anchor = GridBagConstraints.PAGE_END;
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        	controlPanel.add(infologpanel, c);
-//        c.gridx = 8; c.gridy = 5;
-//        c.gridwidth = 1;
-//        c.gridheight = 5;
-//        c.ipadx = 0; c.ipady = 0;
-//        c.anchor = GridBagConstraints.LINE_END;
-//        
-//        JPanel trajpanel = new JPanel(new BorderLayout()); 
-//        trajpanel.add(trajectoryplot,BorderLayout.CENTER);
-//        trajpanel.setPreferredSize(new Dimension(300,200));
-//        controlPanel.add(trajpanel,c); //FIXME
+        c.gridx = 1;
+        c.gridy = 1;
+        controlPanel.add(stopTestGPSButton, c);
+        
+        c.gridx = 2;
+        c.gridy = 1;
+        controlPanel.add(enablePayloadButton, c);
+
+        c.gridx = 3;
+        c.gridy = 1;
+        controlPanel.add(disablePayloadButton, c);
         
         controlPanel.setVisible(true);
-        
         controlPanel.validate();
     }
     
@@ -948,7 +919,7 @@ public class GSGui extends JFrame
     	      public void actionPerformed(ActionEvent actionEvent) {
     	        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
     	        boolean selected = abstractButton.getModel().isSelected();
-    	        infologpanel.setVisible(selected);
+    	        //infologpanel.setVisible(selected);
     	      }
     	};
     	debugPrintoutsCheckBox.addActionListener(debugPrintoutsCheckBoxActionListener);
@@ -1190,5 +1161,6 @@ public class GSGui extends JFrame
     		throw new IllegalArgumentException();
     	}
     }
+
     
 }
