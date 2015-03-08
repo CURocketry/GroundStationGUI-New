@@ -21,15 +21,26 @@ public class RealSender implements Sender{
 
 	@Override
 	public void send(Command c) {
-		switch (c.task()) {
-		//for each type of command, create the proper OutgoingPacket of the proper OutgoingPacketType
-		//Once you have the packet, do sender.send(), and catch the appropriate exceptions.
-		default:
-			CommandReceipt r = 
-				new CommandReceipt (c.task(), false, "edu.cornell.rocketry.comm.send.RealSender#send unimplemented");
-			controller.acceptCommandReceipt(r);
+		CommandReceipt r;
+		try {
+			switch (c.task()) {
+			case StartGPS:
+				controller.commController().startListening();
+				r = new CommandReceipt (c.task(), true, "GPS polling started");
+				break;
+			case StopGPS:
+				controller.commController().stopListening();
+				r = new CommandReceipt (c.task(), true, "GPS polling stopped");
+				break;
+			//for each type of command, create the proper OutgoingPacket of the proper OutgoingPacketType
+			//Once you have the packet, do sender.send(), and catch the appropriate exceptions.
+			default:
+				r = new CommandReceipt (c.task(), false, "edu.cornell.rocketry.comm.send.RealSender#send unimplemented");
+			}
+		} catch (Exception e) {
+			r = new CommandReceipt (c.task(), false, "Send error: " + e.toString());
 		}
-		
+		controller.acceptCommandReceipt(r);
 	}
 	
 	/**
@@ -42,7 +53,5 @@ public class RealSender implements Sender{
 		sender = new XBeeSender(x, a);
 	}
 
-	
-	
 	
 }

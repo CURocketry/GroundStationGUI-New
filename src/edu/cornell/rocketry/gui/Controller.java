@@ -12,19 +12,10 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
-import org.math.plot.Plot3DPanel; //FIXME
-
-
-
-
-
-
-
-
-
-
-
+import org.math.plot.Plot3DPanel;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
 import org.openstreetmap.gui.jmapviewer.Tile;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
@@ -39,19 +30,22 @@ import edu.cornell.rocketry.comm.receive.TestReceiver;
 import edu.cornell.rocketry.comm.send.RealSender;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
+import edu.cornell.rocketry.comm.shared.CommController;
 import edu.cornell.rocketry.gui.Model;
 import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
 import edu.cornell.rocketry.util.CommandResponse;
 import edu.cornell.rocketry.util.CommandTask;
 import edu.cornell.rocketry.util.GPSResponse;
+import edu.cornell.rocketry.util.Logger;
 import edu.cornell.rocketry.util.Position;
 import edu.cornell.rocketry.util.PayloadStatus;
 import edu.cornell.rocketry.util.RunnableFactory;
 import edu.cornell.rocketry.util.LocalLoader;
 import edu.cornell.rocketry.xbee.OutgoingPacket;
 import edu.cornell.rocketry.xbee.OutgoingPacketType;
-import edu.cornell.rocketry.xbee.XBeeListenerThread;
+//import edu.cornell.rocketry.xbee.XBeeListenerThread;
+import edu.cornell.rocketry.comm.receive.XBeeListenerThread;
 import edu.cornell.rocketry.xbee.XBeeSender;
 import edu.cornell.rocketry.xbee.XBeeSenderException;
 import gnu.io.CommPortIdentifier;
@@ -62,10 +56,13 @@ public class Controller {
 	
 	public boolean testing;
 	
+	private Logger logger;
+	
 	//view
 	private GSGui mainWindow;
 	
-	private RunnableFactory r;
+	//for removing text from previous dot
+	private MapMarkerDot prevDot;
 	
 	private Receiver testReceiver;
 	private Receiver realReceiver;
@@ -73,27 +70,40 @@ public class Controller {
 	
 	private Sender testSender;
 	private Sender realSender;
-	public Sender sender() { return (testing? testSender : realSender); }
+	public Sender sender () { return (testing? testSender : realSender); }
 	
 	private Model testModel;
 	private Model realModel;
-	public Model model(boolean test) { return (test? testModel : realModel); }
+	public Model model (boolean test) { return (test? testModel : realModel); }
+	
+	private CommController commController;
+	
 	
 	public Controller (GSGui gui) {
 		mainWindow = gui;
 		testModel = new Model();
 		realModel = new Model();
 		testReceiver = new TestReceiver(this);
-		realReceiver = new RealReceiver(this, realModel.xbeeListener);
+		realReceiver = new RealReceiver(this);
+		commController = new CommController(this);
 		testSender = new TestSender(this);
-		realSender = new RealSender(this, model(false).xbee(), model(false).address());
-		r = new RunnableFactory(this);
-		//xbee = new XBee();
+		realSender = new RealSender(this, commController.xbee(), mainWindow.selectedAddress);
+		logger = new Logger();
+		logger.log("time,lat,lon,alt");
+		System.out.println("Controller Initialized");
 		
 		testing = false;	//default for now	
 	}
 	
 	/*------------------------- Getters & Setters ---------------------------*/
+	
+	public Logger logger() { return logger; }
+	
+	public CommController commController() { return commController; }
+	
+	public GSGui view () {
+		return mainWindow;
+	}
 	
 	public Sender getSender(boolean test) { 
 		return test? testSender : realSender; 
@@ -172,8 +182,14 @@ public class Controller {
 	}
 
     void updateRocketPosition (Position p) {
+    	MapMarkerDot toAdd = new MapMarkerDot(""+Position.millisToTime(p.time()), new Coordinate(p.lat(), p.lon()));
     	mainWindow.addMapMarkerDot
-    		(""+Position.millisToTime(p.time()), p.lat(), p.lon());
+    		(toAdd);
+    	if (prevDot != null) {
+    		prevDot.setBackColor(Color.BLACK);
+    		prevDot.setName("");
+    	}
+    	prevDot = toAdd;
     	updateRocketTrajectory(); //FIXME
     }
     
@@ -251,9 +267,14 @@ public class Controller {
 			if (test == testing) updateRocketPosition (model(test).position());
 			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
+			if (!test) logger.log(
+				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
 		} else {
 			ilog("inaccurate data received");
 		}
+		
+		if (!test) logger.log(
+				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
 	}
 		
 	
@@ -264,8 +285,11 @@ public class Controller {
 	 * @return
 	 */
 	private boolean gpsCheck (GPSResponse r) {
-		//TODO
-		return true;
+		//return true;
+		return (
+			r.lat() < 45 && r.lat() > 40 &&
+			r.lon() > -80 && r.lon() < -70);
+		
 	}
 	
 	/** Logs the given string to the text info panel in
@@ -315,40 +339,37 @@ public class Controller {
 	}
 
 	public void updateSelectedAddress() {
-		model(false).selectedAddress = GSGui.addr[mainWindow.addressesList.getSelectedIndex()]; //set active address
+		mainWindow.selectedAddress = GSGui.addr[mainWindow.addressesList.getSelectedIndex()]; //set active address
 	}
 	
 	public void updateSelectedBaudRate() {
-		model(false).selectedBaud = (int) mainWindow.baudList.getSelectedItem(); //set active rate
+		mainWindow.selectedBaud = (int) mainWindow.baudList.getSelectedItem(); //set active rate
 	}
 
     public void initXbee() throws XBeeException {
-    	XBee xbee = model(false).xbee;
-    	XBeeListenerThread xbeeListener = model(false).xbeeListener;
 
 		// get selected serial port...
 		String selSerial = (String) mainWindow.serialPortsList.getSelectedItem();
-
-		if (xbee != null && xbee.isConnected()) {
-			xbee.close();
-			xbeeListener.stopListening();
-		}
+		
+		
+		System.out.println("Initializing XBee");
 		
 
 		System.out.println(selSerial);
-		xbee.open(selSerial, model(false).selectedBaud); //open port
-		xbeeListener = new XBeeListenerThread(receiver(false), xbee, mainWindow); //init a new listener thread
-		xbeeListener.start();
-
+		commController.openXBee(selSerial, mainWindow.selectedBaud); //open port
+		
+		//don't just do this by default!
+		//commController.startListening();
+		
 		mainWindow.resetPacketCounters();
 	}
 
 	public boolean sendXBeePacket(String msg) {
-    	XBee xbee = model(false).xbee;
+    	XBee xbee = commController.xbee();
     	
 		OutgoingPacket payload = new OutgoingPacket(OutgoingPacketType.TEST);
 		try {
-			XBeeSender mailman = new XBeeSender(xbee, model(false).selectedAddress, payload);
+			XBeeSender mailman = new XBeeSender(xbee, mainWindow.selectedAddress, payload);
 			mailman.send();
 			mainWindow.addToReceiveText("Sent (" + mainWindow.getNumSent() + "): " + msg);
 			return true;

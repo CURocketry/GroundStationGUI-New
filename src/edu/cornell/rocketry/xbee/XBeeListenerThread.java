@@ -21,10 +21,9 @@ public class XBeeListenerThread extends Thread {
 	private GSGui mainWindow;
 	private XBee xbee;
 	
-	public XBeeListenerThread (Receiver r, XBee xb, GSGui mw) {
+	public XBeeListenerThread (Receiver r, XBee xb) {
 		receiver = r;
 		xbee = xb;
-		mainWindow = mw;
 		keepListening = true;
 	}
 	
@@ -35,6 +34,7 @@ public class XBeeListenerThread extends Thread {
 	public void run() {
 		while (keepListening) {
 			try {
+				System.out.println("Listening");
 				XBeeResponse response = xbee.getResponse();
 				
 				if (response.getApiId() == ApiId.ZNET_RX_RESPONSE) {

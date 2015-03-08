@@ -7,7 +7,6 @@ import com.rapplogic.xbee.api.XBeeAddress64;
 
 import edu.cornell.rocketry.util.Position;
 import edu.cornell.rocketry.util.PayloadStatus;
-import edu.cornell.rocketry.xbee.XBeeListenerThread;
 
 
 public class Model {
@@ -18,10 +17,9 @@ public class Model {
 	private LinkedList<Position> rocket_past_pos;
 	
 	//XBee tab variables
-	public XBee xbee = new XBee(); //keep as public reference @see XBeeListenerThread.java
-	protected XBeeListenerThread xbeeListener;
-	protected XBeeAddress64 selectedAddress;				//selected address
-	protected int selectedBaud = 57600; //serial comm rate
+	//public XBee xbee = new XBee(); //keep as public reference @see XBeeListenerThread.java
+	//protected XBeeAddress64 selectedAddress;				//selected address
+	//protected int selectedBaud = 57600; //serial comm rate
 	
 	
 	public Model () {
@@ -67,11 +65,4 @@ public class Model {
 		rocket_pos = p;
 	}
 	
-	public XBee xbee() {
-		return xbee;
-	}
-	
-	public XBeeAddress64 address() {
-		return selectedAddress;
-	}
 }

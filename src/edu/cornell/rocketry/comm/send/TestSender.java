@@ -30,10 +30,10 @@ public class TestSender implements Sender {
 	public void send (Command c) {
 		try {
 			switch (c.task()) {
-			case StartTestSequence:
+			case StartGPS:
 				rsim.startGPS();
 				break;
-			case StopTestSequence:
+			case StopGPS:
 				rsim.stopGPS();
 				rsim.resetGPS();
 				break;

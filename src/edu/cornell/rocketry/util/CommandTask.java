@@ -10,8 +10,8 @@ public enum CommandTask {
 	ChangeBaudRate,
 	ChangeAddress,
 	ChangePort,
-	StartTestSequence,
-	StopTestSequence;
+	StartGPS,
+	StopGPS;
 	
 	public String toString() {
 		switch (this) {
@@ -33,10 +33,10 @@ public enum CommandTask {
 			return "ChangeAddress";
 		case ChangePort:
 			return "ChangePort";
-		case StartTestSequence:
-			return "StartTestSequence";
-		case StopTestSequence:
-			return "StopTestSequence";
+		case StartGPS:
+			return "StartGPS";
+		case StopGPS:
+			return "StopGPS";
 		default:
 			throw new IllegalArgumentException();
 		}

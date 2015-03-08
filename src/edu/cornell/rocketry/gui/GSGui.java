@@ -28,6 +28,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,7 +113,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 
     final GSGui view = this;
     
-    private Controller controller = new Controller(this);
+    private Controller controller;// = new Controller(this);
 
     //tab panel declarations
     JMapViewerTree treeMap = null;
@@ -120,7 +122,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     private JPanel xbeePanel;
     private JPanel settingsPanel;
     
-    JTabbedPane tabbedPane = new JTabbedPane();
+    JTabbedPane tabbedPane;
     
     /*------------------------ Control Tab Fields ---------------------------*/
     JPanel status;
@@ -139,8 +141,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JLabel payloadStatus;
     
     JButton settings = new JButton ("Settings");
-    JButton startTestGPSButton = new JButton("Start GPS Test");
-    JButton stopTestGPSButton = new JButton("Stop GPS Test");
+    JButton startGPSButton = new JButton("Start GPS");
+    JButton stopGPSButton = new JButton("Stop GPS");
     
     JButton enablePayloadButton = new JButton("Enable Payload");
     JButton disablePayloadButton = new JButton("Disable Payload");
@@ -201,6 +203,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	private JTextField sendEdit;
 	private final static Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private final static Font textAreaFont = new Font("Arial", Font.PLAIN, 10);
+	
+	protected XBeeAddress64 selectedAddress;				//selected address
+	protected int selectedBaud = 57600; //serial comm rate
 
 	protected JComboBox<String> serialPortsList, addressesList;
 	protected JComboBox<Integer> baudList;
@@ -209,7 +214,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	private static JLabel lat,longi,alt,flag;
 	
 	
-	private static Logger log = Logger.getLogger(GSGui.class.getName());
+	//private static Logger log = Logger.getLogger(GSGui.class.getName());
     
 	
 	
@@ -260,7 +265,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     public GSGui() {
         super("CURocketry Ground Station GUI");
         setSize(500, 500);
-        
+
+        controller = new Controller(this);
         
         treeMap = new JMapViewerTree("Zones", false);
 
@@ -271,9 +277,18 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         // final JMapViewer map = new JMapViewer(new MemoryTileCache(),4);
         // map.setTileLoader(new OsmFileCacheTileLoader(map));
         // new DefaultMapController(map);
+        
+        addWindowListener(new WindowAdapter() {
+        	public void windowClosing(WindowEvent e) {
+        		System.out.println("Closing log file");
+        		controller.logger().close();
+        		dispose();
+        		System.exit(0);
+        	}
+        });
 
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         
@@ -289,6 +304,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         /*------------------ Create Tabbed Pane & Add Tabs ------------------*/   
         
+        tabbedPane = new JTabbedPane();
         
         tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
         tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
@@ -384,24 +400,25 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         status.add(payloadStatus, BorderLayout.EAST);
         
         
-        //start GPS Test button
-        startTestGPSButton.setVisible(true);
-        startTestGPSButton.addMouseListener(new MouseAdapter() {
+        //start GPS button
+        startGPSButton.setVisible(true);
+        startGPSButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                 	clearMapMarkers();
-                	controller.sendCommand (CommandTask.StopTestSequence);
-                	controller.sendCommand (CommandTask.StartTestSequence);
+                	//no longer necessary 3/7/15
+                	//controller.sendCommand (CommandTask.StopGPS);
+                	controller.sendCommand (CommandTask.StartGPS);
                 }
             }
         });
-        //stop GPS Test button
-        stopTestGPSButton.setVisible(true);
-        stopTestGPSButton.addMouseListener(new MouseAdapter() {
+        //stop GPS button
+        stopGPSButton.setVisible(true);
+        stopGPSButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		if (e.getButton() == MouseEvent.BUTTON1) {
-        			controller.sendCommand(CommandTask.StopTestSequence);
+        			controller.sendCommand(CommandTask.StopGPS);
         		}
         	}
         });
@@ -490,11 +507,11 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         c.weighty = 0.0;
         c.gridx = 0;
         c.gridy = 1;
-        controlPanel.add(startTestGPSButton, c);
+        controlPanel.add(startGPSButton, c);
         
         c.gridx = 1;
         c.gridy = 1;
-        controlPanel.add(stopTestGPSButton, c);
+        controlPanel.add(stopGPSButton, c);
         
         c.gridx = 2;
         c.gridy = 1;
@@ -1092,7 +1109,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	public void addToReceiveText(String txt) {
 		receiveText.setText(receiveText.getText() + "- " + txt + System.getProperty("line.separator"));
 		receiveText.setCaretPosition(receiveText.getDocument().getLength()); // locks scroll at bottom
-		logMessage(txt);
+		//logMessage(txt);
 	}
 	
 	/**
@@ -1115,9 +1132,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	 * Write a message to the log file
 	 * @param msg			msg to write
 	 */
-	public void logMessage(String msg) {
+	/*public void logMessage(String msg) {
 		log.info(msg);
-	}
+	}*/
     
     private void updateZoomParameters() {
         if (mperpLabelValue!=null)
@@ -1136,9 +1153,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     /*------------------ Control & Tracking Tab Update Methods ----------------*/
     
-    public void addMapMarkerDot (String name, double lat, double lon) {
-    	Coordinate c = new Coordinate (lat, lon);
-    	MapMarkerDot m = new MapMarkerDot(name, c);
+    public void addMapMarkerDot (MapMarkerDot m) {
+    	
     	map().addMapMarker(m);
     }
     
