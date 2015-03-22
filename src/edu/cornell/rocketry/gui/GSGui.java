@@ -83,6 +83,8 @@ import com.rapplogic.xbee.api.XBeeException;
 import edu.cornell.rocketry.gui.Controller;
 import edu.cornell.rocketry.util.CommandTask;
 import edu.cornell.rocketry.util.GPSResponse;
+import edu.cornell.rocketry.util.GPSStatus;
+import edu.cornell.rocketry.util.ImageFactory;
 import edu.cornell.rocketry.util.RocketSimulator;
 import edu.cornell.rocketry.util.PayloadStatus;
 import edu.cornell.rocketry.xbee.OutgoingPacket;
@@ -134,11 +136,17 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JPanel controlsSection;
     JPanel trajpanel;
     
+    JPanel payloadStatusContainer;
+    JPanel gpsStatusContainer;
+    
     JScrollPane infologscrollpane;
     JTextArea infolog;
     
     JLabel payloadStatusLabel;
     JLabel payloadStatus;
+    
+    JLabel gpsStatusLabel;
+    JLabel gpsStatus;
     
     JButton settings = new JButton ("Settings");
     JButton startGPSButton = new JButton("Start GPS");
@@ -265,6 +273,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     public GSGui() {
         super("CURocketry Ground Station GUI");
         setSize(500, 500);
+        
+        ImageFactory.init();
 
         controller = new Controller(this);
         
@@ -389,15 +399,37 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         //status indicators
         status = new JPanel(new BorderLayout());
+        status.setOpaque(false);
+        payloadStatusContainer = new JPanel(new BorderLayout());
+        gpsStatusContainer = new JPanel(new BorderLayout());
+        
+        
         payloadStatusLabel = new JLabel("Payload Status");
         payloadStatusLabel.setOpaque(false);
         payloadStatusLabel.setForeground(Color.WHITE);
         payloadStatus = new JLabel();
         payloadStatus.setIcon(new ImageIcon ("./assets/red_icon_20_20.jpg"));
         payloadStatus.setOpaque(false);
-        status.setOpaque(false);
-        status.add(payloadStatusLabel, BorderLayout.WEST);
-        status.add(payloadStatus, BorderLayout.EAST);
+        
+        payloadStatusContainer.add(payloadStatusLabel, BorderLayout.WEST);
+        payloadStatusContainer.add(payloadStatus, BorderLayout.EAST);
+        
+        gpsStatusLabel = new JLabel("GPS Status");
+        gpsStatusLabel.setOpaque(false);
+        gpsStatusLabel.setForeground(Color.WHITE);
+        gpsStatus = new JLabel();
+        gpsStatus.setIcon(ImageFactory.disabledImage());
+        gpsStatus.setOpaque(false);
+        
+        
+        gpsStatusContainer.add(gpsStatusLabel, BorderLayout.WEST);
+        gpsStatusContainer.add(gpsStatus, BorderLayout.EAST);
+        
+        gpsStatusContainer.setOpaque(false);
+        payloadStatusContainer.setOpaque(false);
+        
+        status.add(gpsStatusContainer, BorderLayout.WEST);
+        status.add(payloadStatusContainer, BorderLayout.EAST);
         
         
         //start GPS button
@@ -1075,7 +1107,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 
 	public void updateViewerTree(JMapViewerTree tree) {
 		treeMap = tree;
-		
 	}
 	
 	/**
@@ -1169,17 +1200,34 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     public void setPayloadStatus (PayloadStatus st) {
     	switch (st) {
     	case Enabled:
-    		payloadStatus.setIcon(new ImageIcon("./assets/green_icon_20_20.jpg"));
+    		payloadStatus.setIcon(ImageFactory.enabledImage());
     		break;
     	case Busy:
-    		payloadStatus.setIcon(new ImageIcon("./assets/yellow_icon_20_20.jpg"));
+    		payloadStatus.setIcon(ImageFactory.busyImage());
     		break;
     	case Disabled:
-    		payloadStatus.setIcon(new ImageIcon("./assets/red_icon_20_20.jpg"));
+    		payloadStatus.setIcon(ImageFactory.disabledImage());
     		break;
     	default:
     		throw new IllegalArgumentException();
     	}
+    }
+    
+    public void setGPSStatus (GPSStatus st) {
+    	switch (st) {
+    	case Fix:
+    		gpsStatus.setIcon(ImageFactory.enabledImage());
+    		break;
+    	case Unknown:
+    		gpsStatus.setIcon(ImageFactory.busyImage());
+    		break;
+    	case NoFix:
+    		gpsStatus.setIcon(ImageFactory.disabledImage());
+    		break;
+    	default:
+    		throw new IllegalArgumentException();
+    	}
+    	
     }
 
     

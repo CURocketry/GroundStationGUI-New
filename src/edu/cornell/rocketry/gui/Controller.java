@@ -37,6 +37,7 @@ import edu.cornell.rocketry.util.CommandReceipt;
 import edu.cornell.rocketry.util.CommandResponse;
 import edu.cornell.rocketry.util.CommandTask;
 import edu.cornell.rocketry.util.GPSResponse;
+import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.Logger;
 import edu.cornell.rocketry.util.Position;
 import edu.cornell.rocketry.util.PayloadStatus;
@@ -207,6 +208,11 @@ public class Controller {
     	//System.out.println("Updated Payload Status: " + model(testing).payload().toString());
     }
     
+    void updateGPSStatus (GPSStatus st) {
+    	model(testing).setGPS(st);
+    	mainWindow.setGPSStatus(model(testing).gps());
+    }
+    
     public void clearMapMarkers () {
     	mainWindow.clearMapMarkers();
     }
@@ -254,6 +260,9 @@ public class Controller {
 				//reset to what it was before failed attempt
 				updatePayloadStatus(model(testing).prevPayload());
 			}
+		}
+		else if (r.task() == CommandTask.GPSFix) {
+			
 		}
 	}
 	

@@ -1,5 +1,7 @@
 // License: GPL. For details, see LICENSE file.
 package edu.cornell.rocketry.comm.receive;
+import java.util.ArrayList;
+
 import com.rapplogic.xbee.api.ApiId;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
@@ -10,6 +12,8 @@ import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 import edu.cornell.rocketry.comm.receive.RealReceiver;
 import edu.cornell.rocketry.comm.receive.Receiver;
 import edu.cornell.rocketry.gui.GSGui;
+import edu.cornell.rocketry.util.CommandResponse;
+import edu.cornell.rocketry.util.CommandTask;
 import edu.cornell.rocketry.util.GPSResponse;
 
 public class XBeeListenerThread extends Thread {
@@ -17,6 +21,8 @@ public class XBeeListenerThread extends Thread {
 	private Receiver receiver;
 	private GSGui mainWindow;
 	private XBee xbee;
+	
+	private int timeout = 2000;
 	
 	public XBeeListenerThread (Receiver r, XBee xb, GSGui mw) {
 		receiver = r;
@@ -29,13 +35,13 @@ public class XBeeListenerThread extends Thread {
 //	public void stopListening() { keepListening = false; }
 //	public void startListening() { keepListening = true; }
 	
-	public void startListening() { //if (!isAlive()) {
+	public void startListening() {
 		System.out.println("LISTENER: STARTING"); 
-		start(); //}
+		start();
 	}
-	public void stopListening() { //if (isAlive()) {
+	public void stopListening() {
 		System.out.println("LISTENER: INTERRUPTING"); 
-		interrupt(); //}
+		interrupt();
 	}
 	
 	@Override
@@ -48,7 +54,7 @@ public class XBeeListenerThread extends Thread {
 			}
 			try {
 				//System.out.println("Listening 1");
-				XBeeResponse response = xbee.getResponse(2000);
+				XBeeResponse response = xbee.getResponse(timeout);
 				//System.out.println("Listening 2");
 				if (response.getApiId() == ApiId.ZNET_RX_RESPONSE) {
 					//System.out.println("Listening 3");
@@ -64,6 +70,10 @@ public class XBeeListenerThread extends Thread {
 						//System.out.println("Listening 6");
 						//System.out.println(receiver);
 						receiver.acceptGPSResponse(r);
+						
+						for (CommandResponse cr : parseFlags(packet.flag())) {
+							receiver.acceptCommandResponse(cr);
+						}
 						//System.out.println("Listening 7");
 					}
 					//System.out.println("Listening 8");
@@ -85,11 +95,34 @@ public class XBeeListenerThread extends Thread {
 				e.printStackTrace();
 				return; //stop polling
 			} catch (Exception e) {
-				//System.out.println("Listening Unknown Exception");
+				System.out.println("Listening Unknown Exception:");
 				e.printStackTrace();
 			}
 			//System.out.println("Listening 10");
 		}
 	}
 
+	public static ArrayList<CommandResponse> parseFlags(byte flag) {
+		
+		//GPS fix?
+		CommandResponse r = 
+			new CommandResponse(
+				CommandTask.GPSFix, 
+				((flag & IncomingPacket.FLAG_GPS_FIX) == 0),
+				0,"");
+		//Payload enabled?
+		CommandResponse s = 
+			new CommandResponse(
+				((flag & IncomingPacket.FLAG_PAYLOAD) == 0) ? 
+					CommandTask.EnablePayload: 
+					CommandTask.DisablePayload, 
+				true,
+				0, "");
+		//other flags currently unused
+		
+		ArrayList<CommandResponse> updates = new ArrayList<CommandResponse>(2);
+		updates.set(0, r); updates.set(1, s);
+		
+		return updates;
+	}
 }

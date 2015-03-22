@@ -11,7 +11,8 @@ public enum CommandTask {
 	ChangeAddress,
 	ChangePort,
 	StartGPS,
-	StopGPS;
+	StopGPS,
+	GPSFix;
 	
 	public String toString() {
 		switch (this) {
@@ -37,6 +38,8 @@ public enum CommandTask {
 			return "StartGPS";
 		case StopGPS:
 			return "StopGPS";
+		case GPSFix:
+			return "GPSFix";
 		default:
 			throw new IllegalArgumentException();
 		}

@@ -18,8 +18,7 @@ public class RealReceiver implements Receiver {
 	}
 
 	public synchronized void acceptCommandResponse(CommandResponse cr) {
-		// TODO Auto-generated method stub
-		
+		controller.acceptCommandResponse(cr, false);
 	}
 
 	public synchronized void acceptGPSResponse(GPSResponse gr) {

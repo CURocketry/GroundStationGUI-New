@@ -16,7 +16,7 @@ public class CommController {
 	public CommController (Controller c) {
 		xbee = new XBee();
 		controller = c;
-		//listener = new XBeeListenerThread (c.getReceiver(false), xbee, c.view());
+		listener = new XBeeListenerThread (c.getReceiver(false), xbee, c.view());
 	}
 	
 	public void openXBee (String port, int baud) throws XBeeException { 

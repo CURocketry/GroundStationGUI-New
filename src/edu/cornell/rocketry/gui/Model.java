@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeAddress64;
 
+import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.Position;
 import edu.cornell.rocketry.util.PayloadStatus;
 
@@ -13,6 +14,7 @@ public class Model {
 	
 	private PayloadStatus pl_status;
 	private PayloadStatus prev_stable_pl_status;
+	private GPSStatus gps_status;
 	private Position rocket_pos;
 	private LinkedList<Position> rocket_past_pos;
 	
@@ -25,6 +27,7 @@ public class Model {
 	public Model () {
 		pl_status = PayloadStatus.Disabled;
 		prev_stable_pl_status = PayloadStatus.Disabled;
+		gps_status = GPSStatus.NoFix;
 		rocket_pos = new Position (0,0,0, 0); //there might be better stub values...
 		rocket_past_pos = new LinkedList<Position>();
 	}
@@ -43,6 +46,14 @@ public class Model {
 			prev_stable_pl_status = pl_status;
 		}
 		pl_status = st;
+	}
+	
+	public GPSStatus gps () {
+		return gps_status;
+	}
+	
+	public void setGPS (GPSStatus st) {
+		gps_status = st;
 	}
 	
 	public Position position () {

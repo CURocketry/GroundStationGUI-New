@@ -16,6 +16,9 @@ public class IncomingPacket {
 	
 	final static public int FLAG_GPS_FIX = 0b00000001;
 	final static public int FLAG_PAYLOAD = 0b00000010;
+	final static public int FLAG_MAIN_L  = 0b00000100;
+	final static public int FLAG_LANDED  = 0b00001000;
+	final static public int FLAG_TEST    = 0b00010000;
 	
 	private int[] packetData;
 	private long latitude;
