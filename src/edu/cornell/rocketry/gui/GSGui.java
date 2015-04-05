@@ -130,6 +130,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JPanel status;
     JPanel gpsControls;
     JPanel payloadControls;
+    JPanel latestPositionPanel;
+    JLabel latestPosition;
     
     
     JPanel statusSection;
@@ -248,19 +250,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	//elements
 	private JButton tileLocationChooserButton;
 	private JFileChooser tileLocationChooser;
-	private JCheckBox showMinimapCheckBox;
 	private JButton defaultLocationChooser;
 	private JCheckBox manualPointEntryCheckBox;
 	
-	/* OTHER */
-	//container
-	private JPanel otherSettingsPanel;
-	//label
-	private JLabel otherSettingsPanelLabel;
-	//elements
-	private JCheckBox autoRetryOnCommFailureCheckBox;
 	
-
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
      *                                                                       *
      *                         .: CONSTRUCTOR :.                             *
@@ -340,7 +333,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
               int index = sourceTabbedPane.getSelectedIndex();
               String tab = sourceTabbedPane.getTitleAt(index).toString();
               if (tab.equals("Control")) {
-            	  System.out.println("Giving to Control");
+            	  //System.out.println("Giving to Control");
                   GridBagConstraints c = new GridBagConstraints();
                   c.fill = GridBagConstraints.BOTH;
                   c.anchor = GridBagConstraints.CENTER;
@@ -403,18 +396,29 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         payloadStatusContainer = new JPanel(new BorderLayout());
         gpsStatusContainer = new JPanel(new BorderLayout());
         
+        //display of last known position
+        latestPositionPanel = new JPanel(new BorderLayout());
+        latestPositionPanel.setOpaque(false);
+        latestPosition = new JLabel("no data");
+        JLabel latestPositionLabel = new JLabel("Last Known Position: ");
+        latestPositionLabel.setForeground(Color.WHITE);
+        latestPosition.setForeground(Color.WHITE);
+        latestPositionPanel.add(latestPositionLabel, BorderLayout.WEST);
+        latestPositionPanel.add(latestPosition, BorderLayout.EAST);
         
-        payloadStatusLabel = new JLabel("Payload Status");
+        //functionality not required:
+        payloadStatusLabel = new JLabel("Payload Status: ");
         payloadStatusLabel.setOpaque(false);
         payloadStatusLabel.setForeground(Color.WHITE);
         payloadStatus = new JLabel();
         payloadStatus.setIcon(new ImageIcon ("./assets/red_icon_20_20.jpg"));
         payloadStatus.setOpaque(false);
+        //end functionality not required
         
         payloadStatusContainer.add(payloadStatusLabel, BorderLayout.WEST);
         payloadStatusContainer.add(payloadStatus, BorderLayout.EAST);
         
-        gpsStatusLabel = new JLabel("GPS Status");
+        gpsStatusLabel = new JLabel("GPS Status: ");
         gpsStatusLabel.setOpaque(false);
         gpsStatusLabel.setForeground(Color.WHITE);
         gpsStatus = new JLabel();
@@ -429,7 +433,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         payloadStatusContainer.setOpaque(false);
         
         status.add(gpsStatusContainer, BorderLayout.WEST);
-        status.add(payloadStatusContainer, BorderLayout.EAST);
+        //functionality not required:
+        //status.add(payloadStatusContainer, BorderLayout.EAST);
         
         
         //start GPS button
@@ -474,6 +479,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         	}
         });
         
+        /* ~~~Disable Payload Buttons - Not Required~~~ */
+        enablePayloadButton.setEnabled(false);
+        disablePayloadButton.setEnabled(false);
+        
         //info log
         infolog = new JTextArea (); 
         infolog.setLineWrap(true);
@@ -490,9 +499,12 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         statusSection = new JPanel();
         
         statusSection.add(status);
+        statusSection.add(latestPositionPanel);
         
         statusSection.setOpaque(false);
         infologscrollpane.setOpaque(false);
+        
+        infologscrollpane.setVisible(false); //by default, toggled in settings
         
         //add sections
         
@@ -628,6 +640,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         
         panelTop.add(manualInputPanel);
+        manualInputPanel.setVisible(false); //by default, toggled in settings
         
         
         /* ~~~~~~~ End Manual Input Initialization ~~~~~~~ */
@@ -955,11 +968,12 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	      public void actionPerformed(ActionEvent actionEvent) {
     	        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
     	        boolean selected = abstractButton.getModel().isSelected();
-    	        //infologpanel.setVisible(selected);
+    	        infologscrollpane.setVisible(selected);
     	      }
     	};
-    	debugPrintoutsCheckBox.addActionListener(debugPrintoutsCheckBoxActionListener);
+    	//enabled by default
     	debugPrintoutsCheckBox.setSelected(false);
+    	debugPrintoutsCheckBox.addActionListener(debugPrintoutsCheckBoxActionListener);
     	
     	
     	gpsSimFileChooserButton = new JButton("Choose GPS Simulation File");
@@ -999,6 +1013,16 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	mapSettingsPanelLabel = new JLabel("Map");
     	//elements
     	manualPointEntryCheckBox = new JCheckBox("Enable Manual Coordinate Entry");
+    	manualPointEntryCheckBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                	manualInputPanel.setVisible(manualPointEntryCheckBox.isSelected());
+                }
+            }
+        });
+    	manualPointEntryCheckBox.setSelected(false);
+    	
     	tileLocationChooser = new JFileChooser();
     	tileLocationChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     	tileLocationChooser.setFileFilter(new FileFilter() {
@@ -1030,7 +1054,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             }
     	});
     	
-    	showMinimapCheckBox = new JCheckBox("Show Minimap");
     	
     	defaultLocationChooser = new JButton("Set Default Map Location");
     	
@@ -1039,29 +1062,14 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	mapSettingsPanel.setLayout(new BoxLayout(mapSettingsPanel, BoxLayout.Y_AXIS));
     	mapSettingsPanel.add(mapSettingsPanelLabel);
     	mapSettingsPanel.add(tileLocationChooserButton);
-    	mapSettingsPanel.add(showMinimapCheckBox);
     	mapSettingsPanel.add(defaultLocationChooser);
     	mapSettingsPanel.add(manualPointEntryCheckBox);
     	/* ~~~~~~ END MAP SETTINGS ~~~~~~ */
-    	
-    	/* ~~~~~~~ OTHER SETTINGS ~~~~~~~ */
-    	//container
-    	otherSettingsPanel = new JPanel(new BorderLayout());
-    	//label
-    	otherSettingsPanelLabel = new JLabel("Other");
-    	//elements
-    	autoRetryOnCommFailureCheckBox = new JCheckBox("Auto Retry on Comm Failure");
-    	//add elements to container
-    	otherSettingsPanel.setLayout(new BoxLayout(otherSettingsPanel, BoxLayout.Y_AXIS));
-    	otherSettingsPanel.add(otherSettingsPanelLabel);
-    	otherSettingsPanel.add(autoRetryOnCommFailureCheckBox);
-    	/* ~~~~~ END OTHER SETTINGS ~~~~~ */
     	
     	
     	//add borders for testing
     	testingSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
     	mapSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-    	otherSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
     	
     	
     	/* ~~~~~~~ FINAL ASSEMBLY ~~~~~~~ */
@@ -1076,10 +1084,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	c.gridy = 0; c.gridx = 1;
     	c.anchor = GridBagConstraints.CENTER;
     	settingsPanel.add(mapSettingsPanel, c);
-    	c.weightx = 0.2;
-    	c.gridy = 0; c.gridx = 2;
-    	c.anchor = GridBagConstraints.LINE_END;
-    	settingsPanel.add(otherSettingsPanel, c);
     }
     
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -1087,6 +1091,20 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
      *                       .: UILITY FUNCTIONS :.                          *
      *                                                                       *
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    
+    
+    public void updateLatestPosition (String position) {
+    	latestPosition.setText(position);
+    }
+    
+    public void updateGPSFix (boolean fix) {
+    	if (fix) {
+    		gpsStatus.setIcon(ImageFactory.enabledImage());
+    	}
+    	else {
+    		gpsStatus.setIcon(ImageFactory.disabledImage());
+    	}
+    }
 	
 	/* Getters and Setters for packet counters*/
 	public int getNumSent() { return numSent;}

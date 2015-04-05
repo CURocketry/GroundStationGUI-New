@@ -28,11 +28,11 @@ public class IncomingPacket {
 	public boolean success;
 	
 	public double latitude() {
-		return ((double) latitude) / 1000;
+		return ((double) latitude) / 10000;
 	}
 	
 	public double longitude() {
-		return ((double) longitude) / 1000;
+		return ((double) longitude) / 10000 * -1;
 	}
 	
 	public double altitude() {

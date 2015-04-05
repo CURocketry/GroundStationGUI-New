@@ -262,7 +262,9 @@ public class Controller {
 			}
 		}
 		else if (r.task() == CommandTask.GPSFix) {
-			
+			if (r.successful()) {
+				
+			}
 		}
 	}
 	
@@ -278,6 +280,10 @@ public class Controller {
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 			if (!test) logger.log(
 				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
+			if (!test) {
+				String posn = "(" + r.lat() + ", " + r.lon() + ")";
+				mainWindow.updateLatestPosition(posn);
+			}
 		} else {
 			ilog("inaccurate data received");
 		}
@@ -295,11 +301,21 @@ public class Controller {
 	 */
 	private boolean gpsCheck (GPSResponse r) {
 		//return true;
-		return (
+		//NORTHEAST:
+		/*return (
 			r.lat() < 45 && r.lat() > 40 &&
-			r.lon() > -80 && r.lon() < -70);
+			r.lon() > -80 && r.lon() < -70);*/
+		//ALABAMA (Huntsville):
+		return (
+		 	r.lat() < 36 && r.lat() > 34 &&
+		 	r.lon() > -88 && r.lon() < -85);
+		 
+		 
+		 
 		
 	}
+	
+	
 	
 	/** Logs the given string to the text info panel in
 	 * the Control tab of the main window.

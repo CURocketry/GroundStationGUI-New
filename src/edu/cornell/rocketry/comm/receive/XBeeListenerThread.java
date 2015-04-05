@@ -65,6 +65,8 @@ public class XBeeListenerThread extends Thread {
 						packet.latitude(), packet.longitude(), 
 						packet.altitude(), packet.flag(), 
 						System.currentTimeMillis());
+					System.out.println("Actual Latitude:" + packet.latitude());
+					System.out.println("Actual Longitude:" + packet.longitude());
 					//System.out.println("Listening 5");
 					synchronized(receiver) {
 						//System.out.println("Listening 6");
@@ -108,7 +110,7 @@ public class XBeeListenerThread extends Thread {
 		CommandResponse r = 
 			new CommandResponse(
 				CommandTask.GPSFix, 
-				((flag & IncomingPacket.FLAG_GPS_FIX) == 0),
+				!((flag & IncomingPacket.FLAG_GPS_FIX) == 0),
 				0,"");
 		//Payload enabled?
 		CommandResponse s = 
@@ -120,8 +122,8 @@ public class XBeeListenerThread extends Thread {
 				0, "");
 		//other flags currently unused
 		
-		ArrayList<CommandResponse> updates = new ArrayList<CommandResponse>(2);
-		updates.set(0, r); updates.set(1, s);
+		ArrayList<CommandResponse> updates = new ArrayList<CommandResponse>();
+		updates.add(r);
 		
 		return updates;
 	}
