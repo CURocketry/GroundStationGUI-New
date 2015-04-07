@@ -39,7 +39,7 @@ public class TileController {
         Tile tile = tileCache.getTile(tileSource, tilex, tiley, zoom);
         if (tile == null) {
             tile = new Tile(tileSource, tilex, tiley, zoom);
-            tileCache.addTile(tile);
+            //tileCache.addTile(tile);
             tile.loadPlaceholderFromCache(tileCache);
         }
         if (tile.error) {

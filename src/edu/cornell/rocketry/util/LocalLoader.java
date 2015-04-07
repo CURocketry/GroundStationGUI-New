@@ -48,7 +48,7 @@ public class LocalLoader {
 		
 		//Create a MemoryTileCache and add the Tiles that we get from the system.
 		
-		MemoryTileCache returnObject = new MemoryTileCache(512);
+		MemoryTileCache returnObject = new MemoryTileCache();
 		for(Tile tile: tiles) {
 			returnObject.addTile(tile);
 		}
@@ -94,7 +94,7 @@ public class LocalLoader {
 	 */
 	public static Tile tileFromFile (File f, TileSource src) {
 		try {
-			System.out.println ("Creating tile from file: " + f.toString());
+			//System.out.println ("Creating tile from file: " + f.toString());
 			//dir.toString() will print out tiles/12  /345 /234 .png, for example.
 			//parsed below as:              tiles/zoom/num1/num2.png
 			String sep = File.separator;
