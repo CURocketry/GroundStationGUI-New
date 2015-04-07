@@ -165,6 +165,7 @@ public class Controller {
 		
 		//re-add map markers
 		refreshDisplay();
+		System.out.println("Added tiles to map");
 	}
 	
 	private void addTilesToCacheFromFile(MemoryTileCache cache, TileSource source, File f) {
@@ -309,10 +310,6 @@ public class Controller {
 		return (
 		 	r.lat() < 36 && r.lat() > 34 &&
 		 	r.lon() > -88 && r.lon() < -85);
-		 
-		 
-		 
-		
 	}
 	
 	

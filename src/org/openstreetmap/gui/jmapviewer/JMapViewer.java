@@ -99,7 +99,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      */
     @SuppressWarnings("unused")
     public JMapViewer() {
-        this(new MemoryTileCache(), 8);
+        this(new MemoryTileCache(10000), 8);
         new DefaultMapController(this);
     }
 

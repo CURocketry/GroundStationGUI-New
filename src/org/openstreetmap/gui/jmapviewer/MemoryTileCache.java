@@ -22,7 +22,7 @@ public class MemoryTileCache implements TileCache {
     /**
      * Default cache size
      */
-    protected int cacheSize = 200;
+    protected int cacheSize = 10000;
 
     protected final Map<String, CacheEntry> hash;
 

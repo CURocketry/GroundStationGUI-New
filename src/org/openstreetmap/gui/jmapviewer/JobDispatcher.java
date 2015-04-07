@@ -75,6 +75,7 @@ public class JobDispatcher {
      */
     static public void setMaxWorkers(int workers) {
         workerThreadMaxCount = workers;
+        System.out.println("org.openstreetmap.gui.jmapviewer.JMapViewerTree#setMaxWorkers: " + workers + " workers available.");
     }
 
     /**
