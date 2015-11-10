@@ -174,10 +174,13 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     JTextField lonInput = new JTextField();
     JTextField latInput = new JTextField();
+    JTextField timeInput = new JTextField();
     JLabel lonLabel = new JLabel("Longitude: ");
     JLabel latLabel = new JLabel("Latitude: ");
+    JLabel timeLabel = new JLabel("Time: ");
     JButton manualInputButton = new JButton("Add Map Marker");
     JButton clearMapMarkersButton = new JButton("Clear Map Markers");
+    JButton limitMapMarkersButton = new JButton("Limit Map Markers");
     
     JPanel manualInputPanel = new JPanel(new GridBagLayout());
     
@@ -602,6 +605,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             }
         });
         
+        
         /*
 	    JTextField lonInput = new JTextField();
 	    JTextField latInput = new JTextField();
@@ -615,6 +619,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         lonInput.setPreferredSize(new Dimension(100, 20));
         latInput.setPreferredSize(new Dimension(100, 20));
+        timeInput.setPreferredSize(new Dimension(100, 20));
         
         GridBagConstraints c = new GridBagConstraints();
         
@@ -629,14 +634,23 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         c.gridx = 1; c.gridy = 0;
         manualInputPanel.add(lonLabel, c);
         
+        //c.gridx = 3; c.gridy = 1;								//anita
+        //manualInputPanel.add(timeLabel, c);
+        
         c.gridx = 1; c.gridy = 1;
         manualInputPanel.add(lonInput, c);
+        
+        //c.gridx = 4; c.gridy = 1;								//anita
+        //manualInputPanel.add(timeInput, c);
         
         c.gridx = 2; c.gridy = 0;
         manualInputPanel.add(manualInputButton, c);
         
         c.gridx = 2; c.gridy = 1;
         manualInputPanel.add(clearMapMarkersButton, c);
+        
+        //c.gridx = 5; c.gridy = 1;
+        //manualInputPanel.add(limitMapMarkersButton, c); 		//anita
         
         
         panelTop.add(manualInputPanel);
@@ -721,6 +735,24 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         panelTop.add(zoomValue);
         panelTop.add(mperpLabelName);
         panelTop.add(mperpLabelValue);
+        panelTop.add(timeLabel);
+        panelTop.add(timeInput);
+        panelTop.add(limitMapMarkersButton);
+        
+        
+        
+        limitMapMarkersButton.setVisible(true);							//anita
+        limitMapMarkersButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			String timeLimits = timeInput.getText();
+        			int comma = timeLimits.indexOf(',');
+        			long limit1 = Long.parseLong(timeLimits.substring(0, comma));
+        			long limit2 = Long.parseLong(timeLimits.substring(comma+1, timeLimits.length()));
+        			controller.limitMapMarkers(limit1, limit2);
+        		}
+        	}
+        });
         
         
         map().addMouseListener(new MouseAdapter() {
@@ -1203,7 +1235,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     /*------------------ Control & Tracking Tab Update Methods ----------------*/
     
     public void addMapMarkerDot (MapMarkerDot m) {
-    	
     	map().addMapMarker(m);
     }
     
@@ -1245,8 +1276,5 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	default:
     		throw new IllegalArgumentException();
     	}
-    	
     }
-
-    
 }
