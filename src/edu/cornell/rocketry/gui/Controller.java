@@ -277,7 +277,7 @@ public class Controller {
 			// Update model
 			model(test).updatePosition(r.lat(), r.lon(), r.alt(), r.time());
 			if (test == testing) updateRocketPosition (model(test).position());
-			if (!test) updateXBeeDisplayFields (
+			if (true || !test) updateXBeeDisplayFields ( //change back later
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 			if (!test) logger.log(
 				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
@@ -285,6 +285,9 @@ public class Controller {
 				String posn = "(" + r.lat() + ", " + r.lon() + ")";
 				mainWindow.updateLatestPosition(posn);
 			}
+			
+			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time());
+			
 		} else {
 			ilog("inaccurate data received");
 		}
@@ -301,15 +304,15 @@ public class Controller {
 	 * @return
 	 */
 	private boolean gpsCheck (GPSResponse r) {
-		//return true;
+		return true;
 		//NORTHEAST:
 		/*return (
 			r.lat() < 45 && r.lat() > 40 &&
 			r.lon() > -80 && r.lon() < -70);*/
 		//ALABAMA (Huntsville):
-		return (
-		 	r.lat() < 36 && r.lat() > 34 &&
-		 	r.lon() > -88 && r.lon() < -85);
+		// return (
+		//  	r.lat() < 36 && r.lat() > 34 &&
+		//  	r.lon() > -88 && r.lon() < -85);
 	}
 	
 	
@@ -325,6 +328,12 @@ public class Controller {
 	
 	public void resetTestSender (File f) {
 		testSender = new TestSender(this, f);
+	}
+	
+	
+	/*--------------------- Analytics Methods -----------------------*/
+	public void updateAnalyticsDisplayFields (double latitude, double longitude, double altitude, long time) {
+		mainWindow.updateAnalytics(latitude, longitude, altitude, time);
 	}
 	
 	/*------------------------ XBee Methods -------------------------*/

@@ -120,6 +120,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     //tab panel declarations
     JMapViewerTree treeMap = null;
     private JPanel controlPanel;
+    private JPanel analyticsPanel;
     private JPanel downloadPanel;
     private JPanel xbeePanel;
     private JPanel settingsPanel;
@@ -158,8 +159,47 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JButton disablePayloadButton = new JButton("Disable Payload");
     
     private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
-
-
+    
+    /*------------------------ Analytics Tab Fields --------------------------*/
+    JLabel maxAscentSpeedLabel = new JLabel("Max Ascent Speed (m/s): ");
+    JLabel maxDriftSpeedLabel = new JLabel("Max Drift Speed (m/s): ");
+    JLabel currentSpeedLabel = new JLabel("Current Speed (m/s): ");
+    JLabel currentBearingLabel = new JLabel("Current Bearing: ");
+    JLabel maxAltitudeLabel = new JLabel("Max Altitude (m): ");
+    JLabel currentAltitudeLabel = new JLabel("Current Altitude (m): ");
+    JLabel maxRotationLabel = new JLabel("Max Rotation (RPM): ");
+    JLabel currentRotationLabel = new JLabel("Current Rotation (RPM): "); 
+    JLabel averageRotationLabel = new JLabel("Average Rotation (RPM): "); 
+    JLabel elapsedTimeSinceLaunchLabel = new JLabel("Elapsed Time Since Launch (sec): ");
+    JLabel timeToApogeeSinceLaunchLabel = new JLabel("Time to Apogee Since Launch (sec): ");
+    
+    private static JLabel maxAscentSpeed = new JLabel("0.0");
+    private static JLabel maxDriftSpeed = new JLabel("0.0");
+    private static JLabel currentSpeed = new JLabel("0.0");
+    private static JLabel currentBearing = new JLabel("0.0");
+    private static JLabel maxAltitude = new JLabel("0.0");
+    private static JLabel currentAltitude = new JLabel("0");
+    private static JLabel maxRotation = new JLabel("0.0");
+    private static JLabel currentRotation = new JLabel("0.0");
+    private static JLabel averageRotation = new JLabel("0.0"); 
+    private static JLabel elapsedTimeSinceLaunch = new JLabel("0");
+    private static JLabel timeToApogeeSinceLaunch = new JLabel("0");
+    
+    private static boolean hasLaunched = false;
+    private static boolean hasApogeed = false;
+    private static boolean hasApogeedFlag = false;
+    private static long startTime;
+    private static final double driftTol = 0.1;
+        
+    private static double prevLatitude;
+    private static double prevLongitude;
+    private static double prevAltitude;
+    private static long prevTime;
+    private static double maxAscentSpeedValue = 0.0;
+    private static double maxDriftSpeedValue = 0.0;
+    private static double maxAltitudeValue = 0.0;
+    
+    
     /*------------------------ Recovery Tab Fields --------------------------*/
     private JLabel zoomLabel=null;
     private JLabel zoomValue=null;
@@ -297,6 +337,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         initializeControlTab();
         
+        initializeAnalyticsTab();
+        
         initializeRecoveryTab();
         
         initializeDownloadTab();
@@ -310,6 +352,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         tabbedPane = new JTabbedPane();
         
         tabbedPane.addTab("Control", null, controlPanel, "GS Control Tab");
+        tabbedPane.addTab("Analytics", null, analyticsPanel, "Analytics Tab");
         tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
         tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
         tabbedPane.addTab("XBee", null, xbeePanel, "XBee Setup Tab");
@@ -568,6 +611,46 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         controlPanel.setVisible(true);
         controlPanel.validate();
     }
+    
+    private void initializeAnalyticsTab(){
+    	analyticsPanel = new JPanel();
+    	JPanel data = new JPanel(new GridLayout(11,2));
+    	analyticsPanel.add(data);
+    	
+    	data.add(currentSpeedLabel);
+        data.add(currentSpeed);
+    	
+        data.add(maxAscentSpeedLabel);
+        data.add(maxAscentSpeed);
+        
+        data.add(maxDriftSpeedLabel);
+        data.add(maxDriftSpeed);
+        
+        data.add(currentBearingLabel);
+        data.add(currentBearing);
+        
+        data.add(maxAltitudeLabel);
+        data.add(maxAltitude);
+        
+        data.add(currentAltitudeLabel);
+        data.add(currentAltitude);
+        
+        data.add(maxRotationLabel);
+        data.add(maxRotation);
+        
+        data.add(currentRotationLabel);
+        data.add(currentRotation);
+        
+        data.add(averageRotationLabel);
+        data.add(averageRotation);
+        
+        data.add(elapsedTimeSinceLaunchLabel);
+        data.add(elapsedTimeSinceLaunch);
+        
+        data.add(timeToApogeeSinceLaunchLabel);
+        data.add(timeToApogeeSinceLaunch);
+    }
+    
     
     private void initializeRecoveryTab() {
     	mperpLabelName=new JLabel("Meters/Pixels: ");
@@ -1125,6 +1208,90 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 
 	public void updateViewerTree(JMapViewerTree tree) {
 		treeMap = tree;
+	}
+	
+	public void updateAnalytics(double latitude, double longitude, double altitude, long time){
+		if (!hasLaunched){
+			startTime = time - 1;
+			prevTime = time - 1;
+			prevLatitude = latitude;
+			prevLongitude = longitude;
+			prevAltitude = altitude;
+			hasLaunched = true;
+		}
+		
+		double deltaLat = metersPerDegLat(latitude)-metersPerDegLat(prevLatitude);
+		//double deltaLat = latitude - prevLatitude;
+		//deltaLat = 111132.954 - 559.82*Math.cos(2*deltaLat) + 1.175*Math.cos(4*deltaLat)-0.0023*Math.cos(deltaLat*6);
+		double deltaLon = metersPerDegLon(longitude) - metersPerDegLon(prevLongitude);
+		//deltaLon = 111132.954 * Math.cos(deltaLon);
+		double deltaAlt = altitude - prevAltitude;
+		double deltaTime = ((double) (time-prevTime))/1000;
+		
+		double currSpeed = 
+				Math.sqrt(deltaAlt*deltaAlt+deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime; 
+		currentSpeed.setText(""+currSpeed);
+		if (currSpeed > maxAscentSpeedValue){
+			maxAscentSpeedValue = currSpeed;
+			maxAscentSpeed.setText(""+maxAscentSpeedValue);
+		}
+		
+		double currDriftSpeed = Math.sqrt(deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime;
+		if (currDriftSpeed > maxDriftSpeedValue) {
+			maxDriftSpeedValue = currDriftSpeed;
+			maxDriftSpeed.setText(""+maxDriftSpeedValue);
+		}
+		
+//		System.out.println("###################################");
+//		System.out.println("deltaLat       "+deltaLat);
+//		System.out.println("deltaLon       "+deltaLon);
+//		System.out.println("deltaAlt       "+deltaAlt);
+//		System.out.println("deltaTime      "+deltaTime);
+//		System.out.println("currSpeed      "+currSpeed);
+//		System.out.println("currDriftSpeed "+currDriftSpeed);
+//		System.out.println("###################################\n\n");
+		
+		String northsouth = ""; String westeast = "";
+		if (Math.abs(deltaLat) > driftTol){
+			northsouth = deltaLat > 0 ? "North" : "South";
+		}
+		if (Math.abs(deltaLon) > driftTol){
+			westeast = deltaLon < 0 ? "West" : "East";
+		}
+		currentBearing.setText(northsouth.isEmpty() && westeast.isEmpty() ? "None" : northsouth+" "+westeast);
+		
+		currentAltitude.setText(""+altitude);
+		if (altitude >= maxAltitudeValue){
+			maxAltitudeValue = altitude;
+			maxAltitude.setText(""+maxAltitudeValue);
+		} else {
+			hasApogeed = true;
+		}
+		
+		maxRotation.setText("TODO");
+		currentRotation.setText("TODO");
+		averageRotation.setText("TODO");
+		
+		String elapsedTime = ""+((double) (time-startTime))/1000;
+		elapsedTimeSinceLaunch.setText(elapsedTime);
+		if (hasApogeed && !hasApogeedFlag){
+			timeToApogeeSinceLaunch.setText(elapsedTime);
+			hasApogeedFlag = true;
+		}
+		
+		//Update Variables
+		prevLatitude = latitude;
+		prevLongitude = longitude;
+		prevAltitude = altitude;
+		prevTime = time;
+	}
+	
+	public double metersPerDegLat(double lat){
+		return 111132.954 - 559.82*Math.cos(2*lat) + 1.175*Math.cos(4*lat)-0.0023*Math.cos(lat*6);
+	}
+	
+	public double metersPerDegLon(double lon){
+		return 111412.84*Math.cos(lon) - 93.5*Math.cos(3*lon) - 0.118*Math.cos(5*lon);
 	}
 	
 	/**

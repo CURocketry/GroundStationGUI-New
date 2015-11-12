@@ -1,2 +1,5 @@
 /bin/
 /tiles/
+appConfig.xml
+gps_log_file_*
+.classpath
