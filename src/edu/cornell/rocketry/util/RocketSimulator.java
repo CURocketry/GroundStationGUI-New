@@ -160,7 +160,7 @@ public class RocketSimulator {
 						}
 						p = positions.get(index);
 						GPSResponse r = 
-							new GPSResponse (p.lat(), p.lon(), p.alt(), GPSflag, p.time());
+							new GPSResponse (p.lat(), p.lon(), p.alt(), GPSflag, p.time(), p.rot(), p.acc());
 						System.out.println("Receiver Object in gworker thread: " + receiver);
 						synchronized (receiver) {
 							receiver.acceptGPSResponse (r);
@@ -223,7 +223,10 @@ public class RocketSimulator {
 					Double.parseDouble(components[0]),
 					Double.parseDouble(components[1]),
 					Integer.parseInt(components[2]),
-					Long.parseLong(components[3]));
+					Long.parseLong(components[3]),
+					Double.parseDouble(components[4]),
+					Double.parseDouble(components[5])
+				);
 				positions.add(p);
 			}
 			sc.close();

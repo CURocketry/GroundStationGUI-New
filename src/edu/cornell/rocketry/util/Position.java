@@ -8,6 +8,8 @@ public class Position {
 	private double altitude;
 	
 	private long time;
+	private double rotation;
+	private double acceleration;
 	
 	public Position (double lat, double lon, double alt, long t) {
 		latitude = lat;
@@ -17,11 +19,23 @@ public class Position {
 		bounds_check();
 	}
 	
+	public Position (double lat, double lon, double alt, long t, double rot, double acc) {
+		latitude = lat;
+		longitude = lon;
+		altitude = alt;
+		time = t;
+		rotation = rot;
+		acceleration = acc;
+		bounds_check();
+	}
+	
 	
 	public double lat() { return latitude; }
 	public double lon() { return longitude; }
 	public double alt() { return altitude; }
 	public long time() { return time; }
+	public double rot() { return rotation; }
+	public double acc() { return acceleration; }
 	
 	private void bounds_check () {
 		/*

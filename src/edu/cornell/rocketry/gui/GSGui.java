@@ -164,6 +164,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JLabel maxAscentSpeedLabel = new JLabel("Max Ascent Speed (m/s): ");
     JLabel maxDriftSpeedLabel = new JLabel("Max Drift Speed (m/s): ");
     JLabel currentSpeedLabel = new JLabel("Current Speed (m/s): ");
+    JLabel currentAccelerationLabel = new JLabel("Current Acceleration (m/s^2): ");
     JLabel currentBearingLabel = new JLabel("Current Bearing: ");
     JLabel maxAltitudeLabel = new JLabel("Max Altitude (m): ");
     JLabel currentAltitudeLabel = new JLabel("Current Altitude (m): ");
@@ -176,9 +177,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     private static JLabel maxAscentSpeed = new JLabel("0.0");
     private static JLabel maxDriftSpeed = new JLabel("0.0");
     private static JLabel currentSpeed = new JLabel("0.0");
+    private static JLabel currentAcceleration = new JLabel("0.0");
     private static JLabel currentBearing = new JLabel("0.0");
     private static JLabel maxAltitude = new JLabel("0.0");
-    private static JLabel currentAltitude = new JLabel("0");
+    private static JLabel currentAltitude = new JLabel("0.0");
     private static JLabel maxRotation = new JLabel("0.0");
     private static JLabel currentRotation = new JLabel("0.0");
     private static JLabel averageRotation = new JLabel("0.0"); 
@@ -193,11 +195,15 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
     private static double prevLatitude;
     private static double prevLongitude;
-    private static double prevAltitude;
+    //private static double prevAltitude;
+    private static double prevSpeed;
+    private static double averageRotationValue = 0.0;
+    private static int numRotationDataPoints = 0;
     private static long prevTime;
     private static double maxAscentSpeedValue = 0.0;
     private static double maxDriftSpeedValue = 0.0;
     private static double maxAltitudeValue = 0.0;
+    private static double maxRotationValue = 0.0;
     
     
     /*------------------------ Recovery Tab Fields --------------------------*/
@@ -614,7 +620,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     private void initializeAnalyticsTab(){
     	analyticsPanel = new JPanel();
-    	JPanel data = new JPanel(new GridLayout(11,2));
+    	JPanel data = new JPanel(new GridLayout(12,2));
     	analyticsPanel.add(data);
     	
     	data.add(currentSpeedLabel);
@@ -623,20 +629,20 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         data.add(maxAscentSpeedLabel);
         data.add(maxAscentSpeed);
         
+        data.add(currentAccelerationLabel);
+        data.add(currentAcceleration);
+        
         data.add(maxDriftSpeedLabel);
         data.add(maxDriftSpeed);
         
         data.add(currentBearingLabel);
         data.add(currentBearing);
         
+        data.add(currentAltitudeLabel);
+        data.add(currentAltitude);   
+        
         data.add(maxAltitudeLabel);
         data.add(maxAltitude);
-        
-        data.add(currentAltitudeLabel);
-        data.add(currentAltitude);
-        
-        data.add(maxRotationLabel);
-        data.add(maxRotation);
         
         data.add(currentRotationLabel);
         data.add(currentRotation);
@@ -644,6 +650,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         data.add(averageRotationLabel);
         data.add(averageRotation);
         
+        data.add(maxRotationLabel);
+        data.add(maxRotation);
+       
         data.add(elapsedTimeSinceLaunchLabel);
         data.add(elapsedTimeSinceLaunch);
         
@@ -1210,13 +1219,15 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 		treeMap = tree;
 	}
 	
-	public void updateAnalytics(double latitude, double longitude, double altitude, long time){
+	public void updateAnalytics(double latitude, double longitude, double altitude, 
+			long time, double rotation, double acceleration){
 		if (!hasLaunched){
 			startTime = time - 1;
 			prevTime = time - 1;
 			prevLatitude = latitude;
 			prevLongitude = longitude;
-			prevAltitude = altitude;
+			//prevAltitude = altitude;
+			prevSpeed = 0.0;
 			hasLaunched = true;
 		}
 		
@@ -1225,16 +1236,19 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 		//deltaLat = 111132.954 - 559.82*Math.cos(2*deltaLat) + 1.175*Math.cos(4*deltaLat)-0.0023*Math.cos(deltaLat*6);
 		double deltaLon = metersPerDegLon(longitude) - metersPerDegLon(prevLongitude);
 		//deltaLon = 111132.954 * Math.cos(deltaLon);
-		double deltaAlt = altitude - prevAltitude;
+		//double deltaAlt = altitude - prevAltitude;
 		double deltaTime = ((double) (time-prevTime))/1000;
 		
-		double currSpeed = 
-				Math.sqrt(deltaAlt*deltaAlt+deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime; 
+		//double currSpeed = Math.sqrt(deltaAlt*deltaAlt+deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime; 
+		double currSpeed = prevSpeed + deltaTime*acceleration;
 		currentSpeed.setText(""+currSpeed);
+		
 		if (currSpeed > maxAscentSpeedValue){
 			maxAscentSpeedValue = currSpeed;
 			maxAscentSpeed.setText(""+maxAscentSpeedValue);
 		}
+		
+		currentAcceleration.setText(""+acceleration);
 		
 		double currDriftSpeed = Math.sqrt(deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime;
 		if (currDriftSpeed > maxDriftSpeedValue) {
@@ -1242,14 +1256,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 			maxDriftSpeed.setText(""+maxDriftSpeedValue);
 		}
 		
-//		System.out.println("###################################");
-//		System.out.println("deltaLat       "+deltaLat);
-//		System.out.println("deltaLon       "+deltaLon);
-//		System.out.println("deltaAlt       "+deltaAlt);
-//		System.out.println("deltaTime      "+deltaTime);
-//		System.out.println("currSpeed      "+currSpeed);
-//		System.out.println("currDriftSpeed "+currDriftSpeed);
-//		System.out.println("###################################\n\n");
 		
 		String northsouth = ""; String westeast = "";
 		if (Math.abs(deltaLat) > driftTol){
@@ -1268,9 +1274,18 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 			hasApogeed = true;
 		}
 		
-		maxRotation.setText("TODO");
-		currentRotation.setText("TODO");
-		averageRotation.setText("TODO");
+		if (!hasApogeed){
+			currentRotation.setText(""+rotation);
+			if (Math.abs(rotation) >= Math.abs(maxRotationValue)){
+				maxRotationValue = rotation;
+				maxRotation.setText(""+maxRotationValue);
+			}
+			numRotationDataPoints++;
+			averageRotationValue = (averageRotationValue*numRotationDataPoints + rotation)/(numRotationDataPoints);
+			averageRotation.setText(""+averageRotationValue);
+		} else {
+			currentRotation.setText("---");
+		}
 		
 		String elapsedTime = ""+((double) (time-startTime))/1000;
 		elapsedTimeSinceLaunch.setText(elapsedTime);
@@ -1282,7 +1297,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 		//Update Variables
 		prevLatitude = latitude;
 		prevLongitude = longitude;
-		prevAltitude = altitude;
+		//prevAltitude = altitude;
 		prevTime = time;
 	}
 	

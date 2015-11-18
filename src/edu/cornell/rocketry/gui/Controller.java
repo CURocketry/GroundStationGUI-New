@@ -286,7 +286,7 @@ public class Controller {
 				mainWindow.updateLatestPosition(posn);
 			}
 			
-			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time());
+			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time(), r.getRot(), r.getAcc());
 			
 		} else {
 			ilog("inaccurate data received");
@@ -332,8 +332,9 @@ public class Controller {
 	
 	
 	/*--------------------- Analytics Methods -----------------------*/
-	public void updateAnalyticsDisplayFields (double latitude, double longitude, double altitude, long time) {
-		mainWindow.updateAnalytics(latitude, longitude, altitude, time);
+	public void updateAnalyticsDisplayFields (double latitude, double longitude, double altitude, 
+			long time, double rotation, double acceleration) {
+		mainWindow.updateAnalytics(latitude, longitude, altitude, time, rotation, acceleration);
 	}
 	
 	/*------------------------ XBee Methods -------------------------*/
