@@ -288,6 +288,9 @@ public class Controller {
 				String posn = "(" + r.lat() + ", " + r.lon() + ")";
 				mainWindow.updateLatestPosition(posn);
 			}
+
+			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time(), r.getRot(), r.getAcc());
+
 		} else {
 			ilog("inaccurate data received");
 		}
@@ -304,15 +307,15 @@ public class Controller {
 	 * @return
 	 */
 	private boolean gpsCheck (GPSResponse r) {
-		//return true;
+		return true;
 		//NORTHEAST:
 		/*return (
 			r.lat() < 45 && r.lat() > 40 &&
 			r.lon() > -80 && r.lon() < -70);*/
 		//ALABAMA (Huntsville):
-		return (
-		 	r.lat() < 36 && r.lat() > 34 &&
-		 	r.lon() > -88 && r.lon() < -85);
+		// return (
+		//  	r.lat() < 36 && r.lat() > 34 &&
+		//  	r.lon() > -88 && r.lon() < -85);
 	}
 	
 	
@@ -330,6 +333,13 @@ public class Controller {
 		testSender = new TestSender(this, f);
 	}
 	
+	/*--------------------- Analytics Methods -----------------------*/
+	public void updateAnalyticsDisplayFields (double latitude, double longitude, double altitude, 
+			long time, double rotation, double acceleration) {
+		mainWindow.updateAnalytics(latitude, longitude, altitude, time, rotation, acceleration);
+	}
+
+
 	/*------------------------ XBee Methods -------------------------*/
 	
 	
