@@ -195,7 +195,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
     private static double prevLatitude;
     private static double prevLongitude;
-    //private static double prevAltitude;
     private static double prevSpeed;
     private static double averageRotationValue = 0.0;
     private static int numRotationDataPoints = 0;
@@ -1254,17 +1253,12 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             prevTime = time - 1;
             prevLatitude = latitude;
             prevLongitude = longitude;
-            //prevAltitude = altitude;
             prevSpeed = 0.0;
             hasLaunched = true;
         }
         
         double deltaLat = metersPerDegLat(latitude)-metersPerDegLat(prevLatitude);
-        //double deltaLat = latitude - prevLatitude;
-        //deltaLat = 111132.954 - 559.82*Math.cos(2*deltaLat) + 1.175*Math.cos(4*deltaLat)-0.0023*Math.cos(deltaLat*6);
         double deltaLon = metersPerDegLon(longitude) - metersPerDegLon(prevLongitude);
-        //deltaLon = 111132.954 * Math.cos(deltaLon);
-        //double deltaAlt = altitude - prevAltitude;
         double deltaTime = ((double) (time-prevTime))/1000;
         
         //double currSpeed = Math.sqrt(deltaAlt*deltaAlt+deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime; 
@@ -1325,7 +1319,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         //Update Variables
         prevLatitude = latitude;
         prevLongitude = longitude;
-        //prevAltitude = altitude;
         prevTime = time;
     }
     
