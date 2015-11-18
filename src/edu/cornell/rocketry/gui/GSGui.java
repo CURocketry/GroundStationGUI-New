@@ -159,7 +159,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JButton disablePayloadButton = new JButton("Disable Payload");
     
     private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
-    
+
     /*------------------------ Analytics Tab Fields --------------------------*/
     JLabel maxAscentSpeedLabel = new JLabel("Max Ascent Speed (m/s): ");
     JLabel maxDriftSpeedLabel = new JLabel("Max Drift Speed (m/s): ");
@@ -204,8 +204,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     private static double maxDriftSpeedValue = 0.0;
     private static double maxAltitudeValue = 0.0;
     private static double maxRotationValue = 0.0;
-    
-    
+
     /*------------------------ Recovery Tab Fields --------------------------*/
     private JLabel zoomLabel=null;
     private JLabel zoomValue=null;
@@ -220,10 +219,13 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     JTextField lonInput = new JTextField();
     JTextField latInput = new JTextField();
+    JTextField timeInput = new JTextField();
     JLabel lonLabel = new JLabel("Longitude: ");
     JLabel latLabel = new JLabel("Latitude: ");
+    JLabel timeLabel = new JLabel("Time: ");
     JButton manualInputButton = new JButton("Add Map Marker");
     JButton clearMapMarkersButton = new JButton("Clear Map Markers");
+    JButton limitMapMarkersButton = new JButton("Limit Map Markers");
     
     JPanel manualInputPanel = new JPanel(new GridBagLayout());
     
@@ -342,7 +344,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         
         initializeControlTab();
-        
+
         initializeAnalyticsTab();
         
         initializeRecoveryTab();
@@ -617,15 +619,15 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         controlPanel.setVisible(true);
         controlPanel.validate();
     }
-    
+
     private void initializeAnalyticsTab(){
-    	analyticsPanel = new JPanel();
-    	JPanel data = new JPanel(new GridLayout(12,2));
-    	analyticsPanel.add(data);
-    	
-    	data.add(currentSpeedLabel);
+        analyticsPanel = new JPanel();
+        JPanel data = new JPanel(new GridLayout(12,2));
+        analyticsPanel.add(data);
+        
+        data.add(currentSpeedLabel);
         data.add(currentSpeed);
-    	
+        
         data.add(maxAscentSpeedLabel);
         data.add(maxAscentSpeed);
         
@@ -660,7 +662,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         data.add(timeToApogeeSinceLaunch);
     }
     
-    
     private void initializeRecoveryTab() {
     	mperpLabelName=new JLabel("Meters/Pixels: ");
         mperpLabelValue=new JLabel(String.format("%.2f",map().getMeterPerPixel()));
@@ -694,6 +695,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             }
         });
         
+        
         /*
 	    JTextField lonInput = new JTextField();
 	    JTextField latInput = new JTextField();
@@ -707,6 +709,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         lonInput.setPreferredSize(new Dimension(100, 20));
         latInput.setPreferredSize(new Dimension(100, 20));
+        timeInput.setPreferredSize(new Dimension(100, 20));
         
         GridBagConstraints c = new GridBagConstraints();
         
@@ -813,6 +816,31 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         panelTop.add(zoomValue);
         panelTop.add(mperpLabelName);
         panelTop.add(mperpLabelValue);
+        panelTop.add(timeLabel);
+        panelTop.add(timeInput);
+        panelTop.add(limitMapMarkersButton);
+        
+        
+        
+        limitMapMarkersButton.setVisible(true);							
+        limitMapMarkersButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			String timeLimits = timeInput.getText();
+        			String nums = timeLimits.replaceAll("[\\D]", " ");
+        			int firstBlank = nums.indexOf(" ");
+        			String limit1 = nums.substring(0, firstBlank);
+        			
+        			String b = nums.substring(firstBlank);
+        			String limit2 = b.replaceAll(" ", "");
+        			
+        			if(limit2.length() == 0)
+        				controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
+        			else
+        				controller.limitMapMarkers(Long.parseLong(limit1), Long.parseLong(limit2));
+        		}
+        	}
+        });
         
         
         map().addMouseListener(new MouseAdapter() {
@@ -1218,96 +1246,96 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	public void updateViewerTree(JMapViewerTree tree) {
 		treeMap = tree;
 	}
-	
-	public void updateAnalytics(double latitude, double longitude, double altitude, 
-			long time, double rotation, double acceleration){
-		if (!hasLaunched){
-			startTime = time - 1;
-			prevTime = time - 1;
-			prevLatitude = latitude;
-			prevLongitude = longitude;
-			//prevAltitude = altitude;
-			prevSpeed = 0.0;
-			hasLaunched = true;
-		}
-		
-		double deltaLat = metersPerDegLat(latitude)-metersPerDegLat(prevLatitude);
-		//double deltaLat = latitude - prevLatitude;
-		//deltaLat = 111132.954 - 559.82*Math.cos(2*deltaLat) + 1.175*Math.cos(4*deltaLat)-0.0023*Math.cos(deltaLat*6);
-		double deltaLon = metersPerDegLon(longitude) - metersPerDegLon(prevLongitude);
-		//deltaLon = 111132.954 * Math.cos(deltaLon);
-		//double deltaAlt = altitude - prevAltitude;
-		double deltaTime = ((double) (time-prevTime))/1000;
-		
-		//double currSpeed = Math.sqrt(deltaAlt*deltaAlt+deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime; 
-		double currSpeed = prevSpeed + deltaTime*acceleration;
-		currentSpeed.setText(""+currSpeed);
-		
-		if (currSpeed > maxAscentSpeedValue){
-			maxAscentSpeedValue = currSpeed;
-			maxAscentSpeed.setText(""+maxAscentSpeedValue);
-		}
-		
-		currentAcceleration.setText(""+acceleration);
-		
-		double currDriftSpeed = Math.sqrt(deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime;
-		if (currDriftSpeed > maxDriftSpeedValue) {
-			maxDriftSpeedValue = currDriftSpeed;
-			maxDriftSpeed.setText(""+maxDriftSpeedValue);
-		}
-		
-		
-		String northsouth = ""; String westeast = "";
-		if (Math.abs(deltaLat) > driftTol){
-			northsouth = deltaLat > 0 ? "North" : "South";
-		}
-		if (Math.abs(deltaLon) > driftTol){
-			westeast = deltaLon < 0 ? "West" : "East";
-		}
-		currentBearing.setText(northsouth.isEmpty() && westeast.isEmpty() ? "None" : northsouth+" "+westeast);
-		
-		currentAltitude.setText(""+altitude);
-		if (altitude >= maxAltitudeValue){
-			maxAltitudeValue = altitude;
-			maxAltitude.setText(""+maxAltitudeValue);
-		} else {
-			hasApogeed = true;
-		}
-		
-		if (!hasApogeed){
-			currentRotation.setText(""+rotation);
-			if (Math.abs(rotation) >= Math.abs(maxRotationValue)){
-				maxRotationValue = rotation;
-				maxRotation.setText(""+maxRotationValue);
-			}
-			numRotationDataPoints++;
-			averageRotationValue = (averageRotationValue*numRotationDataPoints + rotation)/(numRotationDataPoints);
-			averageRotation.setText(""+averageRotationValue);
-		} else {
-			currentRotation.setText("---");
-		}
-		
-		String elapsedTime = ""+((double) (time-startTime))/1000;
-		elapsedTimeSinceLaunch.setText(elapsedTime);
-		if (hasApogeed && !hasApogeedFlag){
-			timeToApogeeSinceLaunch.setText(elapsedTime);
-			hasApogeedFlag = true;
-		}
-		
-		//Update Variables
-		prevLatitude = latitude;
-		prevLongitude = longitude;
-		//prevAltitude = altitude;
-		prevTime = time;
-	}
-	
-	public double metersPerDegLat(double lat){
-		return 111132.954 - 559.82*Math.cos(2*lat) + 1.175*Math.cos(4*lat)-0.0023*Math.cos(lat*6);
-	}
-	
-	public double metersPerDegLon(double lon){
-		return 111412.84*Math.cos(lon) - 93.5*Math.cos(3*lon) - 0.118*Math.cos(5*lon);
-	}
+
+    public void updateAnalytics(double latitude, double longitude, double altitude, 
+            long time, double rotation, double acceleration){
+        if (!hasLaunched){
+            startTime = time - 1;
+            prevTime = time - 1;
+            prevLatitude = latitude;
+            prevLongitude = longitude;
+            //prevAltitude = altitude;
+            prevSpeed = 0.0;
+            hasLaunched = true;
+        }
+        
+        double deltaLat = metersPerDegLat(latitude)-metersPerDegLat(prevLatitude);
+        //double deltaLat = latitude - prevLatitude;
+        //deltaLat = 111132.954 - 559.82*Math.cos(2*deltaLat) + 1.175*Math.cos(4*deltaLat)-0.0023*Math.cos(deltaLat*6);
+        double deltaLon = metersPerDegLon(longitude) - metersPerDegLon(prevLongitude);
+        //deltaLon = 111132.954 * Math.cos(deltaLon);
+        //double deltaAlt = altitude - prevAltitude;
+        double deltaTime = ((double) (time-prevTime))/1000;
+        
+        //double currSpeed = Math.sqrt(deltaAlt*deltaAlt+deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime; 
+        double currSpeed = prevSpeed + deltaTime*acceleration;
+        currentSpeed.setText(""+currSpeed);
+        
+        if (currSpeed > maxAscentSpeedValue){
+            maxAscentSpeedValue = currSpeed;
+            maxAscentSpeed.setText(""+maxAscentSpeedValue);
+        }
+        
+        currentAcceleration.setText(""+acceleration);
+        
+        double currDriftSpeed = Math.sqrt(deltaLat*deltaLat+deltaLon*deltaLon)/deltaTime;
+        if (currDriftSpeed > maxDriftSpeedValue) {
+            maxDriftSpeedValue = currDriftSpeed;
+            maxDriftSpeed.setText(""+maxDriftSpeedValue);
+        }
+        
+        
+        String northsouth = ""; String westeast = "";
+        if (Math.abs(deltaLat) > driftTol){
+            northsouth = deltaLat > 0 ? "North" : "South";
+        }
+        if (Math.abs(deltaLon) > driftTol){
+            westeast = deltaLon < 0 ? "West" : "East";
+        }
+        currentBearing.setText(northsouth.isEmpty() && westeast.isEmpty() ? "None" : northsouth+" "+westeast);
+        
+        currentAltitude.setText(""+altitude);
+        if (altitude >= maxAltitudeValue){
+            maxAltitudeValue = altitude;
+            maxAltitude.setText(""+maxAltitudeValue);
+        } else {
+            hasApogeed = true;
+        }
+        
+        if (!hasApogeed){
+            currentRotation.setText(""+rotation);
+            if (Math.abs(rotation) >= Math.abs(maxRotationValue)){
+                maxRotationValue = rotation;
+                maxRotation.setText(""+maxRotationValue);
+            }
+            numRotationDataPoints++;
+            averageRotationValue = (averageRotationValue*numRotationDataPoints + rotation)/(numRotationDataPoints);
+            averageRotation.setText(""+averageRotationValue);
+        } else {
+            currentRotation.setText("---");
+        }
+        
+        String elapsedTime = ""+((double) (time-startTime))/1000;
+        elapsedTimeSinceLaunch.setText(elapsedTime);
+        if (hasApogeed && !hasApogeedFlag){
+            timeToApogeeSinceLaunch.setText(elapsedTime);
+            hasApogeedFlag = true;
+        }
+        
+        //Update Variables
+        prevLatitude = latitude;
+        prevLongitude = longitude;
+        //prevAltitude = altitude;
+        prevTime = time;
+    }
+    
+    public double metersPerDegLat(double lat){
+        return 111132.954 - 559.82*Math.cos(2*lat) + 1.175*Math.cos(4*lat)-0.0023*Math.cos(lat*6);
+    }
+    
+    public double metersPerDegLon(double lon){
+        return 111412.84*Math.cos(lon) - 93.5*Math.cos(3*lon) - 0.118*Math.cos(5*lon);
+    }
 	
 	/**
 	 * updated the Serial Port List (i.e. after a refresh)
@@ -1385,7 +1413,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     /*------------------ Control & Tracking Tab Update Methods ----------------*/
     
     public void addMapMarkerDot (MapMarkerDot m) {
-    	
     	map().addMapMarker(m);
     }
     
@@ -1427,8 +1454,5 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	default:
     		throw new IllegalArgumentException();
     	}
-    	
     }
-
-    
 }

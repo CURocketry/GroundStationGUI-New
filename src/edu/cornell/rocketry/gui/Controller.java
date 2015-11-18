@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -18,6 +19,7 @@ import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
 import org.openstreetmap.gui.jmapviewer.Tile;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
 import com.rapplogic.xbee.api.XBee;
@@ -52,6 +54,7 @@ import edu.cornell.rocketry.xbee.XBeeSenderException;
 import gnu.io.CommPortIdentifier;
 
 public class Controller {
+	public List<Pair<Long, MapMarker>> all_markers = new ArrayList<Pair<Long, MapMarker>>();
 	
 	private Thread worker;
 	
@@ -277,7 +280,7 @@ public class Controller {
 			// Update model
 			model(test).updatePosition(r.lat(), r.lon(), r.alt(), r.time());
 			if (test == testing) updateRocketPosition (model(test).position());
-			if (true || !test) updateXBeeDisplayFields ( //change back later
+			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 			if (!test) logger.log(
 				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
@@ -285,9 +288,9 @@ public class Controller {
 				String posn = "(" + r.lat() + ", " + r.lon() + ")";
 				mainWindow.updateLatestPosition(posn);
 			}
-			
+
 			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time(), r.getRot(), r.getAcc());
-			
+
 		} else {
 			ilog("inaccurate data received");
 		}
@@ -330,13 +333,13 @@ public class Controller {
 		testSender = new TestSender(this, f);
 	}
 	
-	
 	/*--------------------- Analytics Methods -----------------------*/
 	public void updateAnalyticsDisplayFields (double latitude, double longitude, double altitude, 
 			long time, double rotation, double acceleration) {
 		mainWindow.updateAnalytics(latitude, longitude, altitude, time, rotation, acceleration);
 	}
-	
+
+
 	/*------------------------ XBee Methods -------------------------*/
 	
 	
@@ -412,4 +415,40 @@ public class Controller {
 			return false;
 		}
 	}
+    	
+	
+	/**
+	 * Performs the actions required to store and display GPS 
+	 * coordinates as they are received.
+	 */
+	public void acceptGPSResponse (GPSResponse r) {
+		//create a MapMarker m with the coordinates in r
+		//add m to all_markers, in a pair with the current time
+		//add m to the View using the map().addMapMarker(m) method
+		//store location to a permanent file & other code
+		MapMarker m = new MapMarkerDot(r.lat(), r.lon());
+		Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
+		all_markers.add(p);
+		mainWindow.map().addMapMarker(m);
+		logger.log(""+r.time()+","+r.lat()+","+r.lon()+","+r.alt());
+	}
+	
+    /**
+     * Limits the MapMarkers that are visible on the screen. 
+     * Any MapMarker that was received after start_time and before 
+     * end_time will be displayed; the others will not.
+     */
+    public void limitMapMarkers (long start, long end) {
+    	long start_time = System.currentTimeMillis() - start*1000;
+    	long end_time = System.currentTimeMillis() - end*1000;
+    	List<MapMarker> filtered_markers = new ArrayList<MapMarker>();
+    	for (Pair<Long, MapMarker> p : all_markers) {
+    		long time = p.left().longValue();
+    		MapMarker marker = p.right();
+    		if (time > start_time && time < end_time) {
+    			filtered_markers.add(marker);
+    		}
+    	}
+    	mainWindow.map().setMapMarkerList(filtered_markers);
+    }
 }
