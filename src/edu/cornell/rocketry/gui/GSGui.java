@@ -634,23 +634,14 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         c.gridx = 1; c.gridy = 0;
         manualInputPanel.add(lonLabel, c);
         
-        //c.gridx = 3; c.gridy = 1;								//anita
-        //manualInputPanel.add(timeLabel, c);
-        
         c.gridx = 1; c.gridy = 1;
         manualInputPanel.add(lonInput, c);
-        
-        //c.gridx = 4; c.gridy = 1;								//anita
-        //manualInputPanel.add(timeInput, c);
         
         c.gridx = 2; c.gridy = 0;
         manualInputPanel.add(manualInputButton, c);
         
         c.gridx = 2; c.gridy = 1;
         manualInputPanel.add(clearMapMarkersButton, c);
-        
-        //c.gridx = 5; c.gridy = 1;
-        //manualInputPanel.add(limitMapMarkersButton, c); 		//anita
         
         
         panelTop.add(manualInputPanel);
@@ -741,15 +732,20 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         
         
-        limitMapMarkersButton.setVisible(true);							//anita
+        limitMapMarkersButton.setVisible(true);							
         limitMapMarkersButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		if (e.getButton() == MouseEvent.BUTTON1) {
         			String timeLimits = timeInput.getText();
-        			int comma = timeLimits.indexOf(',');
-        			long limit1 = Long.parseLong(timeLimits.substring(0, comma));
-        			long limit2 = Long.parseLong(timeLimits.substring(comma+1, timeLimits.length()));
-        			controller.limitMapMarkers(limit1, limit2);
+        			String nums = timeLimits.replaceAll("[\\D]", " ");
+        			int firstBlank = nums.indexOf(" ");
+        			String limit1 = nums.substring(0, firstBlank);
+        			String b = nums.substring(firstBlank);
+        			String limit2 = b.replaceAll(" ", "");
+        			if(limit2.length() == 0)
+        				controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
+        			else
+        				controller.limitMapMarkers(Long.parseLong(limit1), Long.parseLong(limit2));
         		}
         	}
         });
