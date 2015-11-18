@@ -740,8 +740,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         			String nums = timeLimits.replaceAll("[\\D]", " ");
         			int firstBlank = nums.indexOf(" ");
         			String limit1 = nums.substring(0, firstBlank);
+        			
         			String b = nums.substring(firstBlank);
         			String limit2 = b.replaceAll(" ", "");
+        			
         			if(limit2.length() == 0)
         				controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
         			else
