@@ -230,6 +230,7 @@ public class RocketSimulator {
 				positions.add(p);
 			}
 			sc.close();
+			System.out.println("Positions: " + positions);
 		} catch (FileNotFoundException e) {
 			System.out.println("Could not find file: " + GPSfilepath);
 		}

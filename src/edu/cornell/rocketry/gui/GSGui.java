@@ -1,5 +1,11 @@
-// License: GPL. For details, see Readme.txt file.
 package edu.cornell.rocketry.gui;
+
+import info.monitorenter.gui.chart.Chart2D;
+import info.monitorenter.gui.chart.IAxis;
+import info.monitorenter.gui.chart.ITrace2D;
+import info.monitorenter.gui.chart.IAxis.AxisTitle;
+import info.monitorenter.gui.chart.traces.Trace2DSimple;
+import info.monitorenter.gui.chart.labelformatters.LabelFormatterSimple;
 
 import jTile.src.org.openstreetmap.fma.jtiledownloader.config.AppConfiguration;
 import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.JTileDownloaderMainViewPanel;
@@ -94,6 +100,7 @@ import edu.cornell.rocketry.xbee.XBeeSender;
 import edu.cornell.rocketry.xbee.XBeeSenderException;
 import gnu.io.CommPortIdentifier;
 
+
 /**
  * Demonstrates the usage of {@link JMapViewer}
  *
@@ -174,6 +181,16 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JLabel elapsedTimeSinceLaunchLabel = new JLabel("Elapsed Time Since Launch (sec): ");
     JLabel timeToApogeeSinceLaunchLabel = new JLabel("Time to Apogee Since Launch (sec): ");
     
+    public static Chart2D altitudeChart = new Chart2D();
+    public static ITrace2D altitudeTrace = new Trace2DSimple();
+    public static Chart2D rotationChart = new Chart2D();
+    public static ITrace2D rotationTrace = new Trace2DSimple();
+    public static Chart2D accelChart = new Chart2D();
+    public static ITrace2D accelTrace = new Trace2DSimple();
+    JLabel atimeLabel = new JLabel("Time: ");
+    JTextField atimeInput = new JTextField();
+    JButton alimitMapMarkersButton = new JButton("Limit Map Markers");
+    
     private static JLabel maxAscentSpeed = new JLabel("0.0");
     private static JLabel maxDriftSpeed = new JLabel("0.0");
     private static JLabel currentSpeed = new JLabel("0.0");
@@ -236,16 +253,16 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     public static final Integer[] baudRates = {4800, 9600, 19200, 38400, 57600, 115200};
 	public static final String[] addresses = { 
-		"1: 0013A200 / 40BF5647", 
-		"2: 0013A200 / 40BF56A5",
-		"3: 0013A200 / 409179A7",
-		"4: 0013A200 / 4091796F"
+	"1: 0013A200 / 40BF5647", 
+	"2: 0013A200 / 40BF56A5",
+	"3: 0013A200 / 409179A7",
+	"4: 0013A200 / 4091796F"
 	};
 	public static final XBeeAddress64 addr[] = {
-		  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0xbf, 0x56, 0x47),	//long cable
-		  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0xbf, 0x56, 0xa5),	//new xbees, small cable
-		  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0xa7),
-		  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0x6f)
+	  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0xbf, 0x56, 0x47),	//long cable
+	  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0xbf, 0x56, 0xa5),	//new xbees, small cable
+	  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0xa7),
+	  new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0x6f)
 	};
 	
 	private int numRec = 0; 	//number received packets
@@ -261,7 +278,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	private final static Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private final static Font textAreaFont = new Font("Arial", Font.PLAIN, 10);
 	
-	protected XBeeAddress64 selectedAddress;				//selected address
+	protected XBeeAddress64 selectedAddress;	//selected address
 	protected int selectedBaud = 57600; //serial comm rate
 
 	protected JComboBox<String> serialPortsList, addressesList;
@@ -330,10 +347,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent e) {
-        		System.out.println("Closing log file");
-        		controller.logger().close();
-        		dispose();
-        		System.exit(0);
+        	System.out.println("Closing log file");
+        	controller.logger().close();
+        	dispose();
+        	System.exit(0);
         	}
         });
 
@@ -504,9 +521,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         stopGPSButton.setVisible(true);
         stopGPSButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		if (e.getButton() == MouseEvent.BUTTON1) {
-        			controller.sendCommand(CommandTask.StopGPS);
-        		}
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        	controller.sendCommand(CommandTask.StopGPS);
+        	}
         	}
         });
         //enable payload button
@@ -523,9 +540,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         disablePayloadButton.setVisible(true);
         disablePayloadButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		if (e.getButton() == MouseEvent.BUTTON1){
-        			controller.sendCommand (CommandTask.DisablePayload);
-        		}
+        	if (e.getButton() == MouseEvent.BUTTON1){
+        	controller.sendCommand (CommandTask.DisablePayload);
+        	}
         	}
         });
         
@@ -621,44 +638,134 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 
     private void initializeAnalyticsTab(){
         analyticsPanel = new JPanel();
-        JPanel data = new JPanel(new GridLayout(12,2));
+        JPanel data = new JPanel(new GridBagLayout()); 
+        GridBagConstraints c = new GridBagConstraints();
+        
+        altitudeChart.addTrace(altitudeTrace);
+        AxisTitle altaxisTitleX = new AxisTitle("Altitude vs. Time");
+        IAxis altaxisX = altitudeChart.getAxisX();
+        altaxisX.setAxisTitle(altaxisTitleX);
+     
+        rotationChart.addTrace(rotationTrace);
+        AxisTitle rotaxisTitleX = new AxisTitle("Rotation vs. Time");
+        IAxis rotaxisX = rotationChart.getAxisX();
+        rotaxisX.setAxisTitle(rotaxisTitleX);
+        
+        accelChart.addTrace(accelTrace);
+        AxisTitle accelaxisTitleX = new AxisTitle("Acceleration vs. Time");
+        IAxis accelaxisX = accelChart.getAxisX();
+        accelaxisX.setAxisTitle(accelaxisTitleX);
+        
         analyticsPanel.add(data);
         
-        data.add(currentSpeedLabel);
-        data.add(currentSpeed);
+        c.ipadx = 7; c.ipady = 7;
+        c.gridx = 0; c.gridy = 0;
+        data.add(currentSpeedLabel, c);
+        c.gridx = 1; c.gridy = 0;
+        data.add(currentSpeed, c);
         
-        data.add(maxAscentSpeedLabel);
-        data.add(maxAscentSpeed);
+        c.gridx = 2; c.gridy = 0;
+        data.add(maxAscentSpeedLabel, c);
+        c.gridx = 3; c.gridy = 0;
+        data.add(maxAscentSpeed, c);
         
-        data.add(currentAccelerationLabel);
-        data.add(currentAcceleration);
+        c.gridx = 4; c.gridy = 0;
+        data.add(currentAccelerationLabel, c);
+        c.gridx = 5; c.gridy = 0;
+        data.add(currentAcceleration, c);
         
-        data.add(maxDriftSpeedLabel);
-        data.add(maxDriftSpeed);
+        c.gridx = 6; c.gridy = 0;
+        data.add(maxDriftSpeedLabel, c);
+        c.gridx = 7; c.gridy = 0;
+        data.add(maxDriftSpeed, c);
         
-        data.add(currentBearingLabel);
-        data.add(currentBearing);
+        c.gridx = 0; c.gridy = 1;
+        data.add(currentBearingLabel, c);
+        c.gridx = 1; c.gridy = 1;
+        data.add(currentBearing, c);
         
-        data.add(currentAltitudeLabel);
-        data.add(currentAltitude);   
+        c.gridx = 2; c.gridy = 1;
+        data.add(currentAltitudeLabel, c);
+        c.gridx = 3; c.gridy = 1;
+        data.add(currentAltitude, c);   
         
-        data.add(maxAltitudeLabel);
-        data.add(maxAltitude);
+        c.gridx = 4; c.gridy = 1;
+        data.add(maxAltitudeLabel, c);
+        c.gridx = 5; c.gridy = 1;
+        data.add(maxAltitude, c);
         
-        data.add(currentRotationLabel);
-        data.add(currentRotation);
+        c.gridx = 6; c.gridy = 1;
+        data.add(currentRotationLabel, c);
+        c.gridx = 7; c.gridy = 1;
+        data.add(currentRotation, c);
         
-        data.add(averageRotationLabel);
-        data.add(averageRotation);
+        c.gridx = 0; c.gridy = 2;
+        data.add(averageRotationLabel, c);
+        c.gridx = 1; c.gridy = 2;
+        data.add(averageRotation, c);
         
-        data.add(maxRotationLabel);
-        data.add(maxRotation);
+        c.gridx = 2; c.gridy = 2;
+        data.add(maxRotationLabel, c);
+        c.gridx = 3; c.gridy = 2;
+        data.add(maxRotation, c);
        
-        data.add(elapsedTimeSinceLaunchLabel);
-        data.add(elapsedTimeSinceLaunch);
+        c.gridx = 4; c.gridy = 2;
+        data.add(elapsedTimeSinceLaunchLabel, c);
+        c.gridx = 5; c.gridy = 2;
+        data.add(elapsedTimeSinceLaunch, c);
         
-        data.add(timeToApogeeSinceLaunchLabel);
-        data.add(timeToApogeeSinceLaunch);
+        c.gridx = 6; c.gridy = 2;
+        data.add(timeToApogeeSinceLaunchLabel, c);
+        c.gridx = 7; c.gridy = 2;
+        data.add(timeToApogeeSinceLaunch, c);
+        
+        c.gridx = 0; c.gridy = 3;
+        data.add(atimeLabel, c);
+        c.gridx = 1; c.gridy = 3;
+        //atimeInput.setSize(100, 200);
+        c.fill = GridBagConstraints.BOTH;
+        data.add(atimeInput, c);
+        //c.gridwidth = 1;
+        c.gridx = 2; c.gridy = 3;
+        data.add(alimitMapMarkersButton, c);
+        
+        alimitMapMarkersButton.setVisible(true);	
+        alimitMapMarkersButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        	String timeLimits = atimeInput.getText();
+        	String nums = timeLimits.replaceAll("[\\D]", " ");
+        	int firstBlank = nums.indexOf(" ");
+        	String limit1 = nums.substring(0, firstBlank);
+        	
+        	String b = nums.substring(firstBlank);
+        	String limit2 = b.replaceAll(" ", "");
+        	
+        	if(limit2.length() == 0)
+        	controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
+        	else
+        	controller.limitMapMarkers(Long.parseLong(limit1), Long.parseLong(limit2));
+        	}
+        	}
+        });
+      
+        c.gridx = 0; c.gridy = 4;
+        c.ipadx = 300;
+        c.ipady = 300;
+        c.gridwidth = 2;
+        data.add(altitudeChart, c);
+        
+        c.gridx = 3; c.gridy = 4;
+        c.ipadx = 300;
+        c.ipady = 300;
+        c.gridwidth = 2;
+        data.add(rotationChart, c);
+        
+        c.gridx = 6; c.gridy = 4;
+        c.ipadx = 300;
+        c.ipady = 300;
+        c.gridwidth = 2;
+        data.add(accelChart, c);
     }
     
     private void initializeRecoveryTab() {
@@ -821,23 +928,23 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         
         
-        limitMapMarkersButton.setVisible(true);							
+        limitMapMarkersButton.setVisible(true);	
         limitMapMarkersButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		if (e.getButton() == MouseEvent.BUTTON1) {
-        			String timeLimits = timeInput.getText();
-        			String nums = timeLimits.replaceAll("[\\D]", " ");
-        			int firstBlank = nums.indexOf(" ");
-        			String limit1 = nums.substring(0, firstBlank);
-        			
-        			String b = nums.substring(firstBlank);
-        			String limit2 = b.replaceAll(" ", "");
-        			
-        			if(limit2.length() == 0)
-        				controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
-        			else
-        				controller.limitMapMarkers(Long.parseLong(limit1), Long.parseLong(limit2));
-        		}
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        	String timeLimits = timeInput.getText();
+        	String nums = timeLimits.replaceAll("[\\D]", " ");
+        	int firstBlank = nums.indexOf(" ");
+        	String limit1 = nums.substring(0, firstBlank);
+        	
+        	String b = nums.substring(firstBlank);
+        	String limit2 = b.replaceAll(" ", "");
+        	
+        	if(limit2.length() == 0)
+        	controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
+        	else
+        	controller.limitMapMarkers(Long.parseLong(limit1), Long.parseLong(limit2));
+        	}
         	}
         });
         
@@ -873,193 +980,193 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     private void initializeXBeeTab() {
     	PropertyConfigurator.configure("./lib/log4j.properties");
 
-		// Layout GUI
-		xbeePanel = new JPanel(new BorderLayout());
+	// Layout GUI
+	xbeePanel = new JPanel(new BorderLayout());
 
-		/*-- Setup XBees Panel --*/
-		
-		JPanel xbeeInitPanel = new JPanel(new BorderLayout());
-		JLabel xbeeInitLabel = new JLabel("Setup XBees", JLabel.CENTER);
-		xbeeInitLabel.setFont(titleFont);
-		xbeeInitPanel.add(xbeeInitLabel, BorderLayout.NORTH);
-		JPanel xbeeInitGrid = new JPanel(new GridLayout(5, 2));
-		
-		//XBee Serial Port Label
-		JPanel serialPortPanel = new JPanel(new BorderLayout());
-		serialPortPanel.add(new JLabel("GS XBee Serial Port: "), BorderLayout.WEST);
-
-		//Serial port dropdown
-		serialPortsList = new JComboBox<String>(); //initialize empty dropdown
-		controller.updateSerialPortsList();
-		serialPortsList.setSelectedIndex(serialPortsList.getItemCount() - 1);
-
-		//Refresh serial ports button
-		serialPortPanel.add(serialPortsList, BorderLayout.CENTER);
-		JButton refreshPortsBtn = new JButton("Refresh");
-		refreshPortsBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.updateSerialPortsList();
-			}
-		});
-		serialPortPanel.add(refreshPortsBtn, BorderLayout.EAST);
-		xbeeInitGrid.add(serialPortPanel);
-
-		//Wireless Address Dropdown
-		JPanel addressPanel = new JPanel(new BorderLayout());
-		addressPanel.add(new JLabel("Remote XBee Address: "), BorderLayout.WEST);
-		addressesList = new JComboBox<String>(addresses);
-		addressesList.setSelectedIndex(0);
-		controller.updateSelectedAddress();
-		addressesList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.updateSelectedAddress();
-			}
-		});
-		addressPanel.add(addressesList, BorderLayout.CENTER);
-		xbeeInitGrid.add(addressPanel);
-		
-		//Baud rate dropdown
-		JPanel baudPanel = new JPanel(new BorderLayout());
-		baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
-		baudList = new JComboBox<Integer>(baudRates);
-		baudList.setSelectedIndex(4);
-		controller.updateSelectedBaudRate();
-		addressesList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.updateSelectedBaudRate();
-			}
-		});
-		baudPanel.add(baudList, BorderLayout.CENTER);
-		xbeeInitGrid.add(baudPanel);
-		
-
-		//Initialize GS XBee Button
-		JButton initXBeeButton = new JButton("Initialize GS XBee");
-		initXBeeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					controller.initXbee();
-					addToReceiveText("Success! Initialized GS XBee :)");
-					addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-							+ System.getProperty("line.separator"));
-				} catch (XBeeException e1) {
-					e1.printStackTrace();
-					numErr++;
-					addToReceiveText("Error ("
-							+ numErr
-							+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
-				}
-			}
-		});
-		xbeeInitGrid.add(initXBeeButton);
-		xbeeInitPanel.add(xbeeInitGrid, BorderLayout.CENTER);
-		
-		//Send Packet Title and Button
-		JPanel sendPacketsPanel = new JPanel(new BorderLayout());
-		JPanel sendPacketsGrid = new JPanel(new GridLayout(5, 2));
-		JLabel sendTitle = new JLabel("Send Packets", JLabel.CENTER);
-		sendTitle.setFont(titleFont);
-		sendPacketsPanel.add(sendTitle, BorderLayout.NORTH);
-
-		//Test Send Button
-		JButton testSendBtn = new JButton("Send Test");
-		testSendBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.sendXBeePacket("(Test Packet)");
-			}
-		});
-		sendPacketsGrid.add(testSendBtn);
-		
-		//Send custom data box
-		JButton customDataBtn = new JButton("Send Data");
-		customDataBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.sendXBeePacket(sendEdit.getText());
-			}
-
-		});
-
-		sendPacketsGrid.add(customDataBtn, BorderLayout.CENTER);
-		
-		//Send Custom Packet Textbox
-		JPanel customPacketEntry = new JPanel(new BorderLayout());
-		customPacketEntry.add(new JLabel("Send Packet: "), BorderLayout.WEST);
-		sendEdit = new JTextField("", 20);
-		customPacketEntry.add(sendEdit, BorderLayout.CENTER);
-		sendPacketsGrid.add(customPacketEntry,BorderLayout.SOUTH);
-		
-		sendPacketsPanel.add(sendPacketsGrid, BorderLayout.CENTER);
-		
-		JPanel PContainer = new JPanel(new BorderLayout());
-		PContainer.add(xbeeInitPanel, BorderLayout.NORTH);
-		PContainer.add(sendPacketsPanel, BorderLayout.CENTER);
-
-		/*-- Received Packets Panel-- */
-		JPanel receivePanel = new JPanel(new BorderLayout());
-		receiveText = new JTextArea(40, 60);
-		receiveText.setBackground(Color.white);
-		receiveText.setFont(textAreaFont);
-		receiveText.setLineWrap(true);
-		receiveText.setWrapStyleWord(true);
-		receiveText.setEditable(false);
-		JScrollPane receiveScrollPlane = new JScrollPane(receiveText);
-
-		JLabel receiveTitle = new JLabel("Received Packets", JLabel.CENTER);
-		receiveTitle.setFont(titleFont);
-		receivePanel.add(receiveTitle, BorderLayout.NORTH);
-		receivePanel.add(receiveScrollPlane,BorderLayout.EAST);
-		
-		/*-- Status Panel --*/
-		statusPanel = new JPanel();
-		JLabel statusTitle = new JLabel ("STATUS",JLabel.LEFT);
-		statusTitle.setFont(titleFont);
-		statusPanel.add(statusTitle);
-		
-		dataPanel = new JPanel (new BorderLayout());
-		tablePanel = new JPanel (new GridLayout(3,5));
-		JLabel rocketTitle = new JLabel ("Rocket",JLabel.LEFT);
-		rocketTitle.setFont(titleFont);
-		JLabel payloadTitle = new JLabel ("Payload",JLabel.LEFT);
-		payloadTitle.setFont(titleFont);
-		JLabel latTitle = new JLabel ("Latitude",JLabel.LEFT);
-		latTitle.setFont(titleFont);
-		JLabel longTitle = new JLabel ("Longitude",JLabel.LEFT);
-		longTitle.setFont(titleFont);
-		JLabel altTitle = new JLabel ("Altitude",JLabel.LEFT);
-		altTitle.setFont(titleFont);
-		JLabel enableTitle = new JLabel ("Enabled (Yes/No)",JLabel.LEFT);
-		enableTitle.setFont(titleFont);
-
-		tablePanel.add(new JLabel("", JLabel.LEFT)); //TODO!!!
-		tablePanel.add(latTitle);
-		tablePanel.add(longTitle);
-		tablePanel.add(altTitle);
-		tablePanel.add(enableTitle);
-		tablePanel.add(rocketTitle);	
-		lat = new JLabel("0", JLabel.LEFT);
-		tablePanel.add(lat);
-		longi = new JLabel("0",JLabel.LEFT);
-		tablePanel.add(longi); 
-		alt = new JLabel("0",JLabel.LEFT);
-		tablePanel.add(alt);
-		flag = new JLabel("-",JLabel.LEFT);
-		tablePanel.add(flag);
-		tablePanel.add(payloadTitle);
-		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-		
-		dataPanel.add(statusPanel, BorderLayout.NORTH);
-		dataPanel.add(tablePanel, BorderLayout.SOUTH);
-
-		xbeePanel.add(dataPanel, BorderLayout.SOUTH);
-		
-		xbeePanel.add(PContainer,BorderLayout.WEST);
-		xbeePanel.add(receivePanel,BorderLayout.CENTER);
+	/*-- Setup XBees Panel --*/
 	
-		
-		// Text area stuff...
+	JPanel xbeeInitPanel = new JPanel(new BorderLayout());
+	JLabel xbeeInitLabel = new JLabel("Setup XBees", JLabel.CENTER);
+	xbeeInitLabel.setFont(titleFont);
+	xbeeInitPanel.add(xbeeInitLabel, BorderLayout.NORTH);
+	JPanel xbeeInitGrid = new JPanel(new GridLayout(5, 2));
+	
+	//XBee Serial Port Label
+	JPanel serialPortPanel = new JPanel(new BorderLayout());
+	serialPortPanel.add(new JLabel("GS XBee Serial Port: "), BorderLayout.WEST);
+
+	//Serial port dropdown
+	serialPortsList = new JComboBox<String>(); //initialize empty dropdown
+	controller.updateSerialPortsList();
+	serialPortsList.setSelectedIndex(serialPortsList.getItemCount() - 1);
+
+	//Refresh serial ports button
+	serialPortPanel.add(serialPortsList, BorderLayout.CENTER);
+	JButton refreshPortsBtn = new JButton("Refresh");
+	refreshPortsBtn.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+	controller.updateSerialPortsList();
+	}
+	});
+	serialPortPanel.add(refreshPortsBtn, BorderLayout.EAST);
+	xbeeInitGrid.add(serialPortPanel);
+
+	//Wireless Address Dropdown
+	JPanel addressPanel = new JPanel(new BorderLayout());
+	addressPanel.add(new JLabel("Remote XBee Address: "), BorderLayout.WEST);
+	addressesList = new JComboBox<String>(addresses);
+	addressesList.setSelectedIndex(0);
+	controller.updateSelectedAddress();
+	addressesList.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+	controller.updateSelectedAddress();
+	}
+	});
+	addressPanel.add(addressesList, BorderLayout.CENTER);
+	xbeeInitGrid.add(addressPanel);
+	
+	//Baud rate dropdown
+	JPanel baudPanel = new JPanel(new BorderLayout());
+	baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
+	baudList = new JComboBox<Integer>(baudRates);
+	baudList.setSelectedIndex(4);
+	controller.updateSelectedBaudRate();
+	addressesList.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+	controller.updateSelectedBaudRate();
+	}
+	});
+	baudPanel.add(baudList, BorderLayout.CENTER);
+	xbeeInitGrid.add(baudPanel);
+	
+
+	//Initialize GS XBee Button
+	JButton initXBeeButton = new JButton("Initialize GS XBee");
+	initXBeeButton.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+	try {
+	controller.initXbee();
+	addToReceiveText("Success! Initialized GS XBee :)");
+	addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	+ System.getProperty("line.separator"));
+	} catch (XBeeException e1) {
+	e1.printStackTrace();
+	numErr++;
+	addToReceiveText("Error ("
+	+ numErr
+	+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
+	}
+	}
+	});
+	xbeeInitGrid.add(initXBeeButton);
+	xbeeInitPanel.add(xbeeInitGrid, BorderLayout.CENTER);
+	
+	//Send Packet Title and Button
+	JPanel sendPacketsPanel = new JPanel(new BorderLayout());
+	JPanel sendPacketsGrid = new JPanel(new GridLayout(5, 2));
+	JLabel sendTitle = new JLabel("Send Packets", JLabel.CENTER);
+	sendTitle.setFont(titleFont);
+	sendPacketsPanel.add(sendTitle, BorderLayout.NORTH);
+
+	//Test Send Button
+	JButton testSendBtn = new JButton("Send Test");
+	testSendBtn.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+	controller.sendXBeePacket("(Test Packet)");
+	}
+	});
+	sendPacketsGrid.add(testSendBtn);
+	
+	//Send custom data box
+	JButton customDataBtn = new JButton("Send Data");
+	customDataBtn.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+	controller.sendXBeePacket(sendEdit.getText());
+	}
+
+	});
+
+	sendPacketsGrid.add(customDataBtn, BorderLayout.CENTER);
+	
+	//Send Custom Packet Textbox
+	JPanel customPacketEntry = new JPanel(new BorderLayout());
+	customPacketEntry.add(new JLabel("Send Packet: "), BorderLayout.WEST);
+	sendEdit = new JTextField("", 20);
+	customPacketEntry.add(sendEdit, BorderLayout.CENTER);
+	sendPacketsGrid.add(customPacketEntry,BorderLayout.SOUTH);
+	
+	sendPacketsPanel.add(sendPacketsGrid, BorderLayout.CENTER);
+	
+	JPanel PContainer = new JPanel(new BorderLayout());
+	PContainer.add(xbeeInitPanel, BorderLayout.NORTH);
+	PContainer.add(sendPacketsPanel, BorderLayout.CENTER);
+
+	/*-- Received Packets Panel-- */
+	JPanel receivePanel = new JPanel(new BorderLayout());
+	receiveText = new JTextArea(40, 60);
+	receiveText.setBackground(Color.white);
+	receiveText.setFont(textAreaFont);
+	receiveText.setLineWrap(true);
+	receiveText.setWrapStyleWord(true);
+	receiveText.setEditable(false);
+	JScrollPane receiveScrollPlane = new JScrollPane(receiveText);
+
+	JLabel receiveTitle = new JLabel("Received Packets", JLabel.CENTER);
+	receiveTitle.setFont(titleFont);
+	receivePanel.add(receiveTitle, BorderLayout.NORTH);
+	receivePanel.add(receiveScrollPlane,BorderLayout.EAST);
+	
+	/*-- Status Panel --*/
+	statusPanel = new JPanel();
+	JLabel statusTitle = new JLabel ("STATUS",JLabel.LEFT);
+	statusTitle.setFont(titleFont);
+	statusPanel.add(statusTitle);
+	
+	dataPanel = new JPanel (new BorderLayout());
+	tablePanel = new JPanel (new GridLayout(3,5));
+	JLabel rocketTitle = new JLabel ("Rocket",JLabel.LEFT);
+	rocketTitle.setFont(titleFont);
+	JLabel payloadTitle = new JLabel ("Payload",JLabel.LEFT);
+	payloadTitle.setFont(titleFont);
+	JLabel latTitle = new JLabel ("Latitude",JLabel.LEFT);
+	latTitle.setFont(titleFont);
+	JLabel longTitle = new JLabel ("Longitude",JLabel.LEFT);
+	longTitle.setFont(titleFont);
+	JLabel altTitle = new JLabel ("Altitude",JLabel.LEFT);
+	altTitle.setFont(titleFont);
+	JLabel enableTitle = new JLabel ("Enabled (Yes/No)",JLabel.LEFT);
+	enableTitle.setFont(titleFont);
+
+	tablePanel.add(new JLabel("", JLabel.LEFT)); //TODO!!!
+	tablePanel.add(latTitle);
+	tablePanel.add(longTitle);
+	tablePanel.add(altTitle);
+	tablePanel.add(enableTitle);
+	tablePanel.add(rocketTitle);	
+	lat = new JLabel("0", JLabel.LEFT);
+	tablePanel.add(lat);
+	longi = new JLabel("0",JLabel.LEFT);
+	tablePanel.add(longi); 
+	alt = new JLabel("0",JLabel.LEFT);
+	tablePanel.add(alt);
+	flag = new JLabel("-",JLabel.LEFT);
+	tablePanel.add(flag);
+	tablePanel.add(payloadTitle);
+	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+	
+	dataPanel.add(statusPanel, BorderLayout.NORTH);
+	dataPanel.add(tablePanel, BorderLayout.SOUTH);
+
+	xbeePanel.add(dataPanel, BorderLayout.SOUTH);
+	
+	xbeePanel.add(PContainer,BorderLayout.WEST);
+	xbeePanel.add(receivePanel,BorderLayout.CENTER);
+	
+	
+	// Text area stuff...
     }
     
     private void initializeSettingsTab() {
@@ -1145,7 +1252,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	tileLocationChooser = new JFileChooser();
     	tileLocationChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     	tileLocationChooser.setFileFilter(new FileFilter() {
-    		@Override
+    	@Override
     	      public boolean accept( File file ) {
     	        return file.isDirectory();
     	      }
@@ -1157,7 +1264,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	});
     	tileLocationChooserButton = new JButton("Load Map Tiles");
     	tileLocationChooserButton.addMouseListener(new MouseAdapter() {
-    		@Override
+    	@Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                 	//set default directory to 
@@ -1218,10 +1325,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     public void updateGPSFix (boolean fix) {
     	if (fix) {
-    		gpsStatus.setIcon(ImageFactory.enabledImage());
+    	gpsStatus.setIcon(ImageFactory.enabledImage());
     	}
     	else {
-    		gpsStatus.setIcon(ImageFactory.disabledImage());
+    	gpsStatus.setIcon(ImageFactory.disabledImage());
     	}
     }
 	
@@ -1236,14 +1343,14 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	
 	//get updated data from XBee and display it
 	public void updateXBeeData (String updateLat, String updateLongi, String updateAlt, String updateFlag) {
-		lat.setText(updateLat);
-		longi.setText(updateLongi);
-		alt.setText(updateAlt);
-		flag.setText(updateFlag);
+	lat.setText(updateLat);
+	longi.setText(updateLongi);
+	alt.setText(updateAlt);
+	flag.setText(updateFlag);
 	}
 
 	public void updateViewerTree(JMapViewerTree tree) {
-		treeMap = tree;
+	treeMap = tree;
 	}
 
     public void updateAnalytics(double latitude, double longitude, double altitude, 
@@ -1256,6 +1363,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             prevSpeed = 0.0;
             hasLaunched = true;
         }
+        
+        altitudeTrace.addPoint(time, altitude);
+        rotationTrace.addPoint(time, rotation);
+        accelTrace.addPoint(time, acceleration);
         
         double deltaLat = metersPerDegLat(latitude)-metersPerDegLat(prevLatitude);
         double deltaLon = metersPerDegLon(longitude) - metersPerDegLon(prevLongitude);
@@ -1335,33 +1446,33 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	 * @void
 	 */
 	public void updateSerialPortsList() {
-		ArrayList<String> comboBoxList = new ArrayList<String>();
-		Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
-		while (portList.hasMoreElements()) {
-			CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
-			if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-				comboBoxList.add(portId.getName());
-				// System.out.println(portId.getName());
-			} else {
-				// System.out.println(portId.getName());
-			}
-		}
+	ArrayList<String> comboBoxList = new ArrayList<String>();
+	Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
+	while (portList.hasMoreElements()) {
+	CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
+	if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+	comboBoxList.add(portId.getName());
+	// System.out.println(portId.getName());
+	} else {
+	// System.out.println(portId.getName());
+	}
+	}
 
-		// update list...
-		serialPortsList.removeAllItems();
-		for (String s : comboBoxList) {
-			serialPortsList.addItem(s);
-		}
+	// update list...
+	serialPortsList.removeAllItems();
+	for (String s : comboBoxList) {
+	serialPortsList.addItem(s);
+	}
 	}
 
 	/**
 	 * Adds text to the Received Packets Box
-	 * @param txt			text to add
+	 * @param txt	text to add
 	 */
 	public void addToReceiveText(String txt) {
-		receiveText.setText(receiveText.getText() + "- " + txt + System.getProperty("line.separator"));
-		receiveText.setCaretPosition(receiveText.getDocument().getLength()); // locks scroll at bottom
-		//logMessage(txt);
+	receiveText.setText(receiveText.getText() + "- " + txt + System.getProperty("line.separator"));
+	receiveText.setCaretPosition(receiveText.getDocument().getLength()); // locks scroll at bottom
+	//logMessage(txt);
 	}
 	
 	/**
@@ -1370,22 +1481,22 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	 * @param s
 	 */
 	public void controlLog(String s) {
-		//infolog.setText(infolog.getText() + ">> " + s + System.getProperty("line.separator"));
-		infolog.append(s + System.getProperty("line.separator"));
-		infolog.setCaretPosition(infolog.getDocument().getLength()); // locks scroll at bottom
-		controlLogToFile(s);
+	//infolog.setText(infolog.getText() + ">> " + s + System.getProperty("line.separator"));
+	infolog.append(s + System.getProperty("line.separator"));
+	infolog.setCaretPosition(infolog.getDocument().getLength()); // locks scroll at bottom
+	controlLogToFile(s);
 	}
 	
 	private void controlLogToFile (String s) {
-		//TODO
+	//TODO
 	}
 	
 	/**
 	 * Write a message to the log file
-	 * @param msg			msg to write
+	 * @param msg	msg to write
 	 */
 	/*public void logMessage(String msg) {
-		log.info(msg);
+	log.info(msg);
 	}*/
     
     private void updateZoomParameters() {
@@ -1420,32 +1531,32 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     public void setPayloadStatus (PayloadStatus st) {
     	switch (st) {
     	case Enabled:
-    		payloadStatus.setIcon(ImageFactory.enabledImage());
-    		break;
+    	payloadStatus.setIcon(ImageFactory.enabledImage());
+    	break;
     	case Busy:
-    		payloadStatus.setIcon(ImageFactory.busyImage());
-    		break;
+    	payloadStatus.setIcon(ImageFactory.busyImage());
+    	break;
     	case Disabled:
-    		payloadStatus.setIcon(ImageFactory.disabledImage());
-    		break;
+    	payloadStatus.setIcon(ImageFactory.disabledImage());
+    	break;
     	default:
-    		throw new IllegalArgumentException();
+    	throw new IllegalArgumentException();
     	}
     }
     
     public void setGPSStatus (GPSStatus st) {
     	switch (st) {
     	case Fix:
-    		gpsStatus.setIcon(ImageFactory.enabledImage());
-    		break;
+    	gpsStatus.setIcon(ImageFactory.enabledImage());
+    	break;
     	case Unknown:
-    		gpsStatus.setIcon(ImageFactory.busyImage());
-    		break;
+    	gpsStatus.setIcon(ImageFactory.busyImage());
+    	break;
     	case NoFix:
-    		gpsStatus.setIcon(ImageFactory.disabledImage());
-    		break;
+    	gpsStatus.setIcon(ImageFactory.disabledImage());
+    	break;
     	default:
-    		throw new IllegalArgumentException();
+    	throw new IllegalArgumentException();
     	}
     }
 }
