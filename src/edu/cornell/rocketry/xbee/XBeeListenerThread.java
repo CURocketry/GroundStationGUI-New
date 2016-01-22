@@ -10,7 +10,7 @@ import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 import edu.cornell.rocketry.comm.receive.RealReceiver;
 import edu.cornell.rocketry.comm.receive.Receiver;
 import edu.cornell.rocketry.gui.GSGui;
-import edu.cornell.rocketry.util.GPSResponse;
+import edu.cornell.rocketry.util.TEMResponse;
 
 public class XBeeListenerThread extends Thread {
 
@@ -42,10 +42,10 @@ public class XBeeListenerThread extends Thread {
 					ZNetRxResponse ioSample = (ZNetRxResponse) response;
 					IncomingPacket packet = new IncomingPacket(ioSample);
 					
-					GPSResponse r = new GPSResponse (
+					TEMResponse r = new TEMResponse (
 						packet.latitude(), packet.longitude(), 
 						packet.altitude(), packet.flag(), 
-						System.currentTimeMillis());
+						System.currentTimeMillis(),0,0);
 					
 					synchronized(receiver) {
 						receiver.acceptGPSResponse(r);

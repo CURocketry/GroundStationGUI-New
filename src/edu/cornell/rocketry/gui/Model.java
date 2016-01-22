@@ -1,22 +1,21 @@
 package edu.cornell.rocketry.gui;
 
 import java.util.LinkedList;
-
-import com.rapplogic.xbee.api.XBee;
-import com.rapplogic.xbee.api.XBeeAddress64;
+import java.util.List;
 
 import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.Position;
-import edu.cornell.rocketry.util.PayloadStatus;
+import edu.cornell.rocketry.util.CameraStatus;
+import edu.cornell.rocketry.util.Datum;
 
 
 public class Model {
 	
-	private PayloadStatus pl_status;
-	private PayloadStatus prev_stable_pl_status;
+	private CameraStatus cm_status;
+	private CameraStatus prev_stable_cm_status;
 	private GPSStatus gps_status;
-	private Position rocket_pos;
-	private LinkedList<Position> rocket_past_pos;
+	private Datum rocket_curr;
+	private LinkedList<Datum> rocket_past;
 	
 	//XBee tab variables
 	//public XBee xbee = new XBee(); //keep as public reference @see XBeeListenerThread.java
@@ -25,27 +24,27 @@ public class Model {
 	
 	
 	public Model () {
-		pl_status = PayloadStatus.Disabled;
-		prev_stable_pl_status = PayloadStatus.Disabled;
+		cm_status = CameraStatus.Disabled;
+		prev_stable_cm_status = CameraStatus.Disabled;
 		gps_status = GPSStatus.NoFix;
-		rocket_pos = new Position (0,0,0, 0); //there might be better stub values...
-		rocket_past_pos = new LinkedList<Position>();
+		rocket_curr = null;
+		rocket_past = new LinkedList<Datum>();
 	}
 	
-	public PayloadStatus payload () {
-		return pl_status;
+	public CameraStatus camera () {
+		return cm_status;
 	}
 	
-	public PayloadStatus prevPayload () {
-		return prev_stable_pl_status;
+	public CameraStatus prevPayload () {
+		return prev_stable_cm_status;
 	}
 	
-	public void setPayload (PayloadStatus st) {
-		//make sure prev_stable_pl_status is never Busy - that's not a stable state!
-		if (pl_status != PayloadStatus.Busy) {
-			prev_stable_pl_status = pl_status;
+	public void setPayload (CameraStatus st) {
+		//make sure prev_stable_cm_status is never Busy - that's not a stable state!
+		if (cm_status != CameraStatus.Busy) {
+			prev_stable_cm_status = cm_status;
 		}
-		pl_status = st;
+		cm_status = st;
 	}
 	
 	public GPSStatus gps () {
@@ -56,24 +55,28 @@ public class Model {
 		gps_status = st;
 	}
 	
-	public Position position () {
-		return rocket_pos;
+	public Position current_position () {
+		return rocket_curr.pos();
 	}
 	
-	public LinkedList<Position> getPastRocketPositions(){
-		return rocket_past_pos;
+	public Datum current_datum () {
+		return rocket_curr;
 	}
 	
-	public void updatePosition(double x, double y, double z) {
-		Position p = new Position(x,y,z, System.currentTimeMillis());
-		rocket_past_pos.add(p);
-		rocket_pos = p;
+	public List<Datum> getPastRocketData(){
+		return rocket_past;
 	}
 	
-	public void updatePosition (double x, double y, double z, long t) {
-		Position p = new Position (x,y,z,t);
-		rocket_past_pos.add(p);
-		rocket_pos = p;
+	public void update (double x, double y, double z, long t, long a, long r) {
+		Position p = new Position(x,y,z);
+		Datum d = new Datum(p,t,r,a);
+		rocket_past.add(d);
+		rocket_curr = d;
+	}
+	
+	public void update (Datum d) {
+		rocket_past.add(d);
+		rocket_curr = d;
 	}
 	
 }

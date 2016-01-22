@@ -16,7 +16,7 @@ public class TestSender implements Sender {
 	
 	public TestSender (Controller c) {
 		controller = c;
-		String path = "./assets/gps_spoof_west_campus.gpsim";
+		String path = "./sim/campus_20.rsim";
 		rsim = new RocketSimulator(path, controller.getReceiver(true));
 	}
 	
@@ -30,18 +30,17 @@ public class TestSender implements Sender {
 	public void send (Command c) {
 		try {
 			switch (c.task()) {
-			case StartGPS:
-				rsim.startGPS();
+			case TRANSMIT_START:
+				rsim.restart(c.time());
 				break;
-			case StopGPS:
-				rsim.stopGPS();
-				rsim.resetGPS();
+			case TRANSMIT_HALT:
+				rsim.reset(c.time());
 				break;
-			case EnablePayload:
-				rsim.enablePayload(c.time());
+			case EnableCamera:
+				rsim.enableCamera(c.time());
 				break;
-			case DisablePayload:
-				rsim.disablePayload(c.time());
+			case DisableCamera:
+				rsim.disableCamera(c.time());
 				break;
 			default:
 				throw new UnsupportedOperationException(c.task().toString());

@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.gui;
+package edu.cornell.rocketry.util;
 
 public class Pair<L,R> {
 	private L left;
@@ -26,6 +26,6 @@ public class Pair<L,R> {
 	}
 
 	public static void main (String[] args) {
-		Pair<Integer, String> example = new Pair<Integer, String>(1, "I’m in a Pair with the Integer 1!");
+		Pair<Integer, String> example = new Pair<Integer, String>(1, "Iï¿½m in a Pair with the Integer 1!");
 	}	
 }

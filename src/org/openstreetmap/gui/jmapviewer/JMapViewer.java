@@ -97,7 +97,6 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * {@link MemoryTileCache} and the tile loader uses 4 parallel threads for
      * retrieving the tiles.
      */
-    @SuppressWarnings("unused")
     public JMapViewer() {
         this(new MemoryTileCache(), 0);
         new DefaultMapController(this);

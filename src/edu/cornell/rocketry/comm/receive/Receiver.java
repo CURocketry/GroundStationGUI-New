@@ -1,13 +1,12 @@
 package edu.cornell.rocketry.comm.receive;
 
-import edu.cornell.rocketry.gui.Controller;
 import edu.cornell.rocketry.util.CommandResponse;
-import edu.cornell.rocketry.util.GPSResponse;
+import edu.cornell.rocketry.util.TEMResponse;
 
 public interface Receiver {
 	
 	public void acceptCommandResponse (CommandResponse cr);
 	
-	public void acceptGPSResponse (GPSResponse gr);
+	public void acceptGPSResponse (TEMResponse gr);
 	
 }

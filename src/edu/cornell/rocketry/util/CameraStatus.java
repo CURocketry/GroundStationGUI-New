@@ -1,6 +1,6 @@
 package edu.cornell.rocketry.util;
 
-public enum PayloadStatus {
+public enum CameraStatus {
 	Enabled, //green
 	Busy,	 //yellow
 	Disabled //red

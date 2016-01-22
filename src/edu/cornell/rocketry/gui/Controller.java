@@ -38,17 +38,16 @@ import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
 import edu.cornell.rocketry.util.CommandResponse;
 import edu.cornell.rocketry.util.CommandTask;
-import edu.cornell.rocketry.util.GPSResponse;
+import edu.cornell.rocketry.util.TEMResponse;
 import edu.cornell.rocketry.util.GPSStatus;
-import edu.cornell.rocketry.util.Logger;
+import edu.cornell.rocketry.util.DataLogger;
+import edu.cornell.rocketry.util.Datum;
 import edu.cornell.rocketry.util.Position;
-import edu.cornell.rocketry.util.PayloadStatus;
-import edu.cornell.rocketry.util.RunnableFactory;
+import edu.cornell.rocketry.util.CameraStatus;
 import edu.cornell.rocketry.util.LocalLoader;
+import edu.cornell.rocketry.util.Pair;
 import edu.cornell.rocketry.xbee.OutgoingPacket;
 import edu.cornell.rocketry.xbee.OutgoingPacketType;
-//import edu.cornell.rocketry.xbee.XBeeListenerThread;
-import edu.cornell.rocketry.comm.receive.XBeeListenerThread;
 import edu.cornell.rocketry.xbee.XBeeSender;
 import edu.cornell.rocketry.xbee.XBeeSenderException;
 import gnu.io.CommPortIdentifier;
@@ -60,7 +59,7 @@ public class Controller {
 	
 	public boolean testing;
 	
-	private Logger logger;
+	private DataLogger dataLogger;
 	
 	//view
 	private GSGui mainWindow;
@@ -76,24 +75,22 @@ public class Controller {
 	private Sender realSender;
 	public Sender sender () { return (testing? testSender : realSender); }
 	
-	private Model testModel;
-	private Model realModel;
-	public Model model (boolean test) { return (test? testModel : realModel); }
+	private Model model;
 	
 	private CommController commController;
 	
 	
 	public Controller (GSGui gui) {
 		mainWindow = gui;
-		testModel = new Model();
-		realModel = new Model();
+		model = new Model();
 		testReceiver = new TestReceiver(this);
 		realReceiver = new RealReceiver(this);
 		commController = new CommController(this);
 		testSender = new TestSender(this);
 		realSender = new RealSender(this, commController.xbee(), mainWindow.selectedAddress);
-		logger = new Logger();
-		logger.log("time,lat,lon,alt");
+		dataLogger = new DataLogger();
+		dataLogger.log("time,lat,lon,alt");
+		
 		System.out.println("Controller Initialized");
 		
 		testing = false;	//default for now	
@@ -101,7 +98,7 @@ public class Controller {
 	
 	/*------------------------- Getters & Setters ---------------------------*/
 	
-	public Logger logger() { return logger; }
+	public DataLogger logger() { return dataLogger; }
 	
 	public CommController commController() { return commController; }
 	
@@ -119,11 +116,10 @@ public class Controller {
 	
 	public void refreshDisplay () {
 		//re-load markers on map
-		Collection<Position> all_rocket_positions = 
-			model(testing).getPastRocketPositions();
-		updateRocketPositionFull(all_rocket_positions);
+		Collection<Datum> all_rocket_data = model.getPastRocketData();
+		updateRocketPositionFull(all_rocket_data);
 		
-		mainWindow.setPayloadStatus(model(testing).payload());
+		mainWindow.setCameraStatus(model.camera());
 		
 	}
 	
@@ -131,12 +127,12 @@ public class Controller {
 	/*------------------ Control & Tracking Update Methods ------------------*/
 	
 	void updateRocketTrajectory(){
-		LinkedList<Position> rocket_past_pos = model(testing).getPastRocketPositions();
-		int nPositions = rocket_past_pos.size();
+		List<Datum> rocket_past_data = model.getPastRocketData();
+		int nPositions = rocket_past_data.size();
 		if (nPositions> 1){
-			double[] lat = {rocket_past_pos.get(nPositions-2).lat(), rocket_past_pos.get(nPositions-1).lat()};
-			double[] lon = {rocket_past_pos.get(nPositions-2).lon(), rocket_past_pos.get(nPositions-1).lon()};
-			double[] alt = {rocket_past_pos.get(nPositions-2).alt(), rocket_past_pos.get(nPositions-1).alt()};
+			double[] lat = {rocket_past_data.get(nPositions-2).lat(), rocket_past_data.get(nPositions-1).lat()};
+			double[] lon = {rocket_past_data.get(nPositions-2).lon(), rocket_past_data.get(nPositions-1).lon()};
+			double[] alt = {rocket_past_data.get(nPositions-2).alt(), rocket_past_data.get(nPositions-1).alt()};
 	
 			Plot3DPanel plot = mainWindow.getTrajectoryPlot();
 			plot.addLinePlot(
@@ -171,12 +167,24 @@ public class Controller {
 		System.out.println("Added tiles to map");
 	}
 	
-	private void addTilesToCacheFromFile(MemoryTileCache cache, TileSource source, File f) {
-		LinkedList<Tile> acc = new LinkedList<Tile>();
-		LocalLoader.buildTileList(acc, f, source);
-		for (Tile t : acc) {
-			cache.addTile(t);
-		}
+	private void addTilesToCacheFromFile(final MemoryTileCache cache, final TileSource source, final File f) {
+		final LinkedList<Tile> acc = new LinkedList<Tile>();
+		
+		Thread worker = new Thread() {
+			public void run () {
+				synchronized(cache) {					
+					LocalLoader.buildTileList(acc, f, source);
+					
+					for (Tile t : acc) {
+						cache.addTile(t);
+					}
+					
+				}
+			}
+		};
+		
+		worker.start();
+		
 	}
 	
 	/**
@@ -186,8 +194,8 @@ public class Controller {
 		mainWindow.map().getTileController().setTileCache(new MemoryTileCache());
 	}
 
-    void updateRocketPosition (Position p) {
-    	MapMarkerDot toAdd = new MapMarkerDot(""+Position.millisToTime(p.time()), new Coordinate(p.lat(), p.lon()));
+    void updateRocketPosition (Datum d) {
+    	MapMarkerDot toAdd = new MapMarkerDot(""+Position.millisToTime(d.time()), new Coordinate(d.lat(), d.lon()));
     	mainWindow.addMapMarkerDot
     		(toAdd);
     	if (prevDot != null) {
@@ -198,23 +206,23 @@ public class Controller {
     	updateRocketTrajectory(); //FIXME
     }
     
-    void updateRocketPositionFull (Collection<Position> ps) {
+    void updateRocketPositionFull (Collection<Datum> data) {
     	clearMapMarkers();
-    	for (Position p : ps) {
-    		updateRocketPosition(p);
+    	for (Datum d : data) {
+    		updateRocketPosition(d);
     	}
     }
     
-    void updatePayloadStatus (PayloadStatus st) {
+    void updatePayloadStatus (CameraStatus st) {
     	//System.out.println("Updating Payload Status: " + st.toString());
-    	model(testing).setPayload(st);
-    	mainWindow.setPayloadStatus(model(testing).payload());
+    	model.setPayload(st);
+    	mainWindow.setCameraStatus(model.camera());
     	//System.out.println("Updated Payload Status: " + model(testing).payload().toString());
     }
     
     void updateGPSStatus (GPSStatus st) {
-    	model(testing).setGPS(st);
-    	mainWindow.setGPSStatus(model(testing).gps());
+    	model.setGPS(st);
+    	mainWindow.setGPSStatus(model.gps());
     }
     
     public void clearMapMarkers () {
@@ -240,9 +248,9 @@ public class Controller {
 		ilog(message);
 		
 		//process receipt
-		if (r.task() == CommandTask.EnablePayload
-			|| r.task() == CommandTask.DisablePayload) {
-			updatePayloadStatus(PayloadStatus.Busy);
+		if (r.task() == CommandTask.EnableCamera
+			|| r.task() == CommandTask.DisableCamera) {
+			updatePayloadStatus(CameraStatus.Busy);
 		}
 	}
 	
@@ -255,14 +263,14 @@ public class Controller {
 		ilog("elapsed time: " + r.time() + " ms");
 		
 		//process response
-		if (r.task() == CommandTask.EnablePayload
-			|| r.task() == CommandTask.DisablePayload) {
+		if (r.task() == CommandTask.EnableCamera
+			|| r.task() == CommandTask.DisableCamera) {
 			if (r.successful()) {
-				PayloadStatus ps = r.task() == CommandTask.EnablePayload ? PayloadStatus.Enabled : PayloadStatus.Disabled;
+				CameraStatus ps = r.task() == CommandTask.EnableCamera ? CameraStatus.Enabled : CameraStatus.Disabled;
 				updatePayloadStatus(ps);
 			} else { //we failed to complete task
 				//reset to what it was before failed attempt
-				updatePayloadStatus(model(testing).prevPayload());
+				updatePayloadStatus(model.prevPayload());
 			}
 		}
 		else if (r.task() == CommandTask.GPSFix) {
@@ -272,30 +280,36 @@ public class Controller {
 		}
 	}
 	
-	public synchronized void acceptGPSResponse (GPSResponse r, boolean test) {
+	public synchronized void acceptTEMResponse (TEMResponse r, boolean test) {
 		ilog("\nGPS Response Received:");
+		
 		if (gpsCheck(r)) {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
 			// Update model
-			model(test).updatePosition(r.lat(), r.lon(), r.alt(), r.time());
-			if (test == testing) updateRocketPosition (model(test).position());
+			model.update(r.create_datum());
+			updateRocketPosition (model.current_datum());
 			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
-			if (!test) logger.log(
-				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
+			if (!test) dataLogger.log(
+				System.currentTimeMillis()+","+r.lat()+","+r.lon()+","
+					+r.alt()+","+r.rot()+","+r.acc());
 			if (!test) {
 				String posn = "(" + r.lat() + ", " + r.lon() + ")";
 				mainWindow.updateLatestPosition(posn);
 			}
+			
+			MapMarker m = new MapMarkerDot(r.lat(), r.lon());
+			Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
+			all_markers.add(p);
+			mainWindow.map().addMapMarker(m);
 
-			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time(), r.getRot(), r.getAcc());
-
+			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time(), r.rot(), r.acc());
 		} else {
 			ilog("inaccurate data received");
 		}
 		
-		if (!test) logger.log(
+		if (!test) dataLogger.log(
 				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
 	}
 		
@@ -306,12 +320,12 @@ public class Controller {
 	 * @param r the GPSResponse to be evaluated
 	 * @return
 	 */
-	private boolean gpsCheck (GPSResponse r) {
-		return true;
+	private boolean gpsCheck (TEMResponse r) {
+		//return true;
 		//NORTHEAST:
-		/*return (
+		return (
 			r.lat() < 45 && r.lat() > 40 &&
-			r.lon() > -80 && r.lon() < -70);*/
+			r.lon() > -80 && r.lon() < -70);
 		//ALABAMA (Huntsville):
 		// return (
 		//  	r.lat() < 36 && r.lat() > 34 &&
@@ -415,23 +429,6 @@ public class Controller {
 			return false;
 		}
 	}
-    	
-	
-	/**
-	 * Performs the actions required to store and display GPS 
-	 * coordinates as they are received.
-	 */
-	public void acceptGPSResponse (GPSResponse r) {
-		//create a MapMarker m with the coordinates in r
-		//add m to all_markers, in a pair with the current time
-		//add m to the View using the map().addMapMarker(m) method
-		//store location to a permanent file & other code
-		MapMarker m = new MapMarkerDot(r.lat(), r.lon());
-		Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
-		all_markers.add(p);
-		mainWindow.map().addMapMarker(m);
-		logger.log(""+r.time()+","+r.lat()+","+r.lon()+","+r.alt());
-	}
 	
     /**
      * Limits the MapMarkers that are visible on the screen. 
@@ -450,5 +447,18 @@ public class Controller {
     		}
     	}
     	mainWindow.map().setMapMarkerList(filtered_markers);
+    }
+    
+    /**
+     * Clears all data from the screen, functionally resetting the application
+     */
+    public void clearData () {
+    	//clear map markers
+    	mainWindow.map().setMapMarkerList(new ArrayList<MapMarker>());
+    	//clear 3d plot
+    	mainWindow.resetTrajectoryPlot();
+    	//clear analytics tab
+    	mainWindow.initializeAnalyticsTab();
+    	
     }
 }

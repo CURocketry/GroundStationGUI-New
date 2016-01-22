@@ -7,41 +7,41 @@ public class Position {
 	private double longitude;
 	private double altitude;
 	
-	private long time;
-	private double rotation;
-	private double acceleration;
-	
-	public Position (double lat, double lon, double alt, long t) {
+	public Position (double lat, double lon, double alt) {
 		latitude = lat;
 		longitude = lon;
 		altitude = alt;
-		time = t;
 		bounds_check();
 	}
-	
-	public Position (double lat, double lon, double alt, long t, double rot, double acc) {
-		latitude = lat;
-		longitude = lon;
-		altitude = alt;
-		time = t;
-		rotation = rot;
-		acceleration = acc;
-		bounds_check();
-	}
-	
 	
 	public double lat() { return latitude; }
 	public double lon() { return longitude; }
 	public double alt() { return altitude; }
-	public long time() { return time; }
-	public double rot() { return rotation; }
-	public double acc() { return acceleration; }
 	
 	private void bounds_check () {
-		/*
-		if (true) //conditions: TODO
-			System.err.println("Rocket placed at invalid position");
-		*/
+		if (latitude > 90) {
+			Logger.warn
+				("edu.cornell.rocketry.util.Position#bounds_check failed: latitude = " 
+					+ latitude + ", greater than 90");
+			latitude = 90;
+		}
+		if (latitude < -90) {
+			Logger.warn
+			("edu.cornell.rocketry.util.Position#bounds_check failed: latitude = " 
+				+ latitude + ", less than -90");
+			latitude = -90;
+		}
+		if (longitude > 180) {
+			Logger.warn
+			("edu.cornell.rocketry.util.Position#bounds_check failed: longitude = " 
+				+ longitude + ", greater than 180");
+			longitude = 180;
+		}
+		if (longitude < -180) {
+			Logger.warn("edu.cornell.rocketry.util.Position#bounds_check failed: longitude = " 
+				+ longitude + ", less than -180");
+			longitude = -180;
+		}
 	}
 	
 	public static String millisToTime(long millis) {

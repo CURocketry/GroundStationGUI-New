@@ -12,16 +12,16 @@ import edu.cornell.rocketry.gui.Controller;
 
 public class RocketSimulator {
 	
-	private String GPSfilepath;
-	private File file = null;
+	private String simfilepath;
+	private File simfile;
 	
-	private Thread gworker;
-	private Thread pworker;
+	private Thread gps_worker;
+	private Thread cam_worker;
 	
 	private int frequency; //frequency, in Hz.
 	
 	private int index;
-	private ArrayList<Position> positions;
+	private ArrayList<Datum> data;
 	
 	private Receiver receiver;
 	
@@ -29,28 +29,30 @@ public class RocketSimulator {
 	//TODO: what flag to spoof? (set in constructors)
 	
 	public RocketSimulator (String path, Receiver r) {
-		this.GPSfilepath = path;
+		this.simfilepath = path;
+		this.simfile = new File(path);
 		receiver = r;
 		frequency = 1;
 		index = 0;
-		positions = new ArrayList<Position>();
+		data = new ArrayList<Datum>();
 		GPSflag = 0xf;
-		readGPSFile();
+		loadSimFile();
 	}
 	
 	public RocketSimulator (File f, Receiver r) {
-		this.file = f;
+		this.simfile = f;
+		this.simfilepath = f.getPath();
 		receiver = r;
 		index = 0;
-		positions = new ArrayList<Position>();
+		data = new ArrayList<Datum>();
 		GPSflag = 0xf;
-		readGPSFile();
+		loadSimFile();
 	}
 	
-	public void enablePayload(long requestStartTime) {
+	public void enableCamera(long requestStartTime) {
 		final long st = requestStartTime;
-		if (pworker != null) pworker.interrupt();
-		pworker = new Thread(
+		if (cam_worker != null) cam_worker.interrupt();
+		cam_worker = new Thread(
 			new Runnable () {
 				public void run() {
 					try {
@@ -72,34 +74,34 @@ public class RocketSimulator {
 					if (p < pr_success) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.EnablePayload, true, et, "");
+						CommandResponse cre = new CommandResponse(CommandTask.EnableCamera, true, et, "");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					else if (p < pr_comm_fail) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.EnablePayload, false, et, "failure: could not connect");
+						CommandResponse cre = new CommandResponse(CommandTask.EnableCamera, false, et, "failure: could not connect");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					else if (p < pr_unknown_fail) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.EnablePayload, false, et, "failure: unknown");
+						CommandResponse cre = new CommandResponse(CommandTask.EnableCamera, false, et, "failure: unknown");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
-					
-					else throw new InternalError("no cases reached");
+
+					else throw new InternalError("edu.cornell.rocketry.util.RocketSimulator#enableCamera failed: no cases reached");
 				}
 			});
-		pworker.start();		
+		cam_worker.start();		
 	}
 	
-	public void disablePayload(long requestStartTime) {
+	public void disableCamera(long requestStartTime) {
 		final long st = requestStartTime;
-		if (pworker != null) pworker.interrupt();
-		pworker = new Thread(
+		if (cam_worker != null) cam_worker.interrupt();
+		cam_worker = new Thread(
 			new Runnable () {
 				public void run() {
 					int sleep_time = (int) Math.random() * 1000;
@@ -122,45 +124,45 @@ public class RocketSimulator {
 					if (p < pr_success) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, true, et, "");
+						CommandResponse cre = new CommandResponse(CommandTask.DisableCamera, true, et, "");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					else if (p < pr_comm_fail) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, false, et, "failure: could not connect");
+						CommandResponse cre = new CommandResponse(CommandTask.DisableCamera, false, et, "failure: could not connect");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
 					else if (p < pr_unknown_fail) {
 						long ft = System.currentTimeMillis();
 						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.DisablePayload, false, et, "failure: unknown");
+						CommandResponse cre = new CommandResponse(CommandTask.DisableCamera, false, et, "failure: unknown");
 						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 					}
 					
-					else throw new InternalError("no cases reached");
+					else throw new InternalError("edu.cornell.rocketry.util.RocketSimulator#disableCamera failed: no cases reached");
 				}
 			});
-		pworker.start();
-		
+		cam_worker.start();
 		
 	}
 	
-	public void startGPS() {
-		gworker = new Thread(
+	private void sim_go(long requestStartTime) {
+		final long st = requestStartTime;
+		gps_worker = new Thread(
 			new Runnable() {
 				public void run() {
 					long delay = (long) (1000.0 / getFrequency());
-					Position p;
-					for ( ; index < positions.size(); index++) {
+					Datum d;
+					for ( ; index < data.size(); index++) {
 						if (Thread.interrupted()) {
 							return;
 						}
-						p = positions.get(index);
-						GPSResponse r = 
-							new GPSResponse (p.lat(), p.lon(), p.alt(), GPSflag, p.time(), p.rot(), p.acc());
+						d = data.get(index);
+						TEMResponse r = 
+							new TEMResponse (d.lat(), d.lon(), d.alt(), GPSflag, d.time(), d.rot(), d.acc());
 						System.out.println("Receiver Object in gworker thread: " + receiver);
 						synchronized (receiver) {
 							receiver.acceptGPSResponse (r);
@@ -173,26 +175,34 @@ public class RocketSimulator {
 					}
 				}
 			});
-		gworker.start();
+		gps_worker.start();
+		
+		long ft = System.currentTimeMillis();
+		long et = ft - st;
+		CommandResponse cre = new CommandResponse(CommandTask.TRANSMIT_START, true, et, "");
+		synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 	}
 	
-	public void stopGPS() {
-		if (gworker != null) gworker.interrupt();
+	private void sim_halt(long requestStartTime) {
+		final long st = requestStartTime;
+		if (gps_worker != null) gps_worker.interrupt();
+		
+		long ft = System.currentTimeMillis();
+		long et = ft - st;
+		CommandResponse cre = new CommandResponse(CommandTask.TRANSMIT_HALT, true, et, "");
+		synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 	}
 	
-	public void resetGPS() {
-		stopGPS();
+	public void reset(long requestStartTime) {
+		System.out.println("reset called");
+		sim_halt(requestStartTime);
 		index = 0;
 	}
 	
-	public void restartGPS() {
-		resetGPS();
-		startGPS();
-	}
-	
-	
-	private void readGPSFile () {
-		parseCSV();
+	public void restart(long requestStartTime) {
+		System.out.println("restart called");
+		reset(requestStartTime);
+		sim_go(requestStartTime);
 	}
 	
 	
@@ -206,33 +216,44 @@ public class RocketSimulator {
 		else frequency = 1;
 	}
 	
-	private void parseCSV () {
+	private void loadSimFile () {
+		System.out.println("loading simulation file");
 		try {
 			Scanner sc;
-			if (file == null)
-				sc = new Scanner(new File (GPSfilepath));
-			else sc = new Scanner(file);
+			if (simfile == null)
+				sc = new Scanner(new File (simfilepath));
+			else sc = new Scanner(simfile);
+			
 			String line;
 			String [] components;
-			Position p;
+			Datum d;
 			while (sc.hasNextLine()) {
 				
 				line = sc.nextLine();
 				components = line.split(",");
-				p = new Position (
-					Double.parseDouble(components[0]),
+				
+				if (components[0].trim().substring(0, 2).equals("//")) {
+					continue;
+				}
+				
+				d = new Datum (
 					Double.parseDouble(components[1]),
-					Integer.parseInt(components[2]),
-					Long.parseLong(components[3]),
+					Double.parseDouble(components[2]),
+					Integer.parseInt(components[3]),
+					Long.parseLong(components[0]),
 					Double.parseDouble(components[4]),
 					Double.parseDouble(components[5])
 				);
-				positions.add(p);
+				data.add(d);
 			}
 			sc.close();
-			System.out.println("Positions: " + positions);
-		} catch (FileNotFoundException e) {
-			System.out.println("Could not find file: " + GPSfilepath);
+			Logger.debug("edu.cornell.rocketry.util.RocketSimulator#parseCSV: Loaded Data: " + data);
+		} catch (Exception e) {
+			Logger.err("edu.cornell.rocketry.util.RocketSimulator#parseCSV failed with exception: " + e.toString());
 		}
+	}
+	
+	public static void main (String[] args) {
+		System.out.println(System.currentTimeMillis());
 	}
 }

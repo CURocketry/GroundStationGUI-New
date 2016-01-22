@@ -88,11 +88,11 @@ import com.rapplogic.xbee.api.XBeeException;
 
 import edu.cornell.rocketry.gui.Controller;
 import edu.cornell.rocketry.util.CommandTask;
-import edu.cornell.rocketry.util.GPSResponse;
+import edu.cornell.rocketry.util.TEMResponse;
 import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.ImageFactory;
 import edu.cornell.rocketry.util.RocketSimulator;
-import edu.cornell.rocketry.util.PayloadStatus;
+import edu.cornell.rocketry.util.CameraStatus;
 import edu.cornell.rocketry.xbee.OutgoingPacket;
 import edu.cornell.rocketry.xbee.OutgoingPacketType;
 import edu.cornell.rocketry.xbee.XBeeListenerThread;
@@ -137,7 +137,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     /*------------------------ Control Tab Fields ---------------------------*/
     JPanel status;
     JPanel gpsControls;
-    JPanel payloadControls;
+    JPanel cameraControls;
     JPanel latestPositionPanel;
     JLabel latestPosition;
     
@@ -146,14 +146,14 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JPanel controlsSection;
     JPanel trajpanel;
     
-    JPanel payloadStatusContainer;
+    JPanel cameraStatusContainer;
     JPanel gpsStatusContainer;
     
     JScrollPane infologscrollpane;
     JTextArea infolog;
     
-    JLabel payloadStatusLabel;
-    JLabel payloadStatus;
+    JLabel cameraStatusLabel;
+    JLabel cameraStatus;
     
     JLabel gpsStatusLabel;
     JLabel gpsStatus;
@@ -162,8 +162,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JButton startGPSButton = new JButton("Start GPS");
     JButton stopGPSButton = new JButton("Stop GPS");
     
-    JButton enablePayloadButton = new JButton("Enable Payload");
-    JButton disablePayloadButton = new JButton("Disable Payload");
+    JButton enableCameraButton = new JButton("Enable Camera");
+    JButton disableCameraButton = new JButton("Disable Camera");
     
     private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
 
@@ -273,7 +273,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	private JLabel nLabel;
 
 	private JTextArea receiveText;
-	private JTextArea rocketText, payloadText;
+	private JTextArea rocketText, cameraText;
 	private JTextField sendEdit;
 	private final static Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private final static Font textAreaFont = new Font("Arial", Font.PLAIN, 10);
@@ -317,6 +317,13 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	private JButton defaultLocationChooser;
 	private JCheckBox manualPointEntryCheckBox;
 	
+	/* GENERAL */
+	//container
+	private JPanel generalSettingsPanel;
+	//label
+	private JLabel generalSettingsPanelLabel;
+	//elements
+	private JButton clearDataButton;
 	
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
      *                                                                       *
@@ -433,6 +440,12 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	return trajectoryplot;
     } //FIXME
     
+    public void resetTrajectoryPlot() {
+    	trajpanel.remove(trajectoryplot);
+    	trajectoryplot = new Plot3DPanel();
+        trajpanel.add(trajectoryplot,BorderLayout.CENTER);
+    }
+    
     JMapViewer map(){
         return treeMap.getViewer();
     }
@@ -460,7 +473,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         //status indicators
         status = new JPanel(new BorderLayout());
         status.setOpaque(false);
-        payloadStatusContainer = new JPanel(new BorderLayout());
+        cameraStatusContainer = new JPanel(new BorderLayout());
         gpsStatusContainer = new JPanel(new BorderLayout());
         
         //display of last known position
@@ -473,17 +486,16 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         latestPositionPanel.add(latestPositionLabel, BorderLayout.WEST);
         latestPositionPanel.add(latestPosition, BorderLayout.EAST);
         
-        //functionality not required:
-        payloadStatusLabel = new JLabel("Payload Status: ");
-        payloadStatusLabel.setOpaque(false);
-        payloadStatusLabel.setForeground(Color.WHITE);
-        payloadStatus = new JLabel();
-        payloadStatus.setIcon(new ImageIcon ("./assets/red_icon_20_20.jpg"));
-        payloadStatus.setOpaque(false);
-        //end functionality not required
         
-        payloadStatusContainer.add(payloadStatusLabel, BorderLayout.WEST);
-        payloadStatusContainer.add(payloadStatus, BorderLayout.EAST);
+        cameraStatusLabel = new JLabel("Camera Status: ");
+        cameraStatusLabel.setOpaque(false);
+        cameraStatusLabel.setForeground(Color.WHITE);
+        cameraStatus = new JLabel();
+        cameraStatus.setIcon(ImageFactory.disabledImage());
+        cameraStatus.setOpaque(false);
+        
+        cameraStatusContainer.add(cameraStatusLabel, BorderLayout.WEST);
+        cameraStatusContainer.add(cameraStatus, BorderLayout.EAST);
         
         gpsStatusLabel = new JLabel("GPS Status: ");
         gpsStatusLabel.setOpaque(false);
@@ -497,11 +509,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         gpsStatusContainer.add(gpsStatus, BorderLayout.EAST);
         
         gpsStatusContainer.setOpaque(false);
-        payloadStatusContainer.setOpaque(false);
+        cameraStatusContainer.setOpaque(false);
         
         status.add(gpsStatusContainer, BorderLayout.WEST);
-        //functionality not required:
-        //status.add(payloadStatusContainer, BorderLayout.EAST);
+        status.add(cameraStatusContainer, BorderLayout.EAST);
         
         
         //start GPS button
@@ -513,7 +524,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
                 	clearMapMarkers();
                 	//no longer necessary 3/7/15
                 	//controller.sendCommand (CommandTask.StopGPS);
-                	controller.sendCommand (CommandTask.StartGPS);
+                	controller.commController().startListening();
+                	controller.sendCommand (CommandTask.TRANSMIT_START);
                 }
             }
         });
@@ -522,33 +534,29 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         stopGPSButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         	if (e.getButton() == MouseEvent.BUTTON1) {
-        	controller.sendCommand(CommandTask.StopGPS);
+        	controller.sendCommand(CommandTask.TRANSMIT_HALT);
         	}
         	}
         });
-        //enable payload button
-        enablePayloadButton.setVisible(true);
-        enablePayloadButton.addMouseListener(new MouseAdapter() {
+        //enable camera button
+        enableCameraButton.setVisible(true);
+        enableCameraButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    controller.sendCommand (CommandTask.EnablePayload);
+                    controller.sendCommand (CommandTask.EnableCamera);
                 }
             }
         });
-        //disable payload button
-        disablePayloadButton.setVisible(true);
-        disablePayloadButton.addMouseListener(new MouseAdapter() {
+        //disable camera button
+        disableCameraButton.setVisible(true);
+        disableCameraButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         	if (e.getButton() == MouseEvent.BUTTON1){
-        	controller.sendCommand (CommandTask.DisablePayload);
+        	controller.sendCommand (CommandTask.DisableCamera);
         	}
         	}
         });
-        
-        /* ~~~Disable Payload Buttons - Not Required~~~ */
-        enablePayloadButton.setEnabled(false);
-        disablePayloadButton.setEnabled(false);
         
         //info log
         infolog = new JTextArea (); 
@@ -626,17 +634,17 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         c.gridx = 2;
         c.gridy = 1;
-        controlPanel.add(enablePayloadButton, c);
+        controlPanel.add(enableCameraButton, c);
 
         c.gridx = 3;
         c.gridy = 1;
-        controlPanel.add(disablePayloadButton, c);
+        controlPanel.add(disableCameraButton, c);
         
         controlPanel.setVisible(true);
         controlPanel.validate();
     }
 
-    private void initializeAnalyticsTab(){
+    public void initializeAnalyticsTab(){
         analyticsPanel = new JPanel();
         JPanel data = new JPanel(new GridBagLayout()); 
         GridBagConstraints c = new GridBagConstraints();
@@ -732,20 +740,20 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         alimitMapMarkersButton.setVisible(true);	
         alimitMapMarkersButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        	if (e.getButton() == MouseEvent.BUTTON1) {
-        	String timeLimits = atimeInput.getText();
-        	String nums = timeLimits.replaceAll("[\\D]", " ");
-        	int firstBlank = nums.indexOf(" ");
-        	String limit1 = nums.substring(0, firstBlank);
-        	
-        	String b = nums.substring(firstBlank);
-        	String limit2 = b.replaceAll(" ", "");
-        	
-        	if(limit2.length() == 0)
-        	controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
-        	else
-        	controller.limitMapMarkers(Long.parseLong(limit1), Long.parseLong(limit2));
-        	}
+	        	if (e.getButton() == MouseEvent.BUTTON1) {
+		        	String timeLimits = atimeInput.getText();
+		        	String nums = timeLimits.replaceAll("[\\D]", " ");
+		        	int firstBlank = nums.indexOf(" ");
+		        	String limit1 = nums.substring(0, firstBlank);
+		        	
+		        	String b = nums.substring(firstBlank);
+		        	String limit2 = b.replaceAll(" ", "");
+		        	
+		        	if(limit2.length() == 0)
+		        		controller.limitMapMarkers(Long.parseLong(limit1), System.currentTimeMillis()*1000);
+		        	else
+		        		controller.limitMapMarkers(Long.parseLong(limit1), Long.parseLong(limit2));
+	        	}
         	}
         });
       
@@ -1126,8 +1134,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	tablePanel = new JPanel (new GridLayout(3,5));
 	JLabel rocketTitle = new JLabel ("Rocket",JLabel.LEFT);
 	rocketTitle.setFont(titleFont);
-	JLabel payloadTitle = new JLabel ("Payload",JLabel.LEFT);
-	payloadTitle.setFont(titleFont);
 	JLabel latTitle = new JLabel ("Latitude",JLabel.LEFT);
 	latTitle.setFont(titleFont);
 	JLabel longTitle = new JLabel ("Longitude",JLabel.LEFT);
@@ -1151,7 +1157,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	tablePanel.add(alt);
 	flag = new JLabel("-",JLabel.LEFT);
 	tablePanel.add(flag);
-	tablePanel.add(payloadTitle);
 	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
 	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
 	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
@@ -1292,9 +1297,34 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	mapSettingsPanel.add(manualPointEntryCheckBox);
     	/* ~~~~~~ END MAP SETTINGS ~~~~~~ */
     	
+    	/* ~~~~~~~~ GENERAL SETTINGS ~~~~~~~~ */
+    	//container
+    	generalSettingsPanel = new JPanel();
+    	//label
+    	generalSettingsPanelLabel = new JLabel("General");
+    	//elements
+    	
+    	clearDataButton = new JButton("Clear Data");
+    	clearDataButton.addMouseListener(new MouseAdapter() {
+    	@Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                	controller.clearData();
+                }
+            }
+    	});
+    	
+    	
+    	//add elements to container
+    	generalSettingsPanel.setLayout(new BoxLayout(generalSettingsPanel, BoxLayout.Y_AXIS));
+    	generalSettingsPanel.add(generalSettingsPanelLabel);
+    	generalSettingsPanel.add(clearDataButton);
+    	/* ~~~~~~ END GENERAL SETTINGS ~~~~~~ */
+    	
     	
     	//add borders for testing
     	testingSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+    	generalSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
     	mapSettingsPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
     	
     	
@@ -1303,13 +1333,17 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	GridBagConstraints c = new GridBagConstraints();
     	c.ipadx = 50; c.ipady = 50;
     	c.weightx = 0.2;
-    	c.gridy = 0; c.gridx = 0;
-    	c.anchor = GridBagConstraints.LINE_START;
+    	c.gridy = 0; c.gridx = 1;
+    	c.anchor = GridBagConstraints.LINE_END;
     	settingsPanel.add(testingSettingsPanel, c);
     	c.weightx = 0.2;
-    	c.gridy = 0; c.gridx = 1;
+    	c.gridy = 0; c.gridx = 2;
     	c.anchor = GridBagConstraints.CENTER;
     	settingsPanel.add(mapSettingsPanel, c);
+    	c.weightx = 0.2;
+    	c.gridy = 0; c.gridx = 0;
+    	c.anchor = GridBagConstraints.LINE_START;
+    	settingsPanel.add(generalSettingsPanel, c);
     }
     
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
@@ -1446,23 +1480,24 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	 * @void
 	 */
 	public void updateSerialPortsList() {
-	ArrayList<String> comboBoxList = new ArrayList<String>();
-	Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
-	while (portList.hasMoreElements()) {
-	CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
-	if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-	comboBoxList.add(portId.getName());
-	// System.out.println(portId.getName());
-	} else {
-	// System.out.println(portId.getName());
-	}
-	}
+		ArrayList<String> comboBoxList = new ArrayList<String>();
+		Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
+		
+		while (portList.hasMoreElements()) {
+			CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
+			if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+			comboBoxList.add(portId.getName());
+			// System.out.println(portId.getName());
+			} else {
+			// System.out.println(portId.getName());
+			}
+		}
 
-	// update list...
-	serialPortsList.removeAllItems();
-	for (String s : comboBoxList) {
-	serialPortsList.addItem(s);
-	}
+		// update list...
+		serialPortsList.removeAllItems();
+		for (String s : comboBoxList) {
+		serialPortsList.addItem(s);
+		}
 	}
 
 	/**
@@ -1528,16 +1563,16 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	map().setMapMarkerVisible(b);
     }
     
-    public void setPayloadStatus (PayloadStatus st) {
+    public void setCameraStatus (CameraStatus st) {
     	switch (st) {
     	case Enabled:
-    	payloadStatus.setIcon(ImageFactory.enabledImage());
+    	cameraStatus.setIcon(ImageFactory.enabledImage());
     	break;
     	case Busy:
-    	payloadStatus.setIcon(ImageFactory.busyImage());
+    	cameraStatus.setIcon(ImageFactory.busyImage());
     	break;
     	case Disabled:
-    	payloadStatus.setIcon(ImageFactory.disabledImage());
+    	cameraStatus.setIcon(ImageFactory.disabledImage());
     	break;
     	default:
     	throw new IllegalArgumentException();

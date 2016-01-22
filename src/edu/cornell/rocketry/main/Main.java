@@ -1,4 +1,6 @@
-package edu.cornell.rocketry.gui;
+package edu.cornell.rocketry.main;
+
+import edu.cornell.rocketry.gui.GSGui;
 
 public class Main {
 

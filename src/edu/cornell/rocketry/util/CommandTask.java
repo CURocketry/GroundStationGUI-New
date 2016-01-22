@@ -3,15 +3,15 @@ package edu.cornell.rocketry.util;
 public enum CommandTask {
 	SendTest,
 	SendData,
-	EnablePayload,
-	DisablePayload,
+	EnableCamera,
+	DisableCamera,
 	InitializeXBee,
 	RefreshPortList,
 	ChangeBaudRate,
 	ChangeAddress,
 	ChangePort,
-	StartGPS,
-	StopGPS,
+	TRANSMIT_START,
+	TRANSMIT_HALT,
 	GPSFix;
 	
 	public String toString() {
@@ -20,10 +20,10 @@ public enum CommandTask {
 			return "SendTest";
 		case SendData:
 			return "SendData";
-		case EnablePayload:
-			return "EnablePayload";
-		case DisablePayload:
-			return "DisablePayload";
+		case EnableCamera:
+			return "EnableCamera";
+		case DisableCamera:
+			return "DisableCamera";
 		case InitializeXBee:
 			return "InitializeXBee";
 		case RefreshPortList:
@@ -34,10 +34,10 @@ public enum CommandTask {
 			return "ChangeAddress";
 		case ChangePort:
 			return "ChangePort";
-		case StartGPS:
-			return "StartGPS";
-		case StopGPS:
-			return "StopGPS";
+		case TRANSMIT_START:
+			return "TRANSMIT_START";
+		case TRANSMIT_HALT:
+			return "TRANSMIT_HALT";
 		case GPSFix:
 			return "GPSFix";
 		default:
