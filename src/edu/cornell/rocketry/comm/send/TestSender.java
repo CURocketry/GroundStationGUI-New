@@ -5,7 +5,7 @@ import java.io.File;
 import edu.cornell.rocketry.gui.Controller;
 import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
-import edu.cornell.rocketry.util.CommandTask;
+import edu.cornell.rocketry.util.CommandType;
 import edu.cornell.rocketry.util.RocketSimulator;
 
 public class TestSender implements Sender {
@@ -29,7 +29,7 @@ public class TestSender implements Sender {
 	
 	public void send (Command c) {
 		try {
-			switch (c.task()) {
+			switch (c.type()) {
 			case ENABLE_CAMERA:
 				//TODO
 				break;
@@ -55,15 +55,15 @@ public class TestSender implements Sender {
 				//TODO
 				break;
 			default:
-				throw new UnsupportedOperationException(c.task().toString());
+				throw new UnsupportedOperationException(c.type().toString());
 			}
-			receipt(c.task(), true, "");
+			receipt(c.type(), true, "");
 		} catch (Exception e) {
-			receipt(c.task(), false, "Unrecoverable: " + e.toString());
+			receipt(c.type(), false, "Unrecoverable: " + e.toString());
 		}
 	}
 	
-	private synchronized void receipt (CommandTask t, boolean s, String m) {
+	private synchronized void receipt (CommandType t, boolean s, String m) {
 		controller.acceptCommandReceipt(
 			new CommandReceipt(t, s, m));
 	}

@@ -13,25 +13,29 @@ public class RealSender implements Sender{
 	
 	XBeeSender sender;
 	
-	public RealSender (Controller h, XBee x, XBeeAddress64 a) {
-		controller = h;
+	public RealSender (Controller c, XBee x, XBeeAddress64 a) {
+		controller = c;
 		sender = new XBeeSender(x, a);
 	}
 
 	@Override
 	public void send(Command c) {
 		CommandReceipt r;
+		
+		CommandFlag f = new CommandFlag();
+		f.set(c.type(), true);
+		
+		OutgoingPacket packet = new OutgoingPacket(f);
+		
 		try {
-			switch (c.task()) {
-			//for each type of command, create the proper OutgoingPacket of the proper OutgoingPacketType
-			//Once you have the packet, do sender.send(), and catch the appropriate exceptions.
-			default:
-				r = new CommandReceipt (c.task(), false, 
-					"edu.cornell.rocketry.comm.send.RealSender#send unimplemented for task '" + c.task() + "'");
-			}
-		} catch (Exception e) {
-			r = new CommandReceipt (c.task(), false, "Send error: " + e.toString());
+			sender.send(packet);
+			r = new CommandReceipt(c.type(), true, "");		
+		} catch (XBeeSenderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			r = new CommandReceipt(c.type(), false, e.toString());
 		}
+		
 		controller.acceptCommandReceipt(r);
 	}
 	

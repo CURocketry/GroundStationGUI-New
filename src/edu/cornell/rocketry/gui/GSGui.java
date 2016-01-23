@@ -87,7 +87,7 @@ import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeException;
 
 import edu.cornell.rocketry.gui.Controller;
-import edu.cornell.rocketry.util.CommandTask;
+import edu.cornell.rocketry.util.CommandType;
 import edu.cornell.rocketry.util.TEMResponse;
 import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.ImageFactory;
@@ -525,7 +525,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
                 	//no longer necessary 3/7/15
                 	//controller.sendCommand (CommandTask.StopGPS);
                 	controller.commController().startListening();
-                	controller.sendCommand (CommandTask.TRANSMIT_START);
+                	controller.sendCommand (CommandType.TRANSMIT_START);
                 }
             }
         });
@@ -534,7 +534,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         stopGPSButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
 	        	if (e.getButton() == MouseEvent.BUTTON1) {
-	        		controller.sendCommand(CommandTask.TRANSMIT_HALT);
+	        		controller.sendCommand(CommandType.TRANSMIT_HALT);
 	        	}
         	}
         });
@@ -544,7 +544,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    controller.sendCommand (CommandTask.ENABLE_CAMERA);
+                    controller.sendCommand (CommandType.ENABLE_CAMERA);
                 }
             }
         });
@@ -553,7 +553,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         disableCameraButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
 	        	if (e.getButton() == MouseEvent.BUTTON1){
-	        		controller.sendCommand (CommandTask.DISABLE_CAMERA);
+	        		controller.sendCommand (CommandType.DISABLE_CAMERA);
 	        	}
         	}
         });

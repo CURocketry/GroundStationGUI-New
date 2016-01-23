@@ -18,7 +18,7 @@ public class StatusFlag_TEST {
 		StatusFlag f = new StatusFlag();
 
 		for (StatusFlag.Type s : args) {
-			assertFalse(f.is_set(s));
+			assertFalse(f.isSet(s));
 		}
 	}
 	
@@ -33,10 +33,10 @@ public class StatusFlag_TEST {
 		
 		f.set(args[0], true);
 		
-		assertTrue(f.is_set(args[0]));
+		assertTrue(f.isSet(args[0]));
 		
 		for (int i = 1; i < args.length; i++) {
-			assertFalse(f.is_set(args[i]));
+			assertFalse(f.isSet(args[i]));
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class StatusFlag_TEST {
 		}
 		
 		for (StatusFlag.Type s : args) {
-			assertTrue(f.is_set(s));
+			assertTrue(f.isSet(s));
 		}
 	}
 	
@@ -73,10 +73,10 @@ public class StatusFlag_TEST {
 		
 		f.set(args[0], false);
 		
-		assertFalse(f.is_set(args[0]));
+		assertFalse(f.isSet(args[0]));
 		
 		for (int i = 1; i < args.length; i++) {
-			assertTrue(f.is_set(args[i]));
+			assertTrue(f.isSet(args[i]));
 		}
 	}
 

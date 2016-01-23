@@ -36,7 +36,7 @@ import edu.cornell.rocketry.comm.shared.CommController;
 import edu.cornell.rocketry.gui.Model;
 import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
-import edu.cornell.rocketry.util.CommandTask;
+import edu.cornell.rocketry.util.CommandType;
 import edu.cornell.rocketry.util.TEMResponse;
 import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.DataLogger;
@@ -228,8 +228,8 @@ public class Controller {
     	mainWindow.clearMapMarkers();
     }
     
-    public void sendCommand (CommandTask task) {
-    	Command c = new Command(task, System.currentTimeMillis());
+    public void sendCommand (CommandType type) {
+    	Command c = new Command(type, System.currentTimeMillis());
     	sender().send(c);
     }
     
@@ -240,15 +240,15 @@ public class Controller {
 		//display receipt
 		String message = 
 			r.success() ? 
-				(r.task().toString() + " successfully sent.") :
-				("COULD NOT SEND " + r.task().toString() + 
+				(r.type().toString() + " successfully sent.") :
+				("COULD NOT SEND " + r.type().toString() + 
 					". \n -> " + r.message());
 		ilog("\nCommand Receipt Received:");
 		ilog(message);
 		
 		//process receipt
-		if (r.task() == CommandTask.ENABLE_CAMERA
-			|| r.task() == CommandTask.DISABLE_CAMERA) {
+		if (r.type() == CommandType.ENABLE_CAMERA
+			|| r.type() == CommandType.DISABLE_CAMERA) {
 			updatePayloadStatus(CameraStatus.Busy);
 		}
 	}

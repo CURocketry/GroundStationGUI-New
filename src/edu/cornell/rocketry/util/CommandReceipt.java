@@ -3,17 +3,17 @@ package edu.cornell.rocketry.util;
 public class CommandReceipt {
 
 	
-	private CommandTask task;
+	private CommandType type;
 	private boolean success;
 	private String message;
 	
-	public CommandReceipt  (CommandTask task, boolean success, String message) {
-		this.task = task;
+	public CommandReceipt  (CommandType type, boolean success, String message) {
+		this.type = type;
 		this.success = success;
 		this.message = message;
 	}
 	
-	public CommandTask task() { return task; }
+	public CommandType type() { return type; }
 	public boolean success() { return success; }
 	public String message() { return message; }
 }

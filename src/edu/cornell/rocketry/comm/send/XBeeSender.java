@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.comm.send;
+	package edu.cornell.rocketry.comm.send;
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeAddress64;
@@ -10,12 +10,10 @@ import com.rapplogic.xbee.api.zigbee.ZNetTxStatusResponse;
 
 public class XBeeSender {
 	
-//	private OutgoingPacket payload;
 	private XBeeAddress64 destination;
 	private XBee xbee;
 	
-	public XBeeSender(XBee x, XBeeAddress64 a/*, OutgoingPacket p*/) {
-//		payload = p;
+	public XBeeSender(XBee x, XBeeAddress64 a) {
 		destination = a;
 		xbee = x;
 	}
@@ -33,7 +31,7 @@ public class XBeeSender {
 			
 			//add condition for Send Data
 			
-			final ZNetTxRequest request = new ZNetTxRequest(destination, packet.getPayload());
+			final ZNetTxRequest request = new ZNetTxRequest(destination, packet.payload());
 			
 			ZNetTxStatusResponse response = (ZNetTxStatusResponse) xbee.sendSynchronous(request,1000);
 			//System.out.println(response.isSuccess());

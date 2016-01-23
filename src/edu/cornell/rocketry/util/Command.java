@@ -2,17 +2,17 @@ package edu.cornell.rocketry.util;
 
 public class Command {
 	
-	private CommandTask commandTask;
+	private CommandType type;
 	
 	private long startTime;
 	
 	
-	public Command (CommandTask ct, long t) {
-		commandTask = ct;
+	public Command (CommandType ct, long t) {
+		type = ct;
 		startTime = t;
 	}
 	
-	public CommandTask task() { return commandTask; }
+	public CommandType type () { return type; }
 	
 	public long time() { return startTime; }
 

@@ -1,43 +1,27 @@
 package edu.cornell.rocketry.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class StatusFlag {
 	
 	byte flag;
-	Map<Type, Byte> m;
 	
 	public StatusFlag (byte f) {
-		m = new HashMap<Type, Byte>();
 		flag = f;
-		m.put(Type.gps_fix,        (byte) 0b00000001);
-		m.put(Type.camera_enabled, (byte) 0b00000010);
-		m.put(Type.transmit_freq,  (byte) 0b00000100);
 	}
 	
 	public StatusFlag () {
-		m = new HashMap<Type, Byte>();
 		flag = 0x0;
 	}
 	
 	public void set (Type elem, boolean b) {
-		if (!m.containsKey(elem)) {
-			throw new IllegalArgumentException("no flag '" + elem + "' found");
-		}
 		if (b) {
-			flag |= m.get(elem).byteValue();
+			flag |= elem.bitMask();
 		} else {
-			flag &= ~m.get(elem).byteValue();
+			flag &= ~elem.bitMask();
 		}
 	}
 	
-	public boolean is_set (Type elem) {
-		if (!m.containsKey(elem)) {
-			throw new IllegalArgumentException("no flag '" + elem + "' found");
-		}
-		byte b = (byte) (flag | m.get(elem).byteValue());
-		System.out.println("hello!");
+	public boolean isSet (Type elem) {
+		byte b = (byte) (flag & elem.bitMask());
 		return b != 0;
 	}
 	
@@ -48,7 +32,33 @@ public class StatusFlag {
 	public enum Type {
 		gps_fix,
 		camera_enabled,
-		transmit_freq
+		transmit_freq;
+		
+		public byte bitMask () {
+			switch(this) {
+			case gps_fix:
+				return (byte) 0b00000001;
+			case camera_enabled:
+				return (byte) 0b00000010;
+			case transmit_freq:
+				return (byte) 0b00000100;
+			default: 
+				throw new IllegalStateException("invalid StatusFlag");
+			}
+		}
+		
+		public String toString () {
+			switch (this) {
+			case gps_fix:
+				return "gps_fix";
+			case camera_enabled:
+				return "camera_enabled";
+			case transmit_freq:
+				return "transmit_freq";
+			default:
+				throw new IllegalStateException("invalid StatusFlag");
+			}
+		}
 	}
 
 }
