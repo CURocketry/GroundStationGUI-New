@@ -1,14 +1,10 @@
 package edu.cornell.rocketry.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 import edu.cornell.rocketry.comm.receive.Receiver;
-import edu.cornell.rocketry.comm.receive.TestReceiver;
-import edu.cornell.rocketry.gui.Controller;
 
 public class RocketSimulator {
 	
@@ -16,17 +12,19 @@ public class RocketSimulator {
 	private File simfile;
 	
 	private Thread gps_worker;
-	private Thread cam_worker;
 	
 	private int frequency; //frequency, in Hz.
+	
+	
 	
 	private int index;
 	private ArrayList<Datum> data;
 	
 	private Receiver receiver;
 	
-	private byte GPSflag;
-	//TODO: what flag to spoof? (set in constructors)
+	private boolean gps_fix;
+	private boolean camera_enabled;
+	private boolean transmit_freq; //true -> max freq; false -> min freq
 	
 	public RocketSimulator (String path, Receiver r) {
 		this.simfilepath = path;
@@ -35,7 +33,9 @@ public class RocketSimulator {
 		frequency = 1;
 		index = 0;
 		data = new ArrayList<Datum>();
-		GPSflag = 0xf;
+		gps_fix = true;
+		camera_enabled = false;
+		transmit_freq = false;
 		loadSimFile();
 	}
 	
@@ -45,112 +45,13 @@ public class RocketSimulator {
 		receiver = r;
 		index = 0;
 		data = new ArrayList<Datum>();
-		GPSflag = 0xf;
+		gps_fix = true;
+		camera_enabled = false;
+		transmit_freq = false;
 		loadSimFile();
 	}
 	
-	public void enableCamera(long requestStartTime) {
-		final long st = requestStartTime;
-		if (cam_worker != null) cam_worker.interrupt();
-		cam_worker = new Thread(
-			new Runnable () {
-				public void run() {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException ie) {
-						return;
-					}
-					
-					Random r = new Random();
-					r.setSeed(System.currentTimeMillis());
-					
-					//probabilities of success
-					int pr_success = 8;
-					int pr_comm_fail = 9;
-					int pr_unknown_fail = 10;
-					
-					int p = r.nextInt() % 10;
-					
-					if (p < pr_success) {
-						long ft = System.currentTimeMillis();
-						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.EnableCamera, true, et, "");
-						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
-					}
-					
-					else if (p < pr_comm_fail) {
-						long ft = System.currentTimeMillis();
-						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.EnableCamera, false, et, "failure: could not connect");
-						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
-					}
-					
-					else if (p < pr_unknown_fail) {
-						long ft = System.currentTimeMillis();
-						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.EnableCamera, false, et, "failure: unknown");
-						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
-					}
-
-					else throw new InternalError("edu.cornell.rocketry.util.RocketSimulator#enableCamera failed: no cases reached");
-				}
-			});
-		cam_worker.start();		
-	}
-	
-	public void disableCamera(long requestStartTime) {
-		final long st = requestStartTime;
-		if (cam_worker != null) cam_worker.interrupt();
-		cam_worker = new Thread(
-			new Runnable () {
-				public void run() {
-					int sleep_time = (int) Math.random() * 1000;
-					try {
-						Thread.sleep(sleep_time);
-					} catch (InterruptedException ie) {
-						return;
-					}
-					
-					Random r = new Random();
-					r.setSeed(System.currentTimeMillis());
-					
-					//probabilities of success
-					int pr_success = 8;
-					int pr_comm_fail = 9;
-					int pr_unknown_fail = 10;
-					
-					int p = r.nextInt() % 10;
-					
-					if (p < pr_success) {
-						long ft = System.currentTimeMillis();
-						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.DisableCamera, true, et, "");
-						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
-					}
-					
-					else if (p < pr_comm_fail) {
-						long ft = System.currentTimeMillis();
-						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.DisableCamera, false, et, "failure: could not connect");
-						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
-					}
-					
-					else if (p < pr_unknown_fail) {
-						long ft = System.currentTimeMillis();
-						long et = ft - st;
-						CommandResponse cre = new CommandResponse(CommandTask.DisableCamera, false, et, "failure: unknown");
-						synchronized (receiver) { receiver.acceptCommandResponse(cre); }
-					}
-					
-					else throw new InternalError("edu.cornell.rocketry.util.RocketSimulator#disableCamera failed: no cases reached");
-				}
-			});
-		cam_worker.start();
-		
-	}
-	
 	private void sim_go(long requestStartTime) {
-		final long st = requestStartTime;
 		gps_worker = new Thread(
 			new Runnable() {
 				public void run() {
@@ -161,11 +62,18 @@ public class RocketSimulator {
 							return;
 						}
 						d = data.get(index);
+						//TODO: set gps_fix, camera_enabled, transmit_freq here
+						StatusFlag flag = new StatusFlag();
+						
+						flag.set(StatusFlag.Type.gps_fix, gps_fix);
+						flag.set(StatusFlag.Type.camera_enabled, camera_enabled);
+						flag.set(StatusFlag.Type.transmit_freq, transmit_freq);
+						
 						TEMResponse r = 
-							new TEMResponse (d.lat(), d.lon(), d.alt(), GPSflag, d.time(), d.rot(), d.acc());
+							new TEMResponse (d.lat(), d.lon(), d.alt(), flag.byteValue(), d.time(), d.rot(), d.acc());
 						System.out.println("Receiver Object in gworker thread: " + receiver);
 						synchronized (receiver) {
-							receiver.acceptGPSResponse (r);
+							receiver.acceptTEMResponse (r);
 						}
 						try {
 							Thread.sleep(delay);
@@ -176,21 +84,10 @@ public class RocketSimulator {
 				}
 			});
 		gps_worker.start();
-		
-		long ft = System.currentTimeMillis();
-		long et = ft - st;
-		CommandResponse cre = new CommandResponse(CommandTask.TRANSMIT_START, true, et, "");
-		synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 	}
 	
 	private void sim_halt(long requestStartTime) {
-		final long st = requestStartTime;
 		if (gps_worker != null) gps_worker.interrupt();
-		
-		long ft = System.currentTimeMillis();
-		long et = ft - st;
-		CommandResponse cre = new CommandResponse(CommandTask.TRANSMIT_HALT, true, et, "");
-		synchronized (receiver) { receiver.acceptCommandResponse(cre); }
 	}
 	
 	public void reset(long requestStartTime) {

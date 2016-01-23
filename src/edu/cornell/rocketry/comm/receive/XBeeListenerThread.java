@@ -1,6 +1,5 @@
 // License: GPL. For details, see LICENSE file.
 package edu.cornell.rocketry.comm.receive;
-import java.util.ArrayList;
 
 import com.rapplogic.xbee.api.ApiId;
 import com.rapplogic.xbee.api.XBee;
@@ -11,8 +10,6 @@ import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
 import edu.cornell.rocketry.comm.receive.Receiver;
 import edu.cornell.rocketry.gui.GSGui;
-import edu.cornell.rocketry.util.CommandResponse;
-import edu.cornell.rocketry.util.CommandTask;
 import edu.cornell.rocketry.util.TEMResponse;
 
 public class XBeeListenerThread extends Thread {
@@ -52,36 +49,23 @@ public class XBeeListenerThread extends Thread {
 				return;
 			}
 			try {
-				//System.out.println("Listening 1");
 				XBeeResponse response = xbee.getResponse(timeout);
-				//System.out.println("Listening 2");
+
 				if (response.getApiId() == ApiId.ZNET_RX_RESPONSE) {
-					//System.out.println("Listening 3");
+
 					ZNetRxResponse ioSample = (ZNetRxResponse) response;
 					IncomingPacket packet = new IncomingPacket(ioSample);
-					//System.out.println("Listening 4");
+
 					TEMResponse r = new TEMResponse (
 						packet.latitude(), packet.longitude(), 
 						packet.altitude(), packet.flag(), 
 						System.currentTimeMillis(), 0, 0); //FIXME: REPLACE 0,0 WITH ROT, ACC
+					
 					System.out.println("Actual Latitude:" + packet.latitude());
 					System.out.println("Actual Longitude:" + packet.longitude());
-					//System.out.println("Listening 5");
-					synchronized(receiver) {
-						//System.out.println("Listening 6");
-						//System.out.println(receiver);
-						receiver.acceptGPSResponse(r);
-						
-						for (CommandResponse cr : parseFlags(packet.flag())) {
-							receiver.acceptCommandResponse(cr);
-						}
-						//System.out.println("Listening 7");
-					}
-					//System.out.println("Listening 8");
 					mainWindow.incNumRec();
 					mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
 							+ packet.toString());
-					//System.out.println("Listening 9");
 				}
 			} 
 			catch (XBeeTimeoutException e) {
@@ -101,29 +85,5 @@ public class XBeeListenerThread extends Thread {
 			}
 			//System.out.println("Listening 10");
 		}
-	}
-
-	public static ArrayList<CommandResponse> parseFlags(byte flag) {
-		
-		//GPS fix?
-		CommandResponse r = 
-			new CommandResponse(
-				CommandTask.GPSFix, 
-				!((flag & IncomingPacket.FLAG_GPS_FIX) == 0),
-				0,"");
-		//Payload enabled?
-		CommandResponse s = 
-			new CommandResponse(
-				((flag & IncomingPacket.FLAG_PAYLOAD) == 0) ? 
-					CommandTask.EnableCamera: 
-					CommandTask.DisableCamera, 
-				true,
-				0, "");
-		//other flags currently unused
-		
-		ArrayList<CommandResponse> updates = new ArrayList<CommandResponse>();
-		updates.add(r);
-		
-		return updates;
 	}
 }

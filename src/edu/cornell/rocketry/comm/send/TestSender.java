@@ -25,22 +25,34 @@ public class TestSender implements Sender {
 		rsim = new RocketSimulator(f, controller.getReceiver(true));
 	}
 	
-	public void switchFile (String s) {}; //todo
+	public void switchFile (String s) {}; //TODO
 	
 	public void send (Command c) {
 		try {
 			switch (c.task()) {
+			case ENABLE_CAMERA:
+				//TODO
+				break;
+			case DISABLE_CAMERA:
+				//TODO
+				break;
 			case TRANSMIT_START:
 				rsim.restart(c.time());
 				break;
 			case TRANSMIT_HALT:
 				rsim.reset(c.time());
 				break;
-			case EnableCamera:
-				rsim.enableCamera(c.time());
+			case TRANSMIT_FREQ_MAX:
+				//TODO
 				break;
-			case DisableCamera:
-				rsim.disableCamera(c.time());
+			case TRANSMIT_FREQ_MIN:
+				//TODO
+				break;
+			case BEGIN_LAUNCH:
+				//TODO
+				break;
+			case CANCEL_LAUNCH:
+				//TODO
 				break;
 			default:
 				throw new UnsupportedOperationException(c.task().toString());
@@ -51,7 +63,7 @@ public class TestSender implements Sender {
 		}
 	}
 	
-	private void receipt (CommandTask t, boolean s, String m) {
+	private synchronized void receipt (CommandTask t, boolean s, String m) {
 		controller.acceptCommandReceipt(
 			new CommandReceipt(t, s, m));
 	}

@@ -36,7 +36,6 @@ import edu.cornell.rocketry.comm.shared.CommController;
 import edu.cornell.rocketry.gui.Model;
 import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
-import edu.cornell.rocketry.util.CommandResponse;
 import edu.cornell.rocketry.util.CommandTask;
 import edu.cornell.rocketry.util.TEMResponse;
 import edu.cornell.rocketry.util.GPSStatus;
@@ -248,35 +247,9 @@ public class Controller {
 		ilog(message);
 		
 		//process receipt
-		if (r.task() == CommandTask.EnableCamera
-			|| r.task() == CommandTask.DisableCamera) {
+		if (r.task() == CommandTask.ENABLE_CAMERA
+			|| r.task() == CommandTask.DISABLE_CAMERA) {
 			updatePayloadStatus(CameraStatus.Busy);
-		}
-	}
-	
-	public synchronized void acceptCommandResponse (CommandResponse r, boolean test) {
-		//display response
-		ilog("\nCommand Response Received:");
-		ilog(r.task().toString());
-		ilog(r.successful() ? "Successful" : "Unsuccessful");
-		ilog(r.message());
-		ilog("elapsed time: " + r.time() + " ms");
-		
-		//process response
-		if (r.task() == CommandTask.EnableCamera
-			|| r.task() == CommandTask.DisableCamera) {
-			if (r.successful()) {
-				CameraStatus ps = r.task() == CommandTask.EnableCamera ? CameraStatus.Enabled : CameraStatus.Disabled;
-				updatePayloadStatus(ps);
-			} else { //we failed to complete task
-				//reset to what it was before failed attempt
-				updatePayloadStatus(model.prevPayload());
-			}
-		}
-		else if (r.task() == CommandTask.GPSFix) {
-			if (r.successful()) {
-				
-			}
 		}
 	}
 	

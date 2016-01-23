@@ -17,19 +17,19 @@ public class TEMResponse {
 	 * @param lat latitude
 	 * @param lon longitude
 	 * @param alt altitude
-	 * @param flag GPS flag
+	 * @param flag status flags
 	 * @param t GPS time
 	 * @param rot rotation
 	 * @param acc acceleration
 	 */
 	public TEMResponse (double lat, double lon, double alt, byte flag, long t, double rot, double acc){
-		latitude = lat;
-		longitude = lon;
-		altitude = alt;
+		this.latitude = lat;
+		this.longitude = lon;
+		this.altitude = alt;
 		this.flag = flag;
-		time = t;
-		rotation = rot;
-		acceleration = acc;
+		this.time = t;
+		this.rotation = rot;
+		this.acceleration = acc;
 	}
 
 	
@@ -38,18 +38,18 @@ public class TEMResponse {
 	 * @param lat latitude
 	 * @param lon longitude
 	 * @param alt altitude
-	 * @param flag GPS flag
+	 * @param flag status flags
 	 * @param rot rotation
 	 * @param acc acceleration
 	 */
 	public TEMResponse (double lat, double lon, double alt, byte flag, double rot, double acc) {
-		latitude = lat;
-		longitude = lon;
-		altitude = alt;
+		this.latitude = lat;
+		this.longitude = lon;
+		this.altitude = alt;
 		this.flag = flag;
-		time = System.currentTimeMillis();
-		rotation = rot;
-		acceleration = acc;
+		this.time = System.currentTimeMillis();
+		this.rotation = rot;
+		this.acceleration = acc;
 	}
 	
 	

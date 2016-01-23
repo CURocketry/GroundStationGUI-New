@@ -48,7 +48,7 @@ public class XBeeListenerThread extends Thread {
 						System.currentTimeMillis(),0,0);
 					
 					synchronized(receiver) {
-						receiver.acceptGPSResponse(r);
+						receiver.acceptTEMResponse(r);
 					}
 					
 					mainWindow.incNumRec();

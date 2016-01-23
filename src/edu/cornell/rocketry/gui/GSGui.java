@@ -533,9 +533,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         stopGPSButton.setVisible(true);
         stopGPSButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        	if (e.getButton() == MouseEvent.BUTTON1) {
-        	controller.sendCommand(CommandTask.TRANSMIT_HALT);
-        	}
+	        	if (e.getButton() == MouseEvent.BUTTON1) {
+	        		controller.sendCommand(CommandTask.TRANSMIT_HALT);
+	        	}
         	}
         });
         //enable camera button
@@ -544,7 +544,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    controller.sendCommand (CommandTask.EnableCamera);
+                    controller.sendCommand (CommandTask.ENABLE_CAMERA);
                 }
             }
         });
@@ -552,9 +552,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         disableCameraButton.setVisible(true);
         disableCameraButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        	if (e.getButton() == MouseEvent.BUTTON1){
-        	controller.sendCommand (CommandTask.DisableCamera);
-        	}
+	        	if (e.getButton() == MouseEvent.BUTTON1){
+	        		controller.sendCommand (CommandTask.DISABLE_CAMERA);
+	        	}
         	}
         });
         
