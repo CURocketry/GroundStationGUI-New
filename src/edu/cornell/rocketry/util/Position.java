@@ -55,4 +55,8 @@ public class Position {
 		//http://stackoverflow.com/questions/9027317/how-to-convert-milliseconds-to-hhmmss-format
 		
 	}
+	
+	public String toString () {
+		return "Position[lat:" + lat() + ", lon:" + lon() + ", alt:" + alt() + "]";
+	}
 }

@@ -71,4 +71,23 @@ public class Datum {
 		//http://stackoverflow.com/questions/9027317/how-to-convert-milliseconds-to-hhmmss-format
 		
 	}
+	
+	public String toString () {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Datum");
+		sb.append("[");
+		sb.append("lat:" + lat() + ",");
+		sb.append("lon:" + lon() + ",");
+		sb.append("alt:" + alt() + ",");
+		sb.append("pos:" + pos() + ",");
+		sb.append("time:" + time() + ",");
+		sb.append("rot:" + rot() + ",");
+		sb.append("acc_x:" + acc_x() + ",");
+		sb.append("acc_y:" + acc_y() + ",");
+		sb.append("acc_z:" + acc_z() + ",");
+		sb.append("temp:" + temp() + ",");
+		sb.append("]");
+		
+		return sb.toString();
+	}
 }
