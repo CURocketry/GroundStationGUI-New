@@ -7,30 +7,58 @@ public class Datum {
 	
 	private long time;
 	private double rotation;
-	private double acceleration;
+	private double acceleration_x;
+	private double acceleration_y;
+	private double acceleration_z;
+	private double temperature;
 
-	public Datum (Position p, long t, double rot, double acc) {
+	public Datum 
+			(Position p, 
+			long t, 
+			double rot, 
+			double acc_x, 
+			double acc_y, 
+			double acc_z,
+			double temp) {
 		position = p;
 		time = t;
 		rotation = rot;
-		acceleration = acc;
+		acceleration_x = acc_x;
+		acceleration_y = acc_y;
+		acceleration_z = acc_z;
+		temperature = temp;
 	}
 	
-	public Datum (double lat, double lon, double alt, long t, double rot, double acc) {
+	public Datum 
+			(double lat, 
+			double lon, 
+			double alt, 
+			long t, 
+			double rot, 
+			double acc_x,
+			double acc_y,
+			double acc_z,
+			double temp) {
 		position = new Position(lat, lon, alt);
 		time = t;
 		rotation = rot;
-		acceleration = acc;
+		acceleration_x = acc_x;
+		acceleration_y = acc_y;
+		acceleration_z = acc_z;
+		temperature = temp;
 	}
 	
 	
-	public double lat() { return position.lat(); }
-	public double lon() { return position.lon(); }
-	public double alt() { return position.alt(); }
-	public Position pos() { return position; }
-	public long time() { return time; }
-	public double rot() { return rotation; }
-	public double acc() { return acceleration; }
+	public double lat ()   { return position.lat(); }
+	public double lon ()   { return position.lon(); }
+	public double alt ()   { return position.alt(); }
+	public Position pos () { return position; }
+	public long time ()    { return time; }
+	public double rot ()   { return rotation; }
+	public double acc_x () { return acceleration_x; }
+	public double acc_y () { return acceleration_y; }
+	public double acc_z () { return acceleration_z; }
+	public double temp ()  { return temperature; }
 	
 	public static String millisToTime(long millis) {
 		return

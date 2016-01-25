@@ -14,12 +14,14 @@ public class CommandFlag {
 		flag = 0x0;
 	}
 	
-	public void set (CommandType elem, boolean b) {
+	public CommandFlag set (CommandType elem, boolean b) {
 		if (b) {
 			flag |= elem.bitMask();
 		} else {
 			flag &= ~elem.bitMask();
 		}
+		
+		return this;
 	}
 	
 	public boolean isSet (CommandType elem) {

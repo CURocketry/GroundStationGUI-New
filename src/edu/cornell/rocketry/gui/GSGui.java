@@ -93,11 +93,10 @@ import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.ImageFactory;
 import edu.cornell.rocketry.util.RocketSimulator;
 import edu.cornell.rocketry.util.CameraStatus;
-import edu.cornell.rocketry.xbee.OutgoingPacket;
-import edu.cornell.rocketry.xbee.OutgoingPacketType;
-import edu.cornell.rocketry.xbee.XBeeListenerThread;
-import edu.cornell.rocketry.xbee.XBeeSender;
-import edu.cornell.rocketry.xbee.XBeeSenderException;
+import edu.cornell.rocketry.comm.send.OutgoingPacket;
+import edu.cornell.rocketry.comm.receive.XBeeListenerThread;
+import edu.cornell.rocketry.comm.send.XBeeSender;
+import edu.cornell.rocketry.comm.send.XBeeSenderException;
 import gnu.io.CommPortIdentifier;
 
 
@@ -1079,19 +1078,18 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	//Test Send Button
 	JButton testSendBtn = new JButton("Send Test");
 	testSendBtn.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	controller.sendXBeePacket("(Test Packet)");
-	}
+		public void actionPerformed(ActionEvent e) {
+			controller.sendXBeePacket("(Test Packet)");
+		}
 	});
 	sendPacketsGrid.add(testSendBtn);
 	
 	//Send custom data box
 	JButton customDataBtn = new JButton("Send Data");
 	customDataBtn.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	controller.sendXBeePacket(sendEdit.getText());
-	}
-
+		public void actionPerformed(ActionEvent e) {
+			controller.sendXBeePacket(sendEdit.getText());
+		}
 	});
 
 	sendPacketsGrid.add(customDataBtn, BorderLayout.CENTER);
@@ -1387,9 +1385,16 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	treeMap = tree;
 	}
 
-    public void updateAnalytics(double latitude, double longitude, double altitude, 
-            long time, double rotation, double acceleration){
-        if (!hasLaunched){
+    public void updateAnalytics
+    		(double latitude, 
+    		double longitude, 
+    		double altitude, 
+            long time, 
+            double rotation, 
+            double acceleration_x,
+            double acceleration_y,
+            double acceleration_z) {
+        if (!hasLaunched) {
             startTime = time - 1;
             prevTime = time - 1;
             prevLatitude = latitude;
@@ -1400,7 +1405,13 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         
         altitudeTrace.addPoint(time, altitude);
         rotationTrace.addPoint(time, rotation);
-        accelTrace.addPoint(time, acceleration);
+        //FIXME: ADD ACCELERATION COMPONENTS
+        double acceleration = 
+        	Math.sqrt
+        		(Math.pow(acceleration_x, 2) + 
+        		Math.pow(acceleration_y, 2) + 
+        		Math.pow(acceleration_z, 2));
+        accelTrace.addPoint(time, acceleration); 
         
         double deltaLat = metersPerDegLat(latitude)-metersPerDegLat(prevLatitude);
         double deltaLon = metersPerDegLon(longitude) - metersPerDegLon(prevLongitude);

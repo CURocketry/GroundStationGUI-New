@@ -13,7 +13,7 @@ public class StatusFlag_TEST {
 		StatusFlag.Type[] args = 
 			{StatusFlag.Type.gps_fix, 
 				StatusFlag.Type.camera_enabled, 
-				StatusFlag.Type.transmit_freq};
+				StatusFlag.Type.transmit_freq_max};
 		
 		StatusFlag f = new StatusFlag();
 
@@ -27,7 +27,7 @@ public class StatusFlag_TEST {
 		StatusFlag.Type[] args = 
 			{StatusFlag.Type.gps_fix, 
 				StatusFlag.Type.camera_enabled, 
-				StatusFlag.Type.transmit_freq};
+				StatusFlag.Type.transmit_freq_max};
 		
 		StatusFlag f = new StatusFlag();
 		
@@ -45,7 +45,7 @@ public class StatusFlag_TEST {
 		StatusFlag.Type[] args = 
 			{StatusFlag.Type.gps_fix, 
 				StatusFlag.Type.camera_enabled, 
-				StatusFlag.Type.transmit_freq};
+				StatusFlag.Type.transmit_freq_max};
 		
 		StatusFlag f = new StatusFlag();
 		
@@ -63,7 +63,7 @@ public class StatusFlag_TEST {
 		StatusFlag.Type[] args = 
 			{StatusFlag.Type.gps_fix, 
 				StatusFlag.Type.camera_enabled, 
-				StatusFlag.Type.transmit_freq};
+				StatusFlag.Type.transmit_freq_max};
 		
 		StatusFlag f = new StatusFlag();
 		

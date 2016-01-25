@@ -1,8 +1,8 @@
-package edu.cornell.rocketry.xbee;
+package edu.cornell.rocketry.comm.receive;
 
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
-public class IncomingPacket {
+public class IncomingPacket_OLD {
 	//lengths in terms of bytes
 	final static public int MARKER_LAT = 0xFB;
 	final static public int LEN_LAT = 4;
@@ -16,6 +16,9 @@ public class IncomingPacket {
 	
 	final static public int FLAG_GPS_FIX = 0b00000001;
 	final static public int FLAG_PAYLOAD = 0b00000010;
+	final static public int FLAG_MAIN_L  = 0b00000100;
+	final static public int FLAG_LANDED  = 0b00001000;
+	final static public int FLAG_TEST    = 0b00010000;
 	
 	private int[] packetData;
 	private long latitude;
@@ -25,11 +28,11 @@ public class IncomingPacket {
 	public boolean success;
 	
 	public double latitude() {
-		return ((double) latitude) / 1000;
+		return ((double) latitude) / 10000;
 	}
 	
 	public double longitude() {
-		return ((double) longitude) / 1000;
+		return ((double) longitude) / 10000 * -1;
 	}
 	
 	public double altitude() {
@@ -56,7 +59,7 @@ public class IncomingPacket {
 	}
 
 	
-	public IncomingPacket(ZNetRxResponse ioSample) {
+	public IncomingPacket_OLD(ZNetRxResponse ioSample) {
 		packetData = ioSample.getData();
 		System.out.println(packetData.length);
 		int readerIndex = 0;

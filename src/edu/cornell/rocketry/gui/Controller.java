@@ -5,17 +5,13 @@ package edu.cornell.rocketry.gui;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 import org.math.plot.Plot3DPanel;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
 import org.openstreetmap.gui.jmapviewer.Tile;
@@ -24,7 +20,6 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
-import com.rapplogic.xbee.api.XBeeResponse;
 
 import edu.cornell.rocketry.comm.receive.RealReceiver;
 import edu.cornell.rocketry.comm.receive.Receiver;
@@ -45,10 +40,6 @@ import edu.cornell.rocketry.util.Position;
 import edu.cornell.rocketry.util.CameraStatus;
 import edu.cornell.rocketry.util.LocalLoader;
 import edu.cornell.rocketry.util.Pair;
-import edu.cornell.rocketry.xbee.OutgoingPacket;
-import edu.cornell.rocketry.xbee.OutgoingPacketType;
-import edu.cornell.rocketry.xbee.XBeeSender;
-import edu.cornell.rocketry.xbee.XBeeSenderException;
 import gnu.io.CommPortIdentifier;
 
 public class Controller {
@@ -266,7 +257,7 @@ public class Controller {
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 			if (!test) dataLogger.log(
 				System.currentTimeMillis()+","+r.lat()+","+r.lon()+","
-					+r.alt()+","+r.rot()+","+r.acc());
+					+r.alt()+","+r.rot()+","+r.acc_x()+","+r.acc_y()+","+r.acc_z());
 			if (!test) {
 				String posn = "(" + r.lat() + ", " + r.lon() + ")";
 				mainWindow.updateLatestPosition(posn);
@@ -277,7 +268,15 @@ public class Controller {
 			all_markers.add(p);
 			mainWindow.map().addMapMarker(m);
 
-			updateAnalyticsDisplayFields(r.lat(), r.lon(), r.alt(), r.time(), r.rot(), r.acc());
+			updateAnalyticsDisplayFields
+				(r.lat(), 
+				r.lon(), 
+				r.alt(), 
+				r.time(), 
+				r.rot(), 
+				r.acc_x(), 
+				r.acc_y(), 
+				r.acc_z());
 		} else {
 			ilog("inaccurate data received");
 		}
@@ -321,9 +320,24 @@ public class Controller {
 	}
 	
 	/*--------------------- Analytics Methods -----------------------*/
-	public void updateAnalyticsDisplayFields (double latitude, double longitude, double altitude, 
-			long time, double rotation, double acceleration) {
-		mainWindow.updateAnalytics(latitude, longitude, altitude, time, rotation, acceleration);
+	public void updateAnalyticsDisplayFields 
+			(double latitude, 
+			double longitude, 
+			double altitude, 
+			long time, 
+			double rotation, 
+			double acceleration_x,
+			double acceleration_y,
+			double acceleration_z) {
+		mainWindow.updateAnalytics
+			(latitude, 
+			longitude, 
+			altitude, 
+			time, 
+			rotation, 
+			acceleration_x,
+			acceleration_y,
+			acceleration_z);
 	}
 
 
@@ -386,21 +400,10 @@ public class Controller {
 		mainWindow.resetPacketCounters();
 	}
 
-	public boolean sendXBeePacket(String msg) {
-    	XBee xbee = commController.xbee();
-    	
-		OutgoingPacket payload = new OutgoingPacket(OutgoingPacketType.TEST);
-		try {
-			XBeeSender mailman = new XBeeSender(xbee, mainWindow.selectedAddress, payload);
-			mailman.send();
-			mainWindow.addToReceiveText("Sent (" + mainWindow.getNumSent() + "): " + msg);
-			return true;
-		}
-		catch (XBeeSenderException e) {
-			mainWindow.addToReceiveText("Error (" + mainWindow.getNumError() + "): " + e.getMessage());
-			mainWindow.incNumError();
-			return false;
-		}
+	public void sendXBeePacket(String msg) {
+		
+		sender().send(msg);
+		
 	}
 	
     /**

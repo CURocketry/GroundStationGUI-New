@@ -67,9 +67,9 @@ public class Model {
 		return rocket_past;
 	}
 	
-	public void update (double x, double y, double z, long t, long a, long r) {
+	public void update (double x, double y, double z, long tm, double a_x, double a_y, double a_z, double r, double tp) {
 		Position p = new Position(x,y,z);
-		Datum d = new Datum(p,t,r,a);
+		Datum d = new Datum(p,tm,r,a_x,a_y,a_z,tp);
 		rocket_past.add(d);
 		rocket_curr = d;
 	}

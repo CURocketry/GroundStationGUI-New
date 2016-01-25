@@ -56,16 +56,27 @@ public class XBeeListenerThread extends Thread {
 					ZNetRxResponse ioSample = (ZNetRxResponse) response;
 					IncomingPacket packet = new IncomingPacket(ioSample);
 
-					TEMResponse r = new TEMResponse (
-						packet.latitude(), packet.longitude(), 
-						packet.altitude(), packet.flag(), 
-						System.currentTimeMillis(), 0, 0); //FIXME: REPLACE 0,0 WITH ROT, ACC
+					TEMResponse r = 
+						new TEMResponse (
+							packet.latitude(), 
+							packet.longitude(), 
+							packet.altitude(), 
+							packet.flag(), 
+							packet.gyroscope(),
+							packet.acceleration_x(),
+							packet.acceleration_y(),
+							packet.acceleration_z(),
+							packet.temperature());
 					
 					System.out.println("Actual Latitude:" + packet.latitude());
 					System.out.println("Actual Longitude:" + packet.longitude());
 					mainWindow.incNumRec();
 					mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
 							+ packet.toString());
+					
+					synchronized (receiver) {
+						receiver.acceptTEMResponse(r);
+					}
 				}
 			} 
 			catch (XBeeTimeoutException e) {

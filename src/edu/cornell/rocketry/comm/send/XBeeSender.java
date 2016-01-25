@@ -1,4 +1,4 @@
-	package edu.cornell.rocketry.comm.send;
+package edu.cornell.rocketry.comm.send;
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeAddress64;
@@ -26,11 +26,9 @@ public class XBeeSender {
 		
 		try {
 			// send a request and wait up to 10 seconds for the response
-			//int[] payload = new int[1];
-			//	payload[0] = 0xB;
 			
 			//add condition for Send Data
-			
+	
 			final ZNetTxRequest request = new ZNetTxRequest(destination, packet.payload());
 			
 			ZNetTxStatusResponse response = (ZNetTxStatusResponse) xbee.sendSynchronous(request,1000);

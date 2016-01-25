@@ -25,7 +25,7 @@ public class RealSender implements Sender{
 		CommandFlag f = new CommandFlag();
 		f.set(c.type(), true);
 		
-		OutgoingPacket packet = new OutgoingPacket(f);
+		OutgoingPacket packet = new OutgoingCommandPacket(f);
 		
 		try {
 			sender.send(packet);
@@ -37,6 +37,10 @@ public class RealSender implements Sender{
 		}
 		
 		controller.acceptCommandReceipt(r);
+	}
+	
+	public void send (String msg) {
+		
 	}
 	
 	/**

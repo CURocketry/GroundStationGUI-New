@@ -32,7 +32,7 @@ public class StatusFlag {
 	public enum Type {
 		gps_fix,
 		camera_enabled,
-		transmit_freq;
+		transmit_freq_max;
 		
 		public byte bitMask () {
 			switch(this) {
@@ -40,7 +40,7 @@ public class StatusFlag {
 				return (byte) 0b00000001;
 			case camera_enabled:
 				return (byte) 0b00000010;
-			case transmit_freq:
+			case transmit_freq_max:
 				return (byte) 0b00000100;
 			default: 
 				throw new IllegalStateException("invalid StatusFlag");
@@ -53,8 +53,8 @@ public class StatusFlag {
 				return "gps_fix";
 			case camera_enabled:
 				return "camera_enabled";
-			case transmit_freq:
-				return "transmit_freq";
+			case transmit_freq_max:
+				return "transmit_freq_max";
 			default:
 				throw new IllegalStateException("invalid StatusFlag");
 			}

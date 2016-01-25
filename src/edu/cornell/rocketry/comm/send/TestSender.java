@@ -27,6 +27,10 @@ public class TestSender implements Sender {
 	
 	public void switchFile (String s) {}; //TODO
 	
+	public void send (String msg) {
+		throw new UnsupportedOperationException();
+	}
+	
 	public void send (Command c) {
 		try {
 			switch (c.type()) {

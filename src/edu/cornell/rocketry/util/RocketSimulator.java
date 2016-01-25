@@ -8,14 +8,13 @@ import edu.cornell.rocketry.comm.receive.Receiver;
 
 public class RocketSimulator {
 	
+	private static final long MAX_FREQUENCY_DELAY = 200;
+	private static final long MIN_FREQUENCY_DELAY = 5000;
+	
 	private String simfilepath;
 	private File simfile;
 	
-	private Thread gps_worker;
-	
-	private int frequency; //frequency, in Hz.
-	
-	
+	private Thread gps_worker;	
 	
 	private int index;
 	private ArrayList<Datum> data;
@@ -24,18 +23,17 @@ public class RocketSimulator {
 	
 	private boolean gps_fix;
 	private boolean camera_enabled;
-	private boolean transmit_freq; //true -> max freq; false -> min freq
+	private boolean transmit_freq_max; //true -> max freq; false -> min freq
 	
 	public RocketSimulator (String path, Receiver r) {
 		this.simfilepath = path;
 		this.simfile = new File(path);
 		receiver = r;
-		frequency = 1;
 		index = 0;
 		data = new ArrayList<Datum>();
 		gps_fix = true;
 		camera_enabled = false;
-		transmit_freq = false;
+		transmit_freq_max = false;
 		loadSimFile();
 	}
 	
@@ -47,7 +45,7 @@ public class RocketSimulator {
 		data = new ArrayList<Datum>();
 		gps_fix = true;
 		camera_enabled = false;
-		transmit_freq = false;
+		transmit_freq_max = false;
 		loadSimFile();
 	}
 	
@@ -55,7 +53,7 @@ public class RocketSimulator {
 		gps_worker = new Thread(
 			new Runnable() {
 				public void run() {
-					long delay = (long) (1000.0 / getFrequency());
+					long delay = transmit_freq_max ? MAX_FREQUENCY_DELAY : MIN_FREQUENCY_DELAY;
 					Datum d;
 					for ( ; index < data.size(); index++) {
 						if (Thread.interrupted()) {
@@ -67,10 +65,10 @@ public class RocketSimulator {
 						
 						flag.set(StatusFlag.Type.gps_fix, gps_fix);
 						flag.set(StatusFlag.Type.camera_enabled, camera_enabled);
-						flag.set(StatusFlag.Type.transmit_freq, transmit_freq);
+						flag.set(StatusFlag.Type.transmit_freq_max, transmit_freq_max);
 						
 						TEMResponse r = 
-							new TEMResponse (d.lat(), d.lon(), d.alt(), flag.byteValue(), d.time(), d.rot(), d.acc());
+							new TEMResponse (d.lat(), d.lon(), d.alt(), flag.byteValue(), d.time(), d.rot(), d.acc_x(), d.acc_y(), d.acc_z());
 						System.out.println("Receiver Object in gworker thread: " + receiver);
 						synchronized (receiver) {
 							receiver.acceptTEMResponse (r);
@@ -103,14 +101,20 @@ public class RocketSimulator {
 	}
 	
 	
-	public int getFrequency() { 
-		return frequency; 
+	public void setMaxFrequency () {
+		transmit_freq_max = true;
 	}
 	
-	public void setFrequency(int f) { 
-		if (f > 0) 
-		frequency = f; 
-		else frequency = 1;
+	public void setMinFrequency () {
+		transmit_freq_max = false;
+	}
+	
+	public void enableCamera () {
+		camera_enabled = true;
+	}
+	
+	public void disableCamera () {
+		camera_enabled = false;
 	}
 	
 	private void loadSimFile () {
@@ -134,12 +138,15 @@ public class RocketSimulator {
 				}
 				
 				d = new Datum (
-					Double.parseDouble(components[1]),
-					Double.parseDouble(components[2]),
-					Integer.parseInt(components[3]),
-					Long.parseLong(components[0]),
-					Double.parseDouble(components[4]),
-					Double.parseDouble(components[5])
+					Double.parseDouble(components[1]), //lat
+					Double.parseDouble(components[2]), //lon
+					Integer.parseInt(components[3]),   //alt
+					Long.parseLong(components[0]),     //time
+					Double.parseDouble(components[4]), //rotation
+					Double.parseDouble(components[5]), //acc_x
+					Double.parseDouble(components[6]), //acc_y
+					Double.parseDouble(components[7]), //acc_z
+					Double.parseDouble(components[8]) //temp
 				);
 				data.add(d);
 			}
