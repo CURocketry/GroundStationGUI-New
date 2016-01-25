@@ -33,7 +33,7 @@ public class OutgoingCommandPacket implements OutgoingPacket {
 	
 	public OutgoingCommandPacket (CommandFlag f) {
 		payload = new int[1];
-		payload[1] = (int) f.byteValue();
+		payload[0] = (int) f.byteValue();
 	}
 	
 	public OutgoingCommandPacket (int[] p) {

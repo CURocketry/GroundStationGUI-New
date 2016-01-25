@@ -6,14 +6,14 @@ import com.rapplogic.xbee.api.XBeeException;
 import edu.cornell.rocketry.comm.receive.XBeeListenerThread;
 import edu.cornell.rocketry.gui.Controller;
 
-public class CommController {
+public class XBeeController {
 	
 	private XBee xbee;
 	private XBeeListenerThread listener;
 	//TODO: PUT THE XBEE ADDRESS HERE TOO
 	private Controller controller;
 	
-	public CommController (Controller c) {
+	public XBeeController (Controller c) {
 		xbee = new XBee();
 		controller = c;
 		listener = new XBeeListenerThread (c.getReceiver(false), xbee, c.view());

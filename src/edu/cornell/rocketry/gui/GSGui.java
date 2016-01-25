@@ -158,11 +158,17 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     JLabel gpsStatus;
     
     JButton settings = new JButton ("Settings");
-    JButton startGPSButton = new JButton("Start GPS");
-    JButton stopGPSButton = new JButton("Stop GPS");
+    JButton startTransmittingButton = new JButton("Start Transmitting");
+    JButton stopTransmittingButton = new JButton("Stop Transmitting");
     
     JButton enableCameraButton = new JButton("Enable Camera");
     JButton disableCameraButton = new JButton("Disable Camera");
+    
+    JButton transmitMaxButton = new JButton("Transmit 5Hz");
+    JButton transmitMinButton = new JButton("Transmit 0.2Hz");
+    
+    JButton beginLaunchButton = new JButton("Prepare for Launch");
+    JButton cancelLaunchButton = new JButton("Cancel Launch Preparations");
     
     private Plot3DPanel trajectoryplot = new Plot3DPanel(); //FIXME
 
@@ -417,7 +423,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
                   c.weightx = 1.0;
                   c.weighty = 0.9;
                   c.gridx = 2;
-                  c.gridy = 2;
+                  c.gridy = 3;
                   controlPanel.add(treeMap.getViewer(), c);
               } else if (tab.equals("Recovery")) {
             	  treeMap.setViewer(map);
@@ -514,9 +520,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         status.add(cameraStatusContainer, BorderLayout.EAST);
         
         
-        //start GPS button
-        startGPSButton.setVisible(true);
-        startGPSButton.addMouseListener(new MouseAdapter() {
+        //start transmitting button
+        startTransmittingButton.setVisible(true);
+        startTransmittingButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -528,9 +534,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
                 }
             }
         });
-        //stop GPS button
-        stopGPSButton.setVisible(true);
-        stopGPSButton.addMouseListener(new MouseAdapter() {
+        //stop transmitting button
+        stopTransmittingButton.setVisible(true);
+        stopTransmittingButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
 	        	if (e.getButton() == MouseEvent.BUTTON1) {
 	        		controller.sendCommand(CommandType.TRANSMIT_HALT);
@@ -554,6 +560,46 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	        	if (e.getButton() == MouseEvent.BUTTON1){
 	        		controller.sendCommand (CommandType.DISABLE_CAMERA);
 	        	}
+        	}
+        });
+        
+        //transmit max speed button
+        transmitMaxButton.setVisible(true);
+        transmitMaxButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			controller.sendCommand(CommandType.TRANSMIT_FREQ_MAX);
+        		}
+        	}
+        });
+        
+        //transmit min speed button
+        transmitMinButton.setVisible(true);
+        transmitMinButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			controller.sendCommand(CommandType.TRANSMIT_FREQ_MIN);
+        		}
+        	}
+        });
+        
+        //begin launch button
+        beginLaunchButton.setVisible(true);
+        beginLaunchButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			controller.sendCommand(CommandType.BEGIN_LAUNCH);
+        		}
+        	}
+        });
+        
+        //cancel launch button
+        cancelLaunchButton.setVisible(true);
+        cancelLaunchButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			controller.sendCommand(CommandType.CANCEL_LAUNCH);
+        		}
         	}
         });
         
@@ -590,7 +636,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         c.ipady = 10;
         c.insets = new Insets(10, 10, 10, 10);
 
-        
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 4;
@@ -600,17 +645,17 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 
         c.gridwidth = 2;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         c.weightx = 1.0;
         c.weighty = 0.9;
         controlPanel.add(trajpanel, c);
 
         c.gridx = 2;
-        c.gridy = 2;
+        c.gridy = 3;
         controlPanel.add(treeMap.getViewer(), c);
 
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         c.gridwidth = 4;
         c.gridheight = 1;
         c.weightx = 1.0;
@@ -625,11 +670,11 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         c.weighty = 0.0;
         c.gridx = 0;
         c.gridy = 1;
-        controlPanel.add(startGPSButton, c);
+        controlPanel.add(startTransmittingButton, c);
         
         c.gridx = 1;
         c.gridy = 1;
-        controlPanel.add(stopGPSButton, c);
+        controlPanel.add(stopTransmittingButton, c);
         
         c.gridx = 2;
         c.gridy = 1;
@@ -638,6 +683,23 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         c.gridx = 3;
         c.gridy = 1;
         controlPanel.add(disableCameraButton, c);
+        
+        c.gridx = 0;
+        c.gridy = 2;
+        controlPanel.add(transmitMaxButton, c);
+        
+        c.gridx = 1;
+        c.gridy = 2;
+        controlPanel.add(transmitMinButton, c);
+        
+        c.gridx = 2;
+        c.gridy = 2;
+        controlPanel.add(beginLaunchButton, c);
+        
+        c.gridx = 3;
+        c.gridy = 2;
+        controlPanel.add(cancelLaunchButton, c);
+        
         
         controlPanel.setVisible(true);
         controlPanel.validate();
@@ -1393,7 +1455,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
             double rotation, 
             double acceleration_x,
             double acceleration_y,
-            double acceleration_z) {
+            double acceleration_z,
+            double temp) {
+    	
+    	//TODO: implement temp
         if (!hasLaunched) {
             startTime = time - 1;
             prevTime = time - 1;

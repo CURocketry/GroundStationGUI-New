@@ -35,10 +35,10 @@ public class TestSender implements Sender {
 		try {
 			switch (c.type()) {
 			case ENABLE_CAMERA:
-				//TODO
+				rsim.enableCamera();
 				break;
 			case DISABLE_CAMERA:
-				//TODO
+				rsim.disableCamera();
 				break;
 			case TRANSMIT_START:
 				rsim.restart(c.time());
@@ -47,17 +47,17 @@ public class TestSender implements Sender {
 				rsim.reset(c.time());
 				break;
 			case TRANSMIT_FREQ_MAX:
-				//TODO
+				rsim.setMaxFrequency();
 				break;
 			case TRANSMIT_FREQ_MIN:
-				//TODO
+				rsim.setMinFrequency();
 				break;
 			case BEGIN_LAUNCH:
 				//TODO
-				break;
+				throw new UnsupportedOperationException(c.type().toString());
 			case CANCEL_LAUNCH:
 				//TODO
-				break;
+				throw new UnsupportedOperationException(c.type().toString());
 			default:
 				throw new UnsupportedOperationException(c.type().toString());
 			}

@@ -14,16 +14,18 @@ public class RocketSimulator {
 	private String simfilepath;
 	private File simfile;
 	
-	private Thread gps_worker;	
+	private Thread sim_worker;
 	
 	private int index;
 	private ArrayList<Datum> data;
 	
 	private Receiver receiver;
 	
-	private boolean gps_fix;
-	private boolean camera_enabled;
-	private boolean transmit_freq_max; //true -> max freq; false -> min freq
+	private static boolean gps_fix;
+	private static boolean camera_enabled;
+	private static boolean transmit_freq_max; //true -> max freq; false -> min freq
+	
+	private static boolean CONTINUE_TRANSMITTING = true;
 	
 	public RocketSimulator (String path, Receiver r) {
 		this.simfilepath = path;
@@ -50,17 +52,25 @@ public class RocketSimulator {
 	}
 	
 	private void sim_go(long requestStartTime) {
-		gps_worker = new Thread(
+		System.out.println("calling sim_go");
+		sim_worker = new Thread(
 			new Runnable() {
 				public void run() {
+					System.out.println("sim_worker run called");
 					long delay = transmit_freq_max ? MAX_FREQUENCY_DELAY : MIN_FREQUENCY_DELAY;
 					Datum d;
+					System.out.println("starting for loop");
 					for ( ; index < data.size(); index++) {
+						
 						if (Thread.interrupted()) {
-							return;
+							if (!CONTINUE_TRANSMITTING) {
+								return;
+							}
+							delay = transmit_freq_max ? MAX_FREQUENCY_DELAY : MIN_FREQUENCY_DELAY;
 						}
+						
 						d = data.get(index);
-						//TODO: set gps_fix, camera_enabled, transmit_freq here
+						
 						StatusFlag flag = new StatusFlag();
 						
 						flag.set(StatusFlag.Type.gps_fix, gps_fix);
@@ -71,6 +81,7 @@ public class RocketSimulator {
 							new TEMResponse (d.lat(), d.lon(), d.alt(), flag.byteValue(), d.time(), d.rot(), d.acc_x(), d.acc_y(), d.acc_z());
 						System.out.println("Receiver Object in gworker thread: " + receiver);
 						synchronized (receiver) {
+							System.out.println("sending response to receiver");
 							receiver.acceptTEMResponse (r);
 						}
 						try {
@@ -81,20 +92,23 @@ public class RocketSimulator {
 					}
 				}
 			});
-		gps_worker.start();
+		System.out.println("starting sim_go");
+		sim_worker.start();
 	}
 	
 	private void sim_halt(long requestStartTime) {
-		if (gps_worker != null) gps_worker.interrupt();
+		if (sim_worker != null) sim_worker.interrupt();
 	}
 	
 	public void reset(long requestStartTime) {
+		CONTINUE_TRANSMITTING = false;
 		System.out.println("reset called");
 		sim_halt(requestStartTime);
 		index = 0;
 	}
 	
 	public void restart(long requestStartTime) {
+		CONTINUE_TRANSMITTING = true;
 		System.out.println("restart called");
 		reset(requestStartTime);
 		sim_go(requestStartTime);
@@ -102,11 +116,15 @@ public class RocketSimulator {
 	
 	
 	public void setMaxFrequency () {
+		CONTINUE_TRANSMITTING = true;
 		transmit_freq_max = true;
+		if (sim_worker != null) sim_worker.interrupt();
 	}
 	
 	public void setMinFrequency () {
+		CONTINUE_TRANSMITTING = true;
 		transmit_freq_max = false;
+		if (sim_worker != null) sim_worker.interrupt();
 	}
 	
 	public void enableCamera () {
@@ -129,6 +147,8 @@ public class RocketSimulator {
 			String [] components;
 			Datum d;
 			while (sc.hasNextLine()) {
+				
+				System.out.println("loading simulation file line");
 				
 				line = sc.nextLine();
 				components = line.split(",");

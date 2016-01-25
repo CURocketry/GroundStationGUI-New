@@ -18,7 +18,6 @@ import org.openstreetmap.gui.jmapviewer.Tile;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
-import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
 
 import edu.cornell.rocketry.comm.receive.RealReceiver;
@@ -27,7 +26,7 @@ import edu.cornell.rocketry.comm.receive.TestReceiver;
 import edu.cornell.rocketry.comm.send.RealSender;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
-import edu.cornell.rocketry.comm.shared.CommController;
+import edu.cornell.rocketry.comm.shared.XBeeController;
 import edu.cornell.rocketry.gui.Model;
 import edu.cornell.rocketry.util.Command;
 import edu.cornell.rocketry.util.CommandReceipt;
@@ -37,6 +36,8 @@ import edu.cornell.rocketry.util.GPSStatus;
 import edu.cornell.rocketry.util.DataLogger;
 import edu.cornell.rocketry.util.Datum;
 import edu.cornell.rocketry.util.Position;
+import edu.cornell.rocketry.util.StatusFlag;
+import edu.cornell.rocketry.util.StatusFlag.Type;
 import edu.cornell.rocketry.util.CameraStatus;
 import edu.cornell.rocketry.util.LocalLoader;
 import edu.cornell.rocketry.util.Pair;
@@ -44,8 +45,6 @@ import gnu.io.CommPortIdentifier;
 
 public class Controller {
 	public List<Pair<Long, MapMarker>> all_markers = new ArrayList<Pair<Long, MapMarker>>();
-	
-	private Thread worker;
 	
 	public boolean testing;
 	
@@ -67,7 +66,7 @@ public class Controller {
 	
 	private Model model;
 	
-	private CommController commController;
+	private XBeeController commController;
 	
 	
 	public Controller (GSGui gui) {
@@ -75,7 +74,7 @@ public class Controller {
 		model = new Model();
 		testReceiver = new TestReceiver(this);
 		realReceiver = new RealReceiver(this);
-		commController = new CommController(this);
+		commController = new XBeeController(this);
 		testSender = new TestSender(this);
 		realSender = new RealSender(this, commController.xbee(), mainWindow.selectedAddress);
 		dataLogger = new DataLogger();
@@ -90,7 +89,7 @@ public class Controller {
 	
 	public DataLogger logger() { return dataLogger; }
 	
-	public CommController commController() { return commController; }
+	public XBeeController commController() { return commController; }
 	
 	public GSGui view () {
 		return mainWindow;
@@ -245,7 +244,28 @@ public class Controller {
 	}
 	
 	public synchronized void acceptTEMResponse (TEMResponse r, boolean test) {
-		ilog("\nGPS Response Received:");
+		ilog("\nTEM Response Received:");
+		
+		//process flag
+		StatusFlag flag = r.flag();
+		
+		if (flag.isSet(Type.camera_enabled)) {
+			mainWindow.setCameraStatus(CameraStatus.Enabled);
+		} else {
+			mainWindow.setCameraStatus(CameraStatus.Disabled);
+		}
+		
+		if (flag.isSet(Type.gps_fix)) {
+			mainWindow.setGPSStatus(GPSStatus.Fix);
+		} else {
+			mainWindow.setGPSStatus(GPSStatus.NoFix);
+		}
+		
+		if (flag.isSet(Type.transmit_freq_max)) {
+			//TODO: make transmission frequency indicator
+		} else {
+			//same as above 
+		}
 		
 		if (gpsCheck(r)) {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
@@ -253,15 +273,13 @@ public class Controller {
 			// Update model
 			model.update(r.create_datum());
 			updateRocketPosition (model.current_datum());
+			String posn = "(" + r.lat() + ", " + r.lon() + ")";
+			mainWindow.updateLatestPosition(posn);
 			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 			if (!test) dataLogger.log(
 				System.currentTimeMillis()+","+r.lat()+","+r.lon()+","
 					+r.alt()+","+r.rot()+","+r.acc_x()+","+r.acc_y()+","+r.acc_z());
-			if (!test) {
-				String posn = "(" + r.lat() + ", " + r.lon() + ")";
-				mainWindow.updateLatestPosition(posn);
-			}
 			
 			MapMarker m = new MapMarkerDot(r.lat(), r.lon());
 			Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
@@ -276,7 +294,8 @@ public class Controller {
 				r.rot(), 
 				r.acc_x(), 
 				r.acc_y(), 
-				r.acc_z());
+				r.acc_z(),
+				r.temp());
 		} else {
 			ilog("inaccurate data received");
 		}
@@ -328,7 +347,8 @@ public class Controller {
 			double rotation, 
 			double acceleration_x,
 			double acceleration_y,
-			double acceleration_z) {
+			double acceleration_z,
+			double temp) {
 		mainWindow.updateAnalytics
 			(latitude, 
 			longitude, 
@@ -337,7 +357,8 @@ public class Controller {
 			rotation, 
 			acceleration_x,
 			acceleration_y,
-			acceleration_z);
+			acceleration_z,
+			temp);
 	}
 
 
