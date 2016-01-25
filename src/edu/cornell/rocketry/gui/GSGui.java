@@ -343,7 +343,12 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         super("CURocketry Ground Station GUI");
         setSize(500, 500);
         
+//        selectedAddress = addr[addressesList.getSelectedIndex()];
+        selectedAddress = addr[0]; //FIXME: implement as above, using update methods
+        
         ImageFactory.init();
+        
+        //FIXME ^^ implement so we have the ability to change this
 
         controller = new Controller(this);
         
@@ -382,6 +387,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         initializeXBeeTab();
         
         initializeSettingsTab();
+       
         
         /*------------------ Create Tabbed Pane & Add Tabs ------------------*/   
         
@@ -1112,20 +1118,21 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	//Initialize GS XBee Button
 	JButton initXBeeButton = new JButton("Initialize GS XBee");
 	initXBeeButton.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	try {
-	controller.initXbee();
-	addToReceiveText("Success! Initialized GS XBee :)");
-	addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	+ System.getProperty("line.separator"));
-	} catch (XBeeException e1) {
-	e1.printStackTrace();
-	numErr++;
-	addToReceiveText("Error ("
-	+ numErr
-	+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
-	}
-	}
+		public void actionPerformed(ActionEvent e) {
+			try {
+				controller.initXbee();
+				controller.commController().startListening();
+				addToReceiveText("Success! Initialized GS XBee :)");
+				addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+						+ System.getProperty("line.separator"));
+			} catch (XBeeException e1) {
+				e1.printStackTrace();
+				numErr++;
+				addToReceiveText("Error ("
+						+ numErr
+						+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
+			}
+		}
 	});
 	xbeeInitGrid.add(initXBeeButton);
 	xbeeInitPanel.add(xbeeInitGrid, BorderLayout.CENTER);

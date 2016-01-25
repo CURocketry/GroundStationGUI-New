@@ -66,7 +66,7 @@ public class Controller {
 	
 	private Model model;
 	
-	private XBeeController commController;
+	private XBeeController xbeeController;
 	
 	
 	public Controller (GSGui gui) {
@@ -74,9 +74,10 @@ public class Controller {
 		model = new Model();
 		testReceiver = new TestReceiver(this);
 		realReceiver = new RealReceiver(this);
-		commController = new XBeeController(this);
+		xbeeController = new XBeeController(this);
 		testSender = new TestSender(this);
-		realSender = new RealSender(this, commController.xbee(), mainWindow.selectedAddress);
+		realSender = new RealSender(this, xbeeController.xbee(), mainWindow.selectedAddress);
+		System.out.println("selectedAddress = " + mainWindow.selectedAddress);
 		dataLogger = new DataLogger();
 		dataLogger.log("time,lat,lon,alt");
 		
@@ -89,7 +90,7 @@ public class Controller {
 	
 	public DataLogger logger() { return dataLogger; }
 	
-	public XBeeController commController() { return commController; }
+	public XBeeController commController() { return xbeeController; }
 	
 	public GSGui view () {
 		return mainWindow;
@@ -413,7 +414,7 @@ public class Controller {
 		
 
 		System.out.println(selSerial);
-		commController.openXBee(selSerial, mainWindow.selectedBaud); //open port
+		xbeeController.openXBee(selSerial, mainWindow.selectedBaud); //open port
 		
 		//don't just do this by default!
 		//commController.startListening();

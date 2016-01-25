@@ -31,6 +31,17 @@ public class XBeeSender {
 	
 			final ZNetTxRequest request = new ZNetTxRequest(destination, packet.payload());
 			
+			String payloadString = "";
+			payloadString +=  "[";
+			for (int i = 0; i < packet.payload().length; i++) {
+				payloadString += packet.payload()[i];
+				if (i < packet.payload().length - 1) 
+					payloadString += ",";
+			}
+			payloadString += "]";
+			
+			System.out.println("payload = " + payloadString);
+			
 			ZNetTxStatusResponse response = (ZNetTxStatusResponse) xbee.sendSynchronous(request,1000);
 			//System.out.println(response.isSuccess());
 			

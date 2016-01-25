@@ -137,5 +137,16 @@ public class IncomingPacket {
 	public byte flag () {
 		return flag;
 	}
+	
+	public String toString () {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < rawPacketData.length; i++) {
+			sb.append(Integer.toHexString(rawPacketData[i]));
+			if (i < rawPacketData.length - 1) {
+				sb.append(" ");
+			}
+		}
+		return sb.toString();
+	}
 
 }
