@@ -1,11 +1,13 @@
-package edu.cornell.rocketry.util;
+package edu.cornell.rocketry.comm;
+
+import edu.cornell.rocketry.gui.model.Datum;
 
 public class TEMResponse {
 	
 	private double latitude;
 	private double longitude;
 	private double altitude;
-	private StatusFlag flag;
+	private TEMStatusFlag flag;
 	
 	private long time;
 	private double rotation;
@@ -37,7 +39,7 @@ public class TEMResponse {
 		this.latitude = lat;
 		this.longitude = lon;
 		this.altitude = alt;
-		this.flag = new StatusFlag(flag);
+		this.flag = new TEMStatusFlag(flag);
 		this.time = System.currentTimeMillis();
 		this.rotation = rot;
 		this.acceleration_x = acc_x;
@@ -50,7 +52,7 @@ public class TEMResponse {
 	public double lat()      { return latitude; }
 	public double lon()      { return longitude; }
 	public double alt()      { return altitude; }
-	public StatusFlag flag() { return flag; }
+	public TEMStatusFlag flag() { return flag; }
 	public long time()       { return time; }
 	public double rot()      { return rotation; }
 	public double acc_x()    { return acceleration_x; }

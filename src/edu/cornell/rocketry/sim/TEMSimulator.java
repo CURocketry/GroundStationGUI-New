@@ -1,12 +1,16 @@
-package edu.cornell.rocketry.util;
+package edu.cornell.rocketry.sim;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import edu.cornell.rocketry.comm.TEMResponse;
+import edu.cornell.rocketry.comm.TEMStatusFlag;
 import edu.cornell.rocketry.comm.receive.Receiver;
+import edu.cornell.rocketry.gui.model.Datum;
+import edu.cornell.rocketry.util.Logger;
 
-public class RocketSimulator {
+public class TEMSimulator {
 	
 	private static final long MAX_FREQUENCY_DELAY = 200;
 	private static final long MIN_FREQUENCY_DELAY = 5000;
@@ -27,7 +31,7 @@ public class RocketSimulator {
 	
 	private static boolean CONTINUE_TRANSMITTING = true;
 	
-	public RocketSimulator (String path, Receiver r) {
+	public TEMSimulator (String path, Receiver r) {
 		this.simfilepath = path;
 		this.simfile = new File(path);
 		receiver = r;
@@ -39,7 +43,7 @@ public class RocketSimulator {
 		loadSimFile();
 	}
 	
-	public RocketSimulator (File f, Receiver r) {
+	public TEMSimulator (File f, Receiver r) {
 		this.simfile = f;
 		this.simfilepath = f.getPath();
 		receiver = r;
@@ -71,11 +75,11 @@ public class RocketSimulator {
 						
 						d = data.get(index);
 						
-						StatusFlag flag = new StatusFlag();
+						TEMStatusFlag flag = new TEMStatusFlag();
 						
-						flag.set(StatusFlag.Type.gps_fix, gps_fix);
-						flag.set(StatusFlag.Type.camera_enabled, camera_enabled);
-						flag.set(StatusFlag.Type.transmit_freq_max, transmit_freq_max);
+						flag.set(TEMStatusFlag.Type.gps_fix, gps_fix);
+						flag.set(TEMStatusFlag.Type.camera_enabled, camera_enabled);
+						flag.set(TEMStatusFlag.Type.transmit_freq_max, transmit_freq_max);
 						
 						TEMResponse r = 
 							new TEMResponse (d.lat(), d.lon(), d.alt(), flag.byteValue(), d.time(), d.rot(), d.acc_x(), d.acc_y(), d.acc_z());

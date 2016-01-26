@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.gui;
+package edu.cornell.rocketry.gui.controller;
 
 //import jTile.src.org.openstreetmap.gui.jmapviewer.JMapViewer;
 
@@ -20,25 +20,26 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
 import com.rapplogic.xbee.api.XBeeException;
 
+import edu.cornell.rocketry.comm.Command;
+import edu.cornell.rocketry.comm.CommandReceipt;
+import edu.cornell.rocketry.comm.CommandType;
+import edu.cornell.rocketry.comm.TEMResponse;
+import edu.cornell.rocketry.comm.TEMStatusFlag;
+import edu.cornell.rocketry.comm.XBeeController;
+import edu.cornell.rocketry.comm.TEMStatusFlag.Type;
 import edu.cornell.rocketry.comm.receive.RealReceiver;
 import edu.cornell.rocketry.comm.receive.Receiver;
 import edu.cornell.rocketry.comm.receive.TestReceiver;
 import edu.cornell.rocketry.comm.send.RealSender;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
-import edu.cornell.rocketry.comm.shared.XBeeController;
-import edu.cornell.rocketry.gui.Model;
-import edu.cornell.rocketry.util.Command;
-import edu.cornell.rocketry.util.CommandReceipt;
-import edu.cornell.rocketry.util.CommandType;
-import edu.cornell.rocketry.util.TEMResponse;
-import edu.cornell.rocketry.util.GPSStatus;
+import edu.cornell.rocketry.gui.model.ApplicationModel;
+import edu.cornell.rocketry.gui.model.Datum;
+import edu.cornell.rocketry.gui.model.RocketModel;
+import edu.cornell.rocketry.gui.model.Position;
+import edu.cornell.rocketry.gui.view.View;
 import edu.cornell.rocketry.util.DataLogger;
-import edu.cornell.rocketry.util.Datum;
-import edu.cornell.rocketry.util.Position;
-import edu.cornell.rocketry.util.StatusFlag;
-import edu.cornell.rocketry.util.StatusFlag.Type;
-import edu.cornell.rocketry.util.CameraStatus;
+import edu.cornell.rocketry.util.Status;
 import edu.cornell.rocketry.util.LocalLoader;
 import edu.cornell.rocketry.util.Pair;
 import gnu.io.CommPortIdentifier;
@@ -51,7 +52,7 @@ public class Controller {
 	private DataLogger dataLogger;
 	
 	//view
-	private GSGui mainWindow;
+	private View view;
 	
 	//for removing text from previous dot
 	private MapMarkerDot prevDot;
@@ -64,20 +65,21 @@ public class Controller {
 	private Sender realSender;
 	public Sender sender () { return (testing? testSender : realSender); }
 	
-	private Model model;
+	private RocketModel rocketModel;
+	private ApplicationModel applicationModel;
 	
 	private XBeeController xbeeController;
 	
 	
-	public Controller (GSGui gui) {
-		mainWindow = gui;
-		model = new Model();
+	public Controller (View gui) {
+		view = gui;
+		model = new RocketModel();
 		testReceiver = new TestReceiver(this);
 		realReceiver = new RealReceiver(this);
 		xbeeController = new XBeeController(this);
 		testSender = new TestSender(this);
-		realSender = new RealSender(this, xbeeController.xbee(), mainWindow.selectedAddress);
-		System.out.println("selectedAddress = " + mainWindow.selectedAddress);
+		realSender = new RealSender(this, xbeeController.xbee(), view.selectedAddress);
+		System.out.println("selectedAddress = " + view.selectedAddress);
 		dataLogger = new DataLogger();
 		dataLogger.log("time,lat,lon,alt");
 		
@@ -92,8 +94,8 @@ public class Controller {
 	
 	public XBeeController commController() { return xbeeController; }
 	
-	public GSGui view () {
-		return mainWindow;
+	public View view () {
+		return view;
 	}
 	
 	public Sender getSender(boolean test) { 
@@ -106,10 +108,10 @@ public class Controller {
 	
 	public void refreshDisplay () {
 		//re-load markers on map
-		Collection<Datum> all_rocket_data = model.getPastRocketData();
+		Collection<Datum> all_rocket_data = model.pastRocketData();
 		updateRocketPositionFull(all_rocket_data);
 		
-		mainWindow.setCameraStatus(model.camera());
+		view.setCameraStatus(model.cameraStatus());
 		
 	}
 	
@@ -117,14 +119,14 @@ public class Controller {
 	/*------------------ Control & Tracking Update Methods ------------------*/
 	
 	void updateRocketTrajectory(){
-		List<Datum> rocket_past_data = model.getPastRocketData();
+		List<Datum> rocket_past_data = model.pastRocketData();
 		int nPositions = rocket_past_data.size();
 		if (nPositions> 1){
 			double[] lat = {rocket_past_data.get(nPositions-2).lat(), rocket_past_data.get(nPositions-1).lat()};
 			double[] lon = {rocket_past_data.get(nPositions-2).lon(), rocket_past_data.get(nPositions-1).lon()};
 			double[] alt = {rocket_past_data.get(nPositions-2).alt(), rocket_past_data.get(nPositions-1).alt()};
 	
-			Plot3DPanel plot = mainWindow.getTrajectoryPlot();
+			Plot3DPanel plot = view.getTrajectoryPlot();
 			plot.addLinePlot(
                 "Rocket Trajectory",
                 Color.red,
@@ -145,12 +147,12 @@ public class Controller {
 	 */
 	public void addTilesToMap(File f) {
 		//reset map to one with all of the tiles in cache.
-		MemoryTileCache cache = (MemoryTileCache) mainWindow.map().getTileCache();
-		TileSource source = mainWindow.map().getTileController().getTileSource();
+		MemoryTileCache cache = (MemoryTileCache) view.map().getTileCache();
+		TileSource source = view.map().getTileController().getTileSource();
 		
 		addTilesToCacheFromFile(cache, source, f);
 		
-		mainWindow.map().getTileController().setTileCache(cache);
+		view.map().getTileController().setTileCache(cache);
 		
 		//re-add map markers
 		refreshDisplay();
@@ -181,12 +183,12 @@ public class Controller {
 	 * Removes all tiles from the current map's cache.
 	 */
 	public void resetMapTiles() {
-		mainWindow.map().getTileController().setTileCache(new MemoryTileCache());
+		view.map().getTileController().setTileCache(new MemoryTileCache());
 	}
 
     void updateRocketPosition (Datum d) {
     	MapMarkerDot toAdd = new MapMarkerDot(""+Position.millisToTime(d.time()), new Coordinate(d.lat(), d.lon()));
-    	mainWindow.addMapMarkerDot
+    	view.addMapMarkerDot
     		(toAdd);
     	if (prevDot != null) {
     		prevDot.setBackColor(Color.BLACK);
@@ -203,20 +205,18 @@ public class Controller {
     	}
     }
     
-    void updatePayloadStatus (CameraStatus st) {
-    	//System.out.println("Updating Payload Status: " + st.toString());
-    	model.setPayload(st);
-    	mainWindow.setCameraStatus(model.camera());
-    	//System.out.println("Updated Payload Status: " + model(testing).payload().toString());
+    void updateCameraStatus (Status st) {
+    	model.setCameraStatus(st);
+    	view.setCameraStatus(model.cameraStatus());
     }
     
-    void updateGPSStatus (GPSStatus st) {
-    	model.setGPS(st);
-    	mainWindow.setGPSStatus(model.gps());
+    void updateGPSStatus (Status st) {
+    	model.setGPSStatus(st);
+    	view.setGPSStatus(model.gpsStatus());
     }
     
     public void clearMapMarkers () {
-    	mainWindow.clearMapMarkers();
+    	view.clearMapMarkers();
     }
     
     public void sendCommand (CommandType type) {
@@ -240,7 +240,7 @@ public class Controller {
 		//process receipt
 		if (r.type() == CommandType.ENABLE_CAMERA
 			|| r.type() == CommandType.DISABLE_CAMERA) {
-			updatePayloadStatus(CameraStatus.Busy);
+			updateCameraStatus(Status.BUSY);
 		}
 	}
 	
@@ -248,18 +248,18 @@ public class Controller {
 		ilog("\nTEM Response Received:");
 		
 		//process flag
-		StatusFlag flag = r.flag();
+		TEMStatusFlag flag = r.flag();
 		
 		if (flag.isSet(Type.camera_enabled)) {
-			mainWindow.setCameraStatus(CameraStatus.Enabled);
+			view.setCameraStatus(Status.ENABLED);
 		} else {
-			mainWindow.setCameraStatus(CameraStatus.Disabled);
+			view.setCameraStatus(Status.DISABLED);
 		}
 		
 		if (flag.isSet(Type.gps_fix)) {
-			mainWindow.setGPSStatus(GPSStatus.Fix);
+			view.setGPSStatus(Status.ENABLED);
 		} else {
-			mainWindow.setGPSStatus(GPSStatus.NoFix);
+			view.setGPSStatus(Status.DISABLED);
 		}
 		
 		if (flag.isSet(Type.transmit_freq_max)) {
@@ -273,9 +273,9 @@ public class Controller {
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
 			// Update model
 			model.update(r.create_datum());
-			updateRocketPosition (model.current_datum());
+			updateRocketPosition (model.currentDatum());
 			String posn = "(" + r.lat() + ", " + r.lon() + ")";
-			mainWindow.updateLatestPosition(posn);
+			view.updateLatestPosition(posn);
 			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 			if (!test) dataLogger.log(
@@ -285,7 +285,7 @@ public class Controller {
 			MapMarker m = new MapMarkerDot(r.lat(), r.lon());
 			Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
 			all_markers.add(p);
-			mainWindow.map().addMapMarker(m);
+			view.map().addMapMarker(m);
 
 			updateAnalyticsDisplayFields
 				(r.lat(), 
@@ -331,7 +331,7 @@ public class Controller {
 	 * @param s
 	 */
 	private void ilog (String s) {
-		mainWindow.controlLog("- " + s);
+		view.controlLog("- " + s);
 		System.out.println("logged: " + s);
 	}
 	
@@ -350,7 +350,7 @@ public class Controller {
 			double acceleration_y,
 			double acceleration_z,
 			double temp) {
-		mainWindow.updateAnalytics
+		view.updateAnalytics
 			(latitude, 
 			longitude, 
 			altitude, 
@@ -368,7 +368,7 @@ public class Controller {
 	
 	
 	public void updateXBeeDisplayFields (String lat, String lon, String alt, String flag) {
-		mainWindow.updateXBeeData(lat, lon, alt, flag);
+		view.updateXBeeData(lat, lon, alt, flag);
 	}
 	
 
@@ -390,36 +390,37 @@ public class Controller {
 		}
 
 		// update list...
-		mainWindow.serialPortsList.removeAllItems();
+		view.serialPortsList.removeAllItems();
 		for (String s : comboBoxList) {
-			mainWindow.serialPortsList.addItem(s);
+			view.serialPortsList.addItem(s);
 		}
 	}
 
-	public void updateSelectedAddress() {
-		mainWindow.selectedAddress = GSGui.addr[mainWindow.addressesList.getSelectedIndex()]; //set active address
+	public void setSelectedAddress(XBeeAddress64 addr) {
+		view.selectedAddress = View.addr[view.addressesList.getSelectedIndex()]; //set active address
+		applicationModel.setSelectedAddress(addr);
 	}
 	
 	public void updateSelectedBaudRate() {
-		mainWindow.selectedBaud = (int) mainWindow.baudList.getSelectedItem(); //set active rate
+		view.selectedBaud = (int) view.baudList.getSelectedItem(); //set active rate
 	}
 
     public void initXbee() throws XBeeException {
 
 		// get selected serial port...
-		String selSerial = (String) mainWindow.serialPortsList.getSelectedItem();
+		String selSerial = (String) view.serialPortsList.getSelectedItem();
 		
 		
 		System.out.println("Initializing XBee");
 		
 
 		System.out.println(selSerial);
-		xbeeController.openXBee(selSerial, mainWindow.selectedBaud); //open port
+		xbeeController.openXBee(selSerial, view.selectedBaud); //open port
 		
 		//don't just do this by default!
 		//commController.startListening();
 		
-		mainWindow.resetPacketCounters();
+		view.resetPacketCounters();
 	}
 
 	public void sendXBeePacket(String msg) {
@@ -444,7 +445,7 @@ public class Controller {
     			filtered_markers.add(marker);
     		}
     	}
-    	mainWindow.map().setMapMarkerList(filtered_markers);
+    	view.map().setMapMarkerList(filtered_markers);
     }
     
     /**
@@ -452,11 +453,11 @@ public class Controller {
      */
     public void clearData () {
     	//clear map markers
-    	mainWindow.map().setMapMarkerList(new ArrayList<MapMarker>());
+    	view.map().setMapMarkerList(new ArrayList<MapMarker>());
     	//clear 3d plot
-    	mainWindow.resetTrajectoryPlot();
+    	view.resetTrajectoryPlot();
     	//clear analytics tab
-    	mainWindow.initializeAnalyticsTab();
+    	view.initializeAnalyticsTab();
     	
     }
 }

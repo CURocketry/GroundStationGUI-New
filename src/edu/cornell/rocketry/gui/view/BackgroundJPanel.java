@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.gui;
+package edu.cornell.rocketry.gui.view;
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.util;
+package edu.cornell.rocketry.comm;
 
 public enum CommandType {
 	ENABLE_CAMERA,
@@ -13,21 +13,21 @@ public enum CommandType {
 	public byte bitMask () {
 		switch (this) {
 		case ENABLE_CAMERA:
-			return (byte) 0b10000000;
+			return (byte) 1;
 		case DISABLE_CAMERA:
-			return (byte) 0b01000000;
+			return (byte) 1 << 1;
 		case TRANSMIT_START:
-			return (byte) 0b00100000;
+			return (byte) 1 << 2;
 		case TRANSMIT_HALT:
-			return (byte) 0b00010000;
+			return (byte) 1 << 3;
 		case TRANSMIT_FREQ_MAX:
-			return (byte) 0b00001000;
+			return (byte) 1 << 4;
 		case TRANSMIT_FREQ_MIN:
-			return (byte) 0b00000100;
+			return (byte) 1 << 5;
 		case BEGIN_LAUNCH:
-			return (byte) 0b00000010;
+			return (byte) 1 << 6;
 		case CANCEL_LAUNCH:
-			return (byte) 0b00000001;
+			return (byte) 0b10000000; //thanks Obama
 		default:
 			throw new IllegalStateException("invalid CommandType");
 		}

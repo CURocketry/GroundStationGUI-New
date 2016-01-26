@@ -2,27 +2,27 @@ package edu.cornell.rocketry.comm.send;
 
 import java.io.File;
 
-import edu.cornell.rocketry.gui.Controller;
-import edu.cornell.rocketry.util.Command;
-import edu.cornell.rocketry.util.CommandReceipt;
-import edu.cornell.rocketry.util.CommandType;
-import edu.cornell.rocketry.util.RocketSimulator;
+import edu.cornell.rocketry.comm.Command;
+import edu.cornell.rocketry.comm.CommandReceipt;
+import edu.cornell.rocketry.comm.CommandType;
+import edu.cornell.rocketry.gui.controller.Controller;
+import edu.cornell.rocketry.sim.TEMSimulator;
 
 public class TestSender implements Sender {
 	
 	Controller controller;
 	
-	RocketSimulator rsim;
+	TEMSimulator rsim;
 	
 	public TestSender (Controller c) {
 		controller = c;
 		String path = "./sim/campus_20.rsim";
-		rsim = new RocketSimulator(path, controller.getReceiver(true));
+		rsim = new TEMSimulator(path, controller.getReceiver(true));
 	}
 	
 	public TestSender (Controller c, File f) {
 		controller = c;
-		rsim = new RocketSimulator(f, controller.getReceiver(true));
+		rsim = new TEMSimulator(f, controller.getReceiver(true));
 	}
 	
 	public void switchFile (String s) {}; //TODO

@@ -1,6 +1,6 @@
 package edu.cornell.rocketry.comm.send;
 
-import edu.cornell.rocketry.util.CommandType;
+import edu.cornell.rocketry.comm.CommandType;
 
 public class CommandFlag {
 	
@@ -35,15 +35,15 @@ public class CommandFlag {
 	
 	public String toString () {
 		CommandType[] types = {
-		CommandType.ENABLE_CAMERA,
-		CommandType.DISABLE_CAMERA,
-		CommandType.TRANSMIT_START,
-		CommandType.TRANSMIT_HALT,
-		CommandType.TRANSMIT_FREQ_MAX,
-		CommandType.TRANSMIT_FREQ_MIN,
-		CommandType.BEGIN_LAUNCH,
-		CommandType.CANCEL_LAUNCH
-		};
+			CommandType.ENABLE_CAMERA,
+			CommandType.DISABLE_CAMERA,
+			CommandType.TRANSMIT_START,
+			CommandType.TRANSMIT_HALT,
+			CommandType.TRANSMIT_FREQ_MAX,
+			CommandType.TRANSMIT_FREQ_MIN,
+			CommandType.BEGIN_LAUNCH,
+			CommandType.CANCEL_LAUNCH
+			};
 		
 		String s = "";
 		String b = "";

@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.util;
+package edu.cornell.rocketry.gui.model;
 
 import java.util.concurrent.TimeUnit;
 

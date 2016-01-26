@@ -1,6 +1,6 @@
 package edu.cornell.rocketry.main;
 
-import edu.cornell.rocketry.gui.GSGui;
+import edu.cornell.rocketry.gui.view.View;
 
 public class Main {
 
@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new GSGui().setVisible(true);
+				new View().setVisible(true);
 			}
 		});
 	}

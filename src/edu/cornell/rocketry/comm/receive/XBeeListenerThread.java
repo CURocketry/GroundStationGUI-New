@@ -8,19 +8,19 @@ import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.XBeeTimeoutException;
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
+import edu.cornell.rocketry.comm.TEMResponse;
 import edu.cornell.rocketry.comm.receive.Receiver;
-import edu.cornell.rocketry.gui.GSGui;
-import edu.cornell.rocketry.util.TEMResponse;
+import edu.cornell.rocketry.gui.view.View;
 
 public class XBeeListenerThread extends Thread {
 
 	private Receiver receiver;
-	private GSGui mainWindow;
+	private View mainWindow;
 	private XBee xbee;
 	
 	private int timeout = 2000;
 	
-	public XBeeListenerThread (Receiver r, XBee xb, GSGui mw) {
+	public XBeeListenerThread (Receiver r, XBee xb, View mw) {
 		receiver = r;
 		xbee = xb;
 		mainWindow = mw;
@@ -72,7 +72,7 @@ public class XBeeListenerThread extends Thread {
 					System.out.println("Actual Longitude:" + packet.longitude());
 					mainWindow.incNumRec();
 					mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
-							+ packet.toString());
+							+ packet.toVerboseString());
 					
 					synchronized (receiver) {
 						receiver.acceptTEMResponse(r);

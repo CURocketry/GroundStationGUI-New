@@ -1,10 +1,10 @@
-package edu.cornell.rocketry.comm.shared;
+package edu.cornell.rocketry.comm;
 
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
 
 import edu.cornell.rocketry.comm.receive.XBeeListenerThread;
-import edu.cornell.rocketry.gui.Controller;
+import edu.cornell.rocketry.gui.controller.Controller;
 
 public class XBeeController {
 	

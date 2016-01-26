@@ -1,6 +1,6 @@
 package edu.cornell.rocketry.util;
 
-import edu.cornell.rocketry.gui.Controller;
+import edu.cornell.rocketry.gui.controller.Controller;
 
 public class RunnableFactory {
 	

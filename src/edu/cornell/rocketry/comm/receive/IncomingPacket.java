@@ -2,6 +2,8 @@ package edu.cornell.rocketry.comm.receive;
 
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
+import edu.cornell.rocketry.comm.TEMStatusFlag;
+
 public class IncomingPacket {
 	
 	//Incoming packet structure [len=17]
@@ -11,6 +13,8 @@ public class IncomingPacket {
 	//[gyro x2 signed] 
 	//[acc_z x1 signed] [acc_x x1 signed] [acc_y x1 signed]
 	//[temp x1 unsigned]
+	
+	//FIXME: PARSE AS SIGNED EXCEPT FOR TEMPERATURE
 	
 	private final int FLAG_LEN = 1;
 	private final int LAT_LEN  = 4;
@@ -22,14 +26,14 @@ public class IncomingPacket {
 	
 	private final int PACKET_SIZE = 17;
 	
-	private byte flag;
 	private int latitude;
 	private int longitude;
 	private int altitude;
+	private byte flag;
 	private int gyroscope;
+	private int acceleration_z;
 	private int acceleration_x;
 	private int acceleration_y;
-	private int acceleration_z;
 	private int temperature;
 	
 	int[] rawPacketData;
@@ -39,9 +43,6 @@ public class IncomingPacket {
 		rawPacketData = ioSample.getData();
 		
 		int i = 0;
-		
-		flag = (byte) rawPacketData[i];
-		i += FLAG_LEN;
 		
 		tmp = new int[LAT_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, LAT_LEN);
@@ -58,10 +59,20 @@ public class IncomingPacket {
 		altitude = convertToDecimalInt(tmp);
 		i += ALT_LEN;
 		
+		tmp = new int[FLAG_LEN];
+		System.arraycopy(rawPacketData, i, tmp, 0, FLAG_LEN);
+		flag = (byte) tmp[0];
+		i+= FLAG_LEN;
+		
 		tmp = new int[GYRO_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, GYRO_LEN);
 		gyroscope = convertToDecimalInt(tmp);
 		i += GYRO_LEN;
+		
+		tmp = new int[ACC_LEN];
+		System.arraycopy(rawPacketData, i, tmp, 0, ACC_LEN);
+		acceleration_z = convertToDecimalInt(tmp);
+		i += ACC_LEN;
 		
 		tmp = new int[ACC_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, ACC_LEN);
@@ -71,11 +82,6 @@ public class IncomingPacket {
 		tmp = new int[ACC_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, ACC_LEN);
 		acceleration_y = convertToDecimalInt(tmp);
-		i += ACC_LEN;
-		
-		tmp = new int[ACC_LEN];
-		System.arraycopy(rawPacketData, i, tmp, 0, ACC_LEN);
-		acceleration_z = convertToDecimalInt(tmp);
 		i += ACC_LEN;
 		
 		tmp = new int[TEMP_LEN];
@@ -110,22 +116,22 @@ public class IncomingPacket {
 	}
 	
 	public double acceleration_x () {
-		return (double) acceleration_x;
+		return ((double) acceleration_x) / 100;
 		//FIXME apply proper conversion
 	}
 	
 	public double acceleration_y () {
-		return (double) acceleration_y;
+		return ((double) acceleration_y) / 100;
 		//FIXME apply proper conversion
 	}
 	
 	public double acceleration_z () {
-		return (double) acceleration_z;
+		return ((double) acceleration_z) / 100;
 		//FIXME apply proper conversion
 	}
 	
 	public double gyroscope () {
-		return (double) gyroscope;
+		return ((double) gyroscope) / 360;
 		//FIXME apply proper conversion
 	}
 	
@@ -141,11 +147,31 @@ public class IncomingPacket {
 	public String toString () {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < rawPacketData.length; i++) {
+			String integer = Integer.toHexString(rawPacketData[i]);
+			if (integer.length() == 1) {
+				integer = "0" + integer;
+			}
 			sb.append(Integer.toHexString(rawPacketData[i]));
 			if (i < rawPacketData.length - 1) {
 				sb.append(" ");
 			}
 		}
+		return sb.toString();
+	}
+	
+	public String toVerboseString () {
+		StringBuilder sb = new StringBuilder();
+		sb.append("IncomingPacket[");
+		sb.append("lat:").append(latitude()).append(",");
+		sb.append("lon:").append(longitude()).append(",");
+		sb.append("alt:").append(altitude()).append(",");
+		sb.append("acc_x:").append(acceleration_x()).append(",");
+		sb.append("acc_y:").append(acceleration_y()).append(",");
+		sb.append("acc_z:").append(acceleration_z()).append(",");
+		sb.append("gyro:").append(gyroscope()).append(",");
+		sb.append("temp:").append(temperature()).append(",");
+		sb.append("flag:").append((new TEMStatusFlag(flag)).toString());
+		sb.append("]");
 		return sb.toString();
 	}
 

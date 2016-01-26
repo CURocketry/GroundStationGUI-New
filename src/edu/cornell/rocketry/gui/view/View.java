@@ -1,35 +1,25 @@
-package edu.cornell.rocketry.gui;
+package edu.cornell.rocketry.gui.view;
 
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.IAxis;
 import info.monitorenter.gui.chart.ITrace2D;
 import info.monitorenter.gui.chart.IAxis.AxisTitle;
 import info.monitorenter.gui.chart.traces.Trace2DSimple;
-import info.monitorenter.gui.chart.labelformatters.LabelFormatterSimple;
 
-import jTile.src.org.openstreetmap.fma.jtiledownloader.config.AppConfiguration;
 import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.JTileDownloaderMainViewPanel;
-import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.MainPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
@@ -40,12 +30,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -62,8 +50,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.math.plot.Plot3DPanel; //FIXME
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
@@ -74,29 +60,16 @@ import org.openstreetmap.gui.jmapviewer.OsmTileLoader;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
-import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
-import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
-import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOpenAerialTileSource;
-import org.openstreetmap.gui.jmapviewer.tilesources.MapQuestOsmTileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
-import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeException;
 
-import edu.cornell.rocketry.gui.Controller;
-import edu.cornell.rocketry.util.CommandType;
-import edu.cornell.rocketry.util.TEMResponse;
-import edu.cornell.rocketry.util.GPSStatus;
+import edu.cornell.rocketry.comm.CommandType;
+import edu.cornell.rocketry.gui.controller.Controller;
+import edu.cornell.rocketry.util.Status;
 import edu.cornell.rocketry.util.ImageFactory;
-import edu.cornell.rocketry.util.RocketSimulator;
-import edu.cornell.rocketry.util.CameraStatus;
-import edu.cornell.rocketry.comm.send.OutgoingPacket;
-import edu.cornell.rocketry.comm.receive.XBeeListenerThread;
-import edu.cornell.rocketry.comm.send.XBeeSender;
-import edu.cornell.rocketry.comm.send.XBeeSenderException;
 import gnu.io.CommPortIdentifier;
 
 
@@ -106,7 +79,7 @@ import gnu.io.CommPortIdentifier;
  * @author Jan Peter Stotz
  *
  */
-public class GSGui extends JFrame implements JMapViewerEventListener {
+public class View extends JFrame implements JMapViewerEventListener {
 
 	
 	
@@ -119,7 +92,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     private static final long serialVersionUID = 1L;
     
 
-    final GSGui view = this;
+    final View view = this;
     
     private Controller controller;// = new Controller(this);
 
@@ -135,9 +108,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     /*------------------------ Control Tab Fields ---------------------------*/
     JPanel status;
-    JPanel gpsControls;
-    JPanel cameraControls;
     JPanel latestPositionPanel;
+    JLabel latestPositionLabel;
     JLabel latestPosition;
     
     
@@ -147,6 +119,9 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     JPanel cameraStatusContainer;
     JPanel gpsStatusContainer;
+    JPanel initStatusContainer;
+    JPanel launchStatusContainer;
+    JPanel landedStatusContainer;
     
     JScrollPane infologscrollpane;
     JTextArea infolog;
@@ -156,6 +131,15 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     
     JLabel gpsStatusLabel;
     JLabel gpsStatus;
+    
+    JLabel initStatusLabel;
+    JLabel initStatus;
+    
+    JLabel launchStatusLabel;
+    JLabel launchStatus;
+    
+    JLabel landedStatusLabel;
+    JLabel landedStatus;
     
     JButton settings = new JButton ("Settings");
     JButton startTransmittingButton = new JButton("Start Transmitting");
@@ -274,11 +258,8 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	private int numSent = 0;	//number sent packets
 	private int numErr = 0; 	//number error packets
 
-	private JLabel packetLabel;
-	private JLabel nLabel;
 
 	private JTextArea receiveText;
-	private JTextArea rocketText, cameraText;
 	private JTextField sendEdit;
 	private final static Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private final static Font textAreaFont = new Font("Arial", Font.PLAIN, 10);
@@ -339,7 +320,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     /**
      * Constructs the Rocketry GS Gui.
      */
-    public GSGui() {
+    public View() {
         super("CURocketry Ground Station GUI");
         setSize(500, 500);
         
@@ -457,7 +438,7 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         trajpanel.add(trajectoryplot,BorderLayout.CENTER);
     }
     
-    JMapViewer map(){
+    public JMapViewer map(){
         return treeMap.getViewer();
     }
     @SuppressWarnings("unused")
@@ -486,12 +467,15 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         status.setOpaque(false);
         cameraStatusContainer = new JPanel(new BorderLayout());
         gpsStatusContainer = new JPanel(new BorderLayout());
+        initStatusContainer = new JPanel(new BorderLayout());
+        launchStatusContainer = new JPanel(new BorderLayout());
+        landedStatusContainer = new JPanel(new BorderLayout());
         
         //display of last known position
         latestPositionPanel = new JPanel(new BorderLayout());
         latestPositionPanel.setOpaque(false);
         latestPosition = new JLabel("no data");
-        JLabel latestPositionLabel = new JLabel("Last Known Position: ");
+        latestPositionLabel = new JLabel("Last Known Position: ");
         latestPositionLabel.setForeground(Color.WHITE);
         latestPosition.setForeground(Color.WHITE);
         latestPositionPanel.add(latestPositionLabel, BorderLayout.WEST);
@@ -504,7 +488,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         cameraStatus = new JLabel();
         cameraStatus.setIcon(ImageFactory.disabledImage());
         cameraStatus.setOpaque(false);
-        
         cameraStatusContainer.add(cameraStatusLabel, BorderLayout.WEST);
         cameraStatusContainer.add(cameraStatus, BorderLayout.EAST);
         
@@ -514,16 +497,47 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
         gpsStatus = new JLabel();
         gpsStatus.setIcon(ImageFactory.disabledImage());
         gpsStatus.setOpaque(false);
-        
-        
         gpsStatusContainer.add(gpsStatusLabel, BorderLayout.WEST);
         gpsStatusContainer.add(gpsStatus, BorderLayout.EAST);
         
+        initStatusLabel = new JLabel("Initialization Status: ");
+        initStatusLabel.setOpaque(false);
+        initStatusLabel.setForeground(Color.WHITE);
+        initStatus = new JLabel();
+        initStatus.setIcon(ImageFactory.disabledImage());
+        initStatus.setOpaque(false);
+        initStatusContainer.add(initStatusLabel, BorderLayout.WEST);
+        initStatusContainer.add(initStatus, BorderLayout.EAST);
+        
+        launchStatusLabel = new JLabel("Launch Ready: ");
+        launchStatusLabel.setOpaque(false);
+        launchStatusLabel.setForeground(Color.WHITE);
+        launchStatus = new JLabel();
+        launchStatus.setIcon(ImageFactory.disabledImage());
+        launchStatus.setOpaque(false);
+        launchStatusContainer.add(launchStatusLabel, BorderLayout.WEST);
+        launchStatusContainer.add(launchStatus, BorderLayout.EAST);
+        
+        landedStatusLabel = new JLabel("Landed: ");
+        landedStatusLabel.setOpaque(false);
+        landedStatusLabel.setForeground(Color.WHITE);
+        landedStatus = new JLabel();
+        landedStatus.setIcon(ImageFactory.disabledImage());
+        landedStatus.setOpaque(false);
+        landedStatusContainer.add(landedStatusLabel, BorderLayout.WEST);
+        landedStatusContainer.add(landedStatus, BorderLayout.EAST);
+        
         gpsStatusContainer.setOpaque(false);
         cameraStatusContainer.setOpaque(false);
+        initStatusContainer.setOpaque(false);
+        launchStatusContainer.setOpaque(false);
+        landedStatusContainer.setOpaque(false);
         
         status.add(gpsStatusContainer, BorderLayout.WEST);
-        status.add(cameraStatusContainer, BorderLayout.EAST);
+        status.add(cameraStatusContainer, BorderLayout.WEST);
+        status.add(initStatusContainer, BorderLayout.WEST);
+        status.add(launchStatusContainer, BorderLayout.WEST);
+        status.add(landedStatusContainer, BorderLayout.WEST);
         
         
         //start transmitting button
@@ -1053,7 +1067,6 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     }
     
     private void initializeXBeeTab() {
-    	PropertyConfigurator.configure("./lib/log4j.properties");
 
 	// Layout GUI
 	xbeePanel = new JPanel(new BorderLayout());
@@ -1091,10 +1104,10 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
 	addressPanel.add(new JLabel("Remote XBee Address: "), BorderLayout.WEST);
 	addressesList = new JComboBox<String>(addresses);
 	addressesList.setSelectedIndex(0);
-	controller.updateSelectedAddress();
+	controller.setSelectedAddress();
 	addressesList.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-	controller.updateSelectedAddress();
+	controller.setSelectedAddress();
 	}
 	});
 	addressPanel.add(addressesList, BorderLayout.CENTER);
@@ -1646,35 +1659,87 @@ public class GSGui extends JFrame implements JMapViewerEventListener {
     	map().setMapMarkerVisible(b);
     }
     
-    public void setCameraStatus (CameraStatus st) {
+    public void setCameraStatus (Status st) {
     	switch (st) {
-    	case Enabled:
-    	cameraStatus.setIcon(ImageFactory.enabledImage());
-    	break;
-    	case Busy:
-    	cameraStatus.setIcon(ImageFactory.busyImage());
-    	break;
-    	case Disabled:
-    	cameraStatus.setIcon(ImageFactory.disabledImage());
-    	break;
+    	case ENABLED:
+	    	cameraStatus.setIcon(ImageFactory.enabledImage());
+	    	break;
+    	case BUSY:
+	    	cameraStatus.setIcon(ImageFactory.busyImage());
+	    	break;
+    	case DISABLED:
+    		cameraStatus.setIcon(ImageFactory.disabledImage());
+    		break;
     	default:
-    	throw new IllegalArgumentException();
+    		throw new IllegalArgumentException();
     	}
     }
     
-    public void setGPSStatus (GPSStatus st) {
+    public void setGPSStatus (Status st) {
     	switch (st) {
-    	case Fix:
-    	gpsStatus.setIcon(ImageFactory.enabledImage());
-    	break;
-    	case Unknown:
-    	gpsStatus.setIcon(ImageFactory.busyImage());
-    	break;
-    	case NoFix:
-    	gpsStatus.setIcon(ImageFactory.disabledImage());
-    	break;
+    	case ENABLED:
+	    	gpsStatus.setIcon(ImageFactory.enabledImage());
+	    	break;
+    	case BUSY:
+	    	gpsStatus.setIcon(ImageFactory.busyImage());
+	    	break;
+    	case DISABLED:
+	    	gpsStatus.setIcon(ImageFactory.disabledImage());
+	    	break;
     	default:
-    	throw new IllegalArgumentException();
+    		throw new IllegalArgumentException
+    			("edu.cornell.rocketry.gui.GSGui#setGPSStatus: Invalid Status");
+    	}
+    }
+    
+    public void setInitializationStatus (Status st) {
+    	switch (st) {
+    	case ENABLED:
+    		initStatus.setIcon(ImageFactory.enabledImage());
+    		break;
+    	case BUSY:
+    		initStatus.setIcon(ImageFactory.busyImage());
+    		break;
+    	case DISABLED:
+    		initStatus.setIcon(ImageFactory.disabledImage());
+    		break;
+    	default:
+    		throw new IllegalArgumentException
+    			("edu.cornell.rocketry.gui.GSGui#setInitializationStatus: Invalid Status");
+    	}
+    }
+    
+    public void setLaunchStatus (Status st) {
+    	switch (st) {
+    	case ENABLED:
+    		launchStatus.setIcon(ImageFactory.enabledImage());
+    		break;
+    	case BUSY:
+    		launchStatus.setIcon(ImageFactory.busyImage());
+    		break;
+    	case DISABLED:
+    		launchStatus.setIcon(ImageFactory.disabledImage());
+    		break;
+    	default:
+    		throw new IllegalArgumentException
+    			("edu.cornell.rocketry.gui.GSGui#setLaunchStatus: Invalid Status");
+    	}
+    }
+    
+    public void setLandedStatus (Status st) {
+    	switch (st) {
+    	case ENABLED:
+    		landedStatus.setIcon(ImageFactory.enabledImage());
+    		break;
+    	case BUSY:
+    		landedStatus.setIcon(ImageFactory.busyImage());
+    		break;
+    	case DISABLED:
+    		landedStatus.setIcon(ImageFactory.disabledImage());
+    		break;
+    	default:
+    		throw new IllegalArgumentException
+    			("edu.cornell.rocketry.GSGui#setLandedStatus: Invalid Status");
     	}
     }
 }
