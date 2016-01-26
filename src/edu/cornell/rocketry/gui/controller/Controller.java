@@ -114,6 +114,10 @@ public class Controller {
 		updateRocketPositionFull(all_rocket_data);
 		
 		view.setCameraStatus(rocketModel.getCameraStatus());
+		view.setLaunchStatus(rocketModel.getLaunchStatus());
+		view.setLandedStatus(rocketModel.getLandedStatus());
+		view.setInitializationStatus(rocketModel.getInitStatus());
+		view.setGPSStatus(rocketModel.getGPSStatus());
 		
 	}
 	
@@ -207,14 +211,29 @@ public class Controller {
     	}
     }
     
-    void updateCameraStatus (Status st) {
+    private void updateCameraStatus (Status st) {
     	rocketModel.setCameraStatus(st);
     	view.setCameraStatus(rocketModel.getCameraStatus());
     }
     
-    void updateGPSStatus (Status st) {
+    private void updateGPSStatus (Status st) {
     	rocketModel.setGPSStatus(st);
     	view.setGPSStatus(rocketModel.getGPSStatus());
+    }
+    
+    private void updateLaunchStatus (Status st) {
+    	rocketModel.setLaunchStatus(st);
+    	view.setLaunchStatus(st);
+    }
+    
+    private void updateLandedStatus (Status st) {
+    	rocketModel.setLandedStatus(st);
+    	view.setLandedStatus(st);
+    }
+    
+    private void updateInitializationStatus (Status st) {
+    	rocketModel.setInitStatus(st);
+    	view.setInitializationStatus(st);
     }
     
     public void clearMapMarkers () {
@@ -243,6 +262,11 @@ public class Controller {
 		if (r.type() == CommandType.ENABLE_CAMERA
 			|| r.type() == CommandType.DISABLE_CAMERA) {
 			updateCameraStatus(Status.BUSY);
+		} 
+		
+		if (r.type() == CommandType.BEGIN_LAUNCH
+			|| r.type() == CommandType.CANCEL_LAUNCH) {
+			updateLaunchStatus(Status.BUSY);
 		}
 	}
 	
@@ -253,21 +277,33 @@ public class Controller {
 		TEMStatusFlag flag = r.flag();
 		
 		if (flag.isSet(Type.camera_enabled)) {
-			view.setCameraStatus(Status.ENABLED);
+			updateCameraStatus(Status.ENABLED);
 		} else {
-			view.setCameraStatus(Status.DISABLED);
+			updateCameraStatus(Status.DISABLED);
 		}
 		
 		if (flag.isSet(Type.gps_fix)) {
-			view.setGPSStatus(Status.ENABLED);
+			updateGPSStatus(Status.ENABLED);
 		} else {
-			view.setGPSStatus(Status.DISABLED);
+			updateGPSStatus(Status.DISABLED);
 		}
 		
-		if (flag.isSet(Type.transmit_freq_max)) {
-			//TODO: make transmission frequency indicator
+		if (flag.isSet(Type.launch_ready)) {
+			updateLaunchStatus(Status.ENABLED);
 		} else {
-			//same as above 
+			updateLaunchStatus(Status.DISABLED);
+		}
+		
+		if (flag.isSet(Type.landed)) {
+			updateLandedStatus(Status.ENABLED);
+		} else {
+			updateLandedStatus(Status.DISABLED);
+		}
+		
+		if (flag.isSet(Type.sys_init)) {
+			updateInitializationStatus(Status.ENABLED);
+		} else {
+			updateInitializationStatus(Status.DISABLED);
 		}
 		
 		if (gpsCheck(r)) {

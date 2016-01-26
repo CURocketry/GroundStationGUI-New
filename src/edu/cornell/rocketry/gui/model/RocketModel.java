@@ -61,6 +61,10 @@ public class RocketModel {
 		return initStatus;
 	}
 	
+	public void setInitStatus (Status st) {
+		initStatus = st;
+	}
+	
 	public Status getLandedStatus () {
 		return landedStatus;
 	}

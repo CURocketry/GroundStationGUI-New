@@ -30,7 +30,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.AbstractButton;
@@ -72,7 +71,6 @@ import edu.cornell.rocketry.comm.CommandType;
 import edu.cornell.rocketry.gui.controller.Controller;
 import edu.cornell.rocketry.util.Status;
 import edu.cornell.rocketry.util.ImageFactory;
-import gnu.io.CommPortIdentifier;
 
 
 /**

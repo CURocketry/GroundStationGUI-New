@@ -28,6 +28,12 @@ public class ContinuousTEMSimulator implements TEMSimulator {
 		receiver = r;
 		CONTINUE_TRANSMITTING = false;
 		
+		temInitialized = false;
+		gpsFix = false;
+		cameraEnabled = false;
+		transmitMaxFreq = false;
+		launchReady = false;
+		landed = false;
 		
 	}
 	
