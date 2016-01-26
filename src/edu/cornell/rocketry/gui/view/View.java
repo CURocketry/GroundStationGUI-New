@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -264,7 +265,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 	private final static Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private final static Font textAreaFont = new Font("Arial", Font.PLAIN, 10);
 	
-	protected XBeeAddress64 selectedAddress;	//selected address
+//	protected XBeeAddress64 selectedAddress;	//selected address
 	protected int selectedBaud = 57600; //serial comm rate
 
 	protected JComboBox<String> serialPortsList, addressesList;
@@ -325,7 +326,8 @@ public class View extends JFrame implements JMapViewerEventListener {
         setSize(500, 500);
         
 //        selectedAddress = addr[addressesList.getSelectedIndex()];
-        selectedAddress = addr[0]; //FIXME: implement as above, using update methods
+//        selectedAddress = addr[0]; //FIXME: implement as above, using update methods
+        
         
         ImageFactory.init();
         
@@ -1068,190 +1070,195 @@ public class View extends JFrame implements JMapViewerEventListener {
     
     private void initializeXBeeTab() {
 
-	// Layout GUI
-	xbeePanel = new JPanel(new BorderLayout());
-
-	/*-- Setup XBees Panel --*/
+		// Layout GUI
+		xbeePanel = new JPanel(new BorderLayout());
 	
-	JPanel xbeeInitPanel = new JPanel(new BorderLayout());
-	JLabel xbeeInitLabel = new JLabel("Setup XBees", JLabel.CENTER);
-	xbeeInitLabel.setFont(titleFont);
-	xbeeInitPanel.add(xbeeInitLabel, BorderLayout.NORTH);
-	JPanel xbeeInitGrid = new JPanel(new GridLayout(5, 2));
+		/*-- Setup XBees Panel --*/
+		
+		JPanel xbeeInitPanel = new JPanel(new BorderLayout());
+		JLabel xbeeInitLabel = new JLabel("Setup XBees", JLabel.CENTER);
+		xbeeInitLabel.setFont(titleFont);
+		xbeeInitPanel.add(xbeeInitLabel, BorderLayout.NORTH);
+		JPanel xbeeInitGrid = new JPanel(new GridLayout(5, 2));
+		
+		//XBee Serial Port Label
+		JPanel serialPortPanel = new JPanel(new BorderLayout());
+		serialPortPanel.add(new JLabel("GS XBee Serial Port: "), BorderLayout.WEST);
 	
-	//XBee Serial Port Label
-	JPanel serialPortPanel = new JPanel(new BorderLayout());
-	serialPortPanel.add(new JLabel("GS XBee Serial Port: "), BorderLayout.WEST);
-
-	//Serial port dropdown
-	serialPortsList = new JComboBox<String>(); //initialize empty dropdown
-	controller.updateSerialPortsList();
-	serialPortsList.setSelectedIndex(serialPortsList.getItemCount() - 1);
-
-	//Refresh serial ports button
-	serialPortPanel.add(serialPortsList, BorderLayout.CENTER);
-	JButton refreshPortsBtn = new JButton("Refresh");
-	refreshPortsBtn.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	controller.updateSerialPortsList();
-	}
-	});
-	serialPortPanel.add(refreshPortsBtn, BorderLayout.EAST);
-	xbeeInitGrid.add(serialPortPanel);
-
-	//Wireless Address Dropdown
-	JPanel addressPanel = new JPanel(new BorderLayout());
-	addressPanel.add(new JLabel("Remote XBee Address: "), BorderLayout.WEST);
-	addressesList = new JComboBox<String>(addresses);
-	addressesList.setSelectedIndex(0);
-	controller.setSelectedAddress();
-	addressesList.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	controller.setSelectedAddress();
-	}
-	});
-	addressPanel.add(addressesList, BorderLayout.CENTER);
-	xbeeInitGrid.add(addressPanel);
-	
-	//Baud rate dropdown
-	JPanel baudPanel = new JPanel(new BorderLayout());
-	baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
-	baudList = new JComboBox<Integer>(baudRates);
-	baudList.setSelectedIndex(4);
-	controller.updateSelectedBaudRate();
-	addressesList.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	controller.updateSelectedBaudRate();
-	}
-	});
-	baudPanel.add(baudList, BorderLayout.CENTER);
-	xbeeInitGrid.add(baudPanel);
-	
-
-	//Initialize GS XBee Button
-	JButton initXBeeButton = new JButton("Initialize GS XBee");
-	initXBeeButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			try {
-				controller.initXbee();
-				controller.commController().startListening();
-				addToReceiveText("Success! Initialized GS XBee :)");
-				addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-						+ System.getProperty("line.separator"));
-			} catch (XBeeException e1) {
-				e1.printStackTrace();
-				numErr++;
-				addToReceiveText("Error ("
-						+ numErr
-						+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
+		//Serial port dropdown
+		serialPortsList = new JComboBox<String>(); //initialize empty dropdown
+		controller.updateSerialPortsList();
+		serialPortsList.setSelectedIndex(serialPortsList.getItemCount() - 1);
+		serialPortsList.addActionListener(new ActionListener () {
+			public void actionPerformed (ActionEvent e) {
+				controller.setSerialPort((String) serialPortsList.getSelectedItem());
 			}
-		}
-	});
-	xbeeInitGrid.add(initXBeeButton);
-	xbeeInitPanel.add(xbeeInitGrid, BorderLayout.CENTER);
+		});
 	
-	//Send Packet Title and Button
-	JPanel sendPacketsPanel = new JPanel(new BorderLayout());
-	JPanel sendPacketsGrid = new JPanel(new GridLayout(5, 2));
-	JLabel sendTitle = new JLabel("Send Packets", JLabel.CENTER);
-	sendTitle.setFont(titleFont);
-	sendPacketsPanel.add(sendTitle, BorderLayout.NORTH);
-
-	//Test Send Button
-	JButton testSendBtn = new JButton("Send Test");
-	testSendBtn.addActionListener(new ActionListener() {
+		//Refresh serial ports button
+		serialPortPanel.add(serialPortsList, BorderLayout.CENTER);
+		JButton refreshPortsBtn = new JButton("Refresh");
+		refreshPortsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.updateSerialPortsList();
+			}
+		});
+		serialPortPanel.add(refreshPortsBtn, BorderLayout.EAST);
+		xbeeInitGrid.add(serialPortPanel);
+	
+		//Wireless Address Dropdown
+		JPanel addressPanel = new JPanel(new BorderLayout());
+		addressPanel.add(new JLabel("Remote XBee Address: "), BorderLayout.WEST);
+		addressesList = new JComboBox<String>(addresses);
+		addressesList.setSelectedIndex(0);
+		controller.setSelectedAddress(addr[addressesList.getSelectedIndex()]);
+		addressesList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setSelectedAddress(addr[addressesList.getSelectedIndex()]);
+			}
+		});
+		addressPanel.add(addressesList, BorderLayout.CENTER);
+		xbeeInitGrid.add(addressPanel);
+		
+		//Baud rate dropdown
+		JPanel baudPanel = new JPanel(new BorderLayout());
+		baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
+		baudList = new JComboBox<Integer>(baudRates);
+		baudList.setSelectedIndex(4);
+		controller.updateSelectedBaudRate((int) baudList.getSelectedItem());
+		addressesList.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			controller.sendXBeePacket("(Test Packet)");
+		controller.updateSelectedBaudRate((int) baudList.getSelectedItem());
 		}
-	});
-	sendPacketsGrid.add(testSendBtn);
+		});
+		baudPanel.add(baudList, BorderLayout.CENTER);
+		xbeeInitGrid.add(baudPanel);
+		
 	
-	//Send custom data box
-	JButton customDataBtn = new JButton("Send Data");
-	customDataBtn.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			controller.sendXBeePacket(sendEdit.getText());
-		}
-	});
-
-	sendPacketsGrid.add(customDataBtn, BorderLayout.CENTER);
+		//Initialize GS XBee Button
+		JButton initXBeeButton = new JButton("Initialize GS XBee");
+		initXBeeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.initXbee();
+					controller.commController().startListening();
+					addToReceiveText("Success! Initialized GS XBee :)");
+					addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+							+ System.getProperty("line.separator"));
+				} catch (XBeeException e1) {
+					e1.printStackTrace();
+					numErr++;
+					addToReceiveText("Error ("
+							+ numErr
+							+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
+				}
+			}
+		});
+		xbeeInitGrid.add(initXBeeButton);
+		xbeeInitPanel.add(xbeeInitGrid, BorderLayout.CENTER);
+		
+		//Send Packet Title and Button
+		JPanel sendPacketsPanel = new JPanel(new BorderLayout());
+		JPanel sendPacketsGrid = new JPanel(new GridLayout(5, 2));
+		JLabel sendTitle = new JLabel("Send Packets", JLabel.CENTER);
+		sendTitle.setFont(titleFont);
+		sendPacketsPanel.add(sendTitle, BorderLayout.NORTH);
 	
-	//Send Custom Packet Textbox
-	JPanel customPacketEntry = new JPanel(new BorderLayout());
-	customPacketEntry.add(new JLabel("Send Packet: "), BorderLayout.WEST);
-	sendEdit = new JTextField("", 20);
-	customPacketEntry.add(sendEdit, BorderLayout.CENTER);
-	sendPacketsGrid.add(customPacketEntry,BorderLayout.SOUTH);
+		//Test Send Button
+		JButton testSendBtn = new JButton("Send Test");
+		testSendBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.sendXBeePacket("(Test Packet)");
+			}
+		});
+		sendPacketsGrid.add(testSendBtn);
+		
+		//Send custom data box
+		JButton customDataBtn = new JButton("Send Data");
+		customDataBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.sendXBeePacket(sendEdit.getText());
+			}
+		});
 	
-	sendPacketsPanel.add(sendPacketsGrid, BorderLayout.CENTER);
+		sendPacketsGrid.add(customDataBtn, BorderLayout.CENTER);
+		
+		//Send Custom Packet Textbox
+		JPanel customPacketEntry = new JPanel(new BorderLayout());
+		customPacketEntry.add(new JLabel("Send Packet: "), BorderLayout.WEST);
+		sendEdit = new JTextField("", 20);
+		customPacketEntry.add(sendEdit, BorderLayout.CENTER);
+		sendPacketsGrid.add(customPacketEntry,BorderLayout.SOUTH);
+		
+		sendPacketsPanel.add(sendPacketsGrid, BorderLayout.CENTER);
+		
+		JPanel PContainer = new JPanel(new BorderLayout());
+		PContainer.add(xbeeInitPanel, BorderLayout.NORTH);
+		PContainer.add(sendPacketsPanel, BorderLayout.CENTER);
 	
-	JPanel PContainer = new JPanel(new BorderLayout());
-	PContainer.add(xbeeInitPanel, BorderLayout.NORTH);
-	PContainer.add(sendPacketsPanel, BorderLayout.CENTER);
-
-	/*-- Received Packets Panel-- */
-	JPanel receivePanel = new JPanel(new BorderLayout());
-	receiveText = new JTextArea(40, 60);
-	receiveText.setBackground(Color.white);
-	receiveText.setFont(textAreaFont);
-	receiveText.setLineWrap(true);
-	receiveText.setWrapStyleWord(true);
-	receiveText.setEditable(false);
-	JScrollPane receiveScrollPlane = new JScrollPane(receiveText);
-
-	JLabel receiveTitle = new JLabel("Received Packets", JLabel.CENTER);
-	receiveTitle.setFont(titleFont);
-	receivePanel.add(receiveTitle, BorderLayout.NORTH);
-	receivePanel.add(receiveScrollPlane,BorderLayout.EAST);
+		/*-- Received Packets Panel-- */
+		JPanel receivePanel = new JPanel(new BorderLayout());
+		receiveText = new JTextArea(40, 60);
+		receiveText.setBackground(Color.white);
+		receiveText.setFont(textAreaFont);
+		receiveText.setLineWrap(true);
+		receiveText.setWrapStyleWord(true);
+		receiveText.setEditable(false);
+		JScrollPane receiveScrollPlane = new JScrollPane(receiveText);
 	
-	/*-- Status Panel --*/
-	statusPanel = new JPanel();
-	JLabel statusTitle = new JLabel ("STATUS",JLabel.LEFT);
-	statusTitle.setFont(titleFont);
-	statusPanel.add(statusTitle);
+		JLabel receiveTitle = new JLabel("Received Packets", JLabel.CENTER);
+		receiveTitle.setFont(titleFont);
+		receivePanel.add(receiveTitle, BorderLayout.NORTH);
+		receivePanel.add(receiveScrollPlane,BorderLayout.EAST);
+		
+		/*-- Status Panel --*/
+		statusPanel = new JPanel();
+		JLabel statusTitle = new JLabel ("STATUS",JLabel.LEFT);
+		statusTitle.setFont(titleFont);
+		statusPanel.add(statusTitle);
+		
+		dataPanel = new JPanel (new BorderLayout());
+		tablePanel = new JPanel (new GridLayout(3,5));
+		JLabel rocketTitle = new JLabel ("Rocket",JLabel.LEFT);
+		rocketTitle.setFont(titleFont);
+		JLabel latTitle = new JLabel ("Latitude",JLabel.LEFT);
+		latTitle.setFont(titleFont);
+		JLabel longTitle = new JLabel ("Longitude",JLabel.LEFT);
+		longTitle.setFont(titleFont);
+		JLabel altTitle = new JLabel ("Altitude",JLabel.LEFT);
+		altTitle.setFont(titleFont);
+		JLabel enableTitle = new JLabel ("Enabled (Yes/No)",JLabel.LEFT);
+		enableTitle.setFont(titleFont);
 	
-	dataPanel = new JPanel (new BorderLayout());
-	tablePanel = new JPanel (new GridLayout(3,5));
-	JLabel rocketTitle = new JLabel ("Rocket",JLabel.LEFT);
-	rocketTitle.setFont(titleFont);
-	JLabel latTitle = new JLabel ("Latitude",JLabel.LEFT);
-	latTitle.setFont(titleFont);
-	JLabel longTitle = new JLabel ("Longitude",JLabel.LEFT);
-	longTitle.setFont(titleFont);
-	JLabel altTitle = new JLabel ("Altitude",JLabel.LEFT);
-	altTitle.setFont(titleFont);
-	JLabel enableTitle = new JLabel ("Enabled (Yes/No)",JLabel.LEFT);
-	enableTitle.setFont(titleFont);
-
-	tablePanel.add(new JLabel("", JLabel.LEFT)); //TODO!!!
-	tablePanel.add(latTitle);
-	tablePanel.add(longTitle);
-	tablePanel.add(altTitle);
-	tablePanel.add(enableTitle);
-	tablePanel.add(rocketTitle);	
-	lat = new JLabel("0", JLabel.LEFT);
-	tablePanel.add(lat);
-	longi = new JLabel("0",JLabel.LEFT);
-	tablePanel.add(longi); 
-	alt = new JLabel("0",JLabel.LEFT);
-	tablePanel.add(alt);
-	flag = new JLabel("-",JLabel.LEFT);
-	tablePanel.add(flag);
-	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-	tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+		tablePanel.add(new JLabel("", JLabel.LEFT)); //TODO!!!
+		tablePanel.add(latTitle);
+		tablePanel.add(longTitle);
+		tablePanel.add(altTitle);
+		tablePanel.add(enableTitle);
+		tablePanel.add(rocketTitle);	
+		lat = new JLabel("0", JLabel.LEFT);
+		tablePanel.add(lat);
+		longi = new JLabel("0",JLabel.LEFT);
+		tablePanel.add(longi); 
+		alt = new JLabel("0",JLabel.LEFT);
+		tablePanel.add(alt);
+		flag = new JLabel("-",JLabel.LEFT);
+		tablePanel.add(flag);
+		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
+		
+		dataPanel.add(statusPanel, BorderLayout.NORTH);
+		dataPanel.add(tablePanel, BorderLayout.SOUTH);
 	
-	dataPanel.add(statusPanel, BorderLayout.NORTH);
-	dataPanel.add(tablePanel, BorderLayout.SOUTH);
-
-	xbeePanel.add(dataPanel, BorderLayout.SOUTH);
-	
-	xbeePanel.add(PContainer,BorderLayout.WEST);
-	xbeePanel.add(receivePanel,BorderLayout.CENTER);
-	
-	
-	// Text area stuff...
+		xbeePanel.add(dataPanel, BorderLayout.SOUTH);
+		
+		xbeePanel.add(PContainer,BorderLayout.WEST);
+		xbeePanel.add(receivePanel,BorderLayout.CENTER);
+		
+		
+		// Text area stuff...
     }
     
     private void initializeSettingsTab() {
@@ -1643,6 +1650,13 @@ public class View extends JFrame implements JMapViewerEventListener {
                 command.getCommand().equals(JMVCommandEvent.COMMAND.MOVE)) {
             updateZoomParameters();
         }
+    }
+    
+    public void updateSerialPortsList(List<String> ports) {
+    	serialPortsList.removeAllItems();
+		for (String p : ports) {
+			serialPortsList.addItem(p);
+		}
     }
     
     /*------------------ Control & Tracking Tab Update Methods ----------------*/

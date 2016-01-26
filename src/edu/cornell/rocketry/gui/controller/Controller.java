@@ -18,6 +18,7 @@ import org.openstreetmap.gui.jmapviewer.Tile;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
+import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeException;
 
 import edu.cornell.rocketry.comm.Command;
@@ -59,7 +60,7 @@ public class Controller {
 	
 	private Receiver testReceiver;
 	private Receiver realReceiver;
-	public Receiver receiver(boolean test) { return (test? testReceiver : realReceiver); }
+	public Receiver receiver (boolean test) { return (test? testReceiver : realReceiver); }
 	
 	private Sender testSender;
 	private Sender realSender;
@@ -73,13 +74,14 @@ public class Controller {
 	
 	public Controller (View gui) {
 		view = gui;
-		model = new RocketModel();
+		rocketModel = new RocketModel();
+		applicationModel = new ApplicationModel();
 		testReceiver = new TestReceiver(this);
 		realReceiver = new RealReceiver(this);
 		xbeeController = new XBeeController(this);
 		testSender = new TestSender(this);
-		realSender = new RealSender(this, xbeeController.xbee(), view.selectedAddress);
-		System.out.println("selectedAddress = " + view.selectedAddress);
+		realSender = new RealSender(this, xbeeController.xbee(), applicationModel.getSelectedAddress());
+		System.out.println("selectedAddress = " + applicationModel.getSelectedAddress());
 		dataLogger = new DataLogger();
 		dataLogger.log("time,lat,lon,alt");
 		
@@ -108,10 +110,10 @@ public class Controller {
 	
 	public void refreshDisplay () {
 		//re-load markers on map
-		Collection<Datum> all_rocket_data = model.pastRocketData();
+		Collection<Datum> all_rocket_data = rocketModel.pastRocketData();
 		updateRocketPositionFull(all_rocket_data);
 		
-		view.setCameraStatus(model.cameraStatus());
+		view.setCameraStatus(rocketModel.cameraStatus());
 		
 	}
 	
@@ -119,7 +121,7 @@ public class Controller {
 	/*------------------ Control & Tracking Update Methods ------------------*/
 	
 	void updateRocketTrajectory(){
-		List<Datum> rocket_past_data = model.pastRocketData();
+		List<Datum> rocket_past_data = rocketModel.pastRocketData();
 		int nPositions = rocket_past_data.size();
 		if (nPositions> 1){
 			double[] lat = {rocket_past_data.get(nPositions-2).lat(), rocket_past_data.get(nPositions-1).lat()};
@@ -206,13 +208,13 @@ public class Controller {
     }
     
     void updateCameraStatus (Status st) {
-    	model.setCameraStatus(st);
-    	view.setCameraStatus(model.cameraStatus());
+    	rocketModel.setCameraStatus(st);
+    	view.setCameraStatus(rocketModel.cameraStatus());
     }
     
     void updateGPSStatus (Status st) {
-    	model.setGPSStatus(st);
-    	view.setGPSStatus(model.gpsStatus());
+    	rocketModel.setGPSStatus(st);
+    	view.setGPSStatus(rocketModel.gpsStatus());
     }
     
     public void clearMapMarkers () {
@@ -272,8 +274,8 @@ public class Controller {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
 			// Update model
-			model.update(r.create_datum());
-			updateRocketPosition (model.currentDatum());
+			rocketModel.update(r.create_datum());
+			updateRocketPosition (rocketModel.currentDatum());
 			String posn = "(" + r.lat() + ", " + r.lon() + ")";
 			view.updateLatestPosition(posn);
 			if (!test) updateXBeeDisplayFields (
@@ -388,37 +390,34 @@ public class Controller {
 				// System.out.println(portId.getName());
 			}
 		}
-
-		// update list...
-		view.serialPortsList.removeAllItems();
-		for (String s : comboBoxList) {
-			view.serialPortsList.addItem(s);
-		}
+		
+		view.updateSerialPortsList(comboBoxList);
+	}
+	
+	public void setSerialPort(String port) {
+		applicationModel.setSerialPort(port);
 	}
 
 	public void setSelectedAddress(XBeeAddress64 addr) {
-		view.selectedAddress = View.addr[view.addressesList.getSelectedIndex()]; //set active address
+		realSender = new RealSender(this, xbeeController.xbee(), addr);
 		applicationModel.setSelectedAddress(addr);
 	}
 	
-	public void updateSelectedBaudRate() {
-		view.selectedBaud = (int) view.baudList.getSelectedItem(); //set active rate
+	public void updateSelectedBaudRate(int rate) {
+		applicationModel.setBaudRate(rate);
 	}
 
     public void initXbee() throws XBeeException {
 
 		// get selected serial port...
-		String selSerial = (String) view.serialPortsList.getSelectedItem();
+//		String selSerial = (String) view.serialPortsList.getSelectedItem();
 		
+		int baudRate = applicationModel.getBaudRate();
+		String selSerial = applicationModel.getSerialPort();
 		
 		System.out.println("Initializing XBee");
 		
-
-		System.out.println(selSerial);
-		xbeeController.openXBee(selSerial, view.selectedBaud); //open port
-		
-		//don't just do this by default!
-		//commController.startListening();
+		xbeeController.openXBee(selSerial, baudRate);
 		
 		view.resetPacketCounters();
 	}
