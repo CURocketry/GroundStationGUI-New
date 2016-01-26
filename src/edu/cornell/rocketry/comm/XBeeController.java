@@ -26,17 +26,17 @@ public class XBeeController {
 		xbee.open(port, baud);
 	}
 	
-	public XBee xbee() {
+	public XBee getXbee() {
 		return xbee;
 	}
 	
 	public void refresh () {
-		System.out.println("comm.shared.CommState#refresh () unimplemented.");
+		System.out.println("comm.shared.CommState#refresh() unimplemented.");
 	}
 	
 	public void startListening () {
 		if (!xbee.isConnected())
-			System.out.println ("CommController: Cannot start listening; xbee not connected!");
+			System.out.println ("XBeeController: Cannot start listening; xbee not connected!");
 		else {
 			listener = new XBeeListenerThread (controller.getReceiver(false), xbee, controller.view());
 			listener.start();
