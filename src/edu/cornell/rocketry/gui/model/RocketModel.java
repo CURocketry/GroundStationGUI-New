@@ -25,11 +25,15 @@ public class RocketModel {
 	public RocketModel () {
 		cameraStatus = Status.DISABLED;
 		gpsStatus = Status.DISABLED;
+		initStatus = Status.DISABLED;
+		launchStatus = Status.DISABLED;
+		landedStatus = Status.DISABLED;
+		
 		rocketCurrent = null;
 		rocketPast = new LinkedList<Datum>();
 	}
 	
-	public Status cameraStatus () {
+	public Status getCameraStatus () {
 		return cameraStatus;
 	}
 	
@@ -37,7 +41,7 @@ public class RocketModel {
 		cameraStatus = st;
 	}
 	
-	public Status gpsStatus () {
+	public Status getGPSStatus () {
 		return gpsStatus;
 	}
 	
@@ -45,7 +49,7 @@ public class RocketModel {
 		gpsStatus = st;
 	}
 	
-	public Status launchStatus () {
+	public Status getLaunchStatus () {
 		return launchStatus;
 	}
 	
@@ -53,11 +57,15 @@ public class RocketModel {
 		launchStatus = st;
 	}
 	
-	public Status initStatus () {
+	public Status getInitStatus () {
 		return initStatus;
 	}
 	
-	public Status landedStatus () {
+	public void setInitStatus (Status st) {
+		initStatus = st;
+	}
+	
+	public Status getLandedStatus () {
 		return landedStatus;
 	}
 	
@@ -65,15 +73,15 @@ public class RocketModel {
 		landedStatus = st;
 	}
 	
-	public Position currentPosition () {
+	public Position getCurrentPosition () {
 		return rocketCurrent.pos();
 	}
 	
-	public Datum currentDatum () {
+	public Datum getCurrentDatum () {
 		return rocketCurrent;
 	}
 	
-	public List<Datum> pastRocketData(){
+	public List<Datum> getPastRocketData(){
 		return rocketPast;
 	}
 	

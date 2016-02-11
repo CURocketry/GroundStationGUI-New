@@ -77,11 +77,11 @@ public class Controller {
 		rocketModel = new RocketModel();
 		applicationModel = new ApplicationModel();
 		testReceiver = new TestReceiver(this);
-		realReceiver = new RealReceiver(this);
+		//realReceiver = new RealReceiver(this); initialized w/ xbee initialization
 		xbeeController = new XBeeController(this);
 		testSender = new TestSender(this);
-		realSender = new RealSender(this, xbeeController.xbee(), applicationModel.getSelectedAddress());
-		System.out.println("selectedAddress = " + applicationModel.getSelectedAddress());
+		realSender = new RealSender(this, xbeeController.getXbee(), applicationModel.getXbeeAddress());
+		System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
 		dataLogger = new DataLogger();
 		dataLogger.log("time,lat,lon,alt");
 		
@@ -94,7 +94,7 @@ public class Controller {
 	
 	public DataLogger logger() { return dataLogger; }
 	
-	public XBeeController commController() { return xbeeController; }
+	public XBeeController getXbeeController () { return xbeeController; }
 	
 	public View view () {
 		return view;
@@ -110,10 +110,14 @@ public class Controller {
 	
 	public void refreshDisplay () {
 		//re-load markers on map
-		Collection<Datum> all_rocket_data = rocketModel.pastRocketData();
+		Collection<Datum> all_rocket_data = rocketModel.getPastRocketData();
 		updateRocketPositionFull(all_rocket_data);
 		
-		view.setCameraStatus(rocketModel.cameraStatus());
+		view.setCameraStatus(rocketModel.getCameraStatus());
+		view.setLaunchStatus(rocketModel.getLaunchStatus());
+		view.setLandedStatus(rocketModel.getLandedStatus());
+		view.setInitializationStatus(rocketModel.getInitStatus());
+		view.setGPSStatus(rocketModel.getGPSStatus());
 		
 	}
 	
@@ -121,7 +125,7 @@ public class Controller {
 	/*------------------ Control & Tracking Update Methods ------------------*/
 	
 	void updateRocketTrajectory(){
-		List<Datum> rocket_past_data = rocketModel.pastRocketData();
+		List<Datum> rocket_past_data = rocketModel.getPastRocketData();
 		int nPositions = rocket_past_data.size();
 		if (nPositions> 1){
 			double[] lat = {rocket_past_data.get(nPositions-2).lat(), rocket_past_data.get(nPositions-1).lat()};
@@ -207,14 +211,29 @@ public class Controller {
     	}
     }
     
-    void updateCameraStatus (Status st) {
+    private void updateCameraStatus (Status st) {
     	rocketModel.setCameraStatus(st);
-    	view.setCameraStatus(rocketModel.cameraStatus());
+    	view.setCameraStatus(rocketModel.getCameraStatus());
     }
     
-    void updateGPSStatus (Status st) {
+    private void updateGPSStatus (Status st) {
     	rocketModel.setGPSStatus(st);
-    	view.setGPSStatus(rocketModel.gpsStatus());
+    	view.setGPSStatus(rocketModel.getGPSStatus());
+    }
+    
+    private void updateLaunchStatus (Status st) {
+    	rocketModel.setLaunchStatus(st);
+    	view.setLaunchStatus(st);
+    }
+    
+    private void updateLandedStatus (Status st) {
+    	rocketModel.setLandedStatus(st);
+    	view.setLandedStatus(st);
+    }
+    
+    private void updateInitializationStatus (Status st) {
+    	rocketModel.setInitStatus(st);
+    	view.setInitializationStatus(st);
     }
     
     public void clearMapMarkers () {
@@ -243,6 +262,11 @@ public class Controller {
 		if (r.type() == CommandType.ENABLE_CAMERA
 			|| r.type() == CommandType.DISABLE_CAMERA) {
 			updateCameraStatus(Status.BUSY);
+		} 
+		
+		if (r.type() == CommandType.BEGIN_LAUNCH
+			|| r.type() == CommandType.CANCEL_LAUNCH) {
+			updateLaunchStatus(Status.BUSY);
 		}
 	}
 	
@@ -253,21 +277,33 @@ public class Controller {
 		TEMStatusFlag flag = r.flag();
 		
 		if (flag.isSet(Type.camera_enabled)) {
-			view.setCameraStatus(Status.ENABLED);
+			updateCameraStatus(Status.ENABLED);
 		} else {
-			view.setCameraStatus(Status.DISABLED);
+			updateCameraStatus(Status.DISABLED);
 		}
 		
 		if (flag.isSet(Type.gps_fix)) {
-			view.setGPSStatus(Status.ENABLED);
+			updateGPSStatus(Status.ENABLED);
 		} else {
-			view.setGPSStatus(Status.DISABLED);
+			updateGPSStatus(Status.DISABLED);
 		}
 		
-		if (flag.isSet(Type.transmit_freq_max)) {
-			//TODO: make transmission frequency indicator
+		if (flag.isSet(Type.launch_ready)) {
+			updateLaunchStatus(Status.ENABLED);
 		} else {
-			//same as above 
+			updateLaunchStatus(Status.DISABLED);
+		}
+		
+		if (flag.isSet(Type.landed)) {
+			updateLandedStatus(Status.ENABLED);
+		} else {
+			updateLandedStatus(Status.DISABLED);
+		}
+		
+		if (flag.isSet(Type.sys_init)) {
+			updateInitializationStatus(Status.ENABLED);
+		} else {
+			updateInitializationStatus(Status.DISABLED);
 		}
 		
 		if (gpsCheck(r)) {
@@ -275,7 +311,7 @@ public class Controller {
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
 			// Update model
 			rocketModel.update(r.create_datum());
-			updateRocketPosition (rocketModel.currentDatum());
+			updateRocketPosition (rocketModel.getCurrentDatum());
 			String posn = "(" + r.lat() + ", " + r.lon() + ")";
 			view.updateLatestPosition(posn);
 			if (!test) updateXBeeDisplayFields (
@@ -399,8 +435,8 @@ public class Controller {
 	}
 
 	public void setSelectedAddress(XBeeAddress64 addr) {
-		realSender = new RealSender(this, xbeeController.xbee(), addr);
-		applicationModel.setSelectedAddress(addr);
+		realSender = new RealSender(this, xbeeController.getXbee(), addr);
+		applicationModel.setXbeeAddress(addr);
 	}
 	
 	public void updateSelectedBaudRate(int rate) {
@@ -411,6 +447,8 @@ public class Controller {
 
 		// get selected serial port...
 //		String selSerial = (String) view.serialPortsList.getSelectedItem();
+    	
+    	realReceiver = new RealReceiver(this);
 		
 		int baudRate = applicationModel.getBaudRate();
 		String selSerial = applicationModel.getSerialPort();

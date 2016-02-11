@@ -6,23 +6,24 @@ import edu.cornell.rocketry.comm.Command;
 import edu.cornell.rocketry.comm.CommandReceipt;
 import edu.cornell.rocketry.comm.CommandType;
 import edu.cornell.rocketry.gui.controller.Controller;
+import edu.cornell.rocketry.sim.BasicTEMSimulator;
 import edu.cornell.rocketry.sim.TEMSimulator;
 
 public class TestSender implements Sender {
 	
 	Controller controller;
 	
-	TEMSimulator rsim;
+	BasicTEMSimulator rsim;
 	
 	public TestSender (Controller c) {
 		controller = c;
 		String path = "./sim/campus_20.rsim";
-		rsim = new TEMSimulator(path, controller.getReceiver(true));
+		rsim = new BasicTEMSimulator(path, controller.getReceiver(true));
 	}
 	
 	public TestSender (Controller c, File f) {
 		controller = c;
-		rsim = new TEMSimulator(f, controller.getReceiver(true));
+		rsim = new BasicTEMSimulator(f, controller.getReceiver(true));
 	}
 	
 	public void switchFile (String s) {}; //TODO

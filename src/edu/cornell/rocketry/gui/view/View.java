@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,7 +30,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.AbstractButton;
@@ -71,7 +71,6 @@ import edu.cornell.rocketry.comm.CommandType;
 import edu.cornell.rocketry.gui.controller.Controller;
 import edu.cornell.rocketry.util.Status;
 import edu.cornell.rocketry.util.ImageFactory;
-import gnu.io.CommPortIdentifier;
 
 
 /**
@@ -465,7 +464,7 @@ public class View extends JFrame implements JMapViewerEventListener {
         controlPanel.setLayout(new GridBagLayout());
         
         //status indicators
-        status = new JPanel(new BorderLayout());
+        status = new JPanel(new FlowLayout());
         status.setOpaque(false);
         cameraStatusContainer = new JPanel(new BorderLayout());
         gpsStatusContainer = new JPanel(new BorderLayout());
@@ -502,7 +501,7 @@ public class View extends JFrame implements JMapViewerEventListener {
         gpsStatusContainer.add(gpsStatusLabel, BorderLayout.WEST);
         gpsStatusContainer.add(gpsStatus, BorderLayout.EAST);
         
-        initStatusLabel = new JLabel("Initialization Status: ");
+        initStatusLabel = new JLabel("TEM Initialization: ");
         initStatusLabel.setOpaque(false);
         initStatusLabel.setForeground(Color.WHITE);
         initStatus = new JLabel();
@@ -534,12 +533,12 @@ public class View extends JFrame implements JMapViewerEventListener {
         initStatusContainer.setOpaque(false);
         launchStatusContainer.setOpaque(false);
         landedStatusContainer.setOpaque(false);
-        
-        status.add(gpsStatusContainer, BorderLayout.WEST);
-        status.add(cameraStatusContainer, BorderLayout.WEST);
-        status.add(initStatusContainer, BorderLayout.WEST);
-        status.add(launchStatusContainer, BorderLayout.WEST);
-        status.add(landedStatusContainer, BorderLayout.WEST);
+
+        status.add(initStatusContainer);
+        status.add(gpsStatusContainer);
+        status.add(cameraStatusContainer);
+        status.add(launchStatusContainer);
+        status.add(landedStatusContainer);
         
         
         //start transmitting button
@@ -551,11 +550,12 @@ public class View extends JFrame implements JMapViewerEventListener {
                 	clearMapMarkers();
                 	//no longer necessary 3/7/15
                 	//controller.sendCommand (CommandTask.StopGPS);
-                	controller.commController().startListening();
+                	controller.getXbeeController().startListening();
                 	controller.sendCommand (CommandType.TRANSMIT_START);
                 }
             }
         });
+        
         //stop transmitting button
         stopTransmittingButton.setVisible(true);
         stopTransmittingButton.addMouseListener(new MouseAdapter() {
@@ -565,6 +565,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 	        	}
         	}
         });
+        
         //enable camera button
         enableCameraButton.setVisible(true);
         enableCameraButton.addMouseListener(new MouseAdapter() {
@@ -575,6 +576,7 @@ public class View extends JFrame implements JMapViewerEventListener {
                 }
             }
         });
+        
         //disable camera button
         disableCameraButton.setVisible(true);
         disableCameraButton.addMouseListener(new MouseAdapter() {
@@ -1089,6 +1091,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		serialPortsList = new JComboBox<String>(); //initialize empty dropdown
 		controller.updateSerialPortsList();
 		serialPortsList.setSelectedIndex(serialPortsList.getItemCount() - 1);
+		controller.setSerialPort((String) serialPortsList.getSelectedItem()); //initialize model
 		serialPortsList.addActionListener(new ActionListener () {
 			public void actionPerformed (ActionEvent e) {
 				controller.setSerialPort((String) serialPortsList.getSelectedItem());
@@ -1125,11 +1128,11 @@ public class View extends JFrame implements JMapViewerEventListener {
 		baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
 		baudList = new JComboBox<Integer>(baudRates);
 		baudList.setSelectedIndex(4);
-		controller.updateSelectedBaudRate((int) baudList.getSelectedItem());
+		controller.updateSelectedBaudRate((int) baudList.getSelectedItem()); //initialize model
 		addressesList.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		controller.updateSelectedBaudRate((int) baudList.getSelectedItem());
-		}
+			public void actionPerformed(ActionEvent e) {
+				controller.updateSelectedBaudRate((int) baudList.getSelectedItem());
+			}
 		});
 		baudPanel.add(baudList, BorderLayout.CENTER);
 		xbeeInitGrid.add(baudPanel);
@@ -1141,7 +1144,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.initXbee();
-					controller.commController().startListening();
+					controller.getXbeeController().startListening();
 					addToReceiveText("Success! Initialized GS XBee :)");
 					addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 							+ System.getProperty("line.separator"));
@@ -1577,40 +1580,48 @@ public class View extends JFrame implements JMapViewerEventListener {
     public double metersPerDegLon(double lon){
         return 111412.84*Math.cos(lon) - 93.5*Math.cos(3*lon) - 0.118*Math.cos(5*lon);
     }
-	
-	/**
-	 * updated the Serial Port List (i.e. after a refresh)
-	 * @void
-	 */
-	public void updateSerialPortsList() {
-		ArrayList<String> comboBoxList = new ArrayList<String>();
-		Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
-		
-		while (portList.hasMoreElements()) {
-			CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
-			if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-			comboBoxList.add(portId.getName());
-			// System.out.println(portId.getName());
-			} else {
-			// System.out.println(portId.getName());
-			}
+//	
+//	/** //MOVED TO CONTROLLER
+//	 * updated the Serial Port List (i.e. after a refresh)
+//	 * @void
+//	 */
+//	public void updateSerialPortsList() {
+//		ArrayList<String> comboBoxList = new ArrayList<String>();
+//		Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
+//		
+//		while (portList.hasMoreElements()) {
+//			CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
+//			if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+//			comboBoxList.add(portId.getName());
+//			// System.out.println(portId.getName());
+//			} else {
+//			// System.out.println(portId.getName());
+//			}
+//		}
+//
+//		// update list...
+//		serialPortsList.removeAllItems();
+//		for (String s : comboBoxList) {
+//			serialPortsList.addItem(s);
+//		}
+//	}
+    
+    public void updateSerialPortsList (List<String> ports) {
+    	serialPortsList.removeAllItems();
+		for (String p : ports) {
+			serialPortsList.addItem(p);
 		}
-
-		// update list...
-		serialPortsList.removeAllItems();
-		for (String s : comboBoxList) {
-		serialPortsList.addItem(s);
-		}
-	}
+    }
+    
 
 	/**
 	 * Adds text to the Received Packets Box
 	 * @param txt	text to add
 	 */
 	public void addToReceiveText(String txt) {
-	receiveText.setText(receiveText.getText() + "- " + txt + System.getProperty("line.separator"));
-	receiveText.setCaretPosition(receiveText.getDocument().getLength()); // locks scroll at bottom
-	//logMessage(txt);
+		receiveText.setText(receiveText.getText() + "- " + txt + System.getProperty("line.separator"));
+		receiveText.setCaretPosition(receiveText.getDocument().getLength()); // locks scroll at bottom
+		//logMessage(txt);
 	}
 	
 	/**
@@ -1619,14 +1630,14 @@ public class View extends JFrame implements JMapViewerEventListener {
 	 * @param s
 	 */
 	public void controlLog(String s) {
-	//infolog.setText(infolog.getText() + ">> " + s + System.getProperty("line.separator"));
-	infolog.append(s + System.getProperty("line.separator"));
-	infolog.setCaretPosition(infolog.getDocument().getLength()); // locks scroll at bottom
-	controlLogToFile(s);
+		//infolog.setText(infolog.getText() + ">> " + s + System.getProperty("line.separator"));
+		infolog.append(s + System.getProperty("line.separator"));
+		infolog.setCaretPosition(infolog.getDocument().getLength()); // locks scroll at bottom
+		controlLogToFile(s);
 	}
 	
 	private void controlLogToFile (String s) {
-	//TODO
+		//TODO
 	}
 	
 	/**
@@ -1650,13 +1661,6 @@ public class View extends JFrame implements JMapViewerEventListener {
                 command.getCommand().equals(JMVCommandEvent.COMMAND.MOVE)) {
             updateZoomParameters();
         }
-    }
-    
-    public void updateSerialPortsList(List<String> ports) {
-    	serialPortsList.removeAllItems();
-		for (String p : ports) {
-			serialPortsList.addItem(p);
-		}
     }
     
     /*------------------ Control & Tracking Tab Update Methods ----------------*/

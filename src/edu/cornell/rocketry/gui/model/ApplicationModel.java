@@ -29,11 +29,11 @@ public class ApplicationModel {
 		return baudRate;
 	}
 	
-	public void setSelectedAddress (XBeeAddress64 addr) {
+	public void setXbeeAddress (XBeeAddress64 addr) {
 		xbeeAddress64 = addr;
 	}
 	
-	public XBeeAddress64 getSelectedAddress () {
+	public XBeeAddress64 getXbeeAddress () {
 		return xbeeAddress64;
 	}
 }
