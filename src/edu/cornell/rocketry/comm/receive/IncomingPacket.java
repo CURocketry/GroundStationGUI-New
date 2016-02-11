@@ -16,13 +16,17 @@ public class IncomingPacket {
 	
 	//FIXME: PARSE AS SIGNED EXCEPT FOR TEMPERATURE
 	
-	private final int FLAG_LEN = 1;
-	private final int LAT_LEN  = 4;
-	private final int LON_LEN  = 4;
-	private final int ALT_LEN  = 2;
-	private final int GYRO_LEN = 2;
-	private final int ACC_LEN  = 1;
-	private final int TEMP_LEN = 1;
+	private static final int BYTE_LEN = 1;
+	private static final int SHORT_LEN = 2;
+	private static final int INT_LEN = 4;
+	
+	private final int FLAG_LEN = BYTE_LEN;
+	private final int LAT_LEN  = INT_LEN;
+	private final int LON_LEN  = INT_LEN;
+	private final int ALT_LEN  = SHORT_LEN;
+	private final int GYRO_LEN = SHORT_LEN;
+	private final int ACC_LEN  = BYTE_LEN;
+	private final int TEMP_LEN = BYTE_LEN;
 	
 	private final int PACKET_SIZE = 17;
 	
@@ -46,17 +50,17 @@ public class IncomingPacket {
 		
 		tmp = new int[LAT_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, LAT_LEN);
-		latitude = convertToDecimalInt(tmp);
+		latitude = convertToSignedDecimalInt(tmp);
 		i += LAT_LEN;
 		
 		tmp = new int[LON_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, LON_LEN);
-		longitude = convertToDecimalInt(tmp);
+		longitude = convertToSignedDecimalInt(tmp);
 		i += LON_LEN;
 		
 		tmp = new int[ALT_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, ALT_LEN);
-		altitude = convertToDecimalInt(tmp);
+		altitude = convertToSignedDecimalInt(tmp);
 		i += ALT_LEN;
 		
 		tmp = new int[FLAG_LEN];
@@ -66,33 +70,33 @@ public class IncomingPacket {
 		
 		tmp = new int[GYRO_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, GYRO_LEN);
-		gyroscope = convertToDecimalInt(tmp);
+		gyroscope = convertToSignedDecimalInt(tmp);
 		i += GYRO_LEN;
 		
 		tmp = new int[ACC_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, ACC_LEN);
-		acceleration_z = convertToDecimalInt(tmp);
+		acceleration_z = convertToSignedDecimalInt(tmp);
 		i += ACC_LEN;
 		
 		tmp = new int[ACC_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, ACC_LEN);
-		acceleration_x = convertToDecimalInt(tmp);
+		acceleration_x = convertToSignedDecimalInt(tmp);
 		i += ACC_LEN;
 		
 		tmp = new int[ACC_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, ACC_LEN);
-		acceleration_y = convertToDecimalInt(tmp);
+		acceleration_y = convertToSignedDecimalInt(tmp);
 		i += ACC_LEN;
 		
 		tmp = new int[TEMP_LEN];
 		System.arraycopy(rawPacketData, i, tmp, 0, TEMP_LEN);
-		temperature = convertToDecimalInt(tmp);
+		temperature = convertToDecimalInt(tmp); //temp unsigned
 		i += TEMP_LEN;
 		
 		assert(i == PACKET_SIZE);
 	}
 	
-	private int convertToDecimalInt(int[] array){
+	private static int convertToDecimalInt(int[] array){
 		int result = 0;
 		for (int i=array.length-1; i>=0; i--) {
 			if (i>0)
@@ -101,6 +105,31 @@ public class IncomingPacket {
 				result = result | array[i];
 		}
 		return result;
+	}
+	
+	private static int convertToSignedDecimalInt(int[] array){
+		if (array.length == 1) {
+			byte result = (byte) array[0];
+			return result;
+		}
+		if (array.length == 2) {
+			short result = 0;
+			result = (short) ((result | array[1]) << 8);
+			result = (short) (result | array[0]);
+			return result;
+		}
+		if (array.length == 4) {
+			int result = 0;
+			for (int i=array.length-1; i>=0; i--) {
+				if (i>0)
+					result = (result | array[i]) << 8;
+				else 
+					result = result | array[i];
+			}
+			return result;
+		}
+		throw new IllegalArgumentException
+			("Only 1, 2, and 4-byte arguments allowed");
 	}
 	
 	public double latitude () {
