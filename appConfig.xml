@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="WaitSeconds">10</entry>
+<entry key="ShowTilePreview">true</entry>
+<entry key="UseProxyServer">false</entry>
+<entry key="WaitAfterNrTiles">false</entry>
+<entry key="ProxyServer"></entry>
+<entry key="WaitNrTiles">50</entry>
+<entry key="ProxyServerPort"></entry>
+<entry key="ProxyServerUser"></entry>
+<entry key="AutoCloseTilePreview">true</entry>
+<entry key="UseProxyServerAuth">false</entry>
+<entry key="OverwriteExistingFiles">true</entry>
+</properties>
