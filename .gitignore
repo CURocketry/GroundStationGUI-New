@@ -1,6 +1,5 @@
 /bin/
 /tiles/
 /bin
-appConfig.xml
 gps_log_file_*
 .classpath
