@@ -42,6 +42,7 @@ import edu.cornell.rocketry.gui.view.View;
 import edu.cornell.rocketry.util.DataLogger;
 import edu.cornell.rocketry.util.Status;
 import edu.cornell.rocketry.util.LocalLoader;
+import edu.cornell.rocketry.util.ErrorLogger;
 import edu.cornell.rocketry.util.Pair;
 import gnu.io.CommPortIdentifier;
 
@@ -83,7 +84,8 @@ public class Controller {
 		realSender = new RealSender(this, xbeeController.getXbee(), applicationModel.getXbeeAddress());
 		System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
 		dataLogger = new DataLogger();
-		dataLogger.log("time,lat,lon,alt");
+		//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag
+		dataLogger.logHeader("time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag");
 		
 		System.out.println("Controller Initialized");
 		
@@ -92,7 +94,7 @@ public class Controller {
 	
 	/*------------------------- Getters & Setters ---------------------------*/
 	
-	public DataLogger logger() { return dataLogger; }
+	public DataLogger dataLogger() { return dataLogger; }
 	
 	public XBeeController getXbeeController () { return xbeeController; }
 	
@@ -113,6 +115,7 @@ public class Controller {
 		Collection<Datum> all_rocket_data = rocketModel.getPastRocketData();
 		updateRocketPositionFull(all_rocket_data);
 		
+		//set statuses at top of Control panel
 		view.setCameraStatus(rocketModel.getCameraStatus());
 		view.setLaunchStatus(rocketModel.getLaunchStatus());
 		view.setLandedStatus(rocketModel.getLandedStatus());
@@ -182,7 +185,6 @@ public class Controller {
 		};
 		
 		worker.start();
-		
 	}
 	
 	/**
@@ -306,11 +308,28 @@ public class Controller {
 			updateInitializationStatus(Status.DISABLED);
 		}
 		
+		//log data to file
+		//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag
+		StringBuilder sb = new StringBuilder();
+		sb
+			.append(r.time()).append(",")
+			.append(r.lat()).append(",")
+			.append(r.lon()).append(",")
+			.append(r.alt()).append(",")
+			.append(r.rot()).append(",")
+			.append(r.acc_x()).append(",")
+			.append(r.acc_y()).append(",")
+			.append(r.acc_z()).append(",")
+			.append(r.temp()).append(",")
+			.append(r.flag().toHexString());
+		
+		dataLogger.log(sb.toString());
+		
 		if (gpsCheck(r)) {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
 			// Update model
-			rocketModel.update(r.create_datum());
+			rocketModel.update(r.createDatum());
 			updateRocketPosition (rocketModel.getCurrentDatum());
 			String posn = "(" + r.lat() + ", " + r.lon() + ")";
 			view.updateLatestPosition(posn);
@@ -486,9 +505,11 @@ public class Controller {
     }
     
     /**
-     * Clears all data from the screen, functionally resetting the application
+     * Clears all data from the screen and resets the Model
      */
     public void clearData () {
+    	//clear model
+    	rocketModel = new RocketModel();
     	//clear map markers
     	view.map().setMapMarkerList(new ArrayList<MapMarker>());
     	//clear 3d plot
@@ -496,5 +517,22 @@ public class Controller {
     	//clear analytics tab
     	view.initializeAnalyticsTab();
     	
+    	refreshDisplay();
+    	
+    }
+
+    /**
+     * Cleanup and closing code to be run upon normal application exit.
+     * 
+     * Specifically:
+     * <ul>
+     *   <li>closes the data logger</li>
+     * </ul>
+     */
+    public void onClose () {
+    	ErrorLogger.info("Application closing...");
+    	dataLogger().close();
+    	ErrorLogger.info("Data logger closed");
+    	ErrorLogger.info("Application closed");
     }
 }

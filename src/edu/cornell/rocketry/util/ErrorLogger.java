@@ -4,32 +4,38 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-public class Logger {
+public class ErrorLogger {
 	
 	private static final String FILEPATH = System.getProperty("user.dir") + "/log/errorlog.log";
 	
 	private static void log (String msg, LoggerLevel level) {
 		String s;
 		
+		String timeStamp = 
+			new SimpleDateFormat("MM/dd HH:mm:ss", Locale.US).format(new Date());
+		
 		switch (level) {
 		case DEBUG:
-			s = "[ DEBUG ] " + msg;
+			s = "[ DEBUG ] [ " + timeStamp + " ] " + msg;
 			break;
 		case INFO:
-			s = "[ INFO  ] " + msg;
+			s = "[ INFO  ] [ " + timeStamp + " ] " + msg;
 			break;
 		case WARNING:
-			s = "[ WARN  ] " + msg;
+			s = "[ WARN  ] [ " + timeStamp + " ] " + msg;
 			break;
 		case ERROR:
-			s = "[ ERROR ] " + msg;
+			s = "[ ERROR ] [ " + timeStamp + " ] " + msg;
 			break;
 		case FATAL:
-			s = "[ FATAL ] " + msg;
+			s = "[ FATAL ] [ " + timeStamp + " ] " + msg;
 			break;
 		default:
-			s = "[ ????? ] " + msg;
+			s = "[ ????? ] [ " + timeStamp + " ] " + msg;
 		}
 		
 		try {

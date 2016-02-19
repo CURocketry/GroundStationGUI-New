@@ -91,7 +91,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 
     private static final long serialVersionUID = 1L;
     
-
     final View view = this;
     
     private Controller controller;// = new Controller(this);
@@ -170,12 +169,12 @@ public class View extends JFrame implements JMapViewerEventListener {
     JLabel elapsedTimeSinceLaunchLabel = new JLabel("Elapsed Time Since Launch (sec): ");
     JLabel timeToApogeeSinceLaunchLabel = new JLabel("Time to Apogee Since Launch (sec): ");
     
-    public static Chart2D altitudeChart = new Chart2D();
-    public static ITrace2D altitudeTrace = new Trace2DSimple();
-    public static Chart2D rotationChart = new Chart2D();
-    public static ITrace2D rotationTrace = new Trace2DSimple();
-    public static Chart2D accelChart = new Chart2D();
-    public static ITrace2D accelTrace = new Trace2DSimple();
+    public Chart2D altitudeChart;
+    public ITrace2D altitudeTrace;
+    public Chart2D rotationChart;
+    public ITrace2D rotationTrace;
+    public Chart2D accelChart;
+    public ITrace2D accelTrace;
     JLabel atimeLabel = new JLabel("Time: ");
     JTextField atimeInput = new JTextField();
     JButton alimitMapMarkersButton = new JButton("Limit Map Markers");
@@ -346,10 +345,9 @@ public class View extends JFrame implements JMapViewerEventListener {
         
         addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent e) {
-        	System.out.println("Closing log file");
-        	controller.logger().close();
-        	dispose();
-        	System.exit(0);
+        		controller.onClose();
+	        	dispose();
+	        	System.exit(0);
         	}
         });
 
@@ -730,6 +728,13 @@ public class View extends JFrame implements JMapViewerEventListener {
     }
 
     public void initializeAnalyticsTab(){
+    	altitudeChart = new Chart2D();
+        altitudeTrace = new Trace2DSimple();
+        rotationChart = new Chart2D();
+        rotationTrace = new Trace2DSimple();
+        accelChart = new Chart2D();
+        accelTrace = new Trace2DSimple();
+    	
         analyticsPanel = new JPanel();
         JPanel data = new JPanel(new GridBagLayout()); 
         GridBagConstraints c = new GridBagConstraints();

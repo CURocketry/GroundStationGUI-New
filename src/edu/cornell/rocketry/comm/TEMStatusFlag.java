@@ -1,17 +1,42 @@
 package edu.cornell.rocketry.comm;
 
+/**
+ * Wrapper for a byte flag that contains status information from the TEM.
+ * 
+ * @author Gus
+ *
+ */
 public class TEMStatusFlag {
 	
-	byte flag;
+	/**
+	 * Byte flag received from the TEM.
+	 */
+	private byte flag;
 	
+	/**
+	 * Wraps {@code f} in a new TEMStatusFlag.
+	 * 
+	 * @param f flag to be wrapped
+	 */
 	public TEMStatusFlag (byte f) {
 		flag = f;
 	}
 	
+	/**
+	 * Creates a new TEMStatusFlag with dummy flag 0x00;
+	 */
 	public TEMStatusFlag () {
 		flag = 0x0;
 	}
 	
+	/**
+	 * Sets (if {@code b} is {@code true}) 
+	 * or resets (if {@code b} is {@code false})
+	 * the bit corresponding to the given {@code Type}.
+	 * 
+	 * @param elem specifies which bit to set or reset
+	 * @param b specifies whether to set or reset the specified bit
+	 */
 	public void set (Type elem, boolean b) {
 		if (b) {
 			flag |= elem.bitMask();
@@ -20,15 +45,40 @@ public class TEMStatusFlag {
 		}
 	}
 	
+	/**
+	 * @param elem specifies which bit to check
+	 * @return whether or not the bit corresponding with the given 
+	 * {@code Type} is set
+	 */
 	public boolean isSet (Type elem) {
-		int b = (int) (flag & elem.bitMask());
+		int b = (flag & elem.bitMask());
 		return b != 0;
 	}
 	
+	/**
+	 * @return underlying {@code byte} representation of this flag
+	 */
 	public byte byteValue() {
 		return flag;
 	}
 	
+	/**
+	 * The types of information carried in a {@link TEMStatusFlag}.
+	 * 
+	 * Possible types:
+	 * <ul>
+	 * 	<li>sys_init - set iff the system was successfully initialized</li>
+	 * 	<li>gps_fix - set iff the TEM's GPS has a fix</li>
+	 * 	<li>camera_enabled - set iff the camera is filming</li>
+	 * 	<li>transmit_freq_max - set iff the system is transmitting 
+	 * 		at maximum frequency</li>
+	 * 	<li>launch_ready - set iff the system is ready for and 
+	 * 		expects an imminent launch</li>
+	 * 	<li>landed - set iff the system detects that it has landed</li>
+	 * </ul>
+	 * @author Gus
+	 *
+	 */
 	public enum Type {
 		sys_init,
 		gps_fix,
@@ -37,6 +87,9 @@ public class TEMStatusFlag {
 		launch_ready,
 		landed;
 		
+		/**
+		 * @return the bit representing this {@code Type}
+		 */
 		public int bitMask () {
 			switch(this) {
 			case sys_init:
@@ -56,6 +109,9 @@ public class TEMStatusFlag {
 			}
 		}
 		
+		/**
+		 * @return direct String transcription of this {@code Type}
+		 */
 		public String toString () {
 			switch (this) {
 			case sys_init:
@@ -76,6 +132,18 @@ public class TEMStatusFlag {
 		}
 	}
 	
+	/**
+	 * @return a hexadecimal {@code String} representing the 
+	 * literal {@code byte} flag
+	 */
+	public String toHexString () {
+		return Integer.toHexString(flag);
+	}
+	
+	/**
+	 * @return a human-readable {@code String} representing this flag, 
+	 * broken down by each {@link Type}
+	 */
 	public String toString () {
 		StringBuilder sb = new StringBuilder();
 		sb.append("StatusFlag[");

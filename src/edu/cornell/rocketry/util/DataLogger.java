@@ -1,33 +1,64 @@
 package edu.cornell.rocketry.util;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 public class DataLogger {
 	
-	PrintWriter writer;
-	
+	private PrintWriter writer;
+	private String filename;
+	private boolean writtenTo = false;
+	private boolean closed = false;
 	
 	public DataLogger () {
 		try {
-			writer = new PrintWriter("gps_log_file_" + String.valueOf(System.currentTimeMillis()) + "ms.txt", "UTF-8");
+			filename = "tem_log_file_" + System.currentTimeMillis() + "ms.temdata";
+			writer = new PrintWriter(filename, "UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+			String msg = 
+				"edu.cornell.rocketry.util.DataLogger#init() failed to "
+					+ "create new log file, exception: " + e.toString();
+			System.err.println(msg);
 			e.printStackTrace();
+			ErrorLogger.err(msg);
 		}
 	}
 	
-	public void log (String s) {
-		System.out.println("Logging: " + s);
+	public void logHeader (String s) {
+		if (closed) return;
 		writer.println(s);
-		if (writer.checkError()) System.out.println("WRITER ERROR");
+		if (writer.checkError()) 
+			ErrorLogger.err("edu.cornell.rocketry.util.DataLogger#logHeader(..) "
+				+ "failed to write to log file.");
+	}
+	
+	public void log (String s) {
+		writtenTo = true;
+		logHeader(s);
 	}
 	
 	public void close () {
+		if (closed) {
+			ErrorLogger.warn("edu.cornell.rocketry.util.DataLogger#close: "
+				+ "already closed");			
+			return;
+		}
+		closed = true;
 		writer.close();
+		if (!writtenTo) {
+			System.out.println("not written to, attempting to delete");
+			boolean success = new File(filename).delete();
+			if (!success) {
+				ErrorLogger.err("edu.cornell.rocketry.util.DataLogger#close() "
+					+ "failed to delete unused log file");
+			} else {
+				ErrorLogger.info("edu.cornell.rocketry.util.DataLogger#close() "
+					+ "deleted unused log file '" + filename + "'");
+			}
+			System.out.println("deletion successful: " + success);
+		}
 	}
-	
-	
 
 }
