@@ -1,4 +1,4 @@
-package util;
+package edu.cornell.rocketry.util;
 
 import static org.junit.Assert.*;
 

@@ -30,10 +30,10 @@ public class Datum {
 	}
 	
 	public Datum 
-			(double lat, 
+			(long t,
+			double lat, 
 			double lon, 
-			double alt, 
-			long t, 
+			double alt,
 			double rot, 
 			double acc_x,
 			double acc_y,

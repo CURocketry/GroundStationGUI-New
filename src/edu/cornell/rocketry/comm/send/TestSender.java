@@ -13,11 +13,11 @@ public class TestSender implements Sender {
 	
 	Controller controller;
 	
-	BasicTEMSimulator rsim;
+	TEMSimulator rsim;
 	
 	public TestSender (Controller c) {
 		controller = c;
-		String path = "./sim/campus_20.rsim";
+		String path = "./sim/campus_20_sim.temdata";
 		rsim = new BasicTEMSimulator(path, controller.getReceiver(true));
 	}
 	
@@ -42,23 +42,23 @@ public class TestSender implements Sender {
 				rsim.disableCamera();
 				break;
 			case TRANSMIT_START:
-				rsim.restart(c.time());
+				rsim.startTransmitting();
 				break;
 			case TRANSMIT_HALT:
-				rsim.reset(c.time());
+				rsim.stopTransmitting();
 				break;
 			case TRANSMIT_FREQ_MAX:
-				rsim.setMaxFrequency();
+				rsim.transmitMaxFrequency();
 				break;
 			case TRANSMIT_FREQ_MIN:
-				rsim.setMinFrequency();
+				rsim.transmitMinFrequency();
 				break;
 			case BEGIN_LAUNCH:
-				//TODO
-				throw new UnsupportedOperationException(c.type().toString());
+				rsim.launchPrepare();
+				break;
 			case CANCEL_LAUNCH:
-				//TODO
-				throw new UnsupportedOperationException(c.type().toString());
+				rsim.launchCancel();
+				break;
 			default:
 				throw new UnsupportedOperationException(c.type().toString());
 			}

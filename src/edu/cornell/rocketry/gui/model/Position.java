@@ -2,7 +2,7 @@ package edu.cornell.rocketry.gui.model;
 
 import java.util.concurrent.TimeUnit;
 
-import edu.cornell.rocketry.util.Logger;
+import edu.cornell.rocketry.util.ErrorLogger;
 
 public class Position {
 	private double latitude;
@@ -22,25 +22,25 @@ public class Position {
 	
 	private void bounds_check () {
 		if (latitude > 90) {
-			Logger.warn
+			ErrorLogger.warn
 				("edu.cornell.rocketry.util.Position#bounds_check failed: latitude = " 
 					+ latitude + ", greater than 90");
 			latitude = 90;
 		}
 		if (latitude < -90) {
-			Logger.warn
+			ErrorLogger.warn
 			("edu.cornell.rocketry.util.Position#bounds_check failed: latitude = " 
 				+ latitude + ", less than -90");
 			latitude = -90;
 		}
 		if (longitude > 180) {
-			Logger.warn
+			ErrorLogger.warn
 			("edu.cornell.rocketry.util.Position#bounds_check failed: longitude = " 
 				+ longitude + ", greater than 180");
 			longitude = 180;
 		}
 		if (longitude < -180) {
-			Logger.warn("edu.cornell.rocketry.util.Position#bounds_check failed: longitude = " 
+			ErrorLogger.warn("edu.cornell.rocketry.util.Position#bounds_check failed: longitude = " 
 				+ longitude + ", less than -180");
 			longitude = -180;
 		}

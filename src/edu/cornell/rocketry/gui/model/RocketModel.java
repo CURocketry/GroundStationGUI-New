@@ -14,13 +14,7 @@ public class RocketModel {
 	private Status landedStatus;
 	private Status gpsStatus;
 	private Datum rocketCurrent;
-	private LinkedList<Datum> rocketPast;
-	
-	//XBee tab variables
-	//public XBee xbee = new XBee(); //keep as public reference @see XBeeListenerThread.java
-	//protected XBeeAddress64 selectedAddress;				//selected address
-	//protected int selectedBaud = 57600; //serial comm rate
-	
+	private LinkedList<Datum> rocketPast;	
 	
 	public RocketModel () {
 		cameraStatus = Status.DISABLED;
@@ -33,6 +27,9 @@ public class RocketModel {
 		rocketPast = new LinkedList<Datum>();
 	}
 	
+	/*
+	 * Camera Status
+	 */
 	public Status getCameraStatus () {
 		return cameraStatus;
 	}
@@ -41,6 +38,9 @@ public class RocketModel {
 		cameraStatus = st;
 	}
 	
+	/*
+	 * GPS Status
+	 */
 	public Status getGPSStatus () {
 		return gpsStatus;
 	}
@@ -49,6 +49,9 @@ public class RocketModel {
 		gpsStatus = st;
 	}
 	
+	/*
+	 * Launch Status
+	 */
 	public Status getLaunchStatus () {
 		return launchStatus;
 	}
@@ -57,6 +60,9 @@ public class RocketModel {
 		launchStatus = st;
 	}
 	
+	/*
+	 * Initialization Status
+	 */
 	public Status getInitStatus () {
 		return initStatus;
 	}
@@ -65,6 +71,9 @@ public class RocketModel {
 		initStatus = st;
 	}
 	
+	/*
+	 * Landed Status
+	 */
 	public Status getLandedStatus () {
 		return landedStatus;
 	}
@@ -73,6 +82,9 @@ public class RocketModel {
 		landedStatus = st;
 	}
 	
+	/*
+	 * Data Retrieval
+	 */
 	public Position getCurrentPosition () {
 		return rocketCurrent.pos();
 	}
@@ -85,13 +97,13 @@ public class RocketModel {
 		return rocketPast;
 	}
 	
-	public void update (double x, double y, double z, long tm, double a_x, double a_y, double a_z, double r, double tp) {
-		Position p = new Position(x,y,z);
-		Datum d = new Datum(p,tm,r,a_x,a_y,a_z,tp);
-		rocketPast.add(d);
-		rocketCurrent = d;
-	}
-	
+	/*
+	 * Update model
+	 */
+	/**
+	 * Adds the given {@link Datum} to this {@link RocketModel}.
+	 * @param d represents new information to be stored about the Rocket
+	 */
 	public void update (Datum d) {
 		rocketPast.add(d);
 		rocketCurrent = d;
