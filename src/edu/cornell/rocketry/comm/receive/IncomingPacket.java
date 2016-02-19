@@ -11,7 +11,7 @@ public class IncomingPacket {
 	//[flag x1] 
 	//[lat x4 signed] [lon x4 signed] [alt x2 unsigned] 
 	//[gyro x2 signed] 
-	//[acc_z x1 signed] [acc_x x1 signed] [acc_y x1 signed]
+	//[acc_z x2 signed] [acc_x x2 signed] [acc_y x2 signed]
 	//[temp x1 unsigned]
 	
 	//FIXME: PARSE AS SIGNED EXCEPT FOR TEMPERATURE
@@ -25,7 +25,7 @@ public class IncomingPacket {
 	private final int LON_LEN  = INT_LEN;
 	private final int ALT_LEN  = SHORT_LEN;
 	private final int GYRO_LEN = SHORT_LEN;
-	private final int ACC_LEN  = BYTE_LEN;
+	private final int ACC_LEN  = SHORT_LEN;
 	private final int TEMP_LEN = BYTE_LEN;
 	
 	private final int PACKET_SIZE = 17;

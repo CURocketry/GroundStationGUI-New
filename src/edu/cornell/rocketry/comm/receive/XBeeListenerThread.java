@@ -72,6 +72,8 @@ public class XBeeListenerThread extends Thread {
 					System.out.println("Actual Longitude:" + packet.longitude());
 					mainWindow.incNumRec();
 					mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
+							+ packet.toVerboseString());
+					mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
 							+ packet.toString());
 					
 					synchronized (receiver) {
