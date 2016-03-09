@@ -35,6 +35,8 @@ public class ContinuousTEMSimulator implements TEMSimulator {
 		launchReady = false;
 		landed = false;
 		
+		throw new UnsupportedOperationException("ContinuousTEMSimulator not implemented!");
+		
 	}
 	
 	private void initWorker () {

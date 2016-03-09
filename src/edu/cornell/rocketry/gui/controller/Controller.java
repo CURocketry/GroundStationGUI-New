@@ -85,7 +85,7 @@ public class Controller {
 		System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
 		dataLogger = new DataLogger();
 		//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag
-		dataLogger.logHeader("time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag");
+		dataLogger.logHeader("//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag");
 		
 		System.out.println("Controller Initialized");
 		
@@ -325,6 +325,17 @@ public class Controller {
 		
 		dataLogger.log(sb.toString());
 		
+		updateAnalyticsDisplayFields
+			(r.lat(), 
+			r.lon(), 
+			r.alt(), 
+			r.time(), 
+			r.rot(), 
+			r.acc_x(), 
+			r.acc_y(), 
+			r.acc_z(),
+			r.temp());
+		
 		if (gpsCheck(r)) {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
@@ -335,31 +346,14 @@ public class Controller {
 			view.updateLatestPosition(posn);
 			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
-			if (!test) dataLogger.log(
-				System.currentTimeMillis()+","+r.lat()+","+r.lon()+","
-					+r.alt()+","+r.rot()+","+r.acc_x()+","+r.acc_y()+","+r.acc_z());
 			
 			MapMarker m = new MapMarkerDot(r.lat(), r.lon());
 			Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
 			all_markers.add(p);
 			view.map().addMapMarker(m);
-
-			updateAnalyticsDisplayFields
-				(r.lat(), 
-				r.lon(), 
-				r.alt(), 
-				r.time(), 
-				r.rot(), 
-				r.acc_x(), 
-				r.acc_y(), 
-				r.acc_z(),
-				r.temp());
 		} else {
-			ilog("inaccurate data received");
+			ilog("inaccurate gps data received");
 		}
-		
-		if (!test) dataLogger.log(
-				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
 	}
 		
 	
