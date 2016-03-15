@@ -33,7 +33,7 @@ public class Datum {
 			(long t,
 			double lat, 
 			double lon, 
-			double alt,
+			int alt,
 			double rot, 
 			double acc_x,
 			double acc_y,
@@ -51,7 +51,7 @@ public class Datum {
 	
 	public double lat ()   { return position.lat(); }
 	public double lon ()   { return position.lon(); }
-	public double alt ()   { return position.alt(); }
+	public int alt ()   { return position.alt(); }
 	public Position pos () { return position; }
 	public long time ()    { return time; }
 	public double rot ()   { return rotation; }

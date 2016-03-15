@@ -40,7 +40,7 @@ public class BasicTEMSimulator implements TEMSimulator {
 		data = new ArrayList<Datum>();
 		gps_fix = true;
 		camera_enabled = false;
-		transmit_freq_max = false;
+		transmit_freq_max = true;
 		launch_ready = false;
 		loadSimFile();
 		initSimWorker();

@@ -7,9 +7,9 @@ import edu.cornell.rocketry.util.ErrorLogger;
 public class Position {
 	private double latitude;
 	private double longitude;
-	private double altitude;
+	private int altitude;
 	
-	public Position (double lat, double lon, double alt) {
+	public Position (double lat, double lon, int alt) {
 		latitude = lat;
 		longitude = lon;
 		altitude = alt;
@@ -18,7 +18,7 @@ public class Position {
 	
 	public double lat() { return latitude; }
 	public double lon() { return longitude; }
-	public double alt() { return altitude; }
+	public int alt() { return altitude; }
 	
 	private void bounds_check () {
 		if (latitude > 90) {
