@@ -1333,7 +1333,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 			}
 		});
 
-
 		//add elements to container
 		generalSettingsPanel.setLayout(new BoxLayout(generalSettingsPanel, BoxLayout.PAGE_AXIS));
 		generalSettingsPanel.add(generalSettingsPanelLabel);
