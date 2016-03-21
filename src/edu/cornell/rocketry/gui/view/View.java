@@ -1263,8 +1263,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		JLabel receiveTitle = new JLabel("Received Packets", JLabel.CENTER);
 		receiveTitle.setFont(titleFont);
 		receivePanel.add(receiveTitle, BorderLayout.NORTH);
-		receivePanel.add(receiveScrollPlane,BorderLayout.CENTER);
-
+		receivePanel.add(receiveScrollPlane,BorderLayout.CENTER); 
 		
 		/*-- Status Panel --*/
 //		statusPanel = new JPanel();
@@ -1340,7 +1339,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 		generalSettingsPanel.add(generalSettingsPanelLabel);
 		generalSettingsPanel.add(clearDataButton);
 		/* ~~~~~~ END GENERAL SETTINGS ~~~~~~ */
-
 
 		/* ~~~~~~~~ MAP SETTINGS ~~~~~~~~ */
 		//container
