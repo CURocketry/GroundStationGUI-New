@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import edu.cornell.rocketry.comm.TEMResponse;
-import edu.cornell.rocketry.comm.TEMStatusFlag;
 import edu.cornell.rocketry.comm.receive.Receiver;
+import edu.cornell.rocketry.comm.receive.TEMResponse;
+import edu.cornell.rocketry.comm.receive.TEMStatusFlag;
 import edu.cornell.rocketry.gui.model.Datum;
 import edu.cornell.rocketry.util.ErrorLogger;
 
@@ -40,7 +40,7 @@ public class BasicTEMSimulator implements TEMSimulator {
 		data = new ArrayList<Datum>();
 		gps_fix = true;
 		camera_enabled = false;
-		transmit_freq_max = false;
+		transmit_freq_max = true;
 		launch_ready = false;
 		loadSimFile();
 		initSimWorker();

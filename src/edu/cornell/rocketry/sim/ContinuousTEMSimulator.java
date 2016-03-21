@@ -1,8 +1,8 @@
 package edu.cornell.rocketry.sim;
 
-import edu.cornell.rocketry.comm.TEMResponse;
-import edu.cornell.rocketry.comm.TEMStatusFlag;
 import edu.cornell.rocketry.comm.receive.Receiver;
+import edu.cornell.rocketry.comm.receive.TEMResponse;
+import edu.cornell.rocketry.comm.receive.TEMStatusFlag;
 import edu.cornell.rocketry.gui.model.Datum;
 
 public class ContinuousTEMSimulator implements TEMSimulator {
@@ -34,6 +34,8 @@ public class ContinuousTEMSimulator implements TEMSimulator {
 		transmitMaxFreq = false;
 		launchReady = false;
 		landed = false;
+		
+		throw new UnsupportedOperationException("ContinuousTEMSimulator not implemented!");
 		
 	}
 	

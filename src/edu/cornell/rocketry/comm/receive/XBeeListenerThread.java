@@ -8,7 +8,6 @@ import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.XBeeTimeoutException;
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
-import edu.cornell.rocketry.comm.TEMResponse;
 import edu.cornell.rocketry.comm.receive.Receiver;
 import edu.cornell.rocketry.gui.view.View;
 

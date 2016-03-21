@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.comm;
+package edu.cornell.rocketry.comm.send;
 
 /**
  * Reprsents a command to be sent to the TEM on the Launch Vehicle

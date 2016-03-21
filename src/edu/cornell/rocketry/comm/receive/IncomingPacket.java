@@ -2,8 +2,6 @@ package edu.cornell.rocketry.comm.receive;
 
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
-import edu.cornell.rocketry.comm.TEMStatusFlag;
-
 public class IncomingPacket {
 	
 	//Incoming packet structure [len=17]
@@ -140,8 +138,8 @@ public class IncomingPacket {
 		return ((double) longitude) / 10000 * -1;
 	}
 	
-	public double altitude () {
-		return (double) altitude;
+	public int altitude () {
+		return altitude;
 	}
 	
 	public double acceleration_x () {

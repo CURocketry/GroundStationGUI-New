@@ -21,16 +21,16 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeException;
 
-import edu.cornell.rocketry.comm.Command;
-import edu.cornell.rocketry.comm.CommandReceipt;
-import edu.cornell.rocketry.comm.CommandType;
-import edu.cornell.rocketry.comm.TEMResponse;
-import edu.cornell.rocketry.comm.TEMStatusFlag;
 import edu.cornell.rocketry.comm.XBeeController;
-import edu.cornell.rocketry.comm.TEMStatusFlag.Type;
 import edu.cornell.rocketry.comm.receive.RealReceiver;
 import edu.cornell.rocketry.comm.receive.Receiver;
+import edu.cornell.rocketry.comm.receive.TEMResponse;
+import edu.cornell.rocketry.comm.receive.TEMStatusFlag;
 import edu.cornell.rocketry.comm.receive.TestReceiver;
+import edu.cornell.rocketry.comm.receive.TEMStatusFlag.Type;
+import edu.cornell.rocketry.comm.send.Command;
+import edu.cornell.rocketry.comm.send.CommandReceipt;
+import edu.cornell.rocketry.comm.send.CommandType;
 import edu.cornell.rocketry.comm.send.RealSender;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
@@ -85,7 +85,7 @@ public class Controller {
 		System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
 		dataLogger = new DataLogger();
 		//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag
-		dataLogger.logHeader("time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag");
+		dataLogger.logHeader("//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag");
 		
 		System.out.println("Controller Initialized");
 		
@@ -325,6 +325,17 @@ public class Controller {
 		
 		dataLogger.log(sb.toString());
 		
+		updateAnalyticsDisplayFields
+			(r.lat(), 
+			r.lon(), 
+			r.alt(), 
+			r.time(), 
+			r.rot(), 
+			r.acc_x(), 
+			r.acc_y(), 
+			r.acc_z(),
+			r.temp());
+		
 		if (gpsCheck(r)) {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
@@ -335,31 +346,14 @@ public class Controller {
 			view.updateLatestPosition(posn);
 			if (!test) updateXBeeDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
-			if (!test) dataLogger.log(
-				System.currentTimeMillis()+","+r.lat()+","+r.lon()+","
-					+r.alt()+","+r.rot()+","+r.acc_x()+","+r.acc_y()+","+r.acc_z());
 			
 			MapMarker m = new MapMarkerDot(r.lat(), r.lon());
 			Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
 			all_markers.add(p);
 			view.map().addMapMarker(m);
-
-			updateAnalyticsDisplayFields
-				(r.lat(), 
-				r.lon(), 
-				r.alt(), 
-				r.time(), 
-				r.rot(), 
-				r.acc_x(), 
-				r.acc_y(), 
-				r.acc_z(),
-				r.temp());
 		} else {
-			ilog("inaccurate data received");
+			ilog("inaccurate gps data received");
 		}
-		
-		if (!test) dataLogger.log(
-				""+System.currentTimeMillis()+","+r.lat()+","+r.lon()+","+r.alt());
 	}
 		
 	
