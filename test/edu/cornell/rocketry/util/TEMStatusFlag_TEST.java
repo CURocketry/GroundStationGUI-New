@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import edu.cornell.rocketry.comm.TEMStatusFlag;
+import edu.cornell.rocketry.comm.receive.TEMStatusFlag;
 
 public class TEMStatusFlag_TEST {
 

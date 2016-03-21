@@ -1,6 +1,5 @@
 package edu.cornell.rocketry.comm.receive;
 
-import edu.cornell.rocketry.comm.TEMResponse;
 import edu.cornell.rocketry.gui.controller.Controller;
 
 public class RealReceiver implements Receiver {

@@ -2,8 +2,6 @@ package edu.cornell.rocketry.comm.receive;
 
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
-import edu.cornell.rocketry.comm.TEMStatusFlag;
-
 public class IncomingPacket {
 	
 	//Incoming packet structure [len=17]

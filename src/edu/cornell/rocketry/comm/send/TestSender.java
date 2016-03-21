@@ -2,9 +2,6 @@ package edu.cornell.rocketry.comm.send;
 
 import java.io.File;
 
-import edu.cornell.rocketry.comm.Command;
-import edu.cornell.rocketry.comm.CommandReceipt;
-import edu.cornell.rocketry.comm.CommandType;
 import edu.cornell.rocketry.gui.controller.Controller;
 import edu.cornell.rocketry.sim.BasicTEMSimulator;
 import edu.cornell.rocketry.sim.TEMSimulator;

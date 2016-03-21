@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.comm;
+package edu.cornell.rocketry.comm.send;
 
 public class CommandReceipt {
 

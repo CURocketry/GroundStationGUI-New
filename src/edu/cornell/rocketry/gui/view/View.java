@@ -67,7 +67,7 @@ import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeException;
 
-import edu.cornell.rocketry.comm.CommandType;
+import edu.cornell.rocketry.comm.send.CommandType;
 import edu.cornell.rocketry.gui.controller.Controller;
 import edu.cornell.rocketry.util.Status;
 import edu.cornell.rocketry.util.ImageFactory;

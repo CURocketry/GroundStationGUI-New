@@ -7,8 +7,6 @@ import java.util.List;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeAddress64;
 
-import edu.cornell.rocketry.comm.Command;
-import edu.cornell.rocketry.comm.CommandReceipt;
 import edu.cornell.rocketry.gui.controller.Controller;
 
 public class RealSender implements Sender{

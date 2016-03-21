@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import edu.cornell.rocketry.comm.TEMResponse;
-import edu.cornell.rocketry.comm.TEMStatusFlag;
 import edu.cornell.rocketry.comm.receive.Receiver;
+import edu.cornell.rocketry.comm.receive.TEMResponse;
+import edu.cornell.rocketry.comm.receive.TEMStatusFlag;
 import edu.cornell.rocketry.gui.model.Datum;
 import edu.cornell.rocketry.util.ErrorLogger;
 
