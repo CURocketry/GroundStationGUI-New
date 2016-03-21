@@ -6,7 +6,7 @@ public class TEMResponse {
 	
 	private double latitude;
 	private double longitude;
-	private double altitude;
+	private int altitude;
 	private TEMStatusFlag flag;
 	
 	private long time;
@@ -29,7 +29,7 @@ public class TEMResponse {
 	public TEMResponse 
 			(double lat, 
 			double lon, 
-			double alt, 
+			int alt, 
 			byte flag, 
 			double rot, 
 			double acc_x,
@@ -51,7 +51,7 @@ public class TEMResponse {
 	
 	public double lat()         { return latitude; }
 	public double lon()         { return longitude; }
-	public double alt()         { return altitude; }
+	public int alt()         { return altitude; }
 	public TEMStatusFlag flag() { return flag; }
 	public long time()          { return time; }
 	public double rot()         { return rotation; }

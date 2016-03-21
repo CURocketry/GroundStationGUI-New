@@ -138,8 +138,8 @@ public class IncomingPacket {
 		return ((double) longitude) / 10000 * -1;
 	}
 	
-	public double altitude () {
-		return (double) altitude;
+	public int altitude () {
+		return altitude;
 	}
 	
 	public double acceleration_x () {

@@ -15,6 +15,7 @@ public class TestSender implements Sender {
 	public TestSender (Controller c) {
 		controller = c;
 		String path = "./sim/campus_20_sim.temdata";
+		//String path = "./tem_log_file_1455937569571ms.temdata";
 		rsim = new BasicTEMSimulator(path, controller.getReceiver(true));
 	}
 	
