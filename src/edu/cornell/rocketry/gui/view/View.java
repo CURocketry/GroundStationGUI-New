@@ -1388,9 +1388,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 			}
 		});
 
-
 		defaultLocationChooser = new JButton("Set Default Map Location");
-
 
 		//add elements to container
 		mapSettingsPanel.setLayout(new BoxLayout(mapSettingsPanel, BoxLayout.PAGE_AXIS));

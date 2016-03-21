@@ -36,3 +36,1555 @@
 [ INFO  ] [ 02/19 04:09:45 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1455872973017ms.temdata'
 [ INFO  ] [ 02/19 04:09:45 ] Data logger closed
 [ INFO  ] [ 02/19 04:09:45 ] Application closed
+[ INFO  ] [ 02/24 13:36:38 ] Application closing...
+[ INFO  ] [ 02/24 13:36:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456338852844ms.temdata'
+[ INFO  ] [ 02/24 13:36:38 ] Data logger closed
+[ INFO  ] [ 02/24 13:36:38 ] Application closed
+[ INFO  ] [ 02/24 13:58:34 ] Application closing...
+[ INFO  ] [ 02/24 13:58:34 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456339088417ms.temdata'
+[ INFO  ] [ 02/24 13:58:34 ] Data logger closed
+[ INFO  ] [ 02/24 13:58:34 ] Application closed
+[ INFO  ] [ 02/28 16:41:58 ] Application closing...
+[ INFO  ] [ 02/28 16:41:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456695681112ms.temdata'
+[ INFO  ] [ 02/28 16:41:58 ] Data logger closed
+[ INFO  ] [ 02/28 16:41:58 ] Application closed
+[ INFO  ] [ 02/28 18:54:11 ] Application closing...
+[ INFO  ] [ 02/28 18:54:11 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456703621572ms.temdata'
+[ INFO  ] [ 02/28 18:54:11 ] Data logger closed
+[ INFO  ] [ 02/28 18:54:11 ] Application closed
+[ INFO  ] [ 03/02 23:25:59 ] Application closing...
+[ INFO  ] [ 03/02 23:25:59 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456978780753ms.temdata'
+[ INFO  ] [ 03/02 23:25:59 ] Data logger closed
+[ INFO  ] [ 03/02 23:25:59 ] Application closed
+[ INFO  ] [ 03/02 23:26:27 ] Application closing...
+[ INFO  ] [ 03/02 23:26:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456979163370ms.temdata'
+[ INFO  ] [ 03/02 23:26:27 ] Data logger closed
+[ INFO  ] [ 03/02 23:26:27 ] Application closed
+[ INFO  ] [ 03/02 23:27:38 ] Application closing...
+[ INFO  ] [ 03/02 23:27:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456979190600ms.temdata'
+[ INFO  ] [ 03/02 23:27:38 ] Data logger closed
+[ INFO  ] [ 03/02 23:27:38 ] Application closed
+[ INFO  ] [ 03/02 23:28:02 ] Application closing...
+[ INFO  ] [ 03/02 23:28:02 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456979264454ms.temdata'
+[ INFO  ] [ 03/02 23:28:02 ] Data logger closed
+[ INFO  ] [ 03/02 23:28:02 ] Application closed
+[ INFO  ] [ 03/02 23:28:58 ] Application closing...
+[ INFO  ] [ 03/02 23:28:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456979285599ms.temdata'
+[ INFO  ] [ 03/02 23:28:58 ] Data logger closed
+[ INFO  ] [ 03/02 23:28:58 ] Application closed
+[ INFO  ] [ 03/02 23:36:56 ] Application closing...
+[ INFO  ] [ 03/02 23:36:56 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456979788214ms.temdata'
+[ INFO  ] [ 03/02 23:36:56 ] Data logger closed
+[ INFO  ] [ 03/02 23:36:56 ] Application closed
+[ INFO  ] [ 03/02 23:40:32 ] Application closing...
+[ INFO  ] [ 03/02 23:40:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456979373110ms.temdata'
+[ INFO  ] [ 03/02 23:40:32 ] Data logger closed
+[ INFO  ] [ 03/02 23:40:32 ] Application closed
+[ INFO  ] [ 03/02 23:40:40 ] Application closing...
+[ INFO  ] [ 03/02 23:40:40 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980033869ms.temdata'
+[ INFO  ] [ 03/02 23:40:40 ] Data logger closed
+[ INFO  ] [ 03/02 23:40:40 ] Application closed
+[ INFO  ] [ 03/02 23:41:48 ] Application closing...
+[ INFO  ] [ 03/02 23:41:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980104795ms.temdata'
+[ INFO  ] [ 03/02 23:41:48 ] Data logger closed
+[ INFO  ] [ 03/02 23:41:48 ] Application closed
+[ INFO  ] [ 03/02 23:41:58 ] Application closing...
+[ INFO  ] [ 03/02 23:41:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980115214ms.temdata'
+[ INFO  ] [ 03/02 23:41:58 ] Data logger closed
+[ INFO  ] [ 03/02 23:41:58 ] Application closed
+[ INFO  ] [ 03/02 23:42:00 ] Application closing...
+[ INFO  ] [ 03/02 23:42:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980054820ms.temdata'
+[ INFO  ] [ 03/02 23:42:00 ] Data logger closed
+[ INFO  ] [ 03/02 23:42:00 ] Application closed
+[ INFO  ] [ 03/02 23:42:08 ] Application closing...
+[ INFO  ] [ 03/02 23:42:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980125025ms.temdata'
+[ INFO  ] [ 03/02 23:42:08 ] Data logger closed
+[ INFO  ] [ 03/02 23:42:08 ] Application closed
+[ INFO  ] [ 03/02 23:46:58 ] Application closing...
+[ INFO  ] [ 03/02 23:46:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980412268ms.temdata'
+[ INFO  ] [ 03/02 23:46:58 ] Data logger closed
+[ INFO  ] [ 03/02 23:46:58 ] Application closed
+[ INFO  ] [ 03/02 23:48:33 ] Application closing...
+[ INFO  ] [ 03/02 23:48:33 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980492532ms.temdata'
+[ INFO  ] [ 03/02 23:48:33 ] Data logger closed
+[ INFO  ] [ 03/02 23:48:33 ] Application closed
+[ INFO  ] [ 03/02 23:48:41 ] Application closing...
+[ INFO  ] [ 03/02 23:48:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980515917ms.temdata'
+[ INFO  ] [ 03/02 23:48:41 ] Data logger closed
+[ INFO  ] [ 03/02 23:48:41 ] Application closed
+[ INFO  ] [ 03/02 23:49:15 ] Application closing...
+[ INFO  ] [ 03/02 23:49:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980546757ms.temdata'
+[ INFO  ] [ 03/02 23:49:15 ] Data logger closed
+[ INFO  ] [ 03/02 23:49:15 ] Application closed
+[ INFO  ] [ 03/02 23:49:50 ] Application closing...
+[ INFO  ] [ 03/02 23:49:50 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980583699ms.temdata'
+[ INFO  ] [ 03/02 23:49:50 ] Data logger closed
+[ INFO  ] [ 03/02 23:49:50 ] Application closed
+[ INFO  ] [ 03/02 23:50:00 ] Application closing...
+[ INFO  ] [ 03/02 23:50:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980597288ms.temdata'
+[ INFO  ] [ 03/02 23:50:00 ] Data logger closed
+[ INFO  ] [ 03/02 23:50:00 ] Application closed
+[ INFO  ] [ 03/02 23:50:29 ] Application closing...
+[ INFO  ] [ 03/02 23:50:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980618553ms.temdata'
+[ INFO  ] [ 03/02 23:50:29 ] Data logger closed
+[ INFO  ] [ 03/02 23:50:29 ] Application closed
+[ INFO  ] [ 03/02 23:52:48 ] Application closing...
+[ INFO  ] [ 03/02 23:52:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980644009ms.temdata'
+[ INFO  ] [ 03/02 23:52:49 ] Data logger closed
+[ INFO  ] [ 03/02 23:52:49 ] Application closed
+[ INFO  ] [ 03/02 23:53:00 ] Application closing...
+[ INFO  ] [ 03/02 23:53:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980771876ms.temdata'
+[ INFO  ] [ 03/02 23:53:00 ] Data logger closed
+[ INFO  ] [ 03/02 23:53:00 ] Application closed
+[ INFO  ] [ 03/02 23:53:38 ] Application closing...
+[ INFO  ] [ 03/02 23:53:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980802509ms.temdata'
+[ INFO  ] [ 03/02 23:53:38 ] Data logger closed
+[ INFO  ] [ 03/02 23:53:38 ] Application closed
+[ INFO  ] [ 03/02 23:54:41 ] Application closing...
+[ INFO  ] [ 03/02 23:54:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980852159ms.temdata'
+[ INFO  ] [ 03/02 23:54:41 ] Data logger closed
+[ INFO  ] [ 03/02 23:54:41 ] Application closed
+[ INFO  ] [ 03/02 23:54:49 ] Application closing...
+[ INFO  ] [ 03/02 23:54:49 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980884530ms.temdata'
+[ INFO  ] [ 03/02 23:54:49 ] Data logger closed
+[ INFO  ] [ 03/02 23:54:49 ] Application closed
+[ INFO  ] [ 03/02 23:56:22 ] Application closing...
+[ INFO  ] [ 03/02 23:56:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980978043ms.temdata'
+[ INFO  ] [ 03/02 23:56:22 ] Data logger closed
+[ INFO  ] [ 03/02 23:56:22 ] Application closed
+[ INFO  ] [ 03/02 23:56:32 ] Application closing...
+[ INFO  ] [ 03/02 23:56:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456980951045ms.temdata'
+[ INFO  ] [ 03/02 23:56:32 ] Data logger closed
+[ INFO  ] [ 03/02 23:56:32 ] Application closed
+[ INFO  ] [ 03/02 23:58:05 ] Application closing...
+[ INFO  ] [ 03/02 23:58:05 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456981063070ms.temdata'
+[ INFO  ] [ 03/02 23:58:05 ] Data logger closed
+[ INFO  ] [ 03/02 23:58:05 ] Application closed
+[ INFO  ] [ 03/02 23:59:28 ] Application closing...
+[ INFO  ] [ 03/02 23:59:28 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456981163104ms.temdata'
+[ INFO  ] [ 03/02 23:59:28 ] Data logger closed
+[ INFO  ] [ 03/02 23:59:28 ] Application closed
+[ INFO  ] [ 03/03 00:00:07 ] Application closing...
+[ INFO  ] [ 03/03 00:00:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456981201666ms.temdata'
+[ INFO  ] [ 03/03 00:00:07 ] Data logger closed
+[ INFO  ] [ 03/03 00:00:07 ] Application closed
+[ INFO  ] [ 03/03 00:00:20 ] Application closing...
+[ INFO  ] [ 03/03 00:00:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1456981214191ms.temdata'
+[ INFO  ] [ 03/03 00:00:20 ] Data logger closed
+[ INFO  ] [ 03/03 00:00:20 ] Application closed
+[ INFO  ] [ 03/03 15:58:51 ] Application closing...
+[ INFO  ] [ 03/03 15:58:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457038704090ms.temdata'
+[ INFO  ] [ 03/03 15:58:51 ] Data logger closed
+[ INFO  ] [ 03/03 15:58:51 ] Application closed
+[ INFO  ] [ 03/03 16:01:34 ] Application closing...
+[ INFO  ] [ 03/03 16:01:34 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457038888275ms.temdata'
+[ INFO  ] [ 03/03 16:01:34 ] Data logger closed
+[ INFO  ] [ 03/03 16:01:34 ] Application closed
+[ INFO  ] [ 03/03 16:02:08 ] Application closing...
+[ INFO  ] [ 03/03 16:02:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457038917019ms.temdata'
+[ INFO  ] [ 03/03 16:02:08 ] Data logger closed
+[ INFO  ] [ 03/03 16:02:08 ] Application closed
+[ INFO  ] [ 03/03 16:02:55 ] Application closing...
+[ INFO  ] [ 03/03 16:02:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457038968939ms.temdata'
+[ INFO  ] [ 03/03 16:02:55 ] Data logger closed
+[ INFO  ] [ 03/03 16:02:55 ] Application closed
+[ INFO  ] [ 03/03 16:03:07 ] Application closing...
+[ INFO  ] [ 03/03 16:03:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457038983126ms.temdata'
+[ INFO  ] [ 03/03 16:03:07 ] Data logger closed
+[ INFO  ] [ 03/03 16:03:07 ] Application closed
+[ INFO  ] [ 03/03 16:04:12 ] Application closing...
+[ INFO  ] [ 03/03 16:04:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039037135ms.temdata'
+[ INFO  ] [ 03/03 16:04:12 ] Data logger closed
+[ INFO  ] [ 03/03 16:04:12 ] Application closed
+[ INFO  ] [ 03/03 16:05:15 ] Application closing...
+[ INFO  ] [ 03/03 16:05:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039100231ms.temdata'
+[ INFO  ] [ 03/03 16:05:15 ] Data logger closed
+[ INFO  ] [ 03/03 16:05:15 ] Application closed
+[ INFO  ] [ 03/03 16:06:13 ] Application closing...
+[ INFO  ] [ 03/03 16:06:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039161226ms.temdata'
+[ INFO  ] [ 03/03 16:06:13 ] Data logger closed
+[ INFO  ] [ 03/03 16:06:13 ] Application closed
+[ INFO  ] [ 03/03 16:06:51 ] Application closing...
+[ INFO  ] [ 03/03 16:06:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039192951ms.temdata'
+[ INFO  ] [ 03/03 16:06:51 ] Data logger closed
+[ INFO  ] [ 03/03 16:06:51 ] Application closed
+[ INFO  ] [ 03/03 16:08:36 ] Application closing...
+[ INFO  ] [ 03/03 16:08:36 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039310661ms.temdata'
+[ INFO  ] [ 03/03 16:08:36 ] Data logger closed
+[ INFO  ] [ 03/03 16:08:36 ] Application closed
+[ INFO  ] [ 03/03 16:09:03 ] Application closing...
+[ INFO  ] [ 03/03 16:09:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039329179ms.temdata'
+[ INFO  ] [ 03/03 16:09:03 ] Data logger closed
+[ INFO  ] [ 03/03 16:09:03 ] Application closed
+[ INFO  ] [ 03/03 16:11:59 ] Application closing...
+[ INFO  ] [ 03/03 16:11:59 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039505393ms.temdata'
+[ INFO  ] [ 03/03 16:11:59 ] Data logger closed
+[ INFO  ] [ 03/03 16:11:59 ] Application closed
+[ INFO  ] [ 03/03 16:12:41 ] Application closing...
+[ INFO  ] [ 03/03 16:12:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039546106ms.temdata'
+[ INFO  ] [ 03/03 16:12:41 ] Data logger closed
+[ INFO  ] [ 03/03 16:12:41 ] Application closed
+[ INFO  ] [ 03/03 16:13:00 ] Application closing...
+[ INFO  ] [ 03/03 16:13:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039571412ms.temdata'
+[ INFO  ] [ 03/03 16:13:00 ] Data logger closed
+[ INFO  ] [ 03/03 16:13:00 ] Application closed
+[ INFO  ] [ 03/03 16:14:12 ] Application closing...
+[ INFO  ] [ 03/03 16:14:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039635725ms.temdata'
+[ INFO  ] [ 03/03 16:14:12 ] Data logger closed
+[ INFO  ] [ 03/03 16:14:12 ] Application closed
+[ INFO  ] [ 03/03 16:15:12 ] Application closing...
+[ INFO  ] [ 03/03 16:15:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039703795ms.temdata'
+[ INFO  ] [ 03/03 16:15:12 ] Data logger closed
+[ INFO  ] [ 03/03 16:15:12 ] Application closed
+[ INFO  ] [ 03/03 16:15:42 ] Application closing...
+[ INFO  ] [ 03/03 16:15:42 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039724637ms.temdata'
+[ INFO  ] [ 03/03 16:15:42 ] Data logger closed
+[ INFO  ] [ 03/03 16:15:42 ] Application closed
+[ INFO  ] [ 03/03 16:16:08 ] Application closing...
+[ INFO  ] [ 03/03 16:16:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039759910ms.temdata'
+[ INFO  ] [ 03/03 16:16:08 ] Data logger closed
+[ INFO  ] [ 03/03 16:16:08 ] Application closed
+[ INFO  ] [ 03/03 16:16:22 ] Application closing...
+[ INFO  ] [ 03/03 16:16:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039777207ms.temdata'
+[ INFO  ] [ 03/03 16:16:22 ] Data logger closed
+[ INFO  ] [ 03/03 16:16:22 ] Application closed
+[ INFO  ] [ 03/03 16:17:13 ] Application closing...
+[ INFO  ] [ 03/03 16:17:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457039820519ms.temdata'
+[ INFO  ] [ 03/03 16:17:13 ] Data logger closed
+[ INFO  ] [ 03/03 16:17:13 ] Application closed
+[ INFO  ] [ 03/04 15:34:53 ] Application closing...
+[ INFO  ] [ 03/04 15:34:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457123636070ms.temdata'
+[ INFO  ] [ 03/04 15:34:53 ] Data logger closed
+[ INFO  ] [ 03/04 15:34:53 ] Application closed
+[ INFO  ] [ 03/04 15:35:15 ] Application closing...
+[ INFO  ] [ 03/04 15:35:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457123695786ms.temdata'
+[ INFO  ] [ 03/04 15:35:15 ] Data logger closed
+[ INFO  ] [ 03/04 15:35:15 ] Application closed
+[ INFO  ] [ 03/04 15:37:32 ] Application closing...
+[ INFO  ] [ 03/04 15:37:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457123727630ms.temdata'
+[ INFO  ] [ 03/04 15:37:32 ] Data logger closed
+[ INFO  ] [ 03/04 15:37:32 ] Application closed
+[ INFO  ] [ 03/04 15:38:01 ] Application closing...
+[ INFO  ] [ 03/04 15:38:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457123854672ms.temdata'
+[ INFO  ] [ 03/04 15:38:01 ] Data logger closed
+[ INFO  ] [ 03/04 15:38:01 ] Application closed
+[ INFO  ] [ 03/04 15:39:29 ] Application closing...
+[ INFO  ] [ 03/04 15:39:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457123956942ms.temdata'
+[ INFO  ] [ 03/04 15:39:29 ] Data logger closed
+[ INFO  ] [ 03/04 15:39:29 ] Application closed
+[ INFO  ] [ 03/04 15:40:02 ] Application closing...
+[ INFO  ] [ 03/04 15:40:02 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457123994366ms.temdata'
+[ INFO  ] [ 03/04 15:40:02 ] Data logger closed
+[ INFO  ] [ 03/04 15:40:02 ] Application closed
+[ INFO  ] [ 03/04 15:40:18 ] Application closing...
+[ INFO  ] [ 03/04 15:40:18 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124014046ms.temdata'
+[ INFO  ] [ 03/04 15:40:18 ] Data logger closed
+[ INFO  ] [ 03/04 15:40:18 ] Application closed
+[ INFO  ] [ 03/04 15:40:33 ] Application closing...
+[ INFO  ] [ 03/04 15:40:33 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124030363ms.temdata'
+[ INFO  ] [ 03/04 15:40:33 ] Data logger closed
+[ INFO  ] [ 03/04 15:40:33 ] Application closed
+[ INFO  ] [ 03/04 15:41:05 ] Application closing...
+[ INFO  ] [ 03/04 15:41:05 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124060403ms.temdata'
+[ INFO  ] [ 03/04 15:41:05 ] Data logger closed
+[ INFO  ] [ 03/04 15:41:05 ] Application closed
+[ INFO  ] [ 03/04 15:42:07 ] Application closing...
+[ INFO  ] [ 03/04 15:42:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124102779ms.temdata'
+[ INFO  ] [ 03/04 15:42:07 ] Data logger closed
+[ INFO  ] [ 03/04 15:42:07 ] Application closed
+[ INFO  ] [ 03/04 15:44:13 ] Application closing...
+[ INFO  ] [ 03/04 15:44:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124247096ms.temdata'
+[ INFO  ] [ 03/04 15:44:13 ] Data logger closed
+[ INFO  ] [ 03/04 15:44:13 ] Application closed
+[ INFO  ] [ 03/04 15:45:21 ] Application closing...
+[ INFO  ] [ 03/04 15:45:21 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124312537ms.temdata'
+[ INFO  ] [ 03/04 15:45:21 ] Data logger closed
+[ INFO  ] [ 03/04 15:45:21 ] Application closed
+[ INFO  ] [ 03/04 15:45:32 ] Application closing...
+[ INFO  ] [ 03/04 15:45:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124328227ms.temdata'
+[ INFO  ] [ 03/04 15:45:32 ] Data logger closed
+[ INFO  ] [ 03/04 15:45:32 ] Application closed
+[ INFO  ] [ 03/04 15:45:47 ] Application closing...
+[ INFO  ] [ 03/04 15:45:47 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124340085ms.temdata'
+[ INFO  ] [ 03/04 15:45:47 ] Data logger closed
+[ INFO  ] [ 03/04 15:45:47 ] Application closed
+[ INFO  ] [ 03/04 15:46:14 ] Application closing...
+[ INFO  ] [ 03/04 15:46:14 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124358145ms.temdata'
+[ INFO  ] [ 03/04 15:46:14 ] Data logger closed
+[ INFO  ] [ 03/04 15:46:14 ] Application closed
+[ INFO  ] [ 03/04 15:46:38 ] Application closing...
+[ INFO  ] [ 03/04 15:46:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124378539ms.temdata'
+[ INFO  ] [ 03/04 15:46:38 ] Data logger closed
+[ INFO  ] [ 03/04 15:46:38 ] Application closed
+[ INFO  ] [ 03/04 15:47:58 ] Application closing...
+[ INFO  ] [ 03/04 15:47:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124474605ms.temdata'
+[ INFO  ] [ 03/04 15:47:58 ] Data logger closed
+[ INFO  ] [ 03/04 15:47:58 ] Application closed
+[ INFO  ] [ 03/04 15:48:10 ] Application closing...
+[ INFO  ] [ 03/04 15:48:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124485288ms.temdata'
+[ INFO  ] [ 03/04 15:48:10 ] Data logger closed
+[ INFO  ] [ 03/04 15:48:10 ] Application closed
+[ INFO  ] [ 03/04 15:48:22 ] Application closing...
+[ INFO  ] [ 03/04 15:48:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124495521ms.temdata'
+[ INFO  ] [ 03/04 15:48:22 ] Data logger closed
+[ INFO  ] [ 03/04 15:48:22 ] Application closed
+[ INFO  ] [ 03/04 15:48:29 ] Application closing...
+[ INFO  ] [ 03/04 15:48:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124506351ms.temdata'
+[ INFO  ] [ 03/04 15:48:29 ] Data logger closed
+[ INFO  ] [ 03/04 15:48:29 ] Application closed
+[ INFO  ] [ 03/04 15:49:33 ] Application closing...
+[ INFO  ] [ 03/04 15:49:33 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124568564ms.temdata'
+[ INFO  ] [ 03/04 15:49:33 ] Data logger closed
+[ INFO  ] [ 03/04 15:49:33 ] Application closed
+[ INFO  ] [ 03/04 15:51:58 ] Application closing...
+[ INFO  ] [ 03/04 15:51:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124714267ms.temdata'
+[ INFO  ] [ 03/04 15:51:58 ] Data logger closed
+[ INFO  ] [ 03/04 15:51:58 ] Application closed
+[ INFO  ] [ 03/04 15:53:10 ] Application closing...
+[ INFO  ] [ 03/04 15:53:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124784163ms.temdata'
+[ INFO  ] [ 03/04 15:53:10 ] Data logger closed
+[ INFO  ] [ 03/04 15:53:10 ] Application closed
+[ INFO  ] [ 03/04 15:53:21 ] Application closing...
+[ INFO  ] [ 03/04 15:53:21 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124798271ms.temdata'
+[ INFO  ] [ 03/04 15:53:21 ] Data logger closed
+[ INFO  ] [ 03/04 15:53:21 ] Application closed
+[ INFO  ] [ 03/04 15:54:31 ] Application closing...
+[ INFO  ] [ 03/04 15:54:31 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124868285ms.temdata'
+[ INFO  ] [ 03/04 15:54:31 ] Data logger closed
+[ INFO  ] [ 03/04 15:54:31 ] Application closed
+[ INFO  ] [ 03/04 15:54:41 ] Application closing...
+[ INFO  ] [ 03/04 15:54:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124878733ms.temdata'
+[ INFO  ] [ 03/04 15:54:41 ] Data logger closed
+[ INFO  ] [ 03/04 15:54:41 ] Application closed
+[ INFO  ] [ 03/04 15:55:06 ] Application closing...
+[ INFO  ] [ 03/04 15:55:06 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124902545ms.temdata'
+[ INFO  ] [ 03/04 15:55:06 ] Data logger closed
+[ INFO  ] [ 03/04 15:55:06 ] Application closed
+[ INFO  ] [ 03/04 15:55:15 ] Application closing...
+[ INFO  ] [ 03/04 15:55:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457124912095ms.temdata'
+[ INFO  ] [ 03/04 15:55:15 ] Data logger closed
+[ INFO  ] [ 03/04 15:55:15 ] Application closed
+[ INFO  ] [ 03/04 15:57:58 ] Application closing...
+[ INFO  ] [ 03/04 15:57:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125072178ms.temdata'
+[ INFO  ] [ 03/04 15:57:58 ] Data logger closed
+[ INFO  ] [ 03/04 15:57:58 ] Application closed
+[ INFO  ] [ 03/04 15:58:48 ] Application closing...
+[ INFO  ] [ 03/04 15:58:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125125867ms.temdata'
+[ INFO  ] [ 03/04 15:58:48 ] Data logger closed
+[ INFO  ] [ 03/04 15:58:48 ] Application closed
+[ INFO  ] [ 03/04 15:59:10 ] Application closing...
+[ INFO  ] [ 03/04 15:59:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125139370ms.temdata'
+[ INFO  ] [ 03/04 15:59:10 ] Data logger closed
+[ INFO  ] [ 03/04 15:59:10 ] Application closed
+[ INFO  ] [ 03/04 15:59:19 ] Application closing...
+[ INFO  ] [ 03/04 15:59:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125155321ms.temdata'
+[ INFO  ] [ 03/04 15:59:19 ] Data logger closed
+[ INFO  ] [ 03/04 15:59:19 ] Application closed
+[ INFO  ] [ 03/04 15:59:30 ] Application closing...
+[ INFO  ] [ 03/04 15:59:30 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125166216ms.temdata'
+[ INFO  ] [ 03/04 15:59:30 ] Data logger closed
+[ INFO  ] [ 03/04 15:59:30 ] Application closed
+[ INFO  ] [ 03/04 15:59:40 ] Application closing...
+[ INFO  ] [ 03/04 15:59:40 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125174331ms.temdata'
+[ INFO  ] [ 03/04 15:59:40 ] Data logger closed
+[ INFO  ] [ 03/04 15:59:40 ] Application closed
+[ INFO  ] [ 03/04 15:59:56 ] Application closing...
+[ INFO  ] [ 03/04 15:59:56 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125192130ms.temdata'
+[ INFO  ] [ 03/04 15:59:56 ] Data logger closed
+[ INFO  ] [ 03/04 15:59:56 ] Application closed
+[ INFO  ] [ 03/04 16:00:12 ] Application closing...
+[ INFO  ] [ 03/04 16:00:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125208824ms.temdata'
+[ INFO  ] [ 03/04 16:00:12 ] Data logger closed
+[ INFO  ] [ 03/04 16:00:12 ] Application closed
+[ INFO  ] [ 03/04 16:00:40 ] Application closing...
+[ INFO  ] [ 03/04 16:00:40 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125236436ms.temdata'
+[ INFO  ] [ 03/04 16:00:40 ] Data logger closed
+[ INFO  ] [ 03/04 16:00:40 ] Application closed
+[ INFO  ] [ 03/04 16:01:30 ] Application closing...
+[ INFO  ] [ 03/04 16:01:30 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125282626ms.temdata'
+[ INFO  ] [ 03/04 16:01:30 ] Data logger closed
+[ INFO  ] [ 03/04 16:01:30 ] Application closed
+[ INFO  ] [ 03/04 16:01:41 ] Application closing...
+[ INFO  ] [ 03/04 16:01:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125298354ms.temdata'
+[ INFO  ] [ 03/04 16:01:41 ] Data logger closed
+[ INFO  ] [ 03/04 16:01:41 ] Application closed
+[ INFO  ] [ 03/04 16:02:23 ] Application closing...
+[ INFO  ] [ 03/04 16:02:23 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125340900ms.temdata'
+[ INFO  ] [ 03/04 16:02:24 ] Data logger closed
+[ INFO  ] [ 03/04 16:02:24 ] Application closed
+[ INFO  ] [ 03/04 16:02:48 ] Application closing...
+[ INFO  ] [ 03/04 16:02:49 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125363469ms.temdata'
+[ INFO  ] [ 03/04 16:02:49 ] Data logger closed
+[ INFO  ] [ 03/04 16:02:49 ] Application closed
+[ INFO  ] [ 03/04 16:03:18 ] Application closing...
+[ INFO  ] [ 03/04 16:03:18 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125392273ms.temdata'
+[ INFO  ] [ 03/04 16:03:18 ] Data logger closed
+[ INFO  ] [ 03/04 16:03:18 ] Application closed
+[ INFO  ] [ 03/04 16:03:33 ] Application closing...
+[ INFO  ] [ 03/04 16:03:33 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125407221ms.temdata'
+[ INFO  ] [ 03/04 16:03:33 ] Data logger closed
+[ INFO  ] [ 03/04 16:03:33 ] Application closed
+[ INFO  ] [ 03/04 16:03:51 ] Application closing...
+[ INFO  ] [ 03/04 16:03:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125425078ms.temdata'
+[ INFO  ] [ 03/04 16:03:51 ] Data logger closed
+[ INFO  ] [ 03/04 16:03:51 ] Application closed
+[ INFO  ] [ 03/04 16:04:03 ] Application closing...
+[ INFO  ] [ 03/04 16:04:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125436168ms.temdata'
+[ INFO  ] [ 03/04 16:04:03 ] Data logger closed
+[ INFO  ] [ 03/04 16:04:03 ] Application closed
+[ INFO  ] [ 03/04 16:04:27 ] Application closing...
+[ INFO  ] [ 03/04 16:04:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125463126ms.temdata'
+[ INFO  ] [ 03/04 16:04:27 ] Data logger closed
+[ INFO  ] [ 03/04 16:04:27 ] Application closed
+[ INFO  ] [ 03/04 16:04:59 ] Application closing...
+[ INFO  ] [ 03/04 16:04:59 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125493751ms.temdata'
+[ INFO  ] [ 03/04 16:04:59 ] Data logger closed
+[ INFO  ] [ 03/04 16:04:59 ] Application closed
+[ INFO  ] [ 03/04 16:05:20 ] Application closing...
+[ INFO  ] [ 03/04 16:05:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125512167ms.temdata'
+[ INFO  ] [ 03/04 16:05:20 ] Data logger closed
+[ INFO  ] [ 03/04 16:05:20 ] Application closed
+[ INFO  ] [ 03/04 16:07:06 ] Application closing...
+[ INFO  ] [ 03/04 16:07:06 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125620775ms.temdata'
+[ INFO  ] [ 03/04 16:07:06 ] Data logger closed
+[ INFO  ] [ 03/04 16:07:06 ] Application closed
+[ INFO  ] [ 03/04 16:07:18 ] Application closing...
+[ INFO  ] [ 03/04 16:07:18 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125632396ms.temdata'
+[ INFO  ] [ 03/04 16:07:18 ] Data logger closed
+[ INFO  ] [ 03/04 16:07:18 ] Application closed
+[ INFO  ] [ 03/04 16:07:39 ] Application closing...
+[ INFO  ] [ 03/04 16:07:39 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125646957ms.temdata'
+[ INFO  ] [ 03/04 16:07:39 ] Data logger closed
+[ INFO  ] [ 03/04 16:07:39 ] Application closed
+[ INFO  ] [ 03/04 16:08:06 ] Application closing...
+[ INFO  ] [ 03/04 16:08:06 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125676986ms.temdata'
+[ INFO  ] [ 03/04 16:08:06 ] Data logger closed
+[ INFO  ] [ 03/04 16:08:06 ] Application closed
+[ INFO  ] [ 03/04 16:08:35 ] Application closing...
+[ INFO  ] [ 03/04 16:08:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125703886ms.temdata'
+[ INFO  ] [ 03/04 16:08:35 ] Data logger closed
+[ INFO  ] [ 03/04 16:08:35 ] Application closed
+[ INFO  ] [ 03/04 16:08:51 ] Application closing...
+[ INFO  ] [ 03/04 16:08:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125726656ms.temdata'
+[ INFO  ] [ 03/04 16:08:51 ] Data logger closed
+[ INFO  ] [ 03/04 16:08:51 ] Application closed
+[ INFO  ] [ 03/04 16:09:06 ] Application closing...
+[ INFO  ] [ 03/04 16:09:06 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125743169ms.temdata'
+[ INFO  ] [ 03/04 16:09:06 ] Data logger closed
+[ INFO  ] [ 03/04 16:09:06 ] Application closed
+[ INFO  ] [ 03/04 16:09:20 ] Application closing...
+[ INFO  ] [ 03/04 16:09:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125757052ms.temdata'
+[ INFO  ] [ 03/04 16:09:20 ] Data logger closed
+[ INFO  ] [ 03/04 16:09:20 ] Application closed
+[ INFO  ] [ 03/04 16:09:35 ] Application closing...
+[ INFO  ] [ 03/04 16:09:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125769608ms.temdata'
+[ INFO  ] [ 03/04 16:09:35 ] Data logger closed
+[ INFO  ] [ 03/04 16:09:35 ] Application closed
+[ INFO  ] [ 03/04 16:09:52 ] Application closing...
+[ INFO  ] [ 03/04 16:09:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125786601ms.temdata'
+[ INFO  ] [ 03/04 16:09:52 ] Data logger closed
+[ INFO  ] [ 03/04 16:09:52 ] Application closed
+[ INFO  ] [ 03/04 16:10:24 ] Application closing...
+[ INFO  ] [ 03/04 16:10:24 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125820239ms.temdata'
+[ INFO  ] [ 03/04 16:10:24 ] Data logger closed
+[ INFO  ] [ 03/04 16:10:24 ] Application closed
+[ INFO  ] [ 03/04 16:10:32 ] Application closing...
+[ INFO  ] [ 03/04 16:10:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125829292ms.temdata'
+[ INFO  ] [ 03/04 16:10:32 ] Data logger closed
+[ INFO  ] [ 03/04 16:10:32 ] Application closed
+[ INFO  ] [ 03/04 16:10:46 ] Application closing...
+[ INFO  ] [ 03/04 16:10:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125841160ms.temdata'
+[ INFO  ] [ 03/04 16:10:46 ] Data logger closed
+[ INFO  ] [ 03/04 16:10:46 ] Application closed
+[ INFO  ] [ 03/04 16:11:03 ] Application closing...
+[ INFO  ] [ 03/04 16:11:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125855709ms.temdata'
+[ INFO  ] [ 03/04 16:11:03 ] Data logger closed
+[ INFO  ] [ 03/04 16:11:03 ] Application closed
+[ INFO  ] [ 03/04 16:11:24 ] Application closing...
+[ INFO  ] [ 03/04 16:11:24 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125875797ms.temdata'
+[ INFO  ] [ 03/04 16:11:24 ] Data logger closed
+[ INFO  ] [ 03/04 16:11:24 ] Application closed
+[ INFO  ] [ 03/04 16:11:58 ] Application closing...
+[ INFO  ] [ 03/04 16:11:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125909217ms.temdata'
+[ INFO  ] [ 03/04 16:11:58 ] Data logger closed
+[ INFO  ] [ 03/04 16:11:58 ] Application closed
+[ INFO  ] [ 03/04 16:12:17 ] Application closing...
+[ INFO  ] [ 03/04 16:12:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125933305ms.temdata'
+[ INFO  ] [ 03/04 16:12:17 ] Data logger closed
+[ INFO  ] [ 03/04 16:12:17 ] Application closed
+[ INFO  ] [ 03/04 16:12:41 ] Application closing...
+[ INFO  ] [ 03/04 16:12:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125954946ms.temdata'
+[ INFO  ] [ 03/04 16:12:41 ] Data logger closed
+[ INFO  ] [ 03/04 16:12:41 ] Application closed
+[ INFO  ] [ 03/04 16:13:01 ] Application closing...
+[ INFO  ] [ 03/04 16:13:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457125977528ms.temdata'
+[ INFO  ] [ 03/04 16:13:01 ] Data logger closed
+[ INFO  ] [ 03/04 16:13:01 ] Application closed
+[ INFO  ] [ 03/04 16:13:24 ] Application closing...
+[ INFO  ] [ 03/04 16:13:24 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126000461ms.temdata'
+[ INFO  ] [ 03/04 16:13:24 ] Data logger closed
+[ INFO  ] [ 03/04 16:13:24 ] Application closed
+[ INFO  ] [ 03/04 16:14:10 ] Application closing...
+[ INFO  ] [ 03/04 16:14:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126044208ms.temdata'
+[ INFO  ] [ 03/04 16:14:10 ] Data logger closed
+[ INFO  ] [ 03/04 16:14:10 ] Application closed
+[ INFO  ] [ 03/04 16:14:19 ] Application closing...
+[ INFO  ] [ 03/04 16:14:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126056690ms.temdata'
+[ INFO  ] [ 03/04 16:14:19 ] Data logger closed
+[ INFO  ] [ 03/04 16:14:19 ] Application closed
+[ INFO  ] [ 03/04 16:14:42 ] Application closing...
+[ INFO  ] [ 03/04 16:14:42 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126074169ms.temdata'
+[ INFO  ] [ 03/04 16:14:42 ] Data logger closed
+[ INFO  ] [ 03/04 16:14:42 ] Application closed
+[ INFO  ] [ 03/04 16:16:13 ] Application closing...
+[ INFO  ] [ 03/04 16:16:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126170412ms.temdata'
+[ INFO  ] [ 03/04 16:16:13 ] Data logger closed
+[ INFO  ] [ 03/04 16:16:13 ] Application closed
+[ INFO  ] [ 03/04 16:16:29 ] Application closing...
+[ INFO  ] [ 03/04 16:16:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126181848ms.temdata'
+[ INFO  ] [ 03/04 16:16:29 ] Data logger closed
+[ INFO  ] [ 03/04 16:16:29 ] Application closed
+[ INFO  ] [ 03/04 16:16:52 ] Application closing...
+[ INFO  ] [ 03/04 16:16:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126208265ms.temdata'
+[ INFO  ] [ 03/04 16:16:52 ] Data logger closed
+[ INFO  ] [ 03/04 16:16:52 ] Application closed
+[ INFO  ] [ 03/04 16:17:08 ] Application closing...
+[ INFO  ] [ 03/04 16:17:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126224490ms.temdata'
+[ INFO  ] [ 03/04 16:17:08 ] Data logger closed
+[ INFO  ] [ 03/04 16:17:08 ] Application closed
+[ INFO  ] [ 03/04 16:17:26 ] Application closing...
+[ INFO  ] [ 03/04 16:17:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126237546ms.temdata'
+[ INFO  ] [ 03/04 16:17:26 ] Data logger closed
+[ INFO  ] [ 03/04 16:17:26 ] Application closed
+[ INFO  ] [ 03/04 16:19:08 ] Application closing...
+[ INFO  ] [ 03/04 16:19:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126342020ms.temdata'
+[ INFO  ] [ 03/04 16:19:08 ] Data logger closed
+[ INFO  ] [ 03/04 16:19:08 ] Application closed
+[ INFO  ] [ 03/04 16:19:26 ] Application closing...
+[ INFO  ] [ 03/04 16:19:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126363766ms.temdata'
+[ INFO  ] [ 03/04 16:19:26 ] Data logger closed
+[ INFO  ] [ 03/04 16:19:26 ] Application closed
+[ INFO  ] [ 03/04 16:19:37 ] Application closing...
+[ INFO  ] [ 03/04 16:19:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126374805ms.temdata'
+[ INFO  ] [ 03/04 16:19:37 ] Data logger closed
+[ INFO  ] [ 03/04 16:19:37 ] Application closed
+[ INFO  ] [ 03/04 16:19:52 ] Application closing...
+[ INFO  ] [ 03/04 16:19:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126390051ms.temdata'
+[ INFO  ] [ 03/04 16:19:52 ] Data logger closed
+[ INFO  ] [ 03/04 16:19:52 ] Application closed
+[ INFO  ] [ 03/04 16:20:10 ] Application closing...
+[ INFO  ] [ 03/04 16:20:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126404215ms.temdata'
+[ INFO  ] [ 03/04 16:20:10 ] Data logger closed
+[ INFO  ] [ 03/04 16:20:10 ] Application closed
+[ INFO  ] [ 03/04 16:20:26 ] Application closing...
+[ INFO  ] [ 03/04 16:20:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126423598ms.temdata'
+[ INFO  ] [ 03/04 16:20:26 ] Data logger closed
+[ INFO  ] [ 03/04 16:20:26 ] Application closed
+[ INFO  ] [ 03/04 16:20:46 ] Application closing...
+[ INFO  ] [ 03/04 16:20:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126443619ms.temdata'
+[ INFO  ] [ 03/04 16:20:46 ] Data logger closed
+[ INFO  ] [ 03/04 16:20:46 ] Application closed
+[ INFO  ] [ 03/04 16:20:53 ] Application closing...
+[ INFO  ] [ 03/04 16:20:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126450204ms.temdata'
+[ INFO  ] [ 03/04 16:20:53 ] Data logger closed
+[ INFO  ] [ 03/04 16:20:53 ] Application closed
+[ INFO  ] [ 03/04 16:21:00 ] Application closing...
+[ INFO  ] [ 03/04 16:21:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126458211ms.temdata'
+[ INFO  ] [ 03/04 16:21:00 ] Data logger closed
+[ INFO  ] [ 03/04 16:21:00 ] Application closed
+[ INFO  ] [ 03/04 16:21:20 ] Application closing...
+[ INFO  ] [ 03/04 16:21:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126470262ms.temdata'
+[ INFO  ] [ 03/04 16:21:20 ] Data logger closed
+[ INFO  ] [ 03/04 16:21:20 ] Application closed
+[ INFO  ] [ 03/04 16:21:39 ] Application closing...
+[ INFO  ] [ 03/04 16:21:39 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126495455ms.temdata'
+[ INFO  ] [ 03/04 16:21:39 ] Data logger closed
+[ INFO  ] [ 03/04 16:21:39 ] Application closed
+[ INFO  ] [ 03/04 16:21:56 ] Application closing...
+[ INFO  ] [ 03/04 16:21:56 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126509788ms.temdata'
+[ INFO  ] [ 03/04 16:21:56 ] Data logger closed
+[ INFO  ] [ 03/04 16:21:56 ] Application closed
+[ INFO  ] [ 03/04 16:22:49 ] Application closing...
+[ INFO  ] [ 03/04 16:22:49 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126565996ms.temdata'
+[ INFO  ] [ 03/04 16:22:49 ] Data logger closed
+[ INFO  ] [ 03/04 16:22:49 ] Application closed
+[ INFO  ] [ 03/04 16:23:05 ] Application closing...
+[ INFO  ] [ 03/04 16:23:05 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126581761ms.temdata'
+[ INFO  ] [ 03/04 16:23:05 ] Data logger closed
+[ INFO  ] [ 03/04 16:23:05 ] Application closed
+[ INFO  ] [ 03/04 16:23:56 ] Application closing...
+[ INFO  ] [ 03/04 16:23:56 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126628451ms.temdata'
+[ INFO  ] [ 03/04 16:23:56 ] Data logger closed
+[ INFO  ] [ 03/04 16:23:56 ] Application closed
+[ INFO  ] [ 03/04 16:24:55 ] Application closing...
+[ INFO  ] [ 03/04 16:24:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126690120ms.temdata'
+[ INFO  ] [ 03/04 16:24:55 ] Data logger closed
+[ INFO  ] [ 03/04 16:24:55 ] Application closed
+[ INFO  ] [ 03/04 16:25:16 ] Application closing...
+[ INFO  ] [ 03/04 16:25:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126708315ms.temdata'
+[ INFO  ] [ 03/04 16:25:16 ] Data logger closed
+[ INFO  ] [ 03/04 16:25:16 ] Application closed
+[ INFO  ] [ 03/04 16:26:17 ] Application closing...
+[ INFO  ] [ 03/04 16:26:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126773580ms.temdata'
+[ INFO  ] [ 03/04 16:26:17 ] Data logger closed
+[ INFO  ] [ 03/04 16:26:17 ] Application closed
+[ INFO  ] [ 03/04 16:26:29 ] Application closing...
+[ INFO  ] [ 03/04 16:26:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126787003ms.temdata'
+[ INFO  ] [ 03/04 16:26:29 ] Data logger closed
+[ INFO  ] [ 03/04 16:26:29 ] Application closed
+[ INFO  ] [ 03/04 16:26:37 ] Application closing...
+[ INFO  ] [ 03/04 16:26:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126795215ms.temdata'
+[ INFO  ] [ 03/04 16:26:37 ] Data logger closed
+[ INFO  ] [ 03/04 16:26:37 ] Application closed
+[ INFO  ] [ 03/04 16:26:46 ] Application closing...
+[ INFO  ] [ 03/04 16:26:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126803950ms.temdata'
+[ INFO  ] [ 03/04 16:26:46 ] Data logger closed
+[ INFO  ] [ 03/04 16:26:46 ] Application closed
+[ INFO  ] [ 03/04 16:27:15 ] Application closing...
+[ INFO  ] [ 03/04 16:27:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126830054ms.temdata'
+[ INFO  ] [ 03/04 16:27:15 ] Data logger closed
+[ INFO  ] [ 03/04 16:27:15 ] Application closed
+[ INFO  ] [ 03/04 16:27:28 ] Application closing...
+[ INFO  ] [ 03/04 16:27:28 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126842122ms.temdata'
+[ INFO  ] [ 03/04 16:27:28 ] Data logger closed
+[ INFO  ] [ 03/04 16:27:28 ] Application closed
+[ INFO  ] [ 03/04 16:27:40 ] Application closing...
+[ INFO  ] [ 03/04 16:27:40 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126853237ms.temdata'
+[ INFO  ] [ 03/04 16:27:40 ] Data logger closed
+[ INFO  ] [ 03/04 16:27:40 ] Application closed
+[ INFO  ] [ 03/04 16:27:53 ] Application closing...
+[ INFO  ] [ 03/04 16:27:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126866296ms.temdata'
+[ INFO  ] [ 03/04 16:27:53 ] Data logger closed
+[ INFO  ] [ 03/04 16:27:53 ] Application closed
+[ INFO  ] [ 03/04 16:28:07 ] Application closing...
+[ INFO  ] [ 03/04 16:28:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126880203ms.temdata'
+[ INFO  ] [ 03/04 16:28:07 ] Data logger closed
+[ INFO  ] [ 03/04 16:28:07 ] Application closed
+[ INFO  ] [ 03/04 16:28:22 ] Application closing...
+[ INFO  ] [ 03/04 16:28:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126898913ms.temdata'
+[ INFO  ] [ 03/04 16:28:22 ] Data logger closed
+[ INFO  ] [ 03/04 16:28:22 ] Application closed
+[ INFO  ] [ 03/04 16:28:41 ] Application closing...
+[ INFO  ] [ 03/04 16:28:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126916794ms.temdata'
+[ INFO  ] [ 03/04 16:28:41 ] Data logger closed
+[ INFO  ] [ 03/04 16:28:41 ] Application closed
+[ INFO  ] [ 03/04 16:29:01 ] Application closing...
+[ INFO  ] [ 03/04 16:29:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126929321ms.temdata'
+[ INFO  ] [ 03/04 16:29:01 ] Data logger closed
+[ INFO  ] [ 03/04 16:29:01 ] Application closed
+[ INFO  ] [ 03/04 16:29:15 ] Application closing...
+[ INFO  ] [ 03/04 16:29:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126948086ms.temdata'
+[ INFO  ] [ 03/04 16:29:15 ] Data logger closed
+[ INFO  ] [ 03/04 16:29:15 ] Application closed
+[ INFO  ] [ 03/04 16:29:54 ] Application closing...
+[ INFO  ] [ 03/04 16:29:54 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126969179ms.temdata'
+[ INFO  ] [ 03/04 16:29:54 ] Data logger closed
+[ INFO  ] [ 03/04 16:29:54 ] Application closed
+[ INFO  ] [ 03/04 16:29:55 ] Application closing...
+[ INFO  ] [ 03/04 16:29:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457126960298ms.temdata'
+[ INFO  ] [ 03/04 16:29:55 ] Data logger closed
+[ INFO  ] [ 03/04 16:29:55 ] Application closed
+[ INFO  ] [ 03/04 16:30:10 ] Application closing...
+[ INFO  ] [ 03/04 16:30:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127001397ms.temdata'
+[ INFO  ] [ 03/04 16:30:10 ] Data logger closed
+[ INFO  ] [ 03/04 16:30:10 ] Application closed
+[ INFO  ] [ 03/04 16:30:53 ] Application closing...
+[ INFO  ] [ 03/04 16:30:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127025832ms.temdata'
+[ INFO  ] [ 03/04 16:30:53 ] Data logger closed
+[ INFO  ] [ 03/04 16:30:53 ] Application closed
+[ INFO  ] [ 03/04 16:30:54 ] Application closing...
+[ INFO  ] [ 03/04 16:30:54 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127036592ms.temdata'
+[ INFO  ] [ 03/04 16:30:55 ] Data logger closed
+[ INFO  ] [ 03/04 16:30:55 ] Application closed
+[ INFO  ] [ 03/04 16:31:12 ] Application closing...
+[ INFO  ] [ 03/04 16:31:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127062741ms.temdata'
+[ INFO  ] [ 03/04 16:31:12 ] Data logger closed
+[ INFO  ] [ 03/04 16:31:12 ] Application closed
+[ INFO  ] [ 03/04 16:31:30 ] Application closing...
+[ INFO  ] [ 03/04 16:31:30 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127079985ms.temdata'
+[ INFO  ] [ 03/04 16:31:30 ] Data logger closed
+[ INFO  ] [ 03/04 16:31:30 ] Application closed
+[ INFO  ] [ 03/04 16:32:03 ] Application closing...
+[ INFO  ] [ 03/04 16:32:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127120184ms.temdata'
+[ INFO  ] [ 03/04 16:32:03 ] Data logger closed
+[ INFO  ] [ 03/04 16:32:03 ] Application closed
+[ INFO  ] [ 03/04 16:32:10 ] Application closing...
+[ INFO  ] [ 03/04 16:32:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127127918ms.temdata'
+[ INFO  ] [ 03/04 16:32:10 ] Data logger closed
+[ INFO  ] [ 03/04 16:32:10 ] Application closed
+[ INFO  ] [ 03/04 16:32:26 ] Application closing...
+[ INFO  ] [ 03/04 16:32:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127143602ms.temdata'
+[ INFO  ] [ 03/04 16:32:26 ] Data logger closed
+[ INFO  ] [ 03/04 16:32:26 ] Application closed
+[ INFO  ] [ 03/04 16:32:34 ] Application closing...
+[ INFO  ] [ 03/04 16:32:34 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127152474ms.temdata'
+[ INFO  ] [ 03/04 16:32:35 ] Data logger closed
+[ INFO  ] [ 03/04 16:32:35 ] Application closed
+[ INFO  ] [ 03/04 16:35:17 ] Application closing...
+[ INFO  ] [ 03/04 16:35:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127311778ms.temdata'
+[ INFO  ] [ 03/04 16:35:17 ] Data logger closed
+[ INFO  ] [ 03/04 16:35:17 ] Application closed
+[ INFO  ] [ 03/04 16:35:59 ] Application closing...
+[ INFO  ] [ 03/04 16:35:59 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127354499ms.temdata'
+[ INFO  ] [ 03/04 16:35:59 ] Data logger closed
+[ INFO  ] [ 03/04 16:35:59 ] Application closed
+[ INFO  ] [ 03/04 16:36:07 ] Application closing...
+[ INFO  ] [ 03/04 16:36:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127364684ms.temdata'
+[ INFO  ] [ 03/04 16:36:07 ] Data logger closed
+[ INFO  ] [ 03/04 16:36:07 ] Application closed
+[ INFO  ] [ 03/04 16:36:19 ] Application closing...
+[ INFO  ] [ 03/04 16:36:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127373979ms.temdata'
+[ INFO  ] [ 03/04 16:36:19 ] Data logger closed
+[ INFO  ] [ 03/04 16:36:19 ] Application closed
+[ INFO  ] [ 03/04 16:36:33 ] Application closing...
+[ INFO  ] [ 03/04 16:36:33 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127384284ms.temdata'
+[ INFO  ] [ 03/04 16:36:33 ] Data logger closed
+[ INFO  ] [ 03/04 16:36:33 ] Application closed
+[ INFO  ] [ 03/04 16:36:48 ] Application closing...
+[ INFO  ] [ 03/04 16:36:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127405490ms.temdata'
+[ INFO  ] [ 03/04 16:36:48 ] Data logger closed
+[ INFO  ] [ 03/04 16:36:48 ] Application closed
+[ INFO  ] [ 03/04 16:37:01 ] Application closing...
+[ INFO  ] [ 03/04 16:37:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127418167ms.temdata'
+[ INFO  ] [ 03/04 16:37:01 ] Data logger closed
+[ INFO  ] [ 03/04 16:37:01 ] Application closed
+[ INFO  ] [ 03/04 16:37:19 ] Application closing...
+[ INFO  ] [ 03/04 16:37:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127435171ms.temdata'
+[ INFO  ] [ 03/04 16:37:19 ] Data logger closed
+[ INFO  ] [ 03/04 16:37:19 ] Application closed
+[ INFO  ] [ 03/04 16:37:48 ] Application closing...
+[ INFO  ] [ 03/04 16:37:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127453685ms.temdata'
+[ INFO  ] [ 03/04 16:37:48 ] Data logger closed
+[ INFO  ] [ 03/04 16:37:48 ] Application closed
+[ INFO  ] [ 03/04 16:38:17 ] Application closing...
+[ INFO  ] [ 03/04 16:38:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127493650ms.temdata'
+[ INFO  ] [ 03/04 16:38:17 ] Data logger closed
+[ INFO  ] [ 03/04 16:38:17 ] Application closed
+[ INFO  ] [ 03/04 16:38:27 ] Application closing...
+[ INFO  ] [ 03/04 16:38:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127504649ms.temdata'
+[ INFO  ] [ 03/04 16:38:27 ] Data logger closed
+[ INFO  ] [ 03/04 16:38:27 ] Application closed
+[ INFO  ] [ 03/04 16:39:26 ] Application closing...
+[ INFO  ] [ 03/04 16:39:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127539454ms.temdata'
+[ INFO  ] [ 03/04 16:39:26 ] Data logger closed
+[ INFO  ] [ 03/04 16:39:26 ] Application closed
+[ INFO  ] [ 03/04 16:44:17 ] Application closing...
+[ INFO  ] [ 03/04 16:44:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127848073ms.temdata'
+[ INFO  ] [ 03/04 16:44:17 ] Data logger closed
+[ INFO  ] [ 03/04 16:44:17 ] Application closed
+[ INFO  ] [ 03/04 16:44:29 ] Application closing...
+[ INFO  ] [ 03/04 16:44:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127864190ms.temdata'
+[ INFO  ] [ 03/04 16:44:29 ] Data logger closed
+[ INFO  ] [ 03/04 16:44:29 ] Application closed
+[ INFO  ] [ 03/04 16:44:41 ] Application closing...
+[ INFO  ] [ 03/04 16:44:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127877924ms.temdata'
+[ INFO  ] [ 03/04 16:44:41 ] Data logger closed
+[ INFO  ] [ 03/04 16:44:41 ] Application closed
+[ INFO  ] [ 03/04 16:44:51 ] Application closing...
+[ INFO  ] [ 03/04 16:44:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127887376ms.temdata'
+[ INFO  ] [ 03/04 16:44:51 ] Data logger closed
+[ INFO  ] [ 03/04 16:44:51 ] Application closed
+[ INFO  ] [ 03/04 16:45:35 ] Application closing...
+[ INFO  ] [ 03/04 16:45:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127932493ms.temdata'
+[ INFO  ] [ 03/04 16:45:35 ] Data logger closed
+[ INFO  ] [ 03/04 16:45:35 ] Application closed
+[ INFO  ] [ 03/04 16:45:54 ] Application closing...
+[ INFO  ] [ 03/04 16:45:54 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457127942808ms.temdata'
+[ INFO  ] [ 03/04 16:45:54 ] Data logger closed
+[ INFO  ] [ 03/04 16:45:54 ] Application closed
+[ INFO  ] [ 03/04 16:47:06 ] Application closing...
+[ INFO  ] [ 03/04 16:47:06 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128018685ms.temdata'
+[ INFO  ] [ 03/04 16:47:06 ] Data logger closed
+[ INFO  ] [ 03/04 16:47:06 ] Application closed
+[ INFO  ] [ 03/04 16:47:38 ] Application closing...
+[ INFO  ] [ 03/04 16:47:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128055605ms.temdata'
+[ INFO  ] [ 03/04 16:47:38 ] Data logger closed
+[ INFO  ] [ 03/04 16:47:38 ] Application closed
+[ INFO  ] [ 03/04 16:48:28 ] Application closing...
+[ INFO  ] [ 03/04 16:48:28 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128099945ms.temdata'
+[ INFO  ] [ 03/04 16:48:28 ] Data logger closed
+[ INFO  ] [ 03/04 16:48:28 ] Application closed
+[ INFO  ] [ 03/04 16:48:40 ] Application closing...
+[ INFO  ] [ 03/04 16:48:40 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128117590ms.temdata'
+[ INFO  ] [ 03/04 16:48:40 ] Data logger closed
+[ INFO  ] [ 03/04 16:48:40 ] Application closed
+[ INFO  ] [ 03/04 16:48:55 ] Application closing...
+[ INFO  ] [ 03/04 16:48:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128128864ms.temdata'
+[ INFO  ] [ 03/04 16:48:55 ] Data logger closed
+[ INFO  ] [ 03/04 16:48:55 ] Application closed
+[ INFO  ] [ 03/04 16:49:13 ] Application closing...
+[ INFO  ] [ 03/04 16:49:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128147276ms.temdata'
+[ INFO  ] [ 03/04 16:49:13 ] Data logger closed
+[ INFO  ] [ 03/04 16:49:13 ] Application closed
+[ INFO  ] [ 03/04 16:49:27 ] Application closing...
+[ INFO  ] [ 03/04 16:49:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128161666ms.temdata'
+[ INFO  ] [ 03/04 16:49:27 ] Data logger closed
+[ INFO  ] [ 03/04 16:49:27 ] Application closed
+[ INFO  ] [ 03/04 16:49:53 ] Application closing...
+[ INFO  ] [ 03/04 16:49:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128186931ms.temdata'
+[ INFO  ] [ 03/04 16:49:53 ] Data logger closed
+[ INFO  ] [ 03/04 16:49:53 ] Application closed
+[ INFO  ] [ 03/04 16:50:14 ] Application closing...
+[ ERROR ] [ 03/04 16:50:14 ] edu.cornell.rocketry.util.DataLogger#close() failed to delete unused log file
+[ INFO  ] [ 03/04 16:50:14 ] Data logger closed
+[ INFO  ] [ 03/04 16:50:14 ] Application closed
+[ INFO  ] [ 03/04 16:50:16 ] Application closing...
+[ INFO  ] [ 03/04 16:50:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128203299ms.temdata'
+[ INFO  ] [ 03/04 16:50:16 ] Data logger closed
+[ INFO  ] [ 03/04 16:50:16 ] Application closed
+[ INFO  ] [ 03/04 16:50:30 ] Application closing...
+[ INFO  ] [ 03/04 16:50:30 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128227250ms.temdata'
+[ INFO  ] [ 03/04 16:50:30 ] Data logger closed
+[ INFO  ] [ 03/04 16:50:30 ] Application closed
+[ INFO  ] [ 03/04 16:50:46 ] Application closing...
+[ INFO  ] [ 03/04 16:50:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128237441ms.temdata'
+[ INFO  ] [ 03/04 16:50:46 ] Data logger closed
+[ INFO  ] [ 03/04 16:50:46 ] Application closed
+[ INFO  ] [ 03/04 16:51:01 ] Application closing...
+[ INFO  ] [ 03/04 16:51:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128252113ms.temdata'
+[ INFO  ] [ 03/04 16:51:01 ] Data logger closed
+[ INFO  ] [ 03/04 16:51:01 ] Application closed
+[ INFO  ] [ 03/04 16:51:11 ] Application closing...
+[ INFO  ] [ 03/04 16:51:11 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128265663ms.temdata'
+[ INFO  ] [ 03/04 16:51:11 ] Data logger closed
+[ INFO  ] [ 03/04 16:51:11 ] Application closed
+[ INFO  ] [ 03/04 16:51:56 ] Application closing...
+[ INFO  ] [ 03/04 16:51:56 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128310283ms.temdata'
+[ INFO  ] [ 03/04 16:51:56 ] Data logger closed
+[ INFO  ] [ 03/04 16:51:56 ] Application closed
+[ INFO  ] [ 03/04 16:52:17 ] Application closing...
+[ INFO  ] [ 03/04 16:52:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128331530ms.temdata'
+[ INFO  ] [ 03/04 16:52:17 ] Data logger closed
+[ INFO  ] [ 03/04 16:52:17 ] Application closed
+[ INFO  ] [ 03/04 16:53:28 ] Application closing...
+[ INFO  ] [ 03/04 16:53:28 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128363964ms.temdata'
+[ INFO  ] [ 03/04 16:53:28 ] Data logger closed
+[ INFO  ] [ 03/04 16:53:28 ] Application closed
+[ INFO  ] [ 03/04 16:54:40 ] Application closing...
+[ INFO  ] [ 03/04 16:54:40 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128446517ms.temdata'
+[ INFO  ] [ 03/04 16:54:40 ] Data logger closed
+[ INFO  ] [ 03/04 16:54:40 ] Application closed
+[ INFO  ] [ 03/04 16:55:45 ] Application closing...
+[ INFO  ] [ 03/04 16:55:45 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128538857ms.temdata'
+[ INFO  ] [ 03/04 16:55:45 ] Data logger closed
+[ INFO  ] [ 03/04 16:55:46 ] Application closed
+[ INFO  ] [ 03/04 16:56:46 ] Application closing...
+[ INFO  ] [ 03/04 16:56:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128570195ms.temdata'
+[ INFO  ] [ 03/04 16:56:46 ] Data logger closed
+[ INFO  ] [ 03/04 16:56:46 ] Application closed
+[ INFO  ] [ 03/04 16:57:03 ] Application closing...
+[ INFO  ] [ 03/04 16:57:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128611902ms.temdata'
+[ INFO  ] [ 03/04 16:57:03 ] Data logger closed
+[ INFO  ] [ 03/04 16:57:03 ] Application closed
+[ INFO  ] [ 03/04 16:57:11 ] Application closing...
+[ INFO  ] [ 03/04 16:57:11 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128627299ms.temdata'
+[ INFO  ] [ 03/04 16:57:11 ] Data logger closed
+[ INFO  ] [ 03/04 16:57:11 ] Application closed
+[ INFO  ] [ 03/04 16:57:42 ] Application closing...
+[ INFO  ] [ 03/04 16:57:42 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128656811ms.temdata'
+[ INFO  ] [ 03/04 16:57:42 ] Data logger closed
+[ INFO  ] [ 03/04 16:57:42 ] Application closed
+[ INFO  ] [ 03/04 16:58:14 ] Application closing...
+[ INFO  ] [ 03/04 16:58:14 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128689120ms.temdata'
+[ INFO  ] [ 03/04 16:58:14 ] Data logger closed
+[ INFO  ] [ 03/04 16:58:14 ] Application closed
+[ INFO  ] [ 03/04 16:58:26 ] Application closing...
+[ INFO  ] [ 03/04 16:58:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128699382ms.temdata'
+[ INFO  ] [ 03/04 16:58:26 ] Data logger closed
+[ INFO  ] [ 03/04 16:58:26 ] Application closed
+[ INFO  ] [ 03/04 16:58:48 ] Application closing...
+[ INFO  ] [ 03/04 16:58:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128722868ms.temdata'
+[ INFO  ] [ 03/04 16:58:48 ] Data logger closed
+[ INFO  ] [ 03/04 16:58:48 ] Application closed
+[ INFO  ] [ 03/04 16:59:12 ] Application closing...
+[ INFO  ] [ 03/04 16:59:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128745996ms.temdata'
+[ INFO  ] [ 03/04 16:59:12 ] Data logger closed
+[ INFO  ] [ 03/04 16:59:12 ] Application closed
+[ INFO  ] [ 03/04 16:59:29 ] Application closing...
+[ INFO  ] [ 03/04 16:59:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128763398ms.temdata'
+[ INFO  ] [ 03/04 16:59:29 ] Data logger closed
+[ INFO  ] [ 03/04 16:59:29 ] Application closed
+[ INFO  ] [ 03/04 17:00:12 ] Application closing...
+[ INFO  ] [ 03/04 17:00:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128782501ms.temdata'
+[ INFO  ] [ 03/04 17:00:12 ] Data logger closed
+[ INFO  ] [ 03/04 17:00:12 ] Application closed
+[ INFO  ] [ 03/04 17:00:37 ] Application closing...
+[ INFO  ] [ 03/04 17:00:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128832606ms.temdata'
+[ INFO  ] [ 03/04 17:00:37 ] Data logger closed
+[ INFO  ] [ 03/04 17:00:37 ] Application closed
+[ INFO  ] [ 03/04 17:01:24 ] Application closing...
+[ INFO  ] [ 03/04 17:01:24 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128875852ms.temdata'
+[ INFO  ] [ 03/04 17:01:24 ] Data logger closed
+[ INFO  ] [ 03/04 17:01:24 ] Application closed
+[ INFO  ] [ 03/04 17:01:50 ] Application closing...
+[ INFO  ] [ 03/04 17:01:50 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128906317ms.temdata'
+[ INFO  ] [ 03/04 17:01:50 ] Data logger closed
+[ INFO  ] [ 03/04 17:01:50 ] Application closed
+[ INFO  ] [ 03/04 17:02:05 ] Application closing...
+[ INFO  ] [ 03/04 17:02:05 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128922428ms.temdata'
+[ INFO  ] [ 03/04 17:02:05 ] Data logger closed
+[ INFO  ] [ 03/04 17:02:05 ] Application closed
+[ INFO  ] [ 03/04 17:02:16 ] Application closing...
+[ INFO  ] [ 03/04 17:02:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128929979ms.temdata'
+[ INFO  ] [ 03/04 17:02:16 ] Data logger closed
+[ INFO  ] [ 03/04 17:02:16 ] Application closed
+[ INFO  ] [ 03/04 17:02:57 ] Application closing...
+[ INFO  ] [ 03/04 17:02:57 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128943615ms.temdata'
+[ INFO  ] [ 03/04 17:02:57 ] Data logger closed
+[ INFO  ] [ 03/04 17:02:57 ] Application closed
+[ INFO  ] [ 03/04 17:03:19 ] Application closing...
+[ INFO  ] [ 03/04 17:03:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457128981397ms.temdata'
+[ INFO  ] [ 03/04 17:03:19 ] Data logger closed
+[ INFO  ] [ 03/04 17:03:19 ] Application closed
+[ INFO  ] [ 03/04 17:04:27 ] Application closing...
+[ INFO  ] [ 03/04 17:04:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129055036ms.temdata'
+[ INFO  ] [ 03/04 17:04:27 ] Data logger closed
+[ INFO  ] [ 03/04 17:04:27 ] Application closed
+[ INFO  ] [ 03/04 17:05:24 ] Application closing...
+[ INFO  ] [ 03/04 17:05:24 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129113445ms.temdata'
+[ INFO  ] [ 03/04 17:05:24 ] Data logger closed
+[ INFO  ] [ 03/04 17:05:24 ] Application closed
+[ INFO  ] [ 03/04 17:05:26 ] Application closing...
+[ INFO  ] [ 03/04 17:05:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129093508ms.temdata'
+[ INFO  ] [ 03/04 17:05:26 ] Data logger closed
+[ INFO  ] [ 03/04 17:05:26 ] Application closed
+[ INFO  ] [ 03/04 17:05:51 ] Application closing...
+[ INFO  ] [ 03/04 17:05:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129130114ms.temdata'
+[ INFO  ] [ 03/04 17:05:51 ] Data logger closed
+[ INFO  ] [ 03/04 17:05:51 ] Application closed
+[ INFO  ] [ 03/04 17:06:21 ] Application closing...
+[ INFO  ] [ 03/04 17:06:21 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129167746ms.temdata'
+[ INFO  ] [ 03/04 17:06:21 ] Data logger closed
+[ INFO  ] [ 03/04 17:06:21 ] Application closed
+[ INFO  ] [ 03/04 17:06:51 ] Application closing...
+[ INFO  ] [ 03/04 17:06:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129203973ms.temdata'
+[ INFO  ] [ 03/04 17:06:52 ] Data logger closed
+[ INFO  ] [ 03/04 17:06:52 ] Application closed
+[ INFO  ] [ 03/04 17:08:05 ] Application closing...
+[ INFO  ] [ 03/04 17:08:05 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129261506ms.temdata'
+[ INFO  ] [ 03/04 17:08:05 ] Data logger closed
+[ INFO  ] [ 03/04 17:08:05 ] Application closed
+[ INFO  ] [ 03/04 17:08:41 ] Application closing...
+[ INFO  ] [ 03/04 17:08:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129297711ms.temdata'
+[ INFO  ] [ 03/04 17:08:41 ] Data logger closed
+[ INFO  ] [ 03/04 17:08:41 ] Application closed
+[ INFO  ] [ 03/04 17:09:00 ] Application closing...
+[ INFO  ] [ 03/04 17:09:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129336054ms.temdata'
+[ INFO  ] [ 03/04 17:09:00 ] Data logger closed
+[ INFO  ] [ 03/04 17:09:00 ] Application closed
+[ INFO  ] [ 03/04 17:09:28 ] Application closing...
+[ INFO  ] [ 03/04 17:09:28 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129348430ms.temdata'
+[ INFO  ] [ 03/04 17:09:28 ] Data logger closed
+[ INFO  ] [ 03/04 17:09:28 ] Application closed
+[ INFO  ] [ 03/04 17:09:41 ] Application closing...
+[ INFO  ] [ 03/04 17:09:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129373507ms.temdata'
+[ INFO  ] [ 03/04 17:09:41 ] Data logger closed
+[ INFO  ] [ 03/04 17:09:41 ] Application closed
+[ INFO  ] [ 03/04 17:10:01 ] Application closing...
+[ INFO  ] [ 03/04 17:10:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129394444ms.temdata'
+[ INFO  ] [ 03/04 17:10:01 ] Data logger closed
+[ INFO  ] [ 03/04 17:10:01 ] Application closed
+[ INFO  ] [ 03/04 17:10:16 ] Application closing...
+[ INFO  ] [ 03/04 17:10:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129413067ms.temdata'
+[ INFO  ] [ 03/04 17:10:16 ] Data logger closed
+[ INFO  ] [ 03/04 17:10:16 ] Application closed
+[ INFO  ] [ 03/04 17:10:28 ] Application closing...
+[ INFO  ] [ 03/04 17:10:28 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129424285ms.temdata'
+[ INFO  ] [ 03/04 17:10:28 ] Data logger closed
+[ INFO  ] [ 03/04 17:10:28 ] Application closed
+[ INFO  ] [ 03/04 17:10:37 ] Application closing...
+[ INFO  ] [ 03/04 17:10:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129434188ms.temdata'
+[ INFO  ] [ 03/04 17:10:37 ] Data logger closed
+[ INFO  ] [ 03/04 17:10:37 ] Application closed
+[ INFO  ] [ 03/04 17:10:48 ] Application closing...
+[ INFO  ] [ 03/04 17:10:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129443105ms.temdata'
+[ INFO  ] [ 03/04 17:10:48 ] Data logger closed
+[ INFO  ] [ 03/04 17:10:48 ] Application closed
+[ INFO  ] [ 03/04 17:11:13 ] Application closing...
+[ INFO  ] [ 03/04 17:11:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129470131ms.temdata'
+[ INFO  ] [ 03/04 17:11:13 ] Data logger closed
+[ INFO  ] [ 03/04 17:11:13 ] Application closed
+[ INFO  ] [ 03/04 17:11:24 ] Application closing...
+[ INFO  ] [ 03/04 17:11:24 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129478784ms.temdata'
+[ INFO  ] [ 03/04 17:11:24 ] Data logger closed
+[ INFO  ] [ 03/04 17:11:24 ] Application closed
+[ INFO  ] [ 03/04 17:11:32 ] Application closing...
+[ INFO  ] [ 03/04 17:11:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129489485ms.temdata'
+[ INFO  ] [ 03/04 17:11:32 ] Data logger closed
+[ INFO  ] [ 03/04 17:11:32 ] Application closed
+[ INFO  ] [ 03/04 17:11:43 ] Application closing...
+[ INFO  ] [ 03/04 17:11:43 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129496859ms.temdata'
+[ INFO  ] [ 03/04 17:11:43 ] Data logger closed
+[ INFO  ] [ 03/04 17:11:43 ] Application closed
+[ INFO  ] [ 03/04 17:11:53 ] Application closing...
+[ INFO  ] [ 03/04 17:11:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129509701ms.temdata'
+[ INFO  ] [ 03/04 17:11:53 ] Data logger closed
+[ INFO  ] [ 03/04 17:11:53 ] Application closed
+[ INFO  ] [ 03/04 17:13:12 ] Application closing...
+[ INFO  ] [ 03/04 17:13:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129519900ms.temdata'
+[ INFO  ] [ 03/04 17:13:12 ] Data logger closed
+[ INFO  ] [ 03/04 17:13:12 ] Application closed
+[ INFO  ] [ 03/04 17:13:17 ] Application closing...
+[ INFO  ] [ 03/04 17:13:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129594019ms.temdata'
+[ INFO  ] [ 03/04 17:13:17 ] Data logger closed
+[ INFO  ] [ 03/04 17:13:17 ] Application closed
+[ INFO  ] [ 03/04 17:13:37 ] Application closing...
+[ INFO  ] [ 03/04 17:13:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129611238ms.temdata'
+[ INFO  ] [ 03/04 17:13:37 ] Data logger closed
+[ INFO  ] [ 03/04 17:13:37 ] Application closed
+[ INFO  ] [ 03/04 17:13:54 ] Application closing...
+[ INFO  ] [ 03/04 17:13:54 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129625191ms.temdata'
+[ INFO  ] [ 03/04 17:13:54 ] Data logger closed
+[ INFO  ] [ 03/04 17:13:54 ] Application closed
+[ INFO  ] [ 03/04 17:14:51 ] Application closing...
+[ INFO  ] [ 03/04 17:14:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129652567ms.temdata'
+[ INFO  ] [ 03/04 17:14:51 ] Data logger closed
+[ INFO  ] [ 03/04 17:14:51 ] Application closed
+[ INFO  ] [ 03/04 17:15:39 ] Application closing...
+[ INFO  ] [ 03/04 17:15:39 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129707229ms.temdata'
+[ INFO  ] [ 03/04 17:15:39 ] Data logger closed
+[ INFO  ] [ 03/04 17:15:39 ] Application closed
+[ INFO  ] [ 03/04 17:16:20 ] Application closing...
+[ ERROR ] [ 03/04 17:16:20 ] edu.cornell.rocketry.util.DataLogger#close() failed to delete unused log file
+[ INFO  ] [ 03/04 17:16:20 ] Data logger closed
+[ INFO  ] [ 03/04 17:16:20 ] Application closed
+[ INFO  ] [ 03/04 17:16:20 ] Application closing...
+[ INFO  ] [ 03/04 17:16:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129760173ms.temdata'
+[ INFO  ] [ 03/04 17:16:20 ] Data logger closed
+[ INFO  ] [ 03/04 17:16:20 ] Application closed
+[ INFO  ] [ 03/04 17:16:52 ] Application closing...
+[ INFO  ] [ 03/04 17:16:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129803387ms.temdata'
+[ INFO  ] [ 03/04 17:16:52 ] Data logger closed
+[ INFO  ] [ 03/04 17:16:52 ] Application closed
+[ INFO  ] [ 03/04 17:17:11 ] Application closing...
+[ INFO  ] [ 03/04 17:17:11 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129826357ms.temdata'
+[ INFO  ] [ 03/04 17:17:11 ] Data logger closed
+[ INFO  ] [ 03/04 17:17:11 ] Application closed
+[ INFO  ] [ 03/04 17:17:37 ] Application closing...
+[ INFO  ] [ 03/04 17:17:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129840479ms.temdata'
+[ INFO  ] [ 03/04 17:17:37 ] Data logger closed
+[ INFO  ] [ 03/04 17:17:37 ] Application closed
+[ INFO  ] [ 03/04 17:18:27 ] Application closing...
+[ INFO  ] [ 03/04 17:18:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129898095ms.temdata'
+[ INFO  ] [ 03/04 17:18:27 ] Data logger closed
+[ INFO  ] [ 03/04 17:18:27 ] Application closed
+[ INFO  ] [ 03/04 17:18:47 ] Application closing...
+[ INFO  ] [ 03/04 17:18:47 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129918771ms.temdata'
+[ INFO  ] [ 03/04 17:18:47 ] Data logger closed
+[ INFO  ] [ 03/04 17:18:47 ] Application closed
+[ INFO  ] [ 03/04 17:20:50 ] Application closing...
+[ INFO  ] [ 03/04 17:20:50 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457129947711ms.temdata'
+[ INFO  ] [ 03/04 17:20:50 ] Data logger closed
+[ INFO  ] [ 03/04 17:20:50 ] Application closed
+[ INFO  ] [ 03/04 17:25:27 ] Application closing...
+[ INFO  ] [ 03/04 17:25:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457130285886ms.temdata'
+[ INFO  ] [ 03/04 17:25:27 ] Data logger closed
+[ INFO  ] [ 03/04 17:25:27 ] Application closed
+[ INFO  ] [ 03/04 17:25:59 ] Application closing...
+[ INFO  ] [ 03/04 17:25:59 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457130333168ms.temdata'
+[ INFO  ] [ 03/04 17:25:59 ] Data logger closed
+[ INFO  ] [ 03/04 17:25:59 ] Application closed
+[ INFO  ] [ 03/05 13:19:29 ] Application closing...
+[ INFO  ] [ 03/05 13:19:29 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457201747777ms.temdata'
+[ INFO  ] [ 03/05 13:19:29 ] Data logger closed
+[ INFO  ] [ 03/05 13:19:29 ] Application closed
+[ INFO  ] [ 03/05 13:21:08 ] Application closing...
+[ INFO  ] [ 03/05 13:21:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457202045264ms.temdata'
+[ INFO  ] [ 03/05 13:21:08 ] Data logger closed
+[ INFO  ] [ 03/05 13:21:08 ] Application closed
+[ INFO  ] [ 03/05 13:22:19 ] Application closing...
+[ INFO  ] [ 03/05 13:22:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457202074427ms.temdata'
+[ INFO  ] [ 03/05 13:22:19 ] Data logger closed
+[ INFO  ] [ 03/05 13:22:19 ] Application closed
+[ INFO  ] [ 03/05 13:41:44 ] Application closing...
+[ INFO  ] [ 03/05 13:41:44 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203299086ms.temdata'
+[ INFO  ] [ 03/05 13:41:44 ] Data logger closed
+[ INFO  ] [ 03/05 13:41:44 ] Application closed
+[ INFO  ] [ 03/05 13:42:16 ] Application closing...
+[ INFO  ] [ 03/05 13:42:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203310857ms.temdata'
+[ INFO  ] [ 03/05 13:42:16 ] Data logger closed
+[ INFO  ] [ 03/05 13:42:16 ] Application closed
+[ INFO  ] [ 03/05 13:42:46 ] Application closing...
+[ INFO  ] [ 03/05 13:42:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203359375ms.temdata'
+[ INFO  ] [ 03/05 13:42:46 ] Data logger closed
+[ INFO  ] [ 03/05 13:42:46 ] Application closed
+[ INFO  ] [ 03/05 13:43:07 ] Application closing...
+[ INFO  ] [ 03/05 13:43:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203376122ms.temdata'
+[ INFO  ] [ 03/05 13:43:07 ] Data logger closed
+[ INFO  ] [ 03/05 13:43:07 ] Application closed
+[ INFO  ] [ 03/05 13:43:52 ] Application closing...
+[ INFO  ] [ 03/05 13:43:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203391644ms.temdata'
+[ INFO  ] [ 03/05 13:43:52 ] Data logger closed
+[ INFO  ] [ 03/05 13:43:52 ] Application closed
+[ INFO  ] [ 03/05 13:45:00 ] Application closing...
+[ INFO  ] [ 03/05 13:45:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203492340ms.temdata'
+[ INFO  ] [ 03/05 13:45:00 ] Data logger closed
+[ INFO  ] [ 03/05 13:45:00 ] Application closed
+[ INFO  ] [ 03/05 13:45:40 ] Application closing...
+[ INFO  ] [ 03/05 13:45:40 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203527580ms.temdata'
+[ INFO  ] [ 03/05 13:45:40 ] Data logger closed
+[ INFO  ] [ 03/05 13:45:40 ] Application closed
+[ INFO  ] [ 03/05 13:46:19 ] Application closing...
+[ INFO  ] [ 03/05 13:46:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203575146ms.temdata'
+[ INFO  ] [ 03/05 13:46:19 ] Data logger closed
+[ INFO  ] [ 03/05 13:46:19 ] Application closed
+[ INFO  ] [ 03/05 13:46:32 ] Application closing...
+[ INFO  ] [ 03/05 13:46:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203586665ms.temdata'
+[ INFO  ] [ 03/05 13:46:32 ] Data logger closed
+[ INFO  ] [ 03/05 13:46:32 ] Application closed
+[ INFO  ] [ 03/05 13:51:34 ] Application closing...
+[ INFO  ] [ 03/05 13:51:34 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457203625371ms.temdata'
+[ INFO  ] [ 03/05 13:51:34 ] Data logger closed
+[ INFO  ] [ 03/05 13:51:34 ] Application closed
+[ INFO  ] [ 03/11 01:04:51 ] Application closing...
+[ INFO  ] [ 03/11 01:04:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457676268570ms.temdata'
+[ INFO  ] [ 03/11 01:04:51 ] Data logger closed
+[ INFO  ] [ 03/11 01:04:51 ] Application closed
+[ INFO  ] [ 03/11 01:04:58 ] Application closing...
+[ INFO  ] [ 03/11 01:04:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457676294980ms.temdata'
+[ INFO  ] [ 03/11 01:04:58 ] Data logger closed
+[ INFO  ] [ 03/11 01:04:58 ] Application closed
+[ INFO  ] [ 03/11 17:31:36 ] Application closing...
+[ INFO  ] [ 03/11 17:31:36 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457735478743ms.temdata'
+[ INFO  ] [ 03/11 17:31:36 ] Data logger closed
+[ INFO  ] [ 03/11 17:31:36 ] Application closed
+[ INFO  ] [ 03/11 17:42:13 ] Application closing...
+[ INFO  ] [ 03/11 17:42:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736129592ms.temdata'
+[ INFO  ] [ 03/11 17:42:13 ] Data logger closed
+[ INFO  ] [ 03/11 17:42:13 ] Application closed
+[ INFO  ] [ 03/11 17:42:16 ] Application closing...
+[ INFO  ] [ 03/11 17:42:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457735567663ms.temdata'
+[ INFO  ] [ 03/11 17:42:16 ] Data logger closed
+[ INFO  ] [ 03/11 17:42:16 ] Application closed
+[ INFO  ] [ 03/11 17:42:23 ] Application closing...
+[ INFO  ] [ 03/11 17:42:23 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736139933ms.temdata'
+[ INFO  ] [ 03/11 17:42:23 ] Data logger closed
+[ INFO  ] [ 03/11 17:42:23 ] Application closed
+[ INFO  ] [ 03/11 17:43:31 ] Application closing...
+[ INFO  ] [ 03/11 17:43:31 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736204339ms.temdata'
+[ INFO  ] [ 03/11 17:43:31 ] Data logger closed
+[ INFO  ] [ 03/11 17:43:31 ] Application closed
+[ INFO  ] [ 03/11 17:43:53 ] Application closing...
+[ INFO  ] [ 03/11 17:43:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736223826ms.temdata'
+[ INFO  ] [ 03/11 17:43:53 ] Data logger closed
+[ INFO  ] [ 03/11 17:43:53 ] Application closed
+[ INFO  ] [ 03/11 17:44:22 ] Application closing...
+[ INFO  ] [ 03/11 17:44:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736258356ms.temdata'
+[ INFO  ] [ 03/11 17:44:22 ] Data logger closed
+[ INFO  ] [ 03/11 17:44:22 ] Application closed
+[ INFO  ] [ 03/11 17:44:44 ] Application closing...
+[ INFO  ] [ 03/11 17:44:44 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736275542ms.temdata'
+[ INFO  ] [ 03/11 17:44:44 ] Data logger closed
+[ INFO  ] [ 03/11 17:44:44 ] Application closed
+[ INFO  ] [ 03/11 17:45:35 ] Application closing...
+[ INFO  ] [ 03/11 17:45:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736294514ms.temdata'
+[ INFO  ] [ 03/11 17:45:35 ] Data logger closed
+[ INFO  ] [ 03/11 17:45:35 ] Application closed
+[ INFO  ] [ 03/11 17:47:15 ] Application closing...
+[ INFO  ] [ 03/11 17:47:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736431451ms.temdata'
+[ INFO  ] [ 03/11 17:47:15 ] Data logger closed
+[ INFO  ] [ 03/11 17:47:15 ] Application closed
+[ INFO  ] [ 03/11 17:47:42 ] Application closing...
+[ INFO  ] [ 03/11 17:47:42 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736451433ms.temdata'
+[ INFO  ] [ 03/11 17:47:42 ] Data logger closed
+[ INFO  ] [ 03/11 17:47:42 ] Application closed
+[ INFO  ] [ 03/11 17:47:58 ] Application closing...
+[ INFO  ] [ 03/11 17:47:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736474100ms.temdata'
+[ INFO  ] [ 03/11 17:47:58 ] Data logger closed
+[ INFO  ] [ 03/11 17:47:58 ] Application closed
+[ INFO  ] [ 03/11 17:49:04 ] Application closing...
+[ INFO  ] [ 03/11 17:49:04 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736522090ms.temdata'
+[ INFO  ] [ 03/11 17:49:04 ] Data logger closed
+[ INFO  ] [ 03/11 17:49:04 ] Application closed
+[ INFO  ] [ 03/11 17:49:46 ] Application closing...
+[ INFO  ] [ 03/11 17:49:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736553876ms.temdata'
+[ INFO  ] [ 03/11 17:49:46 ] Data logger closed
+[ INFO  ] [ 03/11 17:49:46 ] Application closed
+[ INFO  ] [ 03/11 17:51:08 ] Application closing...
+[ INFO  ] [ 03/11 17:51:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736666108ms.temdata'
+[ INFO  ] [ 03/11 17:51:08 ] Data logger closed
+[ INFO  ] [ 03/11 17:51:08 ] Application closed
+[ INFO  ] [ 03/11 17:51:11 ] Application closing...
+[ INFO  ] [ 03/11 17:51:11 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736665591ms.temdata'
+[ INFO  ] [ 03/11 17:51:11 ] Data logger closed
+[ INFO  ] [ 03/11 17:51:11 ] Application closed
+[ INFO  ] [ 03/11 17:51:26 ] Application closing...
+[ INFO  ] [ 03/11 17:51:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736673968ms.temdata'
+[ INFO  ] [ 03/11 17:51:26 ] Data logger closed
+[ INFO  ] [ 03/11 17:51:26 ] Application closed
+[ INFO  ] [ 03/11 17:52:01 ] Application closing...
+[ INFO  ] [ 03/11 17:52:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457736711518ms.temdata'
+[ INFO  ] [ 03/11 17:52:01 ] Data logger closed
+[ INFO  ] [ 03/11 17:52:01 ] Application closed
+[ INFO  ] [ 03/11 17:59:48 ] Application closing...
+[ INFO  ] [ 03/11 17:59:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457737182194ms.temdata'
+[ INFO  ] [ 03/11 17:59:48 ] Data logger closed
+[ INFO  ] [ 03/11 17:59:48 ] Application closed
+[ INFO  ] [ 03/11 18:00:54 ] Application closing...
+[ INFO  ] [ 03/11 18:00:54 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457737250895ms.temdata'
+[ INFO  ] [ 03/11 18:00:54 ] Data logger closed
+[ INFO  ] [ 03/11 18:00:54 ] Application closed
+[ INFO  ] [ 03/11 18:01:14 ] Application closing...
+[ INFO  ] [ 03/11 18:01:14 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457737269961ms.temdata'
+[ INFO  ] [ 03/11 18:01:14 ] Data logger closed
+[ INFO  ] [ 03/11 18:01:14 ] Application closed
+[ INFO  ] [ 03/11 18:01:27 ] Application closing...
+[ INFO  ] [ 03/11 18:01:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457737279696ms.temdata'
+[ INFO  ] [ 03/11 18:01:27 ] Data logger closed
+[ INFO  ] [ 03/11 18:01:27 ] Application closed
+[ INFO  ] [ 03/11 18:03:48 ] Application closing...
+[ INFO  ] [ 03/11 18:03:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457737424120ms.temdata'
+[ INFO  ] [ 03/11 18:03:48 ] Data logger closed
+[ INFO  ] [ 03/11 18:03:48 ] Application closed
+[ INFO  ] [ 03/11 19:14:47 ] Application closing...
+[ INFO  ] [ 03/11 19:14:47 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741672208ms.temdata'
+[ INFO  ] [ 03/11 19:14:47 ] Data logger closed
+[ INFO  ] [ 03/11 19:14:47 ] Application closed
+[ INFO  ] [ 03/11 19:16:17 ] Application closing...
+[ INFO  ] [ 03/11 19:16:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741773314ms.temdata'
+[ INFO  ] [ 03/11 19:16:17 ] Data logger closed
+[ INFO  ] [ 03/11 19:16:17 ] Application closed
+[ INFO  ] [ 03/11 19:16:35 ] Application closing...
+[ INFO  ] [ 03/11 19:16:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741786889ms.temdata'
+[ INFO  ] [ 03/11 19:16:35 ] Data logger closed
+[ INFO  ] [ 03/11 19:16:35 ] Application closed
+[ INFO  ] [ 03/11 19:17:47 ] Application closing...
+[ INFO  ] [ 03/11 19:17:47 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741859340ms.temdata'
+[ INFO  ] [ 03/11 19:17:47 ] Data logger closed
+[ INFO  ] [ 03/11 19:17:47 ] Application closed
+[ INFO  ] [ 03/11 19:18:08 ] Application closing...
+[ INFO  ] [ 03/11 19:18:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741882046ms.temdata'
+[ INFO  ] [ 03/11 19:18:08 ] Data logger closed
+[ INFO  ] [ 03/11 19:18:08 ] Application closed
+[ INFO  ] [ 03/11 19:18:27 ] Application closing...
+[ INFO  ] [ 03/11 19:18:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741898595ms.temdata'
+[ INFO  ] [ 03/11 19:18:27 ] Data logger closed
+[ INFO  ] [ 03/11 19:18:27 ] Application closed
+[ INFO  ] [ 03/11 19:18:41 ] Application closing...
+[ INFO  ] [ 03/11 19:18:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741914555ms.temdata'
+[ INFO  ] [ 03/11 19:18:41 ] Data logger closed
+[ INFO  ] [ 03/11 19:18:41 ] Application closed
+[ INFO  ] [ 03/11 19:19:26 ] Application closing...
+[ INFO  ] [ 03/11 19:19:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741953537ms.temdata'
+[ INFO  ] [ 03/11 19:19:26 ] Data logger closed
+[ INFO  ] [ 03/11 19:19:26 ] Application closed
+[ INFO  ] [ 03/11 19:20:02 ] Application closing...
+[ INFO  ] [ 03/11 19:20:02 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457741995006ms.temdata'
+[ INFO  ] [ 03/11 19:20:02 ] Data logger closed
+[ INFO  ] [ 03/11 19:20:02 ] Application closed
+[ INFO  ] [ 03/11 19:21:26 ] Application closing...
+[ INFO  ] [ 03/11 19:21:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742082335ms.temdata'
+[ INFO  ] [ 03/11 19:21:26 ] Data logger closed
+[ INFO  ] [ 03/11 19:21:26 ] Application closed
+[ INFO  ] [ 03/11 19:21:36 ] Application closing...
+[ INFO  ] [ 03/11 19:21:36 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742093574ms.temdata'
+[ INFO  ] [ 03/11 19:21:36 ] Data logger closed
+[ INFO  ] [ 03/11 19:21:36 ] Application closed
+[ INFO  ] [ 03/11 19:22:02 ] Application closing...
+[ INFO  ] [ 03/11 19:22:02 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742117043ms.temdata'
+[ INFO  ] [ 03/11 19:22:03 ] Data logger closed
+[ INFO  ] [ 03/11 19:22:03 ] Application closed
+[ INFO  ] [ 03/11 19:22:35 ] Application closing...
+[ INFO  ] [ 03/11 19:22:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742130323ms.temdata'
+[ INFO  ] [ 03/11 19:22:35 ] Data logger closed
+[ INFO  ] [ 03/11 19:22:35 ] Application closed
+[ INFO  ] [ 03/11 19:22:49 ] Application closing...
+[ INFO  ] [ 03/11 19:22:49 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742164113ms.temdata'
+[ INFO  ] [ 03/11 19:22:49 ] Data logger closed
+[ INFO  ] [ 03/11 19:22:49 ] Application closed
+[ INFO  ] [ 03/11 19:23:20 ] Application closing...
+[ INFO  ] [ 03/11 19:23:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742193531ms.temdata'
+[ INFO  ] [ 03/11 19:23:20 ] Data logger closed
+[ INFO  ] [ 03/11 19:23:20 ] Application closed
+[ INFO  ] [ 03/11 19:23:32 ] Application closing...
+[ INFO  ] [ 03/11 19:23:32 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742208049ms.temdata'
+[ INFO  ] [ 03/11 19:23:32 ] Data logger closed
+[ INFO  ] [ 03/11 19:23:32 ] Application closed
+[ INFO  ] [ 03/11 19:24:05 ] Application closing...
+[ INFO  ] [ 03/11 19:24:05 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742220717ms.temdata'
+[ INFO  ] [ 03/11 19:24:05 ] Data logger closed
+[ INFO  ] [ 03/11 19:24:05 ] Application closed
+[ INFO  ] [ 03/11 19:26:15 ] Application closing...
+[ INFO  ] [ 03/11 19:26:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742368751ms.temdata'
+[ INFO  ] [ 03/11 19:26:15 ] Data logger closed
+[ INFO  ] [ 03/11 19:26:15 ] Application closed
+[ INFO  ] [ 03/11 19:26:30 ] Application closing...
+[ INFO  ] [ 03/11 19:26:30 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742386890ms.temdata'
+[ INFO  ] [ 03/11 19:26:30 ] Data logger closed
+[ INFO  ] [ 03/11 19:26:30 ] Application closed
+[ INFO  ] [ 03/11 19:27:03 ] Application closing...
+[ INFO  ] [ 03/11 19:27:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742417736ms.temdata'
+[ INFO  ] [ 03/11 19:27:03 ] Data logger closed
+[ INFO  ] [ 03/11 19:27:03 ] Application closed
+[ INFO  ] [ 03/11 19:27:12 ] Application closing...
+[ INFO  ] [ 03/11 19:27:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742428405ms.temdata'
+[ INFO  ] [ 03/11 19:27:12 ] Data logger closed
+[ INFO  ] [ 03/11 19:27:12 ] Application closed
+[ INFO  ] [ 03/11 19:27:25 ] Application closing...
+[ INFO  ] [ 03/11 19:27:25 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742439406ms.temdata'
+[ INFO  ] [ 03/11 19:27:25 ] Data logger closed
+[ INFO  ] [ 03/11 19:27:25 ] Application closed
+[ INFO  ] [ 03/11 19:27:35 ] Application closing...
+[ INFO  ] [ 03/11 19:27:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742451550ms.temdata'
+[ INFO  ] [ 03/11 19:27:35 ] Data logger closed
+[ INFO  ] [ 03/11 19:27:35 ] Application closed
+[ INFO  ] [ 03/11 19:27:45 ] Application closing...
+[ INFO  ] [ 03/11 19:27:45 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742462207ms.temdata'
+[ INFO  ] [ 03/11 19:27:45 ] Data logger closed
+[ INFO  ] [ 03/11 19:27:45 ] Application closed
+[ INFO  ] [ 03/11 19:28:07 ] Application closing...
+[ INFO  ] [ 03/11 19:28:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742470934ms.temdata'
+[ INFO  ] [ 03/11 19:28:07 ] Data logger closed
+[ INFO  ] [ 03/11 19:28:07 ] Application closed
+[ INFO  ] [ 03/11 19:28:38 ] Application closing...
+[ INFO  ] [ 03/11 19:28:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742496829ms.temdata'
+[ INFO  ] [ 03/11 19:28:38 ] Data logger closed
+[ INFO  ] [ 03/11 19:28:38 ] Application closed
+[ INFO  ] [ 03/11 19:28:55 ] Application closing...
+[ INFO  ] [ 03/11 19:28:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742529427ms.temdata'
+[ INFO  ] [ 03/11 19:28:55 ] Data logger closed
+[ INFO  ] [ 03/11 19:28:55 ] Application closed
+[ INFO  ] [ 03/11 19:29:15 ] Application closing...
+[ INFO  ] [ 03/11 19:29:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742539162ms.temdata'
+[ INFO  ] [ 03/11 19:29:15 ] Data logger closed
+[ INFO  ] [ 03/11 19:29:15 ] Application closed
+[ INFO  ] [ 03/11 19:29:31 ] Application closing...
+[ INFO  ] [ 03/11 19:29:31 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742560629ms.temdata'
+[ INFO  ] [ 03/11 19:29:31 ] Data logger closed
+[ INFO  ] [ 03/11 19:29:31 ] Application closed
+[ INFO  ] [ 03/11 19:29:52 ] Application closing...
+[ INFO  ] [ 03/11 19:29:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742582829ms.temdata'
+[ INFO  ] [ 03/11 19:29:52 ] Data logger closed
+[ INFO  ] [ 03/11 19:29:52 ] Application closed
+[ INFO  ] [ 03/11 19:30:08 ] Application closing...
+[ INFO  ] [ 03/11 19:30:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742600646ms.temdata'
+[ INFO  ] [ 03/11 19:30:08 ] Data logger closed
+[ INFO  ] [ 03/11 19:30:08 ] Application closed
+[ INFO  ] [ 03/11 19:32:37 ] Application closing...
+[ INFO  ] [ 03/11 19:32:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742749632ms.temdata'
+[ INFO  ] [ 03/11 19:32:37 ] Data logger closed
+[ INFO  ] [ 03/11 19:32:37 ] Application closed
+[ INFO  ] [ 03/11 19:33:21 ] Application closing...
+[ INFO  ] [ 03/11 19:33:21 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742794857ms.temdata'
+[ INFO  ] [ 03/11 19:33:21 ] Data logger closed
+[ INFO  ] [ 03/11 19:33:21 ] Application closed
+[ INFO  ] [ 03/11 19:34:25 ] Application closing...
+[ INFO  ] [ 03/11 19:34:25 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742833971ms.temdata'
+[ INFO  ] [ 03/11 19:34:25 ] Data logger closed
+[ INFO  ] [ 03/11 19:34:25 ] Application closed
+[ INFO  ] [ 03/11 19:36:10 ] Application closing...
+[ INFO  ] [ 03/11 19:36:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457742938459ms.temdata'
+[ INFO  ] [ 03/11 19:36:10 ] Data logger closed
+[ INFO  ] [ 03/11 19:36:10 ] Application closed
+[ INFO  ] [ 03/11 19:36:55 ] Application closing...
+[ INFO  ] [ 03/11 19:36:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743010075ms.temdata'
+[ INFO  ] [ 03/11 19:36:55 ] Data logger closed
+[ INFO  ] [ 03/11 19:36:55 ] Application closed
+[ INFO  ] [ 03/11 19:37:06 ] Application closing...
+[ INFO  ] [ 03/11 19:37:06 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743021627ms.temdata'
+[ INFO  ] [ 03/11 19:37:06 ] Data logger closed
+[ INFO  ] [ 03/11 19:37:06 ] Application closed
+[ INFO  ] [ 03/11 19:37:16 ] Application closing...
+[ INFO  ] [ 03/11 19:37:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743032785ms.temdata'
+[ INFO  ] [ 03/11 19:37:16 ] Data logger closed
+[ INFO  ] [ 03/11 19:37:16 ] Application closed
+[ INFO  ] [ 03/11 19:37:28 ] Application closing...
+[ INFO  ] [ 03/11 19:37:28 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743043808ms.temdata'
+[ INFO  ] [ 03/11 19:37:28 ] Data logger closed
+[ INFO  ] [ 03/11 19:37:28 ] Application closed
+[ INFO  ] [ 03/11 19:39:42 ] Application closing...
+[ INFO  ] [ 03/11 19:39:42 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743179637ms.temdata'
+[ INFO  ] [ 03/11 19:39:42 ] Data logger closed
+[ INFO  ] [ 03/11 19:39:42 ] Application closed
+[ INFO  ] [ 03/11 19:39:54 ] Application closing...
+[ INFO  ] [ 03/11 19:39:54 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743191834ms.temdata'
+[ INFO  ] [ 03/11 19:39:54 ] Data logger closed
+[ INFO  ] [ 03/11 19:39:54 ] Application closed
+[ INFO  ] [ 03/11 19:40:22 ] Application closing...
+[ INFO  ] [ 03/11 19:40:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743217381ms.temdata'
+[ INFO  ] [ 03/11 19:40:22 ] Data logger closed
+[ INFO  ] [ 03/11 19:40:22 ] Application closed
+[ INFO  ] [ 03/11 19:40:53 ] Application closing...
+[ INFO  ] [ 03/11 19:40:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743231466ms.temdata'
+[ INFO  ] [ 03/11 19:40:53 ] Data logger closed
+[ INFO  ] [ 03/11 19:40:53 ] Application closed
+[ INFO  ] [ 03/11 19:42:26 ] Application closing...
+[ INFO  ] [ 03/11 19:42:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743339225ms.temdata'
+[ INFO  ] [ 03/11 19:42:26 ] Data logger closed
+[ INFO  ] [ 03/11 19:42:26 ] Application closed
+[ INFO  ] [ 03/11 19:43:06 ] Application closing...
+[ INFO  ] [ 03/11 19:43:06 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743372264ms.temdata'
+[ INFO  ] [ 03/11 19:43:06 ] Data logger closed
+[ INFO  ] [ 03/11 19:43:06 ] Application closed
+[ INFO  ] [ 03/11 19:49:39 ] Application closing...
+[ INFO  ] [ 03/11 19:49:39 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457743766903ms.temdata'
+[ INFO  ] [ 03/11 19:49:39 ] Data logger closed
+[ INFO  ] [ 03/11 19:49:39 ] Application closed
+[ INFO  ] [ 03/11 19:56:17 ] Application closing...
+[ INFO  ] [ 03/11 19:56:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744171771ms.temdata'
+[ INFO  ] [ 03/11 19:56:17 ] Data logger closed
+[ INFO  ] [ 03/11 19:56:17 ] Application closed
+[ INFO  ] [ 03/11 19:57:30 ] Application closing...
+[ INFO  ] [ 03/11 19:57:30 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744240008ms.temdata'
+[ INFO  ] [ 03/11 19:57:30 ] Data logger closed
+[ INFO  ] [ 03/11 19:57:30 ] Application closed
+[ INFO  ] [ 03/11 19:57:42 ] Application closing...
+[ INFO  ] [ 03/11 19:57:42 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744258257ms.temdata'
+[ INFO  ] [ 03/11 19:57:42 ] Data logger closed
+[ INFO  ] [ 03/11 19:57:42 ] Application closed
+[ INFO  ] [ 03/11 19:58:03 ] Application closing...
+[ INFO  ] [ 03/11 19:58:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744276622ms.temdata'
+[ INFO  ] [ 03/11 19:58:03 ] Data logger closed
+[ INFO  ] [ 03/11 19:58:03 ] Application closed
+[ INFO  ] [ 03/11 19:58:27 ] Application closing...
+[ INFO  ] [ 03/11 19:58:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744300079ms.temdata'
+[ INFO  ] [ 03/11 19:58:27 ] Data logger closed
+[ INFO  ] [ 03/11 19:58:27 ] Application closed
+[ INFO  ] [ 03/11 20:00:52 ] Application closing...
+[ INFO  ] [ 03/11 20:00:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744447453ms.temdata'
+[ INFO  ] [ 03/11 20:00:52 ] Data logger closed
+[ INFO  ] [ 03/11 20:00:52 ] Application closed
+[ INFO  ] [ 03/11 20:01:31 ] Application closing...
+[ INFO  ] [ 03/11 20:01:31 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744478317ms.temdata'
+[ INFO  ] [ 03/11 20:01:31 ] Data logger closed
+[ INFO  ] [ 03/11 20:01:31 ] Application closed
+[ INFO  ] [ 03/11 20:01:47 ] Application closing...
+[ INFO  ] [ 03/11 20:01:47 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744501867ms.temdata'
+[ INFO  ] [ 03/11 20:01:47 ] Data logger closed
+[ INFO  ] [ 03/11 20:01:47 ] Application closed
+[ INFO  ] [ 03/11 20:02:01 ] Application closing...
+[ INFO  ] [ 03/11 20:02:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744514298ms.temdata'
+[ INFO  ] [ 03/11 20:02:01 ] Data logger closed
+[ INFO  ] [ 03/11 20:02:01 ] Application closed
+[ INFO  ] [ 03/11 20:02:16 ] Application closing...
+[ INFO  ] [ 03/11 20:02:16 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744530160ms.temdata'
+[ INFO  ] [ 03/11 20:02:16 ] Data logger closed
+[ INFO  ] [ 03/11 20:02:16 ] Application closed
+[ INFO  ] [ 03/11 20:02:43 ] Application closing...
+[ INFO  ] [ 03/11 20:02:43 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744547300ms.temdata'
+[ INFO  ] [ 03/11 20:02:43 ] Data logger closed
+[ INFO  ] [ 03/11 20:02:43 ] Application closed
+[ INFO  ] [ 03/11 20:04:33 ] Application closing...
+[ INFO  ] [ 03/11 20:04:33 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744668437ms.temdata'
+[ INFO  ] [ 03/11 20:04:33 ] Data logger closed
+[ INFO  ] [ 03/11 20:04:33 ] Application closed
+[ INFO  ] [ 03/11 20:04:46 ] Application closing...
+[ INFO  ] [ 03/11 20:04:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744682341ms.temdata'
+[ INFO  ] [ 03/11 20:04:46 ] Data logger closed
+[ INFO  ] [ 03/11 20:04:46 ] Application closed
+[ INFO  ] [ 03/11 20:04:56 ] Application closing...
+[ INFO  ] [ 03/11 20:04:56 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744691889ms.temdata'
+[ INFO  ] [ 03/11 20:04:56 ] Data logger closed
+[ INFO  ] [ 03/11 20:04:56 ] Application closed
+[ INFO  ] [ 03/11 20:05:19 ] Application closing...
+[ INFO  ] [ 03/11 20:05:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457744711390ms.temdata'
+[ INFO  ] [ 03/11 20:05:19 ] Data logger closed
+[ INFO  ] [ 03/11 20:05:19 ] Application closed
+[ INFO  ] [ 03/13 15:44:11 ] Application closing...
+[ INFO  ] [ 03/13 15:44:11 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1457898218129ms.temdata'
+[ INFO  ] [ 03/13 15:44:11 ] Data logger closed
+[ INFO  ] [ 03/13 15:44:11 ] Application closed
+[ INFO  ] [ 03/16 21:23:08 ] Application closing...
+[ INFO  ] [ 03/16 21:23:08 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458177786551ms.temdata'
+[ INFO  ] [ 03/16 21:23:08 ] Data logger closed
+[ INFO  ] [ 03/16 21:23:08 ] Application closed
+[ INFO  ] [ 03/18 15:10:42 ] Application closing...
+[ INFO  ] [ 03/18 15:10:42 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328017580ms.temdata'
+[ INFO  ] [ 03/18 15:10:42 ] Data logger closed
+[ INFO  ] [ 03/18 15:10:42 ] Application closed
+[ INFO  ] [ 03/18 15:13:09 ] Application closing...
+[ INFO  ] [ 03/18 15:13:09 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328379521ms.temdata'
+[ INFO  ] [ 03/18 15:13:09 ] Data logger closed
+[ INFO  ] [ 03/18 15:13:09 ] Application closed
+[ INFO  ] [ 03/18 15:13:58 ] Application closing...
+[ INFO  ] [ 03/18 15:13:58 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328430002ms.temdata'
+[ INFO  ] [ 03/18 15:13:58 ] Data logger closed
+[ INFO  ] [ 03/18 15:13:58 ] Application closed
+[ INFO  ] [ 03/18 15:14:50 ] Application closing...
+[ INFO  ] [ 03/18 15:14:50 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328479264ms.temdata'
+[ INFO  ] [ 03/18 15:14:50 ] Data logger closed
+[ INFO  ] [ 03/18 15:14:50 ] Application closed
+[ INFO  ] [ 03/18 15:15:50 ] Application closing...
+[ INFO  ] [ 03/18 15:15:50 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328512767ms.temdata'
+[ INFO  ] [ 03/18 15:15:50 ] Data logger closed
+[ INFO  ] [ 03/18 15:15:50 ] Application closed
+[ INFO  ] [ 03/18 15:16:07 ] Application closing...
+[ INFO  ] [ 03/18 15:16:07 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328558261ms.temdata'
+[ INFO  ] [ 03/18 15:16:07 ] Data logger closed
+[ INFO  ] [ 03/18 15:16:07 ] Application closed
+[ INFO  ] [ 03/18 15:19:51 ] Application closing...
+[ INFO  ] [ 03/18 15:19:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328781697ms.temdata'
+[ INFO  ] [ 03/18 15:19:51 ] Data logger closed
+[ INFO  ] [ 03/18 15:19:51 ] Application closed
+[ INFO  ] [ 03/18 15:20:50 ] Application closing...
+[ INFO  ] [ 03/18 15:20:50 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458328819536ms.temdata'
+[ INFO  ] [ 03/18 15:20:50 ] Data logger closed
+[ INFO  ] [ 03/18 15:20:50 ] Application closed
+[ INFO  ] [ 03/18 15:44:36 ] Application closing...
+[ INFO  ] [ 03/18 15:44:36 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458330257473ms.temdata'
+[ INFO  ] [ 03/18 15:44:36 ] Data logger closed
+[ INFO  ] [ 03/18 15:44:36 ] Application closed
+[ INFO  ] [ 03/18 15:44:55 ] Application closing...
+[ INFO  ] [ 03/18 15:44:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458330283180ms.temdata'
+[ INFO  ] [ 03/18 15:44:55 ] Data logger closed
+[ INFO  ] [ 03/18 15:44:55 ] Application closed
+[ INFO  ] [ 03/19 13:22:04 ] Application closing...
+[ INFO  ] [ 03/19 13:22:04 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458407124144ms.temdata'
+[ INFO  ] [ 03/19 13:22:04 ] Data logger closed
+[ INFO  ] [ 03/19 13:22:04 ] Application closed
+[ INFO  ] [ 03/19 14:49:36 ] Application closing...
+[ INFO  ] [ 03/19 14:49:36 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458413370807ms.temdata'
+[ INFO  ] [ 03/19 14:49:36 ] Data logger closed
+[ INFO  ] [ 03/19 14:49:36 ] Application closed
+[ INFO  ] [ 03/19 14:51:38 ] Application closing...
+[ INFO  ] [ 03/19 14:51:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458413489987ms.temdata'
+[ INFO  ] [ 03/19 14:51:38 ] Data logger closed
+[ INFO  ] [ 03/19 14:51:38 ] Application closed
+[ INFO  ] [ 03/19 14:51:52 ] Application closing...
+[ INFO  ] [ 03/19 14:51:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458413504321ms.temdata'
+[ INFO  ] [ 03/19 14:51:52 ] Data logger closed
+[ INFO  ] [ 03/19 14:51:52 ] Application closed
+[ INFO  ] [ 03/19 14:52:14 ] Application closing...
+[ INFO  ] [ 03/19 14:52:14 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458413529720ms.temdata'
+[ INFO  ] [ 03/19 14:52:14 ] Data logger closed
+[ INFO  ] [ 03/19 14:52:14 ] Application closed
+[ INFO  ] [ 03/19 14:56:38 ] Application closing...
+[ INFO  ] [ 03/19 14:56:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458413790457ms.temdata'
+[ INFO  ] [ 03/19 14:56:38 ] Data logger closed
+[ INFO  ] [ 03/19 14:56:38 ] Application closed
+[ INFO  ] [ 03/19 15:00:17 ] Application closing...
+[ INFO  ] [ 03/19 15:00:17 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458414013614ms.temdata'
+[ INFO  ] [ 03/19 15:00:17 ] Data logger closed
+[ INFO  ] [ 03/19 15:00:17 ] Application closed
+[ INFO  ] [ 03/19 15:00:19 ] Application closing...
+[ INFO  ] [ 03/19 15:00:19 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458413814823ms.temdata'
+[ INFO  ] [ 03/19 15:00:19 ] Data logger closed
+[ INFO  ] [ 03/19 15:00:19 ] Application closed
+[ INFO  ] [ 03/19 15:00:26 ] Application closing...
+[ INFO  ] [ 03/19 15:00:26 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458414022696ms.temdata'
+[ INFO  ] [ 03/19 15:00:26 ] Data logger closed
+[ INFO  ] [ 03/19 15:00:26 ] Application closed
+[ INFO  ] [ 03/19 15:01:15 ] Application closing...
+[ INFO  ] [ 03/19 15:01:15 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458414070826ms.temdata'
+[ INFO  ] [ 03/19 15:01:15 ] Data logger closed
+[ INFO  ] [ 03/19 15:01:15 ] Application closed
+[ INFO  ] [ 03/19 15:16:45 ] Application closing...
+[ INFO  ] [ 03/19 15:16:45 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458415003429ms.temdata'
+[ INFO  ] [ 03/19 15:16:45 ] Data logger closed
+[ INFO  ] [ 03/19 15:16:45 ] Application closed
+[ INFO  ] [ 03/19 20:17:10 ] Application closing...
+[ INFO  ] [ 03/19 20:17:10 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458414222844ms.temdata'
+[ INFO  ] [ 03/19 20:17:10 ] Data logger closed
+[ INFO  ] [ 03/19 20:17:10 ] Application closed
+[ INFO  ] [ 03/19 22:50:55 ] Application closing...
+[ INFO  ] [ 03/19 22:50:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458442238874ms.temdata'
+[ INFO  ] [ 03/19 22:50:55 ] Data logger closed
+[ INFO  ] [ 03/19 22:50:55 ] Application closed
+[ INFO  ] [ 03/19 22:51:48 ] Application closing...
+[ INFO  ] [ 03/19 22:51:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458442259373ms.temdata'
+[ INFO  ] [ 03/19 22:51:48 ] Data logger closed
+[ INFO  ] [ 03/19 22:51:48 ] Application closed
+[ INFO  ] [ 03/20 23:46:52 ] Application closing...
+[ INFO  ] [ 03/20 23:46:52 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458532000503ms.temdata'
+[ INFO  ] [ 03/20 23:46:52 ] Data logger closed
+[ INFO  ] [ 03/20 23:46:52 ] Application closed
