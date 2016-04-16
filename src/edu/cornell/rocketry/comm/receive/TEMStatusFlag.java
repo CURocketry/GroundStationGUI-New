@@ -1,4 +1,4 @@
-package edu.cornell.rocketry.comm;
+package edu.cornell.rocketry.comm.receive;
 
 /**
  * Wrapper for a byte flag that contains status information from the TEM.

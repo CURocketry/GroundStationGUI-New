@@ -1,7 +1,5 @@
 package edu.cornell.rocketry.comm.send;
 
-import edu.cornell.rocketry.comm.CommandType;
-
 public class CommandFlag {
 	
 	byte flag;
