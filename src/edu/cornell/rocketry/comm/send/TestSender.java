@@ -4,6 +4,7 @@ import java.io.File;
 
 import edu.cornell.rocketry.gui.controller.Controller;
 import edu.cornell.rocketry.sim.BasicTEMSimulator;
+import edu.cornell.rocketry.sim.ContinuousTEMSimulator;
 import edu.cornell.rocketry.sim.TEMSimulator;
 
 public class TestSender implements Sender {
@@ -15,8 +16,13 @@ public class TestSender implements Sender {
 	public TestSender (Controller c) {
 		controller = c;
 		String path = "./sim/campus_20_sim.temdata";
+		
+		if (path.split(".")[path.split(".").length - 1].equals("csim") == false)
 		//String path = "./tem_log_file_1455937569571ms.temdata";
-		rsim = new BasicTEMSimulator(path, controller.getReceiver(true));
+			rsim = new BasicTEMSimulator(path, controller.getReceiver(true));
+		
+		else
+			rsim = new ContinuousTEMSimulator(path, controller.getReceiver(true));
 	}
 	
 	public TestSender (Controller c, File f) {

@@ -41,7 +41,7 @@ public class ContinuousTEMSimulator implements TEMSimulator {
 	
 	private Receiver receiver;
 	
-	public ContinuousTEMSimulator (String  path, Receiver r) {
+	public ContinuousTEMSimulator (String path, Receiver r) {
 		receiver = r;
 		this.simFilePath = path;
 		this.simFile = new File(path);
