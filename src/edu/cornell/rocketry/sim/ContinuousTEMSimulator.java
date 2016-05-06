@@ -116,7 +116,12 @@ public class ContinuousTEMSimulator implements TEMSimulator {
 						
 						double delta_x_pos = 1.0 / 6.0 * delta_acc_x * Math.pow(elapsedTime, 3) + 0.5 * start_acc_x * Math.pow(elapsedTime, 2) + wind_vel_x * elapsedTime;
 						double delta_y_pos = 1.0 / 6.0 * delta_acc_y * Math.pow(elapsedTime, 3) + 0.5 * start_acc_y * Math.pow(elapsedTime, 2) + wind_vel_y * elapsedTime;
-						double delta_z_pos = 1.0 / 6.0 * delta_acc_z * Math.pow(elapsedTime, 3) + 0.5 * start_acc_z * Math.pow(elapsedTime, 2) + wind_vel_z * elapsedTime;
+						
+						double delta_z_pos;
+						if (start_acc_z + elapsedTime * delta_acc_z > -9.8)
+							delta_z_pos = 1.0 / 6.0 * delta_acc_z * Math.pow(elapsedTime, 3) + 0.5 * start_acc_z * Math.pow(elapsedTime, 2) + wind_vel_z * elapsedTime;
+						else
+							delta_z_pos = -4.9 * Math.pow(elapsedTime, 2) + wind_vel_z * elapsedTime;
 						
 						altitude = (int) ((double) altitude + delta_z_pos);
 						
