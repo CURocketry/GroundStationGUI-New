@@ -147,4 +147,7 @@
 [ INFO  ] [ 03/15 16:14:54 ] Application closing...
 [ INFO  ] [ 03/15 16:14:54 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1458072751329ms.temdata'
 [ INFO  ] [ 03/15 16:14:54 ] Data logger closed
-[ INFO  ] [ 03/15 16:14:54 ] Application closed
+[ INFO  ] [ 03/15 16:14:54 ] Application closed[ INFO  ] [ 09/11 11:03:37 ] Application closing...
+[ INFO  ] [ 09/11 11:03:37 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'tem_log_file_1473566299374ms.temdata'
+[ INFO  ] [ 09/11 11:03:37 ] Data logger closed
+[ INFO  ] [ 09/11 11:03:37 ] Application closed

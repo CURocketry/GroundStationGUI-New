@@ -67,7 +67,7 @@ GPSSpoof spoofs GPS packets defined in ./assets/gps_spoof_west_campus.csv
  - The format of this file is:
      latitude,longitude,altitude,time
    for each GPS location on the path.
-   The program interperets this file and assigns types as follows:
+   The program interprets this file and assigns types as follows:
      double, double, int, long
  - In the future, the user will be able to select which gps path to spoof.
  - As of 1/24/15, you can see the spoofing in action (that's such a fun word)
