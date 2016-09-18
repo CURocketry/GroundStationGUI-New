@@ -16,8 +16,13 @@ public class TestSender implements Sender {
 	public TestSender (Controller c) {
 		controller = c;
 		String path = "./sim/campus_20_sim.temdata";
+
+		for (String k: path.split("\\.")) {
+			System.out.println("k is: \"" + k +"\"");
+		}
+		System.out.println(path.split("\\.").length - 1);
 		
-		if (path.split(".")[path.split(".").length - 1].equals("csim") == false)
+		if (path.split("\\.")[path.split("\\.").length - 1].equals("csim") == false)
 		//String path = "./tem_log_file_1455937569571ms.temdata";
 			rsim = new BasicTEMSimulator(path, controller.getReceiver(true));
 		
