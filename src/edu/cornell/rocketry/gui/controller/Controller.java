@@ -127,6 +127,12 @@ public class Controller {
 	
 	/*------------------ Control & Tracking Update Methods ------------------*/
 	
+	/**
+	 * Takes the data in rocketModel and plots it on screen
+	 * 
+	 * TODO: this is something that takes the a model and displays it on screen;
+	 * TODO: should it be in Model, then?
+	 * */
 	void updateRocketTrajectory(){
 		List<Datum> rocket_past_data = rocketModel.getPastRocketData();
 		int nPositions = rocket_past_data.size();
@@ -148,11 +154,12 @@ public class Controller {
 		}
 		
 	} //FIXME
+	//What needs to be fixed? I'm not actually sure.
 	
-	/** 
-	 * Ensures that the map (present in the minimap in the control tab 
-	 * and the recovery tab) is properly set to include the tiles from
-	 * the current directory.
+	/**
+	 * Ensures that the map (visible both in the minimap in the control tab 
+	 * and the recovery tab) is properly set to include the tiles from the
+	 * current directory.
 	 */
 	public void addTilesToMap(File f) {
 		//reset map to one with all of the tiles in cache.
@@ -168,6 +175,13 @@ public class Controller {
 		System.out.println("Added tiles to map");
 	}
 	
+	/** 
+	 * add the tiles from the file to the cache
+	 * 
+	 * @param cache  the MemoryTileCache to write to
+	 * @param source  the TileSource that... does something
+	 * @param f  the directory that the tiles on your machine are in
+	 */
 	private void addTilesToCacheFromFile(final MemoryTileCache cache, final TileSource source, final File f) {
 		final LinkedList<Tile> acc = new LinkedList<Tile>();
 		
@@ -194,18 +208,26 @@ public class Controller {
 		view.map().getTileController().setTileCache(new MemoryTileCache());
 	}
 
+	/**
+	 * Add the given datum to the model (view?) TODO: perhaps migrate this to Model
+	 * @param d  the Datum giving the time, latitude, and longitude of the added point
+	 */
     void updateRocketPosition (Datum d) {
     	MapMarkerDot toAdd = new MapMarkerDot(""+Position.millisToTime(d.time()), new Coordinate(d.lat(), d.lon()));
-    	view.addMapMarkerDot
-    		(toAdd);
+    	view.addMapMarkerDot(toAdd);
     	if (prevDot != null) {
     		prevDot.setBackColor(Color.BLACK);
     		prevDot.setName("");
     	}
     	prevDot = toAdd;
-    	updateRocketTrajectory(); //FIXME
+    	updateRocketTrajectory(); //FIXME (Why? I'm not sure what's wrong with this)
     }
     
+    /**
+     * clear the screen and plot all the new data (?)
+     * 
+     * @param data  all data to be added
+     */
     void updateRocketPositionFull (Collection<Datum> data) {
     	clearMapMarkers();
     	for (Datum d : data) {
@@ -213,11 +235,12 @@ public class Controller {
     	}
     }
     
+    /* several functions that all update the model to the given status */
     private void updateCameraStatus (Status st) {
     	rocketModel.setCameraStatus(st);
     	view.setCameraStatus(rocketModel.getCameraStatus());
     }
-    
+
     private void updateGPSStatus (Status st) {
     	rocketModel.setGPSStatus(st);
     	view.setGPSStatus(rocketModel.getGPSStatus());
@@ -238,6 +261,9 @@ public class Controller {
     	view.setInitializationStatus(st);
     }
     
+    /**
+     * clear the view of all map markers
+     */
     public void clearMapMarkers () {
     	view.clearMapMarkers();
     }
@@ -249,14 +275,20 @@ public class Controller {
     
     
 	
-	
+	/**
+	 * receive and process an ACK from the rocket for a command that we sent
+	 * 
+	 * @param r  the CommandReceipt that we just received 
+	 */
 	public synchronized void acceptCommandReceipt (CommandReceipt r) {
 		//display receipt
-		String message = 
-			r.success() ? 
-				(r.type().toString() + " successfully sent.") :
-				("COULD NOT SEND " + r.type().toString() + 
-					". \n -> " + r.message());
+		String message;
+		if(r.success()) {
+			message = r.type().toString() + " successfully sent.";
+		} else {
+			message = "COULD NOT SEND " + r.type().toString() + 
+					". \n -> " + r.message();
+		}
 		ilog("\nCommand Receipt Received:");
 		ilog(message);
 		
@@ -272,6 +304,13 @@ public class Controller {
 		}
 	}
 	
+
+	/**
+	 * receive and process a data packet from the TEM
+	 * 
+	 * @param r  the TEMResponse
+	 * @param test  whether or not we're in testing mode
+	 */
 	public synchronized void acceptTEMResponse (TEMResponse r, boolean test) {
 		ilog("\nTEM Response Received:");
 		
@@ -360,10 +399,11 @@ public class Controller {
 	/**
 	 * Returns whether or not the given GPSResponse contains 
 	 * reasonable coordinates (e.g. (0,0,0) will be rejected).
-	 * @param r the GPSResponse to be evaluated
-	 * @return
+	 * @param r  the TEMResponse to be evaluated
+	 * @return  whether or not the GPS is in a reasonable range 
 	 */
 	private boolean gpsCheck (TEMResponse r) {
+		//TODO: don't hard-code numbers
 		//return true;
 		//NORTHEAST:
 		return (
@@ -379,13 +419,19 @@ public class Controller {
 	
 	/** Logs the given string to the text info panel in
 	 * the Control tab of the main window.
-	 * @param s
+	 * 
+	 * @param s  the string to be logged
 	 */
 	private void ilog (String s) {
 		view.controlLog("- " + s);
 		System.out.println("logged: " + s);
 	}
 	
+	/**
+	 * create a new TestSender (throwing out any old ones)
+	 * 
+	 * @param f
+	 */
 	public void resetTestSender (File f) {
 		testSender = new TestSender(this, f);
 	}
@@ -424,25 +470,28 @@ public class Controller {
 	
 
 	/**
-	 * updated the Serial Port List (i.e. after a refresh)
+	 * update the Serial Port List (i.e. after a refresh)
+	 * 
+	 * Note: this directly updates the view, without referencing the Model
+	 * TODO: add this to the Model
 	 * @void
 	 */
 	public void updateSerialPortsList() {
 		ArrayList<String> comboBoxList = new ArrayList<String>();
-		Enumeration portList = CommPortIdentifier.getPortIdentifiers();// this line was false
+		Enumeration<?> portList = CommPortIdentifier.getPortIdentifiers();// this line was false
+		//TODO: What does "This line was false" mean?
 		while (portList.hasMoreElements()) {
 			CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
 			if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
 				comboBoxList.add(portId.getName());
-				// System.out.println(portId.getName());
-			} else {
-				// System.out.println(portId.getName());
 			}
+			// System.out.println(portId.getName());
 		}
 		
 		view.updateSerialPortsList(comboBoxList);
 	}
 	
+	/*several functions that set variables in the model*/
 	public void setSerialPort(String port) {
 		applicationModel.setSerialPort(port);
 	}
@@ -456,6 +505,11 @@ public class Controller {
 		applicationModel.setBaudRate(rate);
 	}
 
+	/**
+	 * setup anything that the XBee needs to run
+	 * 
+	 * @throws XBeeException
+	 */
     public void initXbee() throws XBeeException {
 
 		// get selected serial port...
@@ -473,16 +527,26 @@ public class Controller {
 		view.resetPacketCounters();
 	}
 
+    /**
+     * send a message. Note that although we're sending a String, it's
+     * actually a stream of bytes, not characters
+     * 
+     * @param msg
+     */
 	public void sendXBeePacket(String msg) {
-		
 		sender().send(msg);
-		
 	}
 	
     /**
      * Limits the MapMarkers that are visible on the screen. 
      * Any MapMarker that was received after start_time and before 
      * end_time will be displayed; the others will not.
+     * 
+     * That is, take in a time interval and replot on the view
+     * only the markers that fall within the time interval
+     * 
+     * @param start  the starting time
+     * @param end  the ending time
      */
     public void limitMapMarkers (long start, long end) {
     	long start_time = System.currentTimeMillis() - start*1000;
@@ -499,7 +563,7 @@ public class Controller {
     }
     
     /**
-     * Clears all data from the screen and resets the Model
+     * Resets all data in the model and clears the view
      */
     public void clearData () {
     	//clear model
@@ -518,10 +582,7 @@ public class Controller {
     /**
      * Cleanup and closing code to be run upon normal application exit.
      * 
-     * Specifically:
-     * <ul>
-     *   <li>closes the data logger</li>
-     * </ul>
+     * In particular, this just closes the data logger
      */
     public void onClose () {
     	ErrorLogger.info("Application closing...");
