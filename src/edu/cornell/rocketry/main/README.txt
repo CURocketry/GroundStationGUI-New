@@ -67,7 +67,7 @@ GPSSpoof spoofs GPS packets defined in ./assets/gps_spoof_west_campus.csv
  - The format of this file is:
      latitude,longitude,altitude,time
    for each GPS location on the path.
-   The program interperets this file and assigns types as follows:
+   The program interprets this file and assigns types as follows:
      double, double, int, long
  - In the future, the user will be able to select which gps path to spoof.
  - As of 1/24/15, you can see the spoofing in action (that's such a fun word)
@@ -117,14 +117,61 @@ JTileDownloader: JTileDownloaderStart.java in
 
 TODO
 
-************TRACKING TAB************
+************RECOVERY TAB************
+
+Before you use this tab, you have to set the folder where you downloaded the
+tiles to (see Download Tab). In particular, go to Settings and then choose 
+Load Map Tiles. Select the "tiles" folder (the entire folder).
 
 TODO
 
-************DOWNLOAD TAB************
+************DOWNLOAD TAB************ (Derrick)
 
-TODO
+This tab downloads tiles from the internet and puts it on your local machine.
+Once this is done, the GUI can actually read the files and put it on the
+Recovery Tab (and Control Tab), since this should be the only tab that
+ever tries to access the internet.
+
+The best way to use this is in Main/Bounding Box (Lat/Lon). The Slippy Map
+chooser button brings up a box where you can select the region of interest
+(click and drag to choose the area; right click and drag to move around the
+world). Select the output zoom level (smaller zoom level == more zoomed out).
+Change the source from Mapnik (which doesn't work for some reason -
+OpenCycleMap worked for me). Then, click Download Tiles. If all goes well, a
+popup will appear, and the images being downloaded will be seen as they are
+downloaded.
+
+TODO: If I'm understanding this correctly, most of these options are unuseful
+(dummied out, even?). We should remove such vestiges from this tab.
 
 *************XBEE TAB***************
 
 TODO
+
+
+************TILE CACHING************ (Derrick)
+
+So I don't quite understand what's going on with this. From what I understand,
+there is some cache in main memory of some tiles... somewhere in the code.
+Its creation involves calls to LocalLoader (in edu/cornell/rocketry/util),
+which seems to be somewhere in Controller (edu/cornell/rocketry/gui/controller).
+This right now seems to be dumping the contents of our current "tiles"
+directory into this cache.
+
+At some point in the code (I don't know where), we call getTile in
+TileController. This either gets the requested tile from cache (I think), or
+tells the JobDispatcher to schedule a fetch from disk, i.e. a LocalTileJob. And
+there's a LocalTileLoader in between, for some reason; I don't actually know
+its functionality since it seems to exist purely to create LocalTileJobs. I'm
+also the one who implemented both of them, so if something seems off with
+LocalTileJob and LocalTileLoader (or how they're called in TileController), it
+probably is wrong - please correct it and/or tell me about it. By the way, all
+the aforementioned classes are in org/openstreetmap/gui/jmapviewer.
+
+It's worth noting that there's a lot of duplication between the folders
+org/openstreetmap/gui/jmapviewer and jTile/src/org/openstreetmap/gui/jmapviewer,
+but they're not the same. Don't get confused between the two.
+
+TODO: Right now, if the tiles trying to be fetched are missing, for some reason,
+there's a big pile-up of jobs in the jobs queue, causing an OutOfMemoryError.
+I don't know why that is, but we should stop that from happening.

@@ -157,28 +157,36 @@ public class OsmFileCacheTileLoader extends OsmTileLoader implements CachedTileL
             tileCacheDir = getSourceCacheDir(tile.getSource());
             if (loadTileFromFile()) {
                 return;
-            }
-            if (fileTilePainted) {
-                TileJob job = new TileJob() {
-
-                    @Override
-                    public void run() {
-                        loadOrUpdateTile();
-                    }
-                    @Override
-                    public Tile getTile() {
-                        return tile;
-                    }
-                };
-                JobDispatcher.getInstance().addJob(job);
             } else {
-                loadOrUpdateTile();
+            	System.out.println("Can't find the tile " + tile + "!");
+            	return;
             }
+            
+            
+            
+//            if (fileTilePainted) {
+//                TileJob job = new TileJob() {
+//
+//                    @Override
+//                    public void run() {
+//                        loadOrUpdateTile();
+//                    }
+//                    @Override
+//                    public Tile getTile() {
+//                        return tile;
+//                    }
+//                };
+//                JobDispatcher.getInstance().addJob(job);
+//            } else {
+//                loadOrUpdateTile();
+//            }
         }
 
         protected void loadOrUpdateTile() {
             try {
                 URLConnection urlConn = loadTileFromOsm(tile);
+                
+                System.out.println(tile + " from the tileFile: " + tileFile);
                 if (tileFile != null) {
                     switch (tile.getSource().getTileUpdate()) {
                     case IfModifiedSince:
@@ -281,15 +289,15 @@ public class OsmFileCacheTileLoader extends OsmTileLoader implements CachedTileL
                 }
 
                 fileAge = tileFile.lastModified();
-                boolean oldTile = System.currentTimeMillis() - fileAge > maxCacheFileAge;
-                if (!oldTile) {
+                //boolean oldTile = System.currentTimeMillis() - fileAge > maxCacheFileAge;
+                //if (!oldTile) {
                     tile.setLoaded(true);
                     listener.tileLoadingFinished(tile, true);
                     fileTilePainted = true;
                     return true;
-                }
-                listener.tileLoadingFinished(tile, true);
-                fileTilePainted = true;
+                //}
+//                listener.tileLoadingFinished(tile, true);
+//                fileTilePainted = true;
             } catch (Exception e) {
                 tileFile.delete();
                 tileFile = null;

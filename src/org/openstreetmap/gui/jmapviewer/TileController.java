@@ -1,12 +1,16 @@
 // License: GPL. For details, see Readme.txt file.
 package org.openstreetmap.gui.jmapviewer;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.openstreetmap.gui.jmapviewer.JobDispatcher.JobThread;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileCache;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileLoaderListener;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
+
 
 public class TileController {
     protected TileLoader tileLoader;
@@ -16,8 +20,17 @@ public class TileController {
     JobDispatcher jobDispatcher;
 
     public TileController(TileSource source, TileCache tileCache, TileLoaderListener listener) {
-        tileSource = new OsmTileSource.Mapnik();
-        tileLoader = new OsmTileLoader(listener);
+        tileSource = new OsmTileSource.CycleMap();
+        //TODO: don't hardcode these things
+        
+        try {
+            File tileDir = new File("tiles"); //TODO: don't hardcode
+			//tileLoader = (TileLoader) new OsmFileCacheTileLoader(listener, tileDir); //new OsmTileLoader(listener);
+			tileLoader = (TileLoader) new LocalTileLoader(listener, tileDir); //new OsmTileLoader(listener);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
         this.tileCache = tileCache;
         jobDispatcher = JobDispatcher.getInstance();
     }
@@ -49,6 +62,12 @@ public class TileController {
         	tile.loadPlaceholderFromCache(tileCache);
         	//OH WELL. DON'T TRY TO DOWNLOAD!
             //jobDispatcher.addJob(tileLoader.createTileLoaderJob(tile));
+        	
+        	//LocalTileJob newJob = new LocalTileJob(tile);
+        	//System.out.println(newJob);
+        	jobDispatcher.addJob(tileLoader.createTileLoaderJob(tile));
+        	
+            //System.out.println("we just found a thing not from a cache");
         	//tile.setImage(Tile.ERROR_IMAGE);
         	//tile.error = true;
         }

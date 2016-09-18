@@ -95,6 +95,8 @@ public class JobDispatcher {
      * @param job the the job to be added
      */
     public void addJob(TileJob job) {
+    	
+    	System.out.println(jobQueue.size());
         try {
             if(job.getTile() != null) {
                 for(TileJob oldJob : jobQueue) {
