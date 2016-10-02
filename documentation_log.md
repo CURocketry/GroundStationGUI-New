@@ -1,5 +1,4 @@
-# A list of files that have already been documented vs those that still need to
-be documented.
+# A list of files that have already been documented vs those that still need to be documented.
 
 ## Already Documented
 

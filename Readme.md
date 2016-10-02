@@ -9,6 +9,7 @@ The main part of the code is in in the folder [src/edu/cornell/rocketry/](src/ed
 - There're several sort-of-but-not-really duplicates between files in jTile.src.org.openstreetmap.gui.jmapviewer and files in org.openstreetmap.gui.jmapviewer, but different parts of the code depend on different versions. I don't think that we can easily replace one with the other by just replacing all of one with all of the other due to weird dependency issues, but we should probably collapse the two versions down into a single one to avoid future confusion.
 
 ## TODOs
+- Finish documentation. Current documentation status is in [documentation_log.md](documentation_log.md).
 - Incorporate the other README into this one to have a single, consistent file.
 - Check that the black wood background that we're currently using isn't under copyright.
 - edu.cornell.rocketry.comm.receive.IncomingPacket has a note that says "FIXME: PARSE AS SIGNED EXCEPT FOR TEMPERATURE." If we're currently misinterpreting the format of the received data, this may be a major bug. Also, do we need to handle malformed data, in case something gets corrupted
