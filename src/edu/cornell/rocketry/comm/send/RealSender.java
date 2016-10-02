@@ -9,6 +9,10 @@ import com.rapplogic.xbee.api.XBeeAddress64;
 
 import edu.cornell.rocketry.gui.controller.Controller;
 
+/**
+ * an implementation of Sender that connects to a real XBee
+ *
+ */
 public class RealSender implements Sender{
 	
 	Controller controller;

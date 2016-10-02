@@ -1,5 +1,9 @@
 package edu.cornell.rocketry.comm.send;
 
+/**
+ * an object representing an ACK from the rocket of a command we sent up to it
+ *
+ */
 public class CommandReceipt {
 
 	

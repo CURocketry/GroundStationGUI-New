@@ -2,6 +2,10 @@ package edu.cornell.rocketry.comm.receive;
 
 import edu.cornell.rocketry.gui.model.Datum;
 
+/**
+ * a wrapper class holding all the numbers from a TRACER response packet
+ *
+ */
 public class TEMResponse {
 	
 	private double latitude;

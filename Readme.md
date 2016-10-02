@@ -11,3 +11,10 @@ The main part of the code is in in the folder [src/edu/cornell/rocketry/](src/ed
 ## TODOs
 - Incorporate the other README into this one to have a single, consistent file.
 - Check that the black wood background that we're currently using isn't under copyright.
+- edu.cornell.rocketry.comm.receive.IncomingPacket has a note that says "FIXME: PARSE AS SIGNED EXCEPT FOR TEMPERATURE." If we're currently misinterpreting the format of the received data, this may be a major bug. Also, do we need to handle malformed data, in case something gets corrupted
+along the way (we may get an IndexOutOfBounds or AssertionError otherwise, which may be problematic if the error crashes our whole program, but not as problematic if it only crashes one thread that can be restarted)
+- Replace "TEM" with "TRACER"
+- Create proper Unit Tests for some of these functions
+
+## Questions
+- edu.cornell.rocketry.comm.receive.XBeeListenerThread : does it only work if you have a real XBee, or does it work for testing, too?

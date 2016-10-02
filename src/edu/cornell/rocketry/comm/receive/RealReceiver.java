@@ -2,6 +2,7 @@ package edu.cornell.rocketry.comm.receive;
 
 import edu.cornell.rocketry.gui.controller.Controller;
 
+/** an implementation of Receiver that handles responses from a real XBee */
 public class RealReceiver implements Receiver {
 	
 	private Controller controller;

@@ -1,5 +1,6 @@
 package edu.cornell.rocketry.comm.send;
 
+/** the type of command to be sent to the rocket from the ground station */
 public enum CommandType {
 	ENABLE_CAMERA,
 	DISABLE_CAMERA,
@@ -27,7 +28,7 @@ public enum CommandType {
 		case BEGIN_LAUNCH:
 			return (byte) 1 << 6;
 		case CANCEL_LAUNCH:
-			return (byte) 0b10000000; //thanks Obama
+			return (byte) 0b10000000; //thanks Obama 
 		default:
 			throw new IllegalStateException("invalid CommandType");
 		}

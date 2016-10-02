@@ -1,5 +1,6 @@
 package edu.cornell.rocketry.comm.send;
 
+/** a group of CommandTypes, represented as the physical bits to be sent */
 public class CommandFlag {
 	
 	byte flag;
@@ -8,10 +9,17 @@ public class CommandFlag {
 		flag = f;
 	}
 	
+	/** default constructor, defaulting to nothing set */
 	public CommandFlag () {
 		flag = 0x0;
 	}
 	
+	/** turn on or off the CommandType elem
+	 * 
+	 * @param elem
+	 * @param b  true to turn on elem, false to turn it off
+	 * @return  the same CommandFlag, so that this command can be chained
+	 */
 	public CommandFlag set (CommandType elem, boolean b) {
 		if (b) {
 			flag |= elem.bitMask();
@@ -22,6 +30,7 @@ public class CommandFlag {
 		return this;
 	}
 	
+	/** checks if elem is set to true */
 	public boolean isSet (CommandType elem) {
 		byte b = (byte) (flag & elem.bitMask());
 		return b != 0;

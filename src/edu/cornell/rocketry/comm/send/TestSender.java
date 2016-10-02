@@ -7,6 +7,10 @@ import edu.cornell.rocketry.sim.BasicTEMSimulator;
 import edu.cornell.rocketry.sim.ContinuousTEMSimulator;
 import edu.cornell.rocketry.sim.TEMSimulator;
 
+/**
+ * an implementation of Sender that connects to a simulated XBee
+ *
+ */
 public class TestSender implements Sender {
 	
 	Controller controller;

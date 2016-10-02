@@ -2,6 +2,7 @@ package edu.cornell.rocketry.comm.receive;
 
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
 
+/** a class representing the data received from the TRACER */
 public class IncomingPacket {
 	
 	//Incoming packet structure [len=17]
@@ -40,6 +41,11 @@ public class IncomingPacket {
 	
 	int[] rawPacketData;
 	
+	/** constructor, taking in the raw XBee packet and unpacking
+	 * it into 
+	 * 
+	 * @param ioSample
+	 */
 	public IncomingPacket (ZNetRxResponse ioSample) {
 		int[] tmp;
 		rawPacketData = ioSample.getData();
@@ -94,6 +100,11 @@ public class IncomingPacket {
 		assert(i == PACKET_SIZE);
 	}
 	
+	/** converts a raw array to an actual Java int
+	 * 
+	 * @param array
+	 * @return
+	 */
 	private static int convertToDecimalInt(int[] array){
 		int result = 0;
 		for (int i=array.length-1; i>=0; i--) {
@@ -104,7 +115,12 @@ public class IncomingPacket {
 		}
 		return result;
 	}
-	
+
+	/** converts a raw array to an actual signed Java int
+	 * 
+	 * @param array: 1, 2, or 4-byte array
+	 * @return
+	 */
 	private static int convertToSignedDecimalInt(int[] array){
 		if (array.length == 1) {
 			byte result = (byte) array[0];
@@ -130,6 +146,7 @@ public class IncomingPacket {
 			("Only 1, 2, and 4-byte arguments allowed");
 	}
 	
+	/* getters */
 	public double latitude () {
 		return ((double) latitude) / 10000;
 	}
