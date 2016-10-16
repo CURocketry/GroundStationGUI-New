@@ -27,9 +27,14 @@ package edu.cornell.rocketry.comm.send;
 //
 //}
 
+/** a class representing a packet that gives a command to the TRACER
+ * in effect, this is a wrapper around a single byte which acts as the
+ * command
+ *
+ */
 public class OutgoingCommandPacket implements OutgoingPacket {
 	
-	private int[] payload;
+	private int[] payload; // all commands are a single byte
 	
 	public OutgoingCommandPacket (CommandFlag f) {
 		payload = new int[1];

@@ -16,7 +16,6 @@ import edu.cornell.rocketry.gui.controller.Controller;
 public class RealSender implements Sender{
 	
 	Controller controller;
-	
 	XBeeSender sender;
 	
 	public RealSender (Controller c, XBee x, XBeeAddress64 a) {
@@ -37,7 +36,6 @@ public class RealSender implements Sender{
 			sender.send(packet);
 			r = new CommandReceipt(c.type(), true, "");		
 		} catch (XBeeSenderException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			r = new CommandReceipt(c.type(), false, e.toString());
 		}
@@ -61,7 +59,6 @@ public class RealSender implements Sender{
 				rs.add(new CommandReceipt(c.type(), true, ""));
 			}
 		} catch (XBeeSenderException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			for (Command c : cs) {
 				rs.add(new CommandReceipt(c.type(), false, e.toString()));

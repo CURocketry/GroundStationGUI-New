@@ -16,6 +16,8 @@ The main part of the code is in in the folder [src/edu/cornell/rocketry/](src/ed
 along the way (we may get an IndexOutOfBounds or AssertionError otherwise, which may be problematic if the error crashes our whole program, but not as problematic if it only crashes one thread that can be restarted)
 - Replace "TEM" with "TRACER"
 - Create proper Unit Tests for some of these functions
+- Double-check edu.cornell.rocketry.util.LocalLoader
 
 ## Questions
 - edu.cornell.rocketry.comm.receive.XBeeListenerThread : does it only work if you have a real XBee, or does it work for testing, too?
+- edu.cornell.rocketry.util.DataLogger : What's the difference between log and logHeader?

@@ -2,8 +2,11 @@ package edu.cornell.rocketry.util;
 
 import javax.swing.ImageIcon;
 
+/**
+ * a singleton class that returns images corresponding to the three status levels
+ *
+ */
 public class ImageFactory {
-
 	
 	private static ImageIcon enabled_image;
 	private static ImageIcon busy_image;

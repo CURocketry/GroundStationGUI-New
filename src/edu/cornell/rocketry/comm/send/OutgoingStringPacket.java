@@ -1,5 +1,12 @@
 package edu.cornell.rocketry.comm.send;
 
+/** a class representing a packet that gives a byte array to the TRACER
+ * in effect, this is a wrapper around a byte array, which is inputed
+ * as a String. (This uses native Java Strings, so characters above 0xffff
+ * are split into two surrogate pairs. But as long as we're not sending
+ * up emoji to the TRACER, this should not generally be an issue.) 
+ *
+ */
 public class OutgoingStringPacket implements OutgoingPacket {
 	
 	private int[] payload;

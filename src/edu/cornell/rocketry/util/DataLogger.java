@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * a class that allows logging to a file at GroundStationGUI-New/tem_log_file_XXXms.temdata
+ * where XXX is the current time in milliseconds since Jan. 1 1970. 
+ *
+ */
 public class DataLogger {
 	
 	private PrintWriter writer;

@@ -7,7 +7,11 @@ import com.rapplogic.xbee.api.XBeeTimeoutException;
 import com.rapplogic.xbee.api.zigbee.ZNetTxRequest;
 import com.rapplogic.xbee.api.zigbee.ZNetTxStatusResponse;
 
-
+/**
+ * a class representing the entire process of sending up an OutgoingPacket
+ * to the TRACER
+ *
+ */
 public class XBeeSender {
 	
 	private XBeeAddress64 destination;
@@ -19,10 +23,12 @@ public class XBeeSender {
 	}
 	
 	/**
-	 * Send a packet to remote XBee
+	 * Send a packet to remote XBee. Returns nothing, but if the sending failed,
+	 * throws an error
+	 * 
 	 * @param r		packet to send
 	 */
-	public void send(OutgoingPacket packet) throws XBeeSenderException{
+	public void send(OutgoingPacket packet) throws XBeeSenderException {
 		
 		try {
 			// send a request and wait up to 10 seconds for the response

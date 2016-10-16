@@ -8,9 +8,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ErrorLogger {
+/**
+ * a collection of functions that writes status updates (errors, warnings, debugs, etc.) 
+ * to a log file at GroundStationGUI-New/log/error.log
+ *
+ */
+public final class ErrorLogger {
+	/** hide the constructor */
+	private ErrorLogger (){
+	}
 	
-	private static final String FILEPATH = System.getProperty("user.dir") + "/log/errorlog.log";
+	private static final String FILEPATH =
+			System.getProperty("user.dir") + File.separator + "log" + File.separator + "errorlog.log";
 	
 	private static void log (String msg, LoggerLevel level) {
 		String s;
