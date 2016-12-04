@@ -141,7 +141,8 @@ public class ContinuousTEMSimulator implements TEMSimulator {
 								start_acc_x + elapsedTime * delta_acc_x, start_acc_y + elapsedTime * delta_acc_y, start_acc_z + elapsedTime * delta_acc_z);
 						
 						synchronized (receiver) {
-							receiver.acceptTEMResponse(r);
+							//receiver.acceptLoRaPacket(r);
+							//TODO! change processing TEMResponses to processing LoRaPackets  
 						}
 						try {
 							Thread.sleep(delay);

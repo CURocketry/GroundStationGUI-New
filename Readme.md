@@ -17,6 +17,9 @@ along the way (we may get an IndexOutOfBounds or AssertionError otherwise, which
 - Replace "TEM" with "TRACER"
 - Create proper Unit Tests for some of these functions
 - Double-check edu.cornell.rocketry.util.LocalLoader
+- the GUI->Model/Controller->LoRa pipeline is incomplete (baud rate has no effect right now)
+- we never really agreed on how sending commands up to the rocket works, have we? I have not implemented any sort of data sending.
+- Trying to reinitialize the "GS XBee" (actually the LoRa) for some reason takes a long time. 
 
 ## Questions
 - edu.cornell.rocketry.comm.receive.XBeeListenerThread : does it only work if you have a real XBee, or does it work for testing, too?

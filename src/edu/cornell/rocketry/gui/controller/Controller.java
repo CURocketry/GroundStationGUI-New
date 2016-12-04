@@ -18,10 +18,6 @@ import org.openstreetmap.gui.jmapviewer.Tile;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 
-import com.rapplogic.xbee.api.XBeeAddress64;
-import com.rapplogic.xbee.api.XBeeException;
-
-import edu.cornell.rocketry.comm.XBeeController;
 import edu.cornell.rocketry.comm.receive.RealReceiver;
 import edu.cornell.rocketry.comm.receive.Receiver;
 import edu.cornell.rocketry.comm.receive.TEMResponse;
@@ -31,7 +27,6 @@ import edu.cornell.rocketry.comm.receive.TEMStatusFlag.Type;
 import edu.cornell.rocketry.comm.send.Command;
 import edu.cornell.rocketry.comm.send.CommandReceipt;
 import edu.cornell.rocketry.comm.send.CommandType;
-import edu.cornell.rocketry.comm.send.RealSender;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
 import edu.cornell.rocketry.gui.model.ApplicationModel;
@@ -39,6 +34,9 @@ import edu.cornell.rocketry.gui.model.Datum;
 import edu.cornell.rocketry.gui.model.RocketModel;
 import edu.cornell.rocketry.gui.model.Position;
 import edu.cornell.rocketry.gui.view.View;
+import edu.cornell.rocketry.lora.LoRa;
+import edu.cornell.rocketry.lora.LoRaException;
+import edu.cornell.rocketry.lora.LoRaPacket;
 import edu.cornell.rocketry.util.DataLogger;
 import edu.cornell.rocketry.util.Status;
 import edu.cornell.rocketry.util.LocalLoader;
@@ -70,7 +68,8 @@ public class Controller {
 	private RocketModel rocketModel;
 	private ApplicationModel applicationModel;
 	
-	private XBeeController xbeeController;
+	//private XBeeController xbeeController;
+	private LoRa lora;
 	
 	
 	public Controller (View gui) {
@@ -78,11 +77,13 @@ public class Controller {
 		rocketModel = new RocketModel();
 		applicationModel = new ApplicationModel();
 		testReceiver = new TestReceiver(this);
-		//realReceiver = new RealReceiver(this); initialized w/ xbee initialization
-		xbeeController = new XBeeController(this);
+		//xbeeController = new XBeeController(this);
+		realReceiver = new RealReceiver(this, lora); //initialized w/ xbee initialization
 		testSender = new TestSender(this);
-		realSender = new RealSender(this, xbeeController.getXbee(), applicationModel.getXbeeAddress());
-		System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
+		lora = new LoRa(realReceiver, gui); //TODO: choose the correct the COM
+		//realSender = new RealSender(this, loraConnection);
+		
+		//System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
 		dataLogger = new DataLogger();
 		//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag
 		dataLogger.logHeader("//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag");
@@ -96,7 +97,7 @@ public class Controller {
 	
 	public DataLogger dataLogger() { return dataLogger; }
 	
-	public XBeeController getXbeeController () { return xbeeController; }
+	public LoRa getLoRa () { return lora; }
 	
 	public View view () {
 		return view;
@@ -312,11 +313,12 @@ public class Controller {
 	 * @param r  the TEMResponse
 	 * @param test  whether or not we're in testing mode
 	 */
-	public synchronized void acceptTEMResponse (TEMResponse r, boolean test) {
+	public synchronized void acceptLoRaPacket (LoRaPacket r, boolean test) {
 		ilog("\nTEM Response Received:");
 		
 		//process flag
-		TEMStatusFlag flag = r.flag();
+		
+		/* TEMStatusFlag flag = r.flag();
 		
 		if (flag.isSet(Type.camera_enabled)) {
 			updateCameraStatus(Status.ENABLED);
@@ -347,25 +349,23 @@ public class Controller {
 		} else {
 			updateInitializationStatus(Status.DISABLED);
 		}
+		*/
 		
 		//log data to file
-		//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag
+		//time,lat,lon,alt,x,y,z
 		StringBuilder sb = new StringBuilder();
 		sb
 			.append(r.time()).append(",")
 			.append(r.lat()).append(",")
 			.append(r.lon()).append(",")
 			.append(r.alt()).append(",")
-			.append(r.rot()).append(",")
-			.append(r.acc_x()).append(",")
-			.append(r.acc_y()).append(",")
-			.append(r.acc_z()).append(",")
-			.append(r.temp()).append(",")
-			.append(r.flag().toHexString());
+			.append(r.x()).append(",")
+			.append(r.y()).append(",")
+			.append(r.z()).append(",");
 		
 		dataLogger.log(sb.toString());
 		
-		updateAnalyticsDisplayFields
+		/*updateAnalyticsDisplayFields
 			(r.lat(), 
 			r.lon(), 
 			r.alt(), 
@@ -374,8 +374,9 @@ public class Controller {
 			r.acc_x(), 
 			r.acc_y(), 
 			r.acc_z(),
-			r.temp());
+			r.temp());*/ //TODO
 		
+		/* TODO!!!
 		if (gpsCheck(r)) {
 			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
 			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
@@ -384,7 +385,7 @@ public class Controller {
 			updateRocketPosition (rocketModel.getCurrentDatum());
 			String posn = "(" + r.lat() + ", " + r.lon() + ")";
 			view.updateLatestPosition(posn);
-			if (!test) updateXBeeDisplayFields (
+			if (!test) updateLoRaDisplayFields (
 				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
 			
 			MapMarker m = new MapMarkerDot(r.lat(), r.lon());
@@ -394,6 +395,7 @@ public class Controller {
 		} else {
 			ilog("inaccurate gps data received");
 		}
+		*/
 	}
 		
 	
@@ -461,11 +463,11 @@ public class Controller {
 	}
 
 
-	/*------------------------ XBee Methods -------------------------*/
+	/*------------------------ LoRa Methods -------------------------*/
 	
 	
 	
-	public void updateXBeeDisplayFields (String lat, String lon, String alt, String flag) {
+	public void updateLoRaDisplayFields (String lat, String lon, String alt, String flag) {
 		view.updateXBeeData(lat, lon, alt, flag);
 	}
 	
@@ -499,10 +501,10 @@ public class Controller {
 		applicationModel.setSerialPort(port);
 	}
 
-	public void setSelectedAddress(XBeeAddress64 addr) {
+	/*public void setSelectedAddress(XBeeAddress64 addr) {
 		realSender = new RealSender(this, xbeeController.getXbee(), addr);
 		applicationModel.setXbeeAddress(addr);
-	}
+	}*/
 	
 	public void updateSelectedBaudRate(int rate) {
 		applicationModel.setBaudRate(rate);
@@ -511,21 +513,21 @@ public class Controller {
 	/**
 	 * setup anything that the XBee needs to run
 	 * 
-	 * @throws XBeeException
+	 * @throws LoRaException
 	 */
-    public void initXbee() throws XBeeException {
+    public void initLoRa() throws LoRaException {
 
 		// get selected serial port...
 //		String selSerial = (String) view.serialPortsList.getSelectedItem();
     	
-    	realReceiver = new RealReceiver(this);
+    	// realReceiver = new RealReceiver(this);
 		
-		int baudRate = applicationModel.getBaudRate();
+		int baudRate = applicationModel.getBaudRate(); //TODO: make setting baudRate to really do something
 		String selSerial = applicationModel.getSerialPort();
 		
 		System.out.println("Initializing XBee");
 		
-		xbeeController.openXBee(selSerial, baudRate);
+		lora.changePortName(selSerial); //also set baudrate
 		
 		view.resetPacketCounters();
 	}

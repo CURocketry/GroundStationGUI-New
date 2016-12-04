@@ -10,7 +10,6 @@ import jTile.src.org.openstreetmap.fma.jtiledownloader.views.main.JTileDownloade
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -65,9 +64,8 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
-import com.rapplogic.xbee.api.XBeeAddress64;
-import com.rapplogic.xbee.api.XBeeException;
-
+import edu.cornell.rocketry.lora.LoRa;
+import edu.cornell.rocketry.lora.LoRaException;
 import edu.cornell.rocketry.comm.send.CommandType;
 import edu.cornell.rocketry.gui.controller.Controller;
 import edu.cornell.rocketry.util.Status;
@@ -241,18 +239,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 	/*--------------------------- XBee Tab Fields ---------------------------*/
 
 	public static final Integer[] baudRates = {4800, 9600, 19200, 38400, 57600, 115200};
-	public static final String[] addresses = { 
-			"1: 0013A200 / 40BF5647", 
-			"2: 0013A200 / 40BF56A5",
-			"3: 0013A200 / 409179A7",
-			"4: 0013A200 / 4091796F"
-	};
-	public static final XBeeAddress64 addr[] = {
-			new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0xbf, 0x56, 0x47),	//long cable
-			new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0xbf, 0x56, 0xa5),	//new xbees, small cable
-			new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0xa7),
-			new XBeeAddress64(0, 0x13, 0xa2, 0, 0x40, 0x91, 0x79, 0x6f)
-	};
 
 	private int numRec = 0; 	//number received packets
 	private int numSent = 0;	//number sent packets
@@ -264,10 +250,9 @@ public class View extends JFrame implements JMapViewerEventListener {
 	private final static Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private final static Font textAreaFont = new Font("Arial", Font.PLAIN, 10);
 
-	//	protected XBeeAddress64 selectedAddress;	//selected address
 	protected int selectedBaud = 57600; //serial comm rate
 
-	protected JComboBox<String> serialPortsList, addressesList;
+	protected JComboBox<String> serialPortsList;
 	protected JComboBox<Integer> baudList;
 
 	private JPanel dataPanel, tablePanel; //statusPanel
@@ -323,10 +308,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 	public View() {
 		super("CURocketry Ground Station GUI");
 		setSize(500, 500);
-
-		//        selectedAddress = addr[addressesList.getSelectedIndex()];
-		//        selectedAddress = addr[0]; //FIXME: implement as above, using update methods
-
 
 		ImageFactory.init();
 
@@ -547,9 +528,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
 					clearMapMarkers();
-					//no longer necessary 3/7/15
-					//controller.sendCommand (CommandTask.StopGPS);
-					controller.getXbeeController().startListening();
+					//controller.getXbeeController().startListening();
 					controller.sendCommand (CommandType.TRANSMIT_START);
 				}
 			}
@@ -1145,27 +1124,13 @@ public class View extends JFrame implements JMapViewerEventListener {
 		serialPortPanel.add(refreshPortsBtn, BorderLayout.EAST);
 		xbeeInitGrid.add(serialPortPanel);
 
-		//Wireless Address Dropdown
-		JPanel addressPanel = new JPanel(new BorderLayout());
-		addressPanel.add(new JLabel("Remote XBee Address: "), BorderLayout.WEST);
-		addressesList = new JComboBox<String>(addresses);
-		addressesList.setSelectedIndex(0);
-		controller.setSelectedAddress(addr[addressesList.getSelectedIndex()]);
-		addressesList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.setSelectedAddress(addr[addressesList.getSelectedIndex()]);
-			}
-		});
-		addressPanel.add(addressesList, BorderLayout.CENTER);
-		xbeeInitGrid.add(addressPanel);
-
 		//Baud rate dropdown
 		JPanel baudPanel = new JPanel(new BorderLayout());
 		baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
 		baudList = new JComboBox<Integer>(baudRates);
 		baudList.setSelectedIndex(4);
 		controller.updateSelectedBaudRate((int) baudList.getSelectedItem()); //initialize model
-		addressesList.addActionListener(new ActionListener() {
+		baudList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.updateSelectedBaudRate((int) baudList.getSelectedItem());
 			}
@@ -1179,12 +1144,12 @@ public class View extends JFrame implements JMapViewerEventListener {
 		initXBeeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					controller.initXbee();
-					controller.getXbeeController().startListening();
+					controller.initLoRa();
+					controller.getLoRa().startListening();
 					addToReceiveText("Success! Initialized GS XBee :)");
 					addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 							+ System.getProperty("line.separator"));
-				} catch (XBeeException e1) {
+				} catch (LoRaException e1) {
 					e1.printStackTrace();
 					numErr++;
 					addToReceiveText("Error ("

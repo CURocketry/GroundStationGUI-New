@@ -156,7 +156,8 @@ public class BasicTEMSimulator implements TEMSimulator {
 							TEMResponse r = 
 								new TEMResponse (d.lat(), d.lon(), d.alt(), flag.byteValue(), d.time(), d.rot(), d.acc_x(), d.acc_y(), d.acc_z());
 							synchronized (receiver) {
-								receiver.acceptTEMResponse (r);
+								//receiver.acceptLoRaPacket (r); 
+								//TODO! change processing TEMResponses to processing LoRaPackets
 							}
 							try {
 								Thread.sleep(delay);
