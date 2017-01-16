@@ -3,3 +3,4 @@
 /bin
 gps_log_file_*
 .classpath
+*.temdata
