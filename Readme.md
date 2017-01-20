@@ -4,6 +4,8 @@ This is a Java application that runs the GUI that monitors and saves data packet
 
 The main part of the code is in in the folder [src/edu/cornell/rocketry/](src/edu/cornell/rocketry/). For the moment, the actual README file is actually in [src/edu/cornell/rocketry/main/README.txt](src/edu/cornell/rocketry/main/README.txt).
 
+For testing, it is probably useful to have [com0com](http://com0com.sourceforge.net/) installed, which can redirect COM ports between each other.
+
 ## Known Issues
 - The file system is quite messy, since a lot of the libraries are imported in their entirety, and spread out across the system, obscuring our actual code.
 - There're several sort-of-but-not-really duplicates between files in jTile.src.org.openstreetmap.gui.jmapviewer and files in org.openstreetmap.gui.jmapviewer, but different parts of the code depend on different versions. I don't think that we can easily replace one with the other by just replacing all of one with all of the other due to weird dependency issues, but we should probably collapse the two versions down into a single one to avoid future confusion.

@@ -529,7 +529,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 				if (e.getButton() == MouseEvent.BUTTON1) {
 					clearMapMarkers();
 					//controller.getXbeeController().startListening();
-					controller.sendCommand (CommandType.TRANSMIT_START);
+					// controller.sendCommand (CommandType.TRANSMIT_START); // FIXME: remove
 				}
 			}
 		});
@@ -539,7 +539,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		stopTransmittingButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					controller.sendCommand(CommandType.TRANSMIT_HALT);
+					// controller.sendCommand(CommandType.TRANSMIT_HALT); // FIXME: remove
 				}
 			}
 		});
@@ -550,7 +550,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					controller.sendCommand (CommandType.ENABLE_CAMERA);
+					// controller.sendCommand (CommandType.ENABLE_CAMERA); // FIXME: remove
 				}
 			}
 		});
@@ -560,7 +560,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		disableCameraButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1){
-					controller.sendCommand (CommandType.DISABLE_CAMERA);
+					// controller.sendCommand (CommandType.DISABLE_CAMERA); // FIXME: remove
 				}
 			}
 		});
@@ -570,7 +570,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		transmitMaxButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					controller.sendCommand(CommandType.TRANSMIT_FREQ_MAX);
+					// controller.sendCommand(CommandType.TRANSMIT_FREQ_MAX); // FIXME: remove
 				}
 			}
 		});
@@ -580,7 +580,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		transmitMinButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					controller.sendCommand(CommandType.TRANSMIT_FREQ_MIN);
+					// controller.sendCommand(CommandType.TRANSMIT_FREQ_MIN); // FIXME: remove
 				}
 			}
 		});
@@ -590,7 +590,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		beginLaunchButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					controller.sendCommand(CommandType.BEGIN_LAUNCH);
+					controller.sendCommand(CommandType.LAUNCH);
 				}
 			}
 		});
@@ -600,7 +600,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		cancelLaunchButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					controller.sendCommand(CommandType.CANCEL_LAUNCH);
+					controller.sendCommand(CommandType.CANCEL);
 				}
 			}
 		});
@@ -1172,7 +1172,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		JButton testSendBtn = new JButton("Send Test");
 		testSendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.sendXBeePacket("(Test Packet)");
+				// controller.sendXBeePacket("(Test Packet)"); //FIXME: remove
 			}
 		});
 		sendPacketsGrid.add(testSendBtn);
@@ -1181,7 +1181,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		JButton customDataBtn = new JButton("Send Data");
 		customDataBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.sendXBeePacket(sendEdit.getText());
+				// controller.sendXBeePacket(sendEdit.getText()); //FIXME: remove
 			}
 		});
 

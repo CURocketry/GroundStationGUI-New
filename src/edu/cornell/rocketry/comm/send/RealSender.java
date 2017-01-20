@@ -23,61 +23,16 @@ public class RealSender implements Sender{
 	}
 
 	@Override
-	public void send(Command c) {
-		/*CommandReceipt r;
-		
-		CommandFlag f = new CommandFlag();
-		f.set(c.type(), true);
-		
-		OutgoingPacket packet = new OutgoingCommandPacket(f);
-		
-		try {
-			sender.send(packet);
-			r = new CommandReceipt(c.type(), true, "");		
-		} catch (XBeeSenderException e) {
-			e.printStackTrace();
-			r = new CommandReceipt(c.type(), false, e.toString());
-		}
-		
-		controller.acceptCommandReceipt(r);*/
-		System.err.println("send(Command c) is not implemented!");
+	public void send(CommandType c) {
+		OutgoingCommandPacket msg = new OutgoingCommandPacket(c);
+		send(msg);
 	}
 	
-	/*
-	public void send (Collection<Command> cs) {
-		List<CommandReceipt> rs = new ArrayList<CommandReceipt>();
-		
-		CommandFlag f = new CommandFlag();
-		for (Command c : cs) {
-			f.set(c.type(), true);
-		}
-		
-		OutgoingPacket packet = new OutgoingCommandPacket(f);
-		
-		try {
-			sender.send(packet);
-			for (Command c : cs) {
-				rs.add(new CommandReceipt(c.type(), true, ""));
-			}
-		} catch (XBeeSenderException e) {
-			e.printStackTrace();
-			for (Command c : cs) {
-				rs.add(new CommandReceipt(c.type(), false, e.toString()));
-			}
-		}
-		
-		for (CommandReceipt r : rs) {
-			controller.acceptCommandReceipt(r);
-		}
-		
-	}*/
-	
-	public void send (String msg) {
-		OutgoingPacket packet = new OutgoingStringPacket(msg);
-		
+	@Override
+	public void send (OutgoingCommandPacket msg) {
 		try {
 			System.out.println("edu.cornell.rocketry.comm.send.RealSender#send(String): sending string packet");
-			lora.send(packet);
+			lora.send(msg);
 		} catch (LoRaException e) {
 			System.err.println("edu.cornell.rocketry.comm.send.RealSender#send(String): failed to send String packet");
 			e.printStackTrace();

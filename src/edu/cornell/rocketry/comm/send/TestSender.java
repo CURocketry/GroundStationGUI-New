@@ -40,51 +40,30 @@ public class TestSender implements Sender {
 	}
 	
 	public void switchFile (String s) {}; //TODO
-	
-	public void send (String msg) {
+
+	@Override
+	public void send(OutgoingCommandPacket msg) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public void send (Command c) {
+	@Override
+	public void send (CommandType c) {
 		try {
-			switch (c.type()) {
-			case ENABLE_CAMERA:
-				rsim.enableCamera();
-				break;
-			case DISABLE_CAMERA:
-				rsim.disableCamera();
-				break;
-			case TRANSMIT_START:
-				rsim.startTransmitting();
-				break;
-			case TRANSMIT_HALT:
-				rsim.stopTransmitting();
-				break;
-			case TRANSMIT_FREQ_MAX:
-				rsim.transmitMaxFrequency();
-				break;
-			case TRANSMIT_FREQ_MIN:
-				rsim.transmitMinFrequency();
-				break;
-			case BEGIN_LAUNCH:
+			switch (c) {
+			case LAUNCH:
 				rsim.launchPrepare();
 				break;
-			case CANCEL_LAUNCH:
+			case CANCEL:
 				rsim.launchCancel();
 				break;
 			default:
-				throw new UnsupportedOperationException(c.type().toString());
+				throw new UnsupportedOperationException(c.toString());
 			}
-			receipt(c.type(), true, "");
 		} catch (Exception e) {
-			receipt(c.type(), false, "Unrecoverable: " + e.toString());
+			throw e;
 		}
 	}
-	
-	private synchronized void receipt (CommandType t, boolean s, String m) {
-		controller.acceptCommandReceipt(
-			new CommandReceipt(t, s, m));
-	}
+
 	
 	
 

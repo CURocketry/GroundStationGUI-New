@@ -24,8 +24,6 @@ import edu.cornell.rocketry.comm.receive.TEMResponse;
 import edu.cornell.rocketry.comm.receive.TEMStatusFlag;
 import edu.cornell.rocketry.comm.receive.TestReceiver;
 import edu.cornell.rocketry.comm.receive.TEMStatusFlag.Type;
-import edu.cornell.rocketry.comm.send.Command;
-import edu.cornell.rocketry.comm.send.CommandReceipt;
 import edu.cornell.rocketry.comm.send.CommandType;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
@@ -270,41 +268,10 @@ public class Controller {
     	view.clearMapMarkers();
     }
     
-    public void sendCommand (CommandType type) {
-    	Command c = new Command(type, System.currentTimeMillis());
+    public void sendCommand (CommandType c) {
+    	//Command c = new Command(type, System.currentTimeMillis());
     	sender().send(c);
     }
-    
-	
-	
-	/**
-	 * receive and process an ACK from the rocket for a command that we sent
-	 * 
-	 * @param r  the CommandReceipt that we just received 
-	 */
-	public synchronized void acceptCommandReceipt (CommandReceipt r) {
-		//display receipt
-		String message;
-		if(r.success()) {
-			message = r.type().toString() + " successfully sent.";
-		} else {
-			message = "COULD NOT SEND " + r.type().toString() + 
-					". \n -> " + r.message();
-		}
-		ilog("\nCommand Receipt Received:");
-		ilog(message);
-		
-		//process receipt
-		if (r.type() == CommandType.ENABLE_CAMERA
-			|| r.type() == CommandType.DISABLE_CAMERA) {
-			updateCameraStatus(Status.BUSY);
-		} 
-		
-		if (r.type() == CommandType.BEGIN_LAUNCH
-			|| r.type() == CommandType.CANCEL_LAUNCH) {
-			updateLaunchStatus(Status.BUSY);
-		}
-	}
 	
 
 	/**
@@ -532,15 +499,6 @@ public class Controller {
 		view.resetPacketCounters();
 	}
 
-    /**
-     * send a message. Note that although we're sending a String, it's
-     * actually a stream of bytes, not characters
-     * 
-     * @param msg
-     */
-	public void sendXBeePacket(String msg) {
-		sender().send(msg);
-	}
 	
     /**
      * Limits the MapMarkers that are visible on the screen. 
