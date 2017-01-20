@@ -31,10 +31,10 @@ public class RealSender implements Sender{
 	@Override
 	public void send (OutgoingCommandPacket msg) {
 		try {
-			System.out.println("edu.cornell.rocketry.comm.send.RealSender#send(String): sending string packet");
+			System.out.println("edu.cornell.rocketry.comm.send.RealSender#send(String): sending packet containing: " + msg.getPayload());
 			lora.send(msg);
 		} catch (LoRaException e) {
-			System.err.println("edu.cornell.rocketry.comm.send.RealSender#send(String): failed to send String packet");
+			System.err.println("edu.cornell.rocketry.comm.send.RealSender#send(String): failed to send packet containing: " + msg.getPayload());
 			e.printStackTrace();
 		}
 	}

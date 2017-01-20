@@ -140,14 +140,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 	JLabel landedStatus;
 
 	JButton settings = new JButton ("Settings");
-	JButton startTransmittingButton = new JButton("Start Transmitting");
-	JButton stopTransmittingButton = new JButton("Stop Transmitting");
-
-	JButton enableCameraButton = new JButton("Enable Camera");
-	JButton disableCameraButton = new JButton("Disable Camera");
-
-	JButton transmitMaxButton = new JButton("Transmit 5Hz");
-	JButton transmitMinButton = new JButton("Transmit 0.2Hz");
 
 	JButton beginLaunchButton = new JButton("Prepare for Launch");
 	JButton cancelLaunchButton = new JButton("Cancel Launch Preparations");
@@ -259,9 +251,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 	private static JLabel lat,longi,alt,flag;
 
 
-	//private static Logger log = Logger.getLogger(GSGui.class.getName());
-
-
 
 
 	/* ------------------------ Settings Tab Fields ------------------------ */
@@ -364,7 +353,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 
 		/* Activate the Tabbed Pane */
 		setContentPane(tabbedPane);
-		//getContentPane().addChild(tabbedPane);
 
 		setVisible(true);        
 
@@ -438,19 +426,11 @@ public class View extends JFrame implements JMapViewerEventListener {
 		//general
 		controlPanel = new BackgroundJPanel("./assets/black_wood_background.jpg");
 
-		//controlPanel.setBackground(Color.WHITE);
-		//Image background = Toolkit.getDefaultToolkit().createImage("./assets/black_wood_background.jpg");
-		//controlPanel.drawImage(background, 0, 0, null);
 		controlPanel.setLayout(new GridBagLayout());
 
 		//status indicators
 		status = new JPanel(new FlowLayout());
 		status.setOpaque(false);
-		cameraStatusContainer = new JPanel(new BorderLayout());
-		gpsStatusContainer = new JPanel(new BorderLayout());
-		initStatusContainer = new JPanel(new BorderLayout());
-		launchStatusContainer = new JPanel(new BorderLayout());
-		landedStatusContainer = new JPanel(new BorderLayout());
 
 		//display of last known position
 		latestPositionPanel = new JPanel(new BorderLayout());
@@ -462,34 +442,8 @@ public class View extends JFrame implements JMapViewerEventListener {
 		latestPositionPanel.add(latestPositionLabel, BorderLayout.WEST);
 		latestPositionPanel.add(latestPosition, BorderLayout.EAST);
 
-
-		cameraStatusLabel = new JLabel("Camera Status: ");
-		cameraStatusLabel.setOpaque(false);
-		cameraStatusLabel.setForeground(Color.WHITE);
-		cameraStatus = new JLabel();
-		cameraStatus.setIcon(ImageFactory.disabledImage());
-		cameraStatus.setOpaque(false);
-		cameraStatusContainer.add(cameraStatusLabel, BorderLayout.WEST);
-		cameraStatusContainer.add(cameraStatus, BorderLayout.EAST);
-
-		gpsStatusLabel = new JLabel("GPS Status: ");
-		gpsStatusLabel.setOpaque(false);
-		gpsStatusLabel.setForeground(Color.WHITE);
-		gpsStatus = new JLabel();
-		gpsStatus.setIcon(ImageFactory.disabledImage());
-		gpsStatus.setOpaque(false);
-		gpsStatusContainer.add(gpsStatusLabel, BorderLayout.WEST);
-		gpsStatusContainer.add(gpsStatus, BorderLayout.EAST);
-
-		initStatusLabel = new JLabel("TEM Initialization: ");
-		initStatusLabel.setOpaque(false);
-		initStatusLabel.setForeground(Color.WHITE);
-		initStatus = new JLabel();
-		initStatus.setIcon(ImageFactory.disabledImage());
-		initStatus.setOpaque(false);
-		initStatusContainer.add(initStatusLabel, BorderLayout.WEST);
-		initStatusContainer.add(initStatus, BorderLayout.EAST);
-
+		//display whether we're ready for launch or not
+		launchStatusContainer = new JPanel(new BorderLayout());
 		launchStatusLabel = new JLabel("Launch Ready: ");
 		launchStatusLabel.setOpaque(false);
 		launchStatusLabel.setForeground(Color.WHITE);
@@ -498,92 +452,9 @@ public class View extends JFrame implements JMapViewerEventListener {
 		launchStatus.setOpaque(false);
 		launchStatusContainer.add(launchStatusLabel, BorderLayout.WEST);
 		launchStatusContainer.add(launchStatus, BorderLayout.EAST);
-
-		landedStatusLabel = new JLabel("Landed: ");
-		landedStatusLabel.setOpaque(false);
-		landedStatusLabel.setForeground(Color.WHITE);
-		landedStatus = new JLabel();
-		landedStatus.setIcon(ImageFactory.disabledImage());
-		landedStatus.setOpaque(false);
-		landedStatusContainer.add(landedStatusLabel, BorderLayout.WEST);
-		landedStatusContainer.add(landedStatus, BorderLayout.EAST);
-
-		gpsStatusContainer.setOpaque(false);
-		cameraStatusContainer.setOpaque(false);
-		initStatusContainer.setOpaque(false);
 		launchStatusContainer.setOpaque(false);
-		landedStatusContainer.setOpaque(false);
-
-		status.add(initStatusContainer);
-		status.add(gpsStatusContainer);
-		status.add(cameraStatusContainer);
 		status.add(launchStatusContainer);
-		status.add(landedStatusContainer);
 
-
-		//start transmitting button
-		startTransmittingButton.setVisible(true);
-		startTransmittingButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					clearMapMarkers();
-					//controller.getXbeeController().startListening();
-					// controller.sendCommand (CommandType.TRANSMIT_START); // FIXME: remove
-				}
-			}
-		});
-
-		//stop transmitting button
-		stopTransmittingButton.setVisible(true);
-		stopTransmittingButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					// controller.sendCommand(CommandType.TRANSMIT_HALT); // FIXME: remove
-				}
-			}
-		});
-
-		//enable camera button
-		enableCameraButton.setVisible(true);
-		enableCameraButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					// controller.sendCommand (CommandType.ENABLE_CAMERA); // FIXME: remove
-				}
-			}
-		});
-
-		//disable camera button
-		disableCameraButton.setVisible(true);
-		disableCameraButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1){
-					// controller.sendCommand (CommandType.DISABLE_CAMERA); // FIXME: remove
-				}
-			}
-		});
-
-		//transmit max speed button
-		transmitMaxButton.setVisible(true);
-		transmitMaxButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					// controller.sendCommand(CommandType.TRANSMIT_FREQ_MAX); // FIXME: remove
-				}
-			}
-		});
-
-		//transmit min speed button
-		transmitMinButton.setVisible(true);
-		transmitMinButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					// controller.sendCommand(CommandType.TRANSMIT_FREQ_MIN); // FIXME: remove
-				}
-			}
-		});
 
 		//begin launch button
 		beginLaunchButton.setVisible(true);
@@ -670,36 +541,13 @@ public class View extends JFrame implements JMapViewerEventListener {
 		c.gridheight = 1;
 		c.weightx = 0.1;
 		c.weighty = 0.0;
-		c.gridx = 0;
-		c.gridy = 1;
-		controlPanel.add(startTransmittingButton, c);
-
-		c.gridx = 1;
-		c.gridy = 1;
-		controlPanel.add(stopTransmittingButton, c);
-
-		c.gridx = 2;
-		c.gridy = 1;
-		controlPanel.add(enableCameraButton, c);
-
-		c.gridx = 3;
-		c.gridy = 1;
-		controlPanel.add(disableCameraButton, c);
 
 		c.gridx = 0;
-		c.gridy = 2;
-		controlPanel.add(transmitMaxButton, c);
-
-		c.gridx = 1;
-		c.gridy = 2;
-		controlPanel.add(transmitMinButton, c);
-
-		c.gridx = 2;
-		c.gridy = 2;
+		c.gridy = 1;
 		controlPanel.add(beginLaunchButton, c);
 
-		c.gridx = 3;
-		c.gridy = 2;
+		c.gridx = 2;
+		c.gridy = 1;
 		controlPanel.add(cancelLaunchButton, c);
 
 
@@ -1090,17 +938,17 @@ public class View extends JFrame implements JMapViewerEventListener {
 		// Layout GUI
 		xbeePanel = new JPanel(new BorderLayout());
 
-		/*-- Setup XBees Panel --*/
+		/*-- Setup Radio Panel --*/
 
 		JPanel xbeeInitPanel = new JPanel(new BorderLayout());
-		JLabel xbeeInitLabel = new JLabel("Setup XBees", JLabel.CENTER);
+		JLabel xbeeInitLabel = new JLabel("Setup Arduino/LoRa Connection", JLabel.CENTER);
 		xbeeInitLabel.setFont(titleFont);
 		xbeeInitPanel.add(xbeeInitLabel, BorderLayout.NORTH);
 		JPanel xbeeInitGrid = new JPanel(new GridLayout(5, 2));
 
-		//XBee Serial Port Label
+		//Radio Serial Port Label
 		JPanel serialPortPanel = new JPanel(new BorderLayout());
-		serialPortPanel.add(new JLabel("GS XBee Serial Port: "), BorderLayout.WEST);
+		serialPortPanel.add(new JLabel("Arduino Serial Port: "), BorderLayout.WEST);
 
 		//Serial port dropdown
 		serialPortsList = new JComboBox<String>(); //initialize empty dropdown
@@ -1139,14 +987,14 @@ public class View extends JFrame implements JMapViewerEventListener {
 		xbeeInitGrid.add(baudPanel);
 
 
-		//Initialize GS XBee Button
-		JButton initXBeeButton = new JButton("Initialize GS XBee");
+		//Initialize Arduino Connection Button
+		JButton initXBeeButton = new JButton("Initialize Arduino Connection");
 		initXBeeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.initLoRa();
 					controller.getLoRa().startListening();
-					addToReceiveText("Success! Initialized GS XBee :)");
+					addToReceiveText("Success! Initialized connection to the Arduino :)");
 					addToReceiveText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 							+ System.getProperty("line.separator"));
 				} catch (LoRaException e1) {
@@ -1167,26 +1015,32 @@ public class View extends JFrame implements JMapViewerEventListener {
 		JLabel sendTitle = new JLabel("Send Packets", JLabel.CENTER);
 		sendTitle.setFont(titleFont);
 		sendPacketsPanel.add(sendTitle, BorderLayout.NORTH);
+		sendPacketsPanel.add(sendPacketsGrid, BorderLayout.CENTER);
 
-		//Test Send Button
-		JButton testSendBtn = new JButton("Send Test");
-		testSendBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// controller.sendXBeePacket("(Test Packet)"); //FIXME: remove
+		// Send buttons
+		JButton radio_prepareBtn = new JButton("Prepare for Launch");
+		radio_prepareBtn.setVisible(true);
+		radio_prepareBtn.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					controller.sendCommand(CommandType.LAUNCH);
+				}
 			}
 		});
-		sendPacketsGrid.add(testSendBtn);
-
-		//Send custom data box
-		JButton customDataBtn = new JButton("Send Data");
-		customDataBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// controller.sendXBeePacket(sendEdit.getText()); //FIXME: remove
+		sendPacketsGrid.add(radio_prepareBtn, BorderLayout.CENTER);
+		
+		JButton radio_cancelBtn = new JButton("Cancel Launch");
+		radio_cancelBtn.setVisible(true);
+		radio_cancelBtn.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					controller.sendCommand(CommandType.CANCEL);
+				}
 			}
 		});
+		sendPacketsGrid.add(radio_cancelBtn, BorderLayout.CENTER);
 
-		sendPacketsGrid.add(customDataBtn, BorderLayout.CENTER);
-
+		/**
 		//Send Custom Packet Textbox
 		JPanel customPacketEntry = new JPanel(new BorderLayout());
 		customPacketEntry.add(new JLabel("Send Packet: "), BorderLayout.WEST);
@@ -1195,6 +1049,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		sendPacketsGrid.add(customPacketEntry,BorderLayout.SOUTH);
 
 		sendPacketsPanel.add(sendPacketsGrid, BorderLayout.CENTER);
+		*/
 
 		//Initialize XBee data list
 		JPanel xbeeData = new JPanel(new BorderLayout());
@@ -1231,47 +1086,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 		receivePanel.add(receiveScrollPlane,BorderLayout.CENTER); 
 		
 		/*-- Status Panel --*/
-//		statusPanel = new JPanel();
-//		JLabel statusTitle = new JLabel ("STATUS",JLabel.LEFT);
-//		statusTitle.setFont(titleFont);
-//		statusPanel.add(statusTitle);
-
-//		dataPanel = new JPanel (new BorderLayout());
-//		tablePanel = new JPanel (new GridLayout(3,5));
-//		JLabel rocketTitle = new JLabel ("Rocket",JLabel.LEFT);
-//		rocketTitle.setFont(titleFont);
-//		JLabel latTitle = new JLabel ("Latitude",JLabel.LEFT);
-//		latTitle.setFont(titleFont);
-//		JLabel longTitle = new JLabel ("Longitude",JLabel.LEFT);
-//		longTitle.setFont(titleFont);
-//		JLabel altTitle = new JLabel ("Altitude",JLabel.LEFT);
-//		altTitle.setFont(titleFont);
-//		JLabel enableTitle = new JLabel ("Enabled (Yes/No)",JLabel.LEFT);
-//		enableTitle.setFont(titleFont);
-//
-//		tablePanel.add(new JLabel("", JLabel.LEFT)); //TODO!!!
-//		tablePanel.add(latTitle);
-//		tablePanel.add(longTitle);
-//		tablePanel.add(altTitle);
-//		tablePanel.add(enableTitle);
-//		tablePanel.add(rocketTitle);	
-//		lat = new JLabel("0", JLabel.LEFT);
-//		tablePanel.add(lat);
-//		longi = new JLabel("0",JLabel.LEFT);
-//		tablePanel.add(longi); 
-//		alt = new JLabel("0",JLabel.LEFT);
-//		tablePanel.add(alt);
-//		flag = new JLabel("-",JLabel.LEFT);
-//		tablePanel.add(flag);
-//		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-//		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-//		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-//		tablePanel.add(new JLabel("N/A", JLabel.LEFT));
-//
-//		dataPanel.add(statusPanel, BorderLayout.NORTH);
-//		dataPanel.add(tablePanel, BorderLayout.SOUTH);
-//
-//		xbeePanel.add(dataPanel, BorderLayout.SOUTH);
 
 		xbeePanel.add(PContainer,BorderLayout.WEST);
 		xbeePanel.add(receivePanel,BorderLayout.CENTER);

@@ -27,6 +27,7 @@ import edu.cornell.rocketry.comm.receive.TEMStatusFlag.Type;
 import edu.cornell.rocketry.comm.send.CommandType;
 import edu.cornell.rocketry.comm.send.Sender;
 import edu.cornell.rocketry.comm.send.TestSender;
+import edu.cornell.rocketry.comm.send.RealSender;
 import edu.cornell.rocketry.gui.model.ApplicationModel;
 import edu.cornell.rocketry.gui.model.Datum;
 import edu.cornell.rocketry.gui.model.RocketModel;
@@ -79,7 +80,7 @@ public class Controller {
 		realReceiver = new RealReceiver(this, lora); //initialized w/ xbee initialization
 		testSender = new TestSender(this);
 		lora = new LoRa(realReceiver, gui); //TODO: choose the correct the COM
-		//realSender = new RealSender(this, loraConnection);
+		realSender = new RealSender(this, lora);
 		
 		//System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
 		dataLogger = new DataLogger();

@@ -26,4 +26,9 @@ public class OutgoingStringPacket implements OutgoingPacket {
 		return payload;
 	}
 
+	@Override
+	public int getPayload() {
+		return payload[0];
+	}
+
 }

@@ -8,6 +8,7 @@ package edu.cornell.rocketry.comm.send;
  */
 public class OutgoingCommandPacket implements OutgoingPacket {	
 	private int[] payload; // all commands are a single byte
+	// the fact that it's an array is legacy code and should be factored out when cleaning this code up again
 	
 	public OutgoingCommandPacket (CommandType f) {
 		payload = new int[1];
@@ -17,10 +18,18 @@ public class OutgoingCommandPacket implements OutgoingPacket {
 			break;
 		case CANCEL:
 			payload[0] = 'C';
+			break;
 		default:
 			throw new UnsupportedOperationException("invalid CommandType");
 			//should never reach here due to typechecking, anyway
 		}
+	}
+	
+	/** returns the first int in the payload
+	 * note that the payload is only one int long anyway
+	 */
+	public int getPayload() {
+		return payload[0];
 	}
 	
 	/** ONLY TO BE USED FOR DEBUGGING; use the version that accepts

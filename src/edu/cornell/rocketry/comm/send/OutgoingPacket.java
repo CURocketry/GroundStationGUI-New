@@ -5,4 +5,8 @@ public interface OutgoingPacket {
 	
 	public int[] payload ();
 	
+	/** returns the first int in the payload
+	 */
+	public int getPayload();
+	
 }

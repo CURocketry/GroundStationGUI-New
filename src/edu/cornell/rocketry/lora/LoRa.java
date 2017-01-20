@@ -119,14 +119,6 @@ public class LoRa implements Closeable {
 						mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
 								+ r.toString());
 						
-						/*
-						mainWindow.addToReceiveText("bytes: ");
-						for(byte b : bytes){
-							mainWindow.addToReceiveText(String.format("%02x", b));
-						}
-						mainWindow.addToReceiveText("");
-						*/
-						
 						synchronized (receiver) {
 							receiver.acceptLoRaPacket(r);
 						}
@@ -140,7 +132,7 @@ public class LoRa implements Closeable {
 		}).start();
 	}
 
-	public void send(OutgoingPacket packet) throws LoRaException {
+	public void send(final OutgoingPacket packet) throws LoRaException {
 		// TODO Auto-generated method stub
 		(new Thread(){
 			public void run() {
@@ -148,9 +140,12 @@ public class LoRa implements Closeable {
 					serialPort.setSerialPortParams(baudrate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 					printIfVerbose("Ready to start sending on " + serialPort);
 					
-					OutputStream input = serialPort.getOutputStream();
+					OutputStream output = serialPort.getOutputStream();
+					output.write(packet.getPayload());
+					//TODO: actually send stuff
 					
-					//System.out.print
+					char wasSent = (char) packet.getPayload();
+					mainWindow.addToReceiveText("Sent: " + packet.getPayload() + " (" + wasSent + ")");
 				} catch (UnsupportedCommOperationException e) {
 					throw new LoRaException(e);
 				} catch (IOException e) {
