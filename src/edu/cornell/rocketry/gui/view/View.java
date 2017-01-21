@@ -99,7 +99,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 	private JPanel controlPanel;
 	private JPanel analyticsPanel;
 	private JPanel downloadPanel;
-	private JPanel xbeePanel;
+	private JPanel radioPanel;
 	private JPanel settingsPanel;
 
 	JTabbedPane tabbedPane;
@@ -228,7 +228,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 
 
 
-	/*--------------------------- XBee Tab Fields ---------------------------*/
+	/*--------------------------- Radio Tab Fields --------------------------*/
 
 	public static final Integer[] baudRates = {4800, 9600, 19200, 38400, 57600, 115200};
 
@@ -335,7 +335,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 
 		initializeDownloadTab();
 
-		initializeXBeeTab();
+		initializeRadioTab();
 
 		initializeSettingsTab();
 
@@ -348,7 +348,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		tabbedPane.addTab("Analytics", null, analyticsPanel, "Analytics Tab");
 		tabbedPane.addTab("Recovery", null, treeMap, "Recovery Tracking Tab");
 		tabbedPane.addTab("Download", null, downloadPanel, "Map Downloading Tab");
-		tabbedPane.addTab("XBee", null, xbeePanel, "XBee Setup Tab");
+		tabbedPane.addTab("Radio", null, radioPanel, "Radio Setup Tab");
 		tabbedPane.addTab("Settings", null, settingsPanel, "Settings Tab");
 
 		/* Activate the Tabbed Pane */
@@ -497,7 +497,7 @@ public class View extends JFrame implements JMapViewerEventListener {
 		statusSection.setOpaque(false);
 		infologscrollpane.setOpaque(false);
 
-		infologscrollpane.setVisible(false); //by default, toggled in settings
+		infologscrollpane.setVisible(true); //by default, toggled in settings
 
 		//add sections
 
@@ -933,18 +933,19 @@ public class View extends JFrame implements JMapViewerEventListener {
 		downloadPanel = new JTileDownloaderMainViewPanel(this);
 	}
 
-	private void initializeXBeeTab() {
+	private void initializeRadioTab() {
+		controlLog("Remember to go to the Radio Tab to set up the connection to the Arduino/LoRa first!\n");
 
 		// Layout GUI
-		xbeePanel = new JPanel(new BorderLayout());
+		radioPanel = new JPanel(new BorderLayout());
 
 		/*-- Setup Radio Panel --*/
 
-		JPanel xbeeInitPanel = new JPanel(new BorderLayout());
-		JLabel xbeeInitLabel = new JLabel("Setup Arduino/LoRa Connection", JLabel.CENTER);
-		xbeeInitLabel.setFont(titleFont);
-		xbeeInitPanel.add(xbeeInitLabel, BorderLayout.NORTH);
-		JPanel xbeeInitGrid = new JPanel(new GridLayout(5, 2));
+		JPanel radioInitPanel = new JPanel(new BorderLayout());
+		JLabel radioInitLabel = new JLabel("Setup Arduino/LoRa Connection", JLabel.CENTER);
+		radioInitLabel.setFont(titleFont);
+		radioInitPanel.add(radioInitLabel, BorderLayout.NORTH);
+		JPanel radioInitGrid = new JPanel(new GridLayout(5, 2));
 
 		//Radio Serial Port Label
 		JPanel serialPortPanel = new JPanel(new BorderLayout());
@@ -970,11 +971,11 @@ public class View extends JFrame implements JMapViewerEventListener {
 			}
 		});
 		serialPortPanel.add(refreshPortsBtn, BorderLayout.EAST);
-		xbeeInitGrid.add(serialPortPanel);
+		radioInitGrid.add(serialPortPanel);
 
 		//Baud rate dropdown
 		JPanel baudPanel = new JPanel(new BorderLayout());
-		baudPanel.add(new JLabel("XBee Baud Rate: "), BorderLayout.WEST);
+		baudPanel.add(new JLabel("LoRa Baud Rate: "), BorderLayout.WEST);
 		baudList = new JComboBox<Integer>(baudRates);
 		baudList.setSelectedIndex(4);
 		controller.updateSelectedBaudRate((int) baudList.getSelectedItem()); //initialize model
@@ -984,12 +985,12 @@ public class View extends JFrame implements JMapViewerEventListener {
 			}
 		});
 		baudPanel.add(baudList, BorderLayout.CENTER);
-		xbeeInitGrid.add(baudPanel);
+		radioInitGrid.add(baudPanel);
 
 
 		//Initialize Arduino Connection Button
-		JButton initXBeeButton = new JButton("Initialize Arduino Connection");
-		initXBeeButton.addActionListener(new ActionListener() {
+		JButton initArduinoButton = new JButton("Initialize Arduino Connection");
+		initArduinoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.initLoRa();
@@ -1002,12 +1003,12 @@ public class View extends JFrame implements JMapViewerEventListener {
 					numErr++;
 					addToReceiveText("Error ("
 							+ numErr
-							+ "): Could not connect to XBee :( Make sure port isn't being used by another program (including this one)!");
+							+ "): Could not connect to Arduino :( Make sure port isn't being used by another program (including this one)!");
 				}
 			}
 		});
-		xbeeInitGrid.add(initXBeeButton);
-		xbeeInitPanel.add(xbeeInitGrid, BorderLayout.CENTER);
+		radioInitGrid.add(initArduinoButton);
+		radioInitPanel.add(radioInitGrid, BorderLayout.CENTER);
 
 		//Send Packet Title and Button
 		JPanel sendPacketsPanel = new JPanel(new BorderLayout());
@@ -1051,21 +1052,21 @@ public class View extends JFrame implements JMapViewerEventListener {
 		sendPacketsPanel.add(sendPacketsGrid, BorderLayout.CENTER);
 		*/
 
-		//Initialize XBee data list
-		JPanel xbeeData = new JPanel(new BorderLayout());
-		xbeeData.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-		JPanel xbeeDataGrid = new JPanel(new GridLayout(4, 2));
+		//Initialize radio data list
+		JPanel radioData = new JPanel(new BorderLayout());
+		radioData.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+		JPanel radioDataGrid = new JPanel(new GridLayout(4, 2));
 		JLabel mostRecentPacket = new JLabel("Most Recent Data Packet:");
-		xbeeDataGrid.add(mostRecentPacket);
+		radioDataGrid.add(mostRecentPacket);
 		JLabel parsedPacket = new JLabel("Parsed Data Packet:");
-		xbeeDataGrid.add(parsedPacket);
-		xbeeData.add(xbeeDataGrid, BorderLayout.CENTER);
+		radioDataGrid.add(parsedPacket);
+		radioData.add(radioDataGrid, BorderLayout.CENTER);
 
 		
 		JPanel PContainer = new JPanel(new BorderLayout());
-		PContainer.add(xbeeInitPanel, BorderLayout.NORTH);
+		PContainer.add(radioInitPanel, BorderLayout.NORTH);
 		PContainer.add(sendPacketsPanel, BorderLayout.CENTER);
-		PContainer.add(xbeeData, BorderLayout.SOUTH);
+		PContainer.add(radioData, BorderLayout.SOUTH);
 
 
 		/*-- Received Packets Panel-- */
@@ -1087,8 +1088,8 @@ public class View extends JFrame implements JMapViewerEventListener {
 		
 		/*-- Status Panel --*/
 
-		xbeePanel.add(PContainer,BorderLayout.WEST);
-		xbeePanel.add(receivePanel,BorderLayout.CENTER);
+		radioPanel.add(PContainer,BorderLayout.WEST);
+		radioPanel.add(receivePanel,BorderLayout.CENTER);
 
 
 		// Text area stuff...
@@ -1296,8 +1297,8 @@ public class View extends JFrame implements JMapViewerEventListener {
 	public void incNumError() { numErr++; }
 	public void resetPacketCounters() { numSent=0; numRec=0; numErr=0; }
 
-	//get updated data from XBee and display it
-	public void updateXBeeData (String updateLat, String updateLongi, String updateAlt, String updateFlag) {
+	//get updated data from Radio and display it
+	public void updateRadioData (String updateLat, String updateLongi, String updateAlt, String updateFlag) {
 		lat.setText(updateLat);
 		longi.setText(updateLongi);
 		alt.setText(updateAlt);
@@ -1452,7 +1453,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 	public void addToReceiveText(String txt) {
 		receiveText.setText(receiveText.getText() + "- " + txt + System.getProperty("line.separator"));
 		receiveText.setCaretPosition(receiveText.getDocument().getLength()); // locks scroll at bottom
-		//logMessage(txt);
 	}
 
 	/**
@@ -1461,7 +1461,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 	 * @param s
 	 */
 	public void controlLog(String s) {
-		//infolog.setText(infolog.getText() + ">> " + s + System.getProperty("line.separator"));
 		infolog.append(s + System.getProperty("line.separator"));
 		infolog.setCaretPosition(infolog.getDocument().getLength()); // locks scroll at bottom
 		controlLogToFile(s);

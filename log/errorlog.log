@@ -390,3 +390,49 @@
 [ INFO  ] [ 01/19 21:51:43 ] Application closing...
 [ INFO  ] [ 01/19 21:51:43 ] Data logger closed
 [ INFO  ] [ 01/19 21:51:43 ] Application closed
+[ INFO  ] [ 01/19 23:14:45 ] Application closing...
+[ INFO  ] [ 01/19 23:14:45 ] Data logger closed
+[ INFO  ] [ 01/19 23:14:45 ] Application closed
+[ INFO  ] [ 01/21 13:35:18 ] Application closing...
+[ INFO  ] [ 01/21 13:35:18 ] Data logger closed
+[ INFO  ] [ 01/21 13:35:18 ] Application closed
+[ INFO  ] [ 01/21 13:45:25 ] Application closing...
+[ INFO  ] [ 01/21 13:45:25 ] Data logger closed
+[ INFO  ] [ 01/21 13:45:25 ] Application closed
+[ INFO  ] [ 01/21 13:53:46 ] Application closing...
+[ INFO  ] [ 01/21 13:53:46 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485024327901.csv'
+[ INFO  ] [ 01/21 13:53:46 ] Data logger closed
+[ INFO  ] [ 01/21 13:53:46 ] Application closed
+[ INFO  ] [ 01/21 14:02:42 ] Application closing...
+[ INFO  ] [ 01/21 14:02:42 ] Data logger closed
+[ INFO  ] [ 01/21 14:02:42 ] Application closed
+[ INFO  ] [ 01/21 14:24:23 ] Application closing...
+[ INFO  ] [ 01/21 14:24:23 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485025365138.csv'
+[ INFO  ] [ 01/21 14:24:23 ] Data logger closed
+[ INFO  ] [ 01/21 14:24:23 ] Application closed
+[ INFO  ] [ 01/21 14:30:00 ] Application closing...
+[ INFO  ] [ 01/21 14:30:00 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485026662582.csv'
+[ INFO  ] [ 01/21 14:30:00 ] Data logger closed
+[ INFO  ] [ 01/21 14:30:00 ] Application closed
+[ INFO  ] [ 01/21 14:33:22 ] Application closing...
+[ INFO  ] [ 01/21 14:33:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485027002684.csv'
+[ INFO  ] [ 01/21 14:33:22 ] Data logger closed
+[ INFO  ] [ 01/21 14:33:22 ] Application closed
+[ INFO  ] [ 01/21 14:35:20 ] Application closing...
+[ INFO  ] [ 01/21 14:35:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485027202380.csv'
+[ INFO  ] [ 01/21 14:35:20 ] Data logger closed
+[ INFO  ] [ 01/21 14:35:20 ] Application closed
+[ INFO  ] [ 01/21 14:36:13 ] Application closing...
+[ INFO  ] [ 01/21 14:36:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485027322399.csv'
+[ INFO  ] [ 01/21 14:36:13 ] Data logger closed
+[ INFO  ] [ 01/21 14:36:13 ] Application closed
+[ INFO  ] [ 01/21 14:39:48 ] Application closing...
+[ INFO  ] [ 01/21 14:39:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485027376738.csv'
+[ INFO  ] [ 01/21 14:39:48 ] Data logger closed
+[ INFO  ] [ 01/21 14:39:48 ] Application closed
+[ INFO  ] [ 01/21 14:46:06 ] Application closing...
+[ INFO  ] [ 01/21 14:46:06 ] Data logger closed
+[ INFO  ] [ 01/21 14:46:06 ] Application closed
+[ INFO  ] [ 01/21 14:46:54 ] Application closing...
+[ INFO  ] [ 01/21 14:46:54 ] Data logger closed
+[ INFO  ] [ 01/21 14:46:54 ] Application closed

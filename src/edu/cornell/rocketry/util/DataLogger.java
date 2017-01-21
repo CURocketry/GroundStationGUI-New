@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
- * a class that allows logging to a file at GroundStationGUI-New/tem_log_file_XXXms.temdata
+ * a class that allows logging to a file at GroundStationGUI-New/log/tracer_log_XXX.csv
  * where XXX is the current time in milliseconds since Jan. 1 1970. 
  *
  */
@@ -19,8 +21,9 @@ public class DataLogger {
 	
 	public DataLogger () {
 		try {
-			filename = "tem_log_file_" + System.currentTimeMillis() + "ms.temdata";
-			writer = new PrintWriter(filename, "UTF-8");
+			Path thePath = Paths.get("log", "tracer_log_" + System.currentTimeMillis() + ".csv");
+			filename = thePath.toString();
+			writer = new PrintWriter(thePath.toFile(), "UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			String msg = 
 				"edu.cornell.rocketry.util.DataLogger#init() failed to "

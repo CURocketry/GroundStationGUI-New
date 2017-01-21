@@ -84,8 +84,8 @@ public class Controller {
 		
 		//System.out.println("selectedAddress = " + applicationModel.getXbeeAddress());
 		dataLogger = new DataLogger();
-		//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag
-		dataLogger.logHeader("//time,lat,lon,alt,rot,acc_x,acc_y,acc_z,temp,flag");
+		//time,lat,lon,alt,x,y,z
+		dataLogger.logHeader("time,lat,lon,alt,x,y,z");
 		
 		System.out.println("Controller Initialized");
 		
@@ -270,100 +270,28 @@ public class Controller {
     }
     
     public void sendCommand (CommandType c) {
-    	//Command c = new Command(type, System.currentTimeMillis());
     	sender().send(c);
     }
 	
 
 	/**
-	 * receive and process a data packet from the TEM
+	 * receive and process a data packet from the Tracer
 	 * 
 	 * @param r  the TEMResponse
 	 * @param test  whether or not we're in testing mode
 	 */
 	public synchronized void acceptLoRaPacket (LoRaPacket r, boolean test) {
-		ilog("\nTEM Response Received:");
-		
-		//process flag
-		
-		/* TEMStatusFlag flag = r.flag();
-		
-		if (flag.isSet(Type.camera_enabled)) {
-			updateCameraStatus(Status.ENABLED);
-		} else {
-			updateCameraStatus(Status.DISABLED);
-		}
-		
-		if (flag.isSet(Type.gps_fix)) {
-			updateGPSStatus(Status.ENABLED);
-		} else {
-			updateGPSStatus(Status.DISABLED);
-		}
-		
-		if (flag.isSet(Type.launch_ready)) {
-			updateLaunchStatus(Status.ENABLED);
-		} else {
-			updateLaunchStatus(Status.DISABLED);
-		}
-		
-		if (flag.isSet(Type.landed)) {
-			updateLandedStatus(Status.ENABLED);
-		} else {
-			updateLandedStatus(Status.DISABLED);
-		}
-		
-		if (flag.isSet(Type.sys_init)) {
-			updateInitializationStatus(Status.ENABLED);
-		} else {
-			updateInitializationStatus(Status.DISABLED);
-		}
-		*/
-		
 		//log data to file
 		//time,lat,lon,alt,x,y,z
 		StringBuilder sb = new StringBuilder();
-		sb
-			.append(r.time()).append(",")
+		sb.append(r.time()).append(",")
 			.append(r.lat()).append(",")
 			.append(r.lon()).append(",")
 			.append(r.alt()).append(",")
 			.append(r.x()).append(",")
 			.append(r.y()).append(",")
-			.append(r.z()).append(",");
-		
+			.append(r.z());
 		dataLogger.log(sb.toString());
-		
-		/*updateAnalyticsDisplayFields
-			(r.lat(), 
-			r.lon(), 
-			r.alt(), 
-			r.time(), 
-			r.rot(), 
-			r.acc_x(), 
-			r.acc_y(), 
-			r.acc_z(),
-			r.temp());*/ //TODO
-		
-		/* TODO!!!
-		if (gpsCheck(r)) {
-			ilog("(" + r.lat() + ", " + r.lon() + ", " + r.alt() + ")");
-			ilog("gps time: " + Position.millisToTime(r.time()) + " ms");
-			// Update model
-			rocketModel.update(r.createDatum());
-			updateRocketPosition (rocketModel.getCurrentDatum());
-			String posn = "(" + r.lat() + ", " + r.lon() + ")";
-			view.updateLatestPosition(posn);
-			if (!test) updateLoRaDisplayFields (
-				""+r.lat(),""+r.lon(),""+r.alt(),""+r.flag());
-			
-			MapMarker m = new MapMarkerDot(r.lat(), r.lon());
-			Pair<Long, MapMarker> p = new Pair<Long, MapMarker>(r.time(), m);
-			all_markers.add(p);
-			view.map().addMapMarker(m);
-		} else {
-			ilog("inaccurate gps data received");
-		}
-		*/
 	}
 		
 	
@@ -393,7 +321,7 @@ public class Controller {
 	 * 
 	 * @param s  the string to be logged
 	 */
-	private void ilog (String s) {
+	public void ilog (String s) {
 		view.controlLog("- " + s);
 		System.out.println("logged: " + s);
 	}
@@ -436,7 +364,7 @@ public class Controller {
 	
 	
 	public void updateLoRaDisplayFields (String lat, String lon, String alt, String flag) {
-		view.updateXBeeData(lat, lon, alt, flag);
+		view.updateRadioData(lat, lon, alt, flag);
 	}
 	
 
@@ -469,10 +397,6 @@ public class Controller {
 		applicationModel.setSerialPort(port);
 	}
 
-	/*public void setSelectedAddress(XBeeAddress64 addr) {
-		realSender = new RealSender(this, xbeeController.getXbee(), addr);
-		applicationModel.setXbeeAddress(addr);
-	}*/
 	
 	public void updateSelectedBaudRate(int rate) {
 		applicationModel.setBaudRate(rate);

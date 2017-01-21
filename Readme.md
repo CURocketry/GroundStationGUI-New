@@ -4,7 +4,9 @@ This is a Java application that runs the GUI that monitors and saves data packet
 
 The main part of the code is in in the folder [src/edu/cornell/rocketry/](src/edu/cornell/rocketry/). For the moment, the actual README file is actually in [src/edu/cornell/rocketry/main/README.txt](src/edu/cornell/rocketry/main/README.txt).
 
-For testing, it is probably useful to have [com0com](http://com0com.sourceforge.net/) installed, which can redirect COM ports between each other.
+Upon running, data is stored to a file of the form [log/tem_log_file_XXXXX.csv](log/tem_log_file_XXXXX.csv), where XXXXX is the starting time as a Unix epoch (milliseconds since January 1, 1970.
+
+For testing, it is probably useful to have [com0com](http://com0com.sourceforge.net/) installed, which can redirect COM ports between each other. Also, there are a couple of Python scripts (to be run in Python 3; I don't know if it works in Python 2) in [test/PythonScripts](test/PythonScripts). Note that if you're testing sending and receiving, you may get some blocking in the Java code unless there's something (like these Python scripts) to receive stuff from the other end of the pipeline.
 
 ## Known Issues
 - The file system is quite messy, since a lot of the libraries are imported in their entirety, and spread out across the system, obscuring our actual code.
@@ -20,8 +22,7 @@ along the way (we may get an IndexOutOfBounds or AssertionError otherwise, which
 - Create proper Unit Tests for some of these functions
 - Double-check edu.cornell.rocketry.util.LocalLoader
 - the GUI->Model/Controller->LoRa pipeline is incomplete (baud rate has no effect right now)
-- we never really agreed on how sending commands up to the rocket works, have we? I have not implemented any sort of data sending.
-- Trying to reinitialize the "GS XBee" (actually the LoRa) for some reason takes a long time. 
+- Trying to reinitialize the "GS XBee" (actually the LoRa) for some reason takes a long time; ideally we should also just have a "close connection" button.
 
 ## Questions
 - edu.cornell.rocketry.comm.receive.XBeeListenerThread : does it only work if you have a real XBee, or does it work for testing, too?

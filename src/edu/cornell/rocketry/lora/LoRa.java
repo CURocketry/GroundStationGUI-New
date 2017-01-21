@@ -17,7 +17,7 @@ import gnu.io.UnsupportedCommOperationException;
 public class LoRa implements Closeable {
 	public static int TIMEOUT = 3000; //in milliseconds
 	
-	private boolean verbose = false;
+	private boolean verbose = true;
 	private int baudrate = 19200;
 	
 	private String portname;
@@ -115,13 +115,14 @@ public class LoRa implements Closeable {
 						
 						LoRaPacket r = new LoRaPacket(bytes);
 						
+						synchronized (receiver) {
+							receiver.acceptLoRaPacket(r);
+						}
 						mainWindow.incNumRec();
 						mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
 								+ r.toString());
 						
-						synchronized (receiver) {
-							receiver.acceptLoRaPacket(r);
-						}
+						mainWindow.controlLog("- Received: " + r.toString());
 					}
 				} catch (UnsupportedCommOperationException e) {
 					throw new LoRaException(e);
@@ -133,22 +134,24 @@ public class LoRa implements Closeable {
 	}
 
 	public void send(final OutgoingPacket packet) throws LoRaException {
-		// TODO Auto-generated method stub
 		(new Thread(){
 			public void run() {
 				try {
 					serialPort.setSerialPortParams(baudrate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 					printIfVerbose("Ready to start sending on " + serialPort);
 					
-					OutputStream output = serialPort.getOutputStream();
+					// actually do the sending
+					OutputStream output = serialPort.getOutputStream();					
 					output.write(packet.getPayload());
-					//TODO: actually send stuff
-					
+										
+					// log it
 					char wasSent = (char) packet.getPayload();
 					mainWindow.addToReceiveText("Sent: " + packet.getPayload() + " (" + wasSent + ")");
+					mainWindow.controlLog("- Sent: " + packet.getPayload() + " (" + wasSent + ")");
 				} catch (UnsupportedCommOperationException e) {
 					throw new LoRaException(e);
 				} catch (IOException e) {
+					printIfVerbose("ERROR OCCURRED WHEN WRITING");
 					throw new LoRaException(e);
 				}
 			}
