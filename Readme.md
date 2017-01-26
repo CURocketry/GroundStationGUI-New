@@ -8,6 +8,8 @@ Upon running, data is stored to a file of the form [log/tem_log_file_XXXXX.csv](
 
 For testing, it is probably useful to have [com0com](http://com0com.sourceforge.net/) installed, which can redirect COM ports between each other. Also, there are a couple of Python scripts (to be run in Python 3; I don't know if it works in Python 2) in [test/PythonScripts](test/PythonScripts). Note that if you're testing sending and receiving, you may get some blocking in the Java code unless there's something (like these Python scripts) to receive stuff from the other end of the pipeline.
 
+The RXTX library requires some setup. In Eclipse, make sure there's exactly one RXTXcomm.jar that's located at GroundStationGUI-New/lib/mfz-rxtx-2.2-20081207-win-x64, and upon opening up the dropdown, the Native library location is set to the same thing (the folder GroundStationGUI-New/lib/mfz-rxtx-2.2-20081207-win-x64). (While you're in there, also make sure you have JUnit in your path, too.)
+
 ## Known Issues
 - The file system is quite messy, since a lot of the libraries are imported in their entirety, and spread out across the system, obscuring our actual code.
 - There're several sort-of-but-not-really duplicates between files in jTile.src.org.openstreetmap.gui.jmapviewer and files in org.openstreetmap.gui.jmapviewer, but different parts of the code depend on different versions. I don't think that we can easily replace one with the other by just replacing all of one with all of the other due to weird dependency issues, but we should probably collapse the two versions down into a single one to avoid future confusion.
