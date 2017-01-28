@@ -436,3 +436,19 @@
 [ INFO  ] [ 01/21 14:46:54 ] Application closing...
 [ INFO  ] [ 01/21 14:46:54 ] Data logger closed
 [ INFO  ] [ 01/21 14:46:54 ] Application closed
+[ INFO  ] [ 01/25 22:03:34 ] Application closing...
+[ INFO  ] [ 01/25 22:03:34 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485396113990.csv'
+[ INFO  ] [ 01/25 22:03:34 ] Data logger closed
+[ INFO  ] [ 01/25 22:03:34 ] Application closed
+[ INFO  ] [ 01/28 16:19:51 ] Application closing...
+[ INFO  ] [ 01/28 16:19:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485634226795.csv'
+[ INFO  ] [ 01/28 16:19:51 ] Data logger closed
+[ INFO  ] [ 01/28 16:19:51 ] Application closed
+[ INFO  ] [ 01/28 16:21:22 ] Application closing...
+[ INFO  ] [ 01/28 16:21:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1485638393412.csv'
+[ INFO  ] [ 01/28 16:21:22 ] Data logger closed
+[ INFO  ] [ 01/28 16:21:22 ] Application closed
+[ ERROR ] [ 01/28 16:36:22 ] edu.cornell.rocketry.util.BasicTEMSimulator#loadSimFile failed with exception: java.lang.NumberFormatException: For input string: "42.446243"
+[ INFO  ] [ 01/28 16:59:13 ] Application closing...
+[ INFO  ] [ 01/28 16:59:13 ] Data logger closed
+[ INFO  ] [ 01/28 16:59:13 ] Application closed

@@ -292,6 +292,10 @@ public class Controller {
 			.append(r.y()).append(",")
 			.append(r.z());
 		dataLogger.log(sb.toString());
+		
+		//mark on map
+		Datum datum = new Datum (r.time(), r.lat(), r.lon(), (int) r.alt(), Double.NaN, r.x(), r.y(), r.z(), Double.NaN);
+		updateRocketPosition(datum);
 	}
 		
 	

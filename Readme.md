@@ -10,6 +10,8 @@ For testing, it is probably useful to have [com0com](http://com0com.sourceforge.
 
 The RXTX library requires some setup. In Eclipse, make sure there's exactly one RXTXcomm.jar that's located at GroundStationGUI-New/lib/mfz-rxtx-2.2-20081207-win-x64, and upon opening up the dropdown, the Native library location is set to the same thing (the folder GroundStationGUI-New/lib/mfz-rxtx-2.2-20081207-win-x64). (While you're in there, also make sure you have JUnit in your path, too.)
 
+When loading tiles in the Settings Tab, select the entire tiles folder. When downloading tiles on the Download tab, click on Slippy Map chooser. In the popup, zoom in with double clicks or mouse scroll, move around with right-click, and select a region with left-click. Enter the zoom level(s) desired in Output Zoom Levels, and then click "Download Tiles." After this, reload all the tiles in the Settings Tab.
+
 ## Known Issues
 - The file system is quite messy, since a lot of the libraries are imported in their entirety, and spread out across the system, obscuring our actual code.
 - There're several sort-of-but-not-really duplicates between files in jTile.src.org.openstreetmap.gui.jmapviewer and files in org.openstreetmap.gui.jmapviewer, but different parts of the code depend on different versions. I don't think that we can easily replace one with the other by just replacing all of one with all of the other due to weird dependency issues, but we should probably collapse the two versions down into a single one to avoid future confusion.

@@ -328,16 +328,16 @@ public class View extends JFrame implements JMapViewerEventListener {
 
 
 		initializeControlTab();
-
 		initializeAnalyticsTab();
-
 		initializeRecoveryTab();
-
 		initializeDownloadTab();
-
 		initializeRadioTab();
-
 		initializeSettingsTab();
+		
+		// a few notifications
+		controlLog("Remember to go to the Settings Tab to choose what folder to load the map tiles from (and the Download Tab to get the map tiles into the folder)!");
+		controlLog("Remember to go to the Radio Tab to set up the connection to the Arduino/LoRa!\n");
+
 
 
 		/*------------------ Create Tabbed Pane & Add Tabs ------------------*/   
@@ -934,8 +934,6 @@ public class View extends JFrame implements JMapViewerEventListener {
 	}
 
 	private void initializeRadioTab() {
-		controlLog("Remember to go to the Radio Tab to set up the connection to the Arduino/LoRa first!\n");
-
 		// Layout GUI
 		radioPanel = new JPanel(new BorderLayout());
 
