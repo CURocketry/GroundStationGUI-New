@@ -283,19 +283,29 @@ public class Controller {
 	public synchronized void acceptLoRaPacket (LoRaPacket r, boolean test) {
 		//log data to file
 		//time,lat,lon,alt,x,y,z
-		StringBuilder sb = new StringBuilder();
-		sb.append(r.time()).append(",")
-			.append(r.lat()).append(",")
-			.append(r.lon()).append(",")
-			.append(r.alt()).append(",")
-			.append(r.x()).append(",")
-			.append(r.y()).append(",")
-			.append(r.z());
-		dataLogger.log(sb.toString());
-		
-		//mark on map
-		Datum datum = new Datum (r.time(), r.lat(), r.lon(), (int) r.alt(), Double.NaN, r.x(), r.y(), r.z(), Double.NaN);
-		updateRocketPosition(datum);
+		if(!r.isConfirmation()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(r.time()).append(",")
+				.append(r.lat()).append(",")
+				.append(r.lon()).append(",")
+				.append(r.alt()).append(",")
+				.append(r.x()).append(",")
+				.append(r.y()).append(",")
+				.append(r.z());
+			dataLogger.log(sb.toString());
+			view.incNumRec();
+			view.addToReceiveText("Received (" + view.getNumRec() + "): "
+					+ r.toString());
+			view.controlLog("- Received: " + r.toString());
+			
+			//mark on map
+			Datum datum = new Datum (r.time(), r.lat(), r.lon(), (int) r.alt(), Double.NaN, r.x(), r.y(), r.z(), Double.NaN);
+			updateRocketPosition(datum);
+		} else {
+			String string = "RECEIVED CONFIRMATION: " + r.getConfirmation();
+			view.addToReceiveText(string);
+			view.controlLog(string);
+		}
 	}
 		
 	

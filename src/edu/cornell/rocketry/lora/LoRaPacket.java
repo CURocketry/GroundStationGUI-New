@@ -24,6 +24,8 @@ public class LoRaPacket {
 	public Float x = null;
 	public Float y = null;
 	public Float z = null;
+	
+	private Byte commandByte = null;
 
 	/** constructs a packet from the byte array
 	 * all values are assumed to be big-endian
@@ -70,6 +72,8 @@ public class LoRaPacket {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			z = bb.getFloat();
 		}
+		
+		commandByte = bytes[4];
 	}
 	
 	/** constructs a packet from the given parameters */
@@ -126,5 +130,22 @@ public class LoRaPacket {
 	}
 	public float z() {
 		return z == null ? Float.NaN : z;
+	}
+	
+	public boolean isConfirmation(){
+		return time == -1; //TODO: if unsigned, change to MAX_INT
+	}
+	public LoRaConfirmationEnum getConfirmation(){
+		switch(commandByte) {
+		case 'L':
+			return LoRaConfirmationEnum.LAUNCH_CONFIRM;
+		case 'C':
+			return LoRaConfirmationEnum.CANCEL_CONFIRM;
+		case 'D':
+			return LoRaConfirmationEnum.DONE_CONFIRM;
+		default:
+			System.out.println(commandByte);
+			return LoRaConfirmationEnum.UNKNOWN_CONFIRM;
+		}
 	}
 }

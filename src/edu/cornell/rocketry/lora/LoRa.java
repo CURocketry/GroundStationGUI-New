@@ -118,11 +118,12 @@ public class LoRa implements Closeable {
 						synchronized (receiver) {
 							receiver.acceptLoRaPacket(r);
 						}
-						mainWindow.incNumRec();
-						mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
-								+ r.toString());
-						
-						mainWindow.controlLog("- Received: " + r.toString());
+//						mainWindow.incNumRec();
+//						mainWindow.addToReceiveText("Received (" + mainWindow.getNumRec() + "): "
+//								+ r.toString());
+//						
+//						mainWindow.controlLog("- Received: " + r.toString());
+						//moved to controller.acceptLoRaPacket
 					}
 				} catch (UnsupportedCommOperationException e) {
 					throw new LoRaException(e);
@@ -148,6 +149,8 @@ public class LoRa implements Closeable {
 					char wasSent = (char) packet.getPayload();
 					mainWindow.addToReceiveText("Sent: " + packet.getPayload() + " (" + wasSent + ")");
 					mainWindow.controlLog("- Sent: " + packet.getPayload() + " (" + wasSent + ")");
+					
+					//TODO: move this to something in the controller
 				} catch (UnsupportedCommOperationException e) {
 					throw new LoRaException(e);
 				} catch (IOException e) {

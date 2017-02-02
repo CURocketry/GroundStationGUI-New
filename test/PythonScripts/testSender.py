@@ -32,19 +32,33 @@ def sendPacket(packet):
 	for i in packet[1:]:
 		do_write(ser, b"\x01")
 		do_write(ser, float_to_bytes(i))
+def sendConfimationPacket(b):
+	"""byte b"""
+
+	bytes_final = bytes([0xff,0xff,0xff,0xff])
+	bytes_final += b
+	MESSAGE_LENGTH = 34
+	while len(bytes_final) < MESSAGE_LENGTH:
+		bytes_final += bytes([0x00])
+	do_write(ser, bytes_final)
 
 with serial.Serial('COM8', 19200, writeTimeout=15) as ser:  # open serial port
 	print(ser.name)         # check which port was really used
 	print('is open? %s' % ser.is_open)
 
-	# sendPacket((1258, 10.5, 20.5, 30.5, 40.5, 50.5, 60.5))
-	# sendPacket((-11, -1.5, -2.5, -3.5, -4.5, -5.5, -6.5))
+	sendPacket((-11, -1.5, -2.5, -3.5, -4.5, -5.5, -6.5))
+	sendConfimationPacket(b'L')
+	sendPacket((1258, 10.5, 20.5, 30.5, 40.5, 50.5, 60.5))
+	sendConfimationPacket(b'C')
+	sendConfimationPacket(b'D')
+	sendConfimationPacket(b'U')
+	sendPacket((12538, 40.75, 30.75, 30.25	, 40.25	, 50.25	, 60.25	))
 
-	counter = 0
-	for (lat, lon, alt, x, y, z) in west_campus_test:
-		counter += 1
-		sendPacket((counter, lat, lon, alt, x, y, z))
-		time.sleep(1);
+	# counter = 0
+	# for (lat, lon, alt, x, y, z) in west_campus_test:
+	# 	counter += 1
+	# 	sendPacket((counter, lat, lon, alt, x, y, z))
+	# 	time.sleep(1);
 
 	print('finished writing')
 
