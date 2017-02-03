@@ -16,6 +16,7 @@ import java.util.Objects;
  */
 public class LoRaPacket {
 	public static final int MESSAGE_LENGTH = 34; //in bytes
+	private static final byte VALID_BYTE = (byte) 'Y';
 	
 	public int time;
 	public Float lat = null;
@@ -38,37 +39,37 @@ public class LoRaPacket {
 
 		//maybe there's a better way to do this than copy-paste?
 		int counter = 4;
-		if (bytes[counter] != 0x00) {
+		if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			lat = bb.getFloat();
 		}
 
 		counter += 5;
-		if (bytes[counter] != 0x00) {
+		if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			lon = bb.getFloat();
 		}
 
 		counter += 5;
-		if (bytes[counter] != 0x00) {
+		if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			alt = bb.getFloat();
 		}
 		
 		counter += 5;
-		if (bytes[counter] != 0x00) {
+		if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			x = bb.getFloat();
 		}
 
 		counter += 5;
-		if (bytes[counter] != 0x00) {
+		if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			y = bb.getFloat();
 		}
 
 		counter += 5;
-		if (bytes[counter] != 0x00) {
+		if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			z = bb.getFloat();
 		}

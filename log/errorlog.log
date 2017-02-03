@@ -505,3 +505,37 @@
 [ INFO  ] [ 02/02 17:28:45 ] Application closing...
 [ INFO  ] [ 02/02 17:28:45 ] Data logger closed
 [ INFO  ] [ 02/02 17:28:45 ] Application closed
+[ INFO  ] [ 02/03 12:23:45 ] Application closing...
+[ INFO  ] [ 02/03 12:23:45 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486076033806.csv'
+[ INFO  ] [ 02/03 12:23:45 ] Data logger closed
+[ INFO  ] [ 02/03 12:23:45 ] Application closed
+[ WARN  ] [ 02/03 18:18:07 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.4294264614721018E34, greater than 90
+[ WARN  ] [ 02/03 18:18:07 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.4294108634276068E34, greater than 90
+[ WARN  ] [ 02/03 18:18:07 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.591994591780586E38, less than -90
+[ WARN  ] [ 02/03 18:18:07 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.605286871738435E38, less than -90
+[ WARN  ] [ 02/03 18:18:07 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.8312556310218708E38, less than -90
+[ WARN  ] [ 02/03 18:18:08 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.2907048480159214E35, less than -90
+[ WARN  ] [ 02/03 18:18:47 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.4294109872216108E34, greater than 90
+[ WARN  ] [ 02/03 18:19:25 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -8.589934592E9, less than -90
+[ INFO  ] [ 02/03 18:19:49 ] Application closing...
+[ INFO  ] [ 02/03 18:19:49 ] Data logger closed
+[ INFO  ] [ 02/03 18:19:49 ] Application closed
+[ WARN  ] [ 02/03 18:21:12 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.4294264614721018E34, greater than 90
+[ WARN  ] [ 02/03 18:21:12 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.4294108634276068E34, greater than 90
+[ INFO  ] [ 02/03 18:21:59 ] Application closing...
+[ INFO  ] [ 02/03 18:21:59 ] Data logger closed
+[ INFO  ] [ 02/03 18:21:59 ] Application closed
+[ WARN  ] [ 02/03 18:22:15 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.4294264614721018E34, greater than 90
+[ WARN  ] [ 02/03 18:22:15 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.4294108634276068E34, greater than 90
+[ INFO  ] [ 02/03 18:23:48 ] Application closing...
+[ INFO  ] [ 02/03 18:23:48 ] Data logger closed
+[ INFO  ] [ 02/03 18:23:48 ] Application closed
+[ INFO  ] [ 02/03 18:24:34 ] Application closing...
+[ INFO  ] [ 02/03 18:24:34 ] Data logger closed
+[ INFO  ] [ 02/03 18:24:34 ] Application closed
+[ INFO  ] [ 02/03 18:25:20 ] Application closing...
+[ INFO  ] [ 02/03 18:25:20 ] Data logger closed
+[ INFO  ] [ 02/03 18:25:20 ] Application closed
+[ INFO  ] [ 02/03 18:25:55 ] Application closing...
+[ INFO  ] [ 02/03 18:25:55 ] Data logger closed
+[ INFO  ] [ 02/03 18:25:55 ] Application closed

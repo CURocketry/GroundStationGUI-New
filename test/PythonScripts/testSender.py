@@ -28,13 +28,13 @@ def float_to_bytes(f):
 def sendPacket(packet):
 	"""packet is a tuple of the form
 	(time, lat, long, alt, x, y, z) where time is an int and the rest are floats"""
-	do_write(ser, int_to_bytes(packet[0]))
+	bytes_final = int_to_bytes(packet[0])
 	for i in packet[1:]:
-		do_write(ser, b"\x01")
-		do_write(ser, float_to_bytes(i))
+		bytes_final += b"Y"
+		bytes_final += float_to_bytes(i)
+	do_write(ser, bytes_final)
 def sendConfimationPacket(b):
 	"""byte b"""
-
 	bytes_final = bytes([0xff,0xff,0xff,0xff])
 	bytes_final += b
 	MESSAGE_LENGTH = 34
