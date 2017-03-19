@@ -39,40 +39,40 @@ public class LoRaPacket {
 
 		//maybe there's a better way to do this than copy-paste?
 		int counter = 4;
-		if (bytes[counter] == VALID_BYTE) {
+		//if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			lat = bb.getFloat();
-		}
+		//}
 
 		counter += 5;
-		if (bytes[counter] == VALID_BYTE) {
+		//if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			lon = bb.getFloat();
-		}
+		//}
 
 		counter += 5;
-		if (bytes[counter] == VALID_BYTE) {
+		//if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			alt = bb.getFloat();
-		}
+		//}
 		
 		counter += 5;
-		if (bytes[counter] == VALID_BYTE) {
+		//if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			x = bb.getFloat();
-		}
+		//}
 
 		counter += 5;
-		if (bytes[counter] == VALID_BYTE) {
+		//if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			y = bb.getFloat();
-		}
+		//}
 
 		counter += 5;
-		if (bytes[counter] == VALID_BYTE) {
+		//if (bytes[counter] == VALID_BYTE) {
 			bb = ByteBuffer.wrap(Arrays.copyOfRange(bytes, counter+1, counter+5));
 			z = bb.getFloat();
-		}
+		//}
 		
 		commandByte = bytes[4];
 	}
@@ -142,6 +142,8 @@ public class LoRaPacket {
 			return LoRaConfirmationEnum.LAUNCH_CONFIRM;
 		case 'C':
 			return LoRaConfirmationEnum.CANCEL_CONFIRM;
+		case 'E':
+			return LoRaConfirmationEnum.RASPBERRYPI_ERROR;
 		case 'D':
 			return LoRaConfirmationEnum.DONE_CONFIRM;
 		default:

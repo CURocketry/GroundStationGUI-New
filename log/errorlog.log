@@ -539,3 +539,646 @@
 [ INFO  ] [ 02/03 18:25:55 ] Application closing...
 [ INFO  ] [ 02/03 18:25:55 ] Data logger closed
 [ INFO  ] [ 02/03 18:25:55 ] Application closed
+[ INFO  ] [ 02/03 21:00:55 ] Application closing...
+[ INFO  ] [ 02/03 21:00:55 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486173646277.csv'
+[ INFO  ] [ 02/03 21:00:55 ] Data logger closed
+[ INFO  ] [ 02/03 21:00:55 ] Application closed
+[ INFO  ] [ 02/03 21:03:22 ] Application closing...
+[ INFO  ] [ 02/03 21:03:22 ] Data logger closed
+[ INFO  ] [ 02/03 21:03:22 ] Application closed
+[ INFO  ] [ 02/03 21:06:23 ] Application closing...
+[ INFO  ] [ 02/03 21:06:23 ] Data logger closed
+[ INFO  ] [ 02/03 21:06:23 ] Application closed
+[ INFO  ] [ 02/03 21:16:51 ] Application closing...
+[ INFO  ] [ 02/03 21:16:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486174521984.csv'
+[ INFO  ] [ 02/03 21:16:51 ] Data logger closed
+[ INFO  ] [ 02/03 21:16:51 ] Application closed
+[ INFO  ] [ 02/03 21:18:01 ] Application closing...
+[ INFO  ] [ 02/03 21:18:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486174626393.csv'
+[ INFO  ] [ 02/03 21:18:01 ] Data logger closed
+[ INFO  ] [ 02/03 21:18:01 ] Application closed
+[ INFO  ] [ 02/03 21:21:56 ] Application closing...
+[ INFO  ] [ 02/03 21:21:56 ] Data logger closed
+[ INFO  ] [ 02/03 21:21:56 ] Application closed
+[ INFO  ] [ 02/03 23:48:22 ] Application closing...
+[ INFO  ] [ 02/03 23:48:22 ] Data logger closed
+[ INFO  ] [ 02/03 23:48:22 ] Application closed
+[ INFO  ] [ 02/04 00:38:48 ] Application closing...
+[ INFO  ] [ 02/04 00:38:48 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486186617401.csv'
+[ INFO  ] [ 02/04 00:38:48 ] Data logger closed
+[ INFO  ] [ 02/04 00:38:48 ] Application closed
+[ INFO  ] [ 02/04 01:02:24 ] Application closing...
+[ INFO  ] [ 02/04 01:02:24 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486187158416.csv'
+[ INFO  ] [ 02/04 01:02:24 ] Data logger closed
+[ INFO  ] [ 02/04 01:02:24 ] Application closed
+[ INFO  ] [ 02/04 01:08:19 ] Application closing...
+[ INFO  ] [ 02/04 01:08:19 ] Data logger closed
+[ INFO  ] [ 02/04 01:08:19 ] Application closed
+[ INFO  ] [ 02/04 01:16:13 ] Application closing...
+[ INFO  ] [ 02/04 01:16:13 ] Data logger closed
+[ INFO  ] [ 02/04 01:16:13 ] Application closed
+[ INFO  ] [ 02/04 01:32:40 ] Application closing...
+[ INFO  ] [ 02/04 01:32:40 ] Data logger closed
+[ INFO  ] [ 02/04 01:32:40 ] Application closed
+[ INFO  ] [ 02/04 01:44:32 ] Application closing...
+[ INFO  ] [ 02/04 01:44:32 ] Data logger closed
+[ INFO  ] [ 02/04 01:44:32 ] Application closed
+[ INFO  ] [ 02/04 01:48:26 ] Application closing...
+[ INFO  ] [ 02/04 01:48:26 ] Data logger closed
+[ INFO  ] [ 02/04 01:48:26 ] Application closed
+[ INFO  ] [ 02/04 01:51:53 ] Application closing...
+[ INFO  ] [ 02/04 01:51:53 ] Data logger closed
+[ INFO  ] [ 02/04 01:51:53 ] Application closed
+[ INFO  ] [ 02/04 01:57:43 ] Application closing...
+[ INFO  ] [ 02/04 01:57:43 ] Data logger closed
+[ INFO  ] [ 02/04 01:57:43 ] Application closed
+[ INFO  ] [ 02/04 02:05:31 ] Application closing...
+[ INFO  ] [ 02/04 02:05:31 ] Data logger closed
+[ INFO  ] [ 02/04 02:05:31 ] Application closed
+[ INFO  ] [ 02/04 02:17:15 ] Application closing...
+[ INFO  ] [ 02/04 02:17:15 ] Data logger closed
+[ INFO  ] [ 02/04 02:17:15 ] Application closed
+[ INFO  ] [ 02/04 02:18:28 ] Application closing...
+[ INFO  ] [ 02/04 02:18:28 ] Data logger closed
+[ INFO  ] [ 02/04 02:18:28 ] Application closed
+[ INFO  ] [ 02/04 02:23:32 ] Application closing...
+[ INFO  ] [ 02/04 02:23:32 ] Data logger closed
+[ INFO  ] [ 02/04 02:23:32 ] Application closed
+[ INFO  ] [ 02/04 02:24:49 ] Application closing...
+[ INFO  ] [ 02/04 02:24:49 ] Data logger closed
+[ INFO  ] [ 02/04 02:24:49 ] Application closed
+[ INFO  ] [ 02/04 02:28:35 ] Application closing...
+[ INFO  ] [ 02/04 02:28:35 ] Data logger closed
+[ INFO  ] [ 02/04 02:28:35 ] Application closed
+[ INFO  ] [ 02/04 02:30:48 ] Application closing...
+[ INFO  ] [ 02/04 02:30:48 ] Data logger closed
+[ INFO  ] [ 02/04 02:30:48 ] Application closed
+[ INFO  ] [ 02/04 02:33:12 ] Application closing...
+[ INFO  ] [ 02/04 02:33:12 ] Data logger closed
+[ INFO  ] [ 02/04 02:33:12 ] Application closed
+[ INFO  ] [ 02/04 02:39:44 ] Application closing...
+[ INFO  ] [ 02/04 02:39:44 ] Data logger closed
+[ INFO  ] [ 02/04 02:39:44 ] Application closed
+[ INFO  ] [ 02/04 02:48:39 ] Application closing...
+[ INFO  ] [ 02/04 02:48:39 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486194505227.csv'
+[ INFO  ] [ 02/04 02:48:39 ] Data logger closed
+[ INFO  ] [ 02/04 02:48:39 ] Application closed
+[ INFO  ] [ 02/04 02:48:42 ] Application closing...
+[ INFO  ] [ 02/04 02:48:42 ] Data logger closed
+[ INFO  ] [ 02/04 02:48:42 ] Application closed
+[ INFO  ] [ 02/04 02:50:28 ] Application closing...
+[ INFO  ] [ 02/04 02:50:28 ] Data logger closed
+[ INFO  ] [ 02/04 02:50:28 ] Application closed
+[ INFO  ] [ 02/04 02:55:56 ] Application closing...
+[ INFO  ] [ 02/04 02:55:56 ] Data logger closed
+[ INFO  ] [ 02/04 02:55:56 ] Application closed
+[ INFO  ] [ 02/04 03:12:44 ] Application closing...
+[ INFO  ] [ 02/04 03:12:44 ] Data logger closed
+[ INFO  ] [ 02/04 03:12:44 ] Application closed
+[ INFO  ] [ 02/04 03:38:13 ] Application closing...
+[ INFO  ] [ 02/04 03:38:13 ] Data logger closed
+[ INFO  ] [ 02/04 03:38:13 ] Application closed
+[ INFO  ] [ 02/04 05:27:18 ] Application closing...
+[ INFO  ] [ 02/04 05:27:18 ] Data logger closed
+[ INFO  ] [ 02/04 05:27:18 ] Application closed
+[ INFO  ] [ 02/04 11:59:53 ] Application closing...
+[ INFO  ] [ 02/04 11:59:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486227343466.csv'
+[ INFO  ] [ 02/04 11:59:53 ] Data logger closed
+[ INFO  ] [ 02/04 11:59:53 ] Application closed
+[ INFO  ] [ 02/10 19:39:15 ] Application closing...
+[ INFO  ] [ 02/10 19:39:15 ] Data logger closed
+[ INFO  ] [ 02/10 19:39:15 ] Application closed
+[ INFO  ] [ 02/10 19:45:31 ] Application closing...
+[ INFO  ] [ 02/10 19:45:31 ] Data logger closed
+[ INFO  ] [ 02/10 19:45:31 ] Application closed
+[ INFO  ] [ 02/10 19:53:32 ] Application closing...
+[ INFO  ] [ 02/10 19:53:32 ] Data logger closed
+[ INFO  ] [ 02/10 19:53:32 ] Application closed
+[ INFO  ] [ 02/10 19:59:11 ] Application closing...
+[ INFO  ] [ 02/10 19:59:11 ] Data logger closed
+[ INFO  ] [ 02/10 19:59:11 ] Application closed
+[ INFO  ] [ 02/10 20:02:22 ] Application closing...
+[ INFO  ] [ 02/10 20:02:22 ] Data logger closed
+[ INFO  ] [ 02/10 20:02:22 ] Application closed
+[ INFO  ] [ 02/10 20:02:55 ] Application closing...
+[ INFO  ] [ 02/10 20:02:55 ] Data logger closed
+[ INFO  ] [ 02/10 20:02:55 ] Application closed
+[ INFO  ] [ 02/10 20:56:33 ] Application closing...
+[ INFO  ] [ 02/10 20:56:33 ] Data logger closed
+[ INFO  ] [ 02/10 20:56:33 ] Application closed
+[ INFO  ] [ 02/10 21:03:26 ] Application closing...
+[ INFO  ] [ 02/10 21:03:26 ] Data logger closed
+[ INFO  ] [ 02/10 21:03:26 ] Application closed
+[ INFO  ] [ 02/10 21:04:00 ] Application closing...
+[ INFO  ] [ 02/10 21:04:00 ] Data logger closed
+[ INFO  ] [ 02/10 21:04:00 ] Application closed
+[ INFO  ] [ 02/10 21:06:16 ] Application closing...
+[ INFO  ] [ 02/10 21:06:16 ] Data logger closed
+[ INFO  ] [ 02/10 21:06:16 ] Application closed
+[ INFO  ] [ 02/11 22:03:38 ] Application closing...
+[ INFO  ] [ 02/11 22:03:38 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1486826880028.csv'
+[ INFO  ] [ 02/11 22:03:38 ] Data logger closed
+[ INFO  ] [ 02/11 22:03:38 ] Application closed
+[ INFO  ] [ 02/15 20:37:21 ] Application closing...
+[ INFO  ] [ 02/15 20:37:21 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487208885614.csv'
+[ INFO  ] [ 02/15 20:37:21 ] Data logger closed
+[ INFO  ] [ 02/15 20:37:21 ] Application closed
+[ INFO  ] [ 02/15 20:38:50 ] Application closing...
+[ INFO  ] [ 02/15 20:38:50 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487209043978.csv'
+[ INFO  ] [ 02/15 20:38:50 ] Data logger closed
+[ INFO  ] [ 02/15 20:38:50 ] Application closed
+[ INFO  ] [ 02/15 20:40:09 ] Application closing...
+[ INFO  ] [ 02/15 20:40:09 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487209136725.csv'
+[ INFO  ] [ 02/15 20:40:09 ] Data logger closed
+[ INFO  ] [ 02/15 20:40:09 ] Application closed
+[ INFO  ] [ 02/15 20:45:03 ] Application closing...
+[ INFO  ] [ 02/15 20:45:03 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487209454616.csv'
+[ INFO  ] [ 02/15 20:45:03 ] Data logger closed
+[ INFO  ] [ 02/15 20:45:03 ] Application closed
+[ INFO  ] [ 02/15 20:46:23 ] Application closing...
+[ INFO  ] [ 02/15 20:46:23 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487209569883.csv'
+[ INFO  ] [ 02/15 20:46:23 ] Data logger closed
+[ INFO  ] [ 02/15 20:46:23 ] Application closed
+[ INFO  ] [ 02/15 20:50:01 ] Application closing...
+[ INFO  ] [ 02/15 20:50:01 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487209742246.csv'
+[ INFO  ] [ 02/15 20:50:01 ] Data logger closed
+[ INFO  ] [ 02/15 20:50:01 ] Application closed
+[ INFO  ] [ 02/15 20:50:21 ] Application closing...
+[ INFO  ] [ 02/15 20:50:21 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487209804506.csv'
+[ INFO  ] [ 02/15 20:50:21 ] Data logger closed
+[ INFO  ] [ 02/15 20:50:21 ] Application closed
+[ INFO  ] [ 02/15 20:52:22 ] Application closing...
+[ INFO  ] [ 02/15 20:52:22 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487209911377.csv'
+[ INFO  ] [ 02/15 20:52:22 ] Data logger closed
+[ INFO  ] [ 02/15 20:52:22 ] Application closed
+[ WARN  ] [ 02/15 20:58:05 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 8.970315493093747E37, greater than 90
+[ WARN  ] [ 02/15 20:58:05 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.87314053961304E19, greater than 180
+[ WARN  ] [ 02/15 20:58:05 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -3.0363801913927765E23, less than -90
+[ WARN  ] [ 02/15 20:58:05 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.180364974504743E34, less than -90
+[ WARN  ] [ 02/15 20:58:19 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.742009498078716E34, greater than 180
+[ WARN  ] [ 02/15 20:58:19 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 4.254376377112683E37, greater than 90
+[ WARN  ] [ 02/15 20:58:19 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.517361073076982E23, greater than 90
+[ WARN  ] [ 02/15 20:58:19 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.185288650624035E23, greater than 180
+[ WARN  ] [ 02/15 20:58:19 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -1.3310393976349314E20, less than -180
+[ WARN  ] [ 02/15 20:58:19 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 5.865185512792375E23, greater than 90
+[ INFO  ] [ 02/15 20:58:19 ] Application closing...
+[ INFO  ] [ 02/15 20:58:19 ] Data logger closed
+[ INFO  ] [ 02/15 20:58:19 ] Application closed
+[ WARN  ] [ 02/15 20:58:29 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 8.970315493093747E37, greater than 90
+[ WARN  ] [ 02/15 20:58:29 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.87314053961304E19, greater than 180
+[ WARN  ] [ 02/15 20:58:29 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -3.0363801913927765E23, less than -90
+[ WARN  ] [ 02/15 20:58:29 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.180364974504743E34, less than -90
+[ INFO  ] [ 02/15 20:58:33 ] Application closing...
+[ INFO  ] [ 02/15 20:58:33 ] Data logger closed
+[ INFO  ] [ 02/15 20:58:33 ] Application closed
+[ WARN  ] [ 02/15 21:01:44 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 8.970315493093747E37, greater than 90
+[ WARN  ] [ 02/15 21:01:44 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.87314053961304E19, greater than 180
+[ WARN  ] [ 02/15 21:01:44 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -3.0363801913927765E23, less than -90
+[ WARN  ] [ 02/15 21:01:44 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.180364974504743E34, less than -90
+[ WARN  ] [ 02/15 21:02:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 8.970315493093747E37, greater than 90
+[ WARN  ] [ 02/15 21:02:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.87314053961304E19, greater than 180
+[ WARN  ] [ 02/15 21:02:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -3.0363801913927765E23, less than -90
+[ WARN  ] [ 02/15 21:02:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.180364974504743E34, less than -90
+[ INFO  ] [ 02/15 21:02:21 ] Application closing...
+[ INFO  ] [ 02/15 21:02:21 ] Data logger closed
+[ INFO  ] [ 02/15 21:02:21 ] Application closed
+[ INFO  ] [ 02/15 21:04:02 ] Application closing...
+[ INFO  ] [ 02/15 21:04:02 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487210635223.csv'
+[ INFO  ] [ 02/15 21:04:02 ] Data logger closed
+[ INFO  ] [ 02/15 21:04:02 ] Application closed
+[ INFO  ] [ 02/15 21:05:54 ] Application closing...
+[ INFO  ] [ 02/15 21:05:54 ] Data logger closed
+[ INFO  ] [ 02/15 21:05:54 ] Application closed
+[ INFO  ] [ 02/15 21:14:24 ] Application closing...
+[ INFO  ] [ 02/15 21:14:24 ] Data logger closed
+[ INFO  ] [ 02/15 21:14:24 ] Application closed
+[ INFO  ] [ 02/15 21:16:24 ] Application closing...
+[ INFO  ] [ 02/15 21:16:24 ] Data logger closed
+[ INFO  ] [ 02/15 21:16:24 ] Application closed
+[ INFO  ] [ 02/15 21:17:52 ] Application closing...
+[ INFO  ] [ 02/15 21:17:52 ] Data logger closed
+[ INFO  ] [ 02/15 21:17:52 ] Application closed
+[ INFO  ] [ 02/15 21:39:14 ] Application closing...
+[ INFO  ] [ 02/15 21:39:14 ] Data logger closed
+[ INFO  ] [ 02/15 21:39:14 ] Application closed
+[ INFO  ] [ 02/15 21:40:11 ] Application closing...
+[ INFO  ] [ 02/15 21:40:11 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487212804032.csv'
+[ INFO  ] [ 02/15 21:40:11 ] Data logger closed
+[ INFO  ] [ 02/15 21:40:11 ] Application closed
+[ INFO  ] [ 02/15 21:41:16 ] Application closing...
+[ INFO  ] [ 02/15 21:41:16 ] Data logger closed
+[ INFO  ] [ 02/15 21:41:16 ] Application closed
+[ INFO  ] [ 02/15 21:42:26 ] Application closing...
+[ INFO  ] [ 02/15 21:42:26 ] Data logger closed
+[ INFO  ] [ 02/15 21:42:26 ] Application closed
+[ INFO  ] [ 02/15 21:50:28 ] Application closing...
+[ INFO  ] [ 02/15 21:50:28 ] Data logger closed
+[ INFO  ] [ 02/15 21:50:28 ] Application closed
+[ INFO  ] [ 02/15 21:52:09 ] Application closing...
+[ INFO  ] [ 02/15 21:52:09 ] Data logger closed
+[ INFO  ] [ 02/15 21:52:09 ] Application closed
+[ INFO  ] [ 02/15 21:53:34 ] Application closing...
+[ INFO  ] [ 02/15 21:53:34 ] Data logger closed
+[ INFO  ] [ 02/15 21:53:34 ] Application closed
+[ INFO  ] [ 02/15 22:01:52 ] Application closing...
+[ INFO  ] [ 02/15 22:01:52 ] Data logger closed
+[ INFO  ] [ 02/15 22:01:52 ] Application closed
+[ INFO  ] [ 02/15 22:03:27 ] Application closing...
+[ INFO  ] [ 02/15 22:03:27 ] Data logger closed
+[ INFO  ] [ 02/15 22:03:27 ] Application closed
+[ INFO  ] [ 02/15 22:07:44 ] Application closing...
+[ INFO  ] [ 02/15 22:07:44 ] Data logger closed
+[ INFO  ] [ 02/15 22:07:44 ] Application closed
+[ INFO  ] [ 02/15 22:13:13 ] Application closing...
+[ INFO  ] [ 02/15 22:13:13 ] Data logger closed
+[ INFO  ] [ 02/15 22:13:13 ] Application closed
+[ INFO  ] [ 02/15 22:17:22 ] Application closing...
+[ INFO  ] [ 02/15 22:17:22 ] Data logger closed
+[ INFO  ] [ 02/15 22:17:22 ] Application closed
+[ INFO  ] [ 02/15 22:22:46 ] Application closing...
+[ INFO  ] [ 02/15 22:22:46 ] Data logger closed
+[ INFO  ] [ 02/15 22:22:46 ] Application closed
+[ INFO  ] [ 02/15 22:34:12 ] Application closing...
+[ INFO  ] [ 02/15 22:34:12 ] Data logger closed
+[ INFO  ] [ 02/15 22:34:12 ] Application closed
+[ INFO  ] [ 02/15 22:56:53 ] Application closing...
+[ INFO  ] [ 02/15 22:56:53 ] Data logger closed
+[ INFO  ] [ 02/15 22:56:53 ] Application closed
+[ INFO  ] [ 02/15 23:02:08 ] Application closing...
+[ INFO  ] [ 02/15 23:02:08 ] Data logger closed
+[ INFO  ] [ 02/15 23:02:08 ] Application closed
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 6.2505675808824E37, greater than 90
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 4.604906119404359E23, greater than 180
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.389099264E9, less than -90
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -1.0617625542374486E31, less than -180
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 2.2209242155039064E23, greater than 90
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.5717213964122347E34, less than -90
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 1.1435174007289272E34, greater than 180
+[ WARN  ] [ 02/22 22:22:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -2.556878848E9, less than -180
+[ INFO  ] [ 02/22 22:23:25 ] Application closing...
+[ INFO  ] [ 02/22 22:23:25 ] Data logger closed
+[ INFO  ] [ 02/22 22:23:25 ] Application closed
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 6.250538678448715E37, greater than 90
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.75413363581359E23, greater than 180
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -1.323952E8, less than -90
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 2.2209243956478915E23, greater than 180
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -1.0617625542374486E31, less than -180
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 2.2209242155039064E23, greater than 90
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 4.6167120356115334E23, greater than 180
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.0427819588416958E38, greater than 90
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -1.113352980019175E31, less than -180
+[ WARN  ] [ 02/22 22:23:43 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 3.741983748925899E34, greater than 90
+[ INFO  ] [ 02/22 22:25:34 ] Application closing...
+[ INFO  ] [ 02/22 22:25:34 ] Data logger closed
+[ INFO  ] [ 02/22 22:25:34 ] Application closed
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 6.250538678448715E37, greater than 90
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.75413363581359E23, greater than 180
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -2.65753472E9, less than -180
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 5.738315148121676E23, greater than 180
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -134.94931030273438, less than -90
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 5.3722906728706766E23, greater than 180
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.7417602660533674E23, greater than 180
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 8.946877140555767E37, greater than 180
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -3.0363801913927765E23, less than -90
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.1435174007289272E34, greater than 90
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 7.782338903352017E19, greater than 180
+[ WARN  ] [ 02/22 22:26:00 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 1.6929740766586968E23, greater than 180
+[ INFO  ] [ 02/22 22:26:23 ] Application closing...
+[ INFO  ] [ 02/22 22:26:23 ] Data logger closed
+[ INFO  ] [ 02/22 22:26:23 ] Application closed
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 6.250518903099351E37, greater than 90
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 2.2209243956478915E23, greater than 180
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -7.645059807229706E37, less than -90
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -2.959506944E9, less than -180
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 2.2209242155039064E23, greater than 90
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 4.6167120356115334E23, greater than 180
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.5716976279634804E34, less than -90
+[ WARN  ] [ 02/22 22:27:06 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 1.1435169055529115E34, greater than 180
+[ INFO  ] [ 02/22 22:27:32 ] Application closing...
+[ INFO  ] [ 02/22 22:27:32 ] Data logger closed
+[ INFO  ] [ 02/22 22:27:32 ] Application closed
+[ WARN  ] [ 02/22 22:30:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 6.250583806810083E37, greater than 90
+[ WARN  ] [ 02/22 22:30:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 2.1228077131581023E23, greater than 180
+[ WARN  ] [ 02/22 22:30:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 5.516075673910352E19, greater than 180
+[ WARN  ] [ 02/22 22:30:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 3.0229371266490606E23, greater than 90
+[ WARN  ] [ 02/22 22:30:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.5716976279634804E34, less than -90
+[ WARN  ] [ 02/22 22:30:18 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -3.6831328E7, less than -90
+[ INFO  ] [ 02/22 22:30:52 ] Application closing...
+[ INFO  ] [ 02/22 22:30:52 ] Data logger closed
+[ INFO  ] [ 02/22 22:30:52 ] Application closed
+[ WARN  ] [ 02/22 22:32:28 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 6.2505675808824E37, greater than 90
+[ WARN  ] [ 02/22 22:32:28 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 3.7334581503562875E23, greater than 90
+[ WARN  ] [ 02/22 22:32:28 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.5717218915882504E34, less than -90
+[ WARN  ] [ 02/22 22:32:28 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 7.174078515554707E19, greater than 90
+[ WARN  ] [ 02/22 22:32:28 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 4.554722328612585E23, greater than 180
+[ INFO  ] [ 02/22 22:33:42 ] Application closing...
+[ INFO  ] [ 02/22 22:33:42 ] Data logger closed
+[ INFO  ] [ 02/22 22:33:42 ] Application closed
+[ WARN  ] [ 02/22 22:33:58 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 1.2501037806198703E38, greater than 90
+[ WARN  ] [ 02/22 22:33:58 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 3.1646264958216297E23, greater than 180
+[ WARN  ] [ 02/22 22:33:58 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 3.6862355663915016E23, greater than 90
+[ WARN  ] [ 02/22 22:33:59 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 4.8356381383935064E23, greater than 90
+[ WARN  ] [ 02/22 22:33:59 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = -3.732905828897987E23, less than -180
+[ INFO  ] [ 02/22 22:34:40 ] Application closing...
+[ INFO  ] [ 02/22 22:34:40 ] Data logger closed
+[ INFO  ] [ 02/22 22:34:40 ] Application closed
+[ INFO  ] [ 02/22 22:47:43 ] Application closing...
+[ INFO  ] [ 02/22 22:47:43 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487821637532.csv'
+[ INFO  ] [ 02/22 22:47:43 ] Data logger closed
+[ INFO  ] [ 02/22 22:47:43 ] Application closed
+[ INFO  ] [ 02/22 22:56:35 ] Application closing...
+[ INFO  ] [ 02/22 22:56:35 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1487822153436.csv'
+[ INFO  ] [ 02/22 22:56:35 ] Data logger closed
+[ INFO  ] [ 02/22 22:56:35 ] Application closed
+[ INFO  ] [ 02/22 22:58:28 ] Application closing...
+[ INFO  ] [ 02/22 22:58:28 ] Data logger closed
+[ INFO  ] [ 02/22 22:58:28 ] Application closed
+[ INFO  ] [ 02/24 13:07:55 ] Application closing...
+[ INFO  ] [ 02/24 13:07:55 ] Data logger closed
+[ INFO  ] [ 02/24 13:07:55 ] Application closed
+[ INFO  ] [ 02/24 17:18:10 ] Application closing...
+[ INFO  ] [ 02/24 17:18:10 ] Data logger closed
+[ INFO  ] [ 02/24 17:18:10 ] Application closed
+[ INFO  ] [ 02/25 15:14:59 ] Application closing...
+[ INFO  ] [ 02/25 15:14:59 ] Data logger closed
+[ INFO  ] [ 02/25 15:14:59 ] Application closed
+[ INFO  ] [ 02/25 19:43:49 ] Application closing...
+[ INFO  ] [ 02/25 19:43:49 ] Data logger closed
+[ INFO  ] [ 02/25 19:43:49 ] Application closed
+[ INFO  ] [ 02/26 14:50:07 ] Application closing...
+[ INFO  ] [ 02/26 14:50:07 ] Data logger closed
+[ INFO  ] [ 02/26 14:50:07 ] Application closed
+[ INFO  ] [ 02/26 14:51:48 ] Application closing...
+[ INFO  ] [ 02/26 14:51:48 ] Data logger closed
+[ INFO  ] [ 02/26 14:51:48 ] Application closed
+[ INFO  ] [ 02/26 14:58:19 ] Application closing...
+[ INFO  ] [ 02/26 14:58:19 ] Data logger closed
+[ INFO  ] [ 02/26 14:58:19 ] Application closed
+[ INFO  ] [ 02/26 15:54:23 ] Application closing...
+[ INFO  ] [ 02/26 15:54:23 ] Data logger closed
+[ INFO  ] [ 02/26 15:54:23 ] Application closed
+[ INFO  ] [ 02/26 17:42:36 ] Application closing...
+[ INFO  ] [ 02/26 17:42:36 ] Data logger closed
+[ INFO  ] [ 02/26 17:42:36 ] Application closed
+[ INFO  ] [ 02/26 19:03:05 ] Application closing...
+[ INFO  ] [ 02/26 19:03:05 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1488148987561.csv'
+[ INFO  ] [ 02/26 19:03:05 ] Data logger closed
+[ INFO  ] [ 02/26 19:03:05 ] Application closed
+[ INFO  ] [ 02/26 19:04:26 ] Application closing...
+[ INFO  ] [ 02/26 19:04:26 ] Data logger closed
+[ INFO  ] [ 02/26 19:04:26 ] Application closed
+[ INFO  ] [ 02/26 19:05:04 ] Application closing...
+[ INFO  ] [ 02/26 19:05:04 ] Data logger closed
+[ INFO  ] [ 02/26 19:05:04 ] Application closed
+[ INFO  ] [ 02/26 19:06:35 ] Application closing...
+[ INFO  ] [ 02/26 19:06:35 ] Data logger closed
+[ INFO  ] [ 02/26 19:06:35 ] Application closed
+[ INFO  ] [ 02/26 19:10:06 ] Application closing...
+[ INFO  ] [ 02/26 19:10:06 ] Data logger closed
+[ INFO  ] [ 02/26 19:10:06 ] Application closed
+[ INFO  ] [ 02/26 19:13:55 ] Application closing...
+[ INFO  ] [ 02/26 19:13:55 ] Data logger closed
+[ INFO  ] [ 02/26 19:13:55 ] Application closed
+[ INFO  ] [ 02/26 19:14:32 ] Application closing...
+[ INFO  ] [ 02/26 19:14:32 ] Data logger closed
+[ INFO  ] [ 02/26 19:14:32 ] Application closed
+[ INFO  ] [ 02/26 19:18:29 ] Application closing...
+[ INFO  ] [ 02/26 19:18:29 ] Data logger closed
+[ INFO  ] [ 02/26 19:18:29 ] Application closed
+[ INFO  ] [ 02/26 19:19:17 ] Application closing...
+[ INFO  ] [ 02/26 19:19:17 ] Data logger closed
+[ INFO  ] [ 02/26 19:19:17 ] Application closed
+[ INFO  ] [ 02/26 19:21:08 ] Application closing...
+[ INFO  ] [ 02/26 19:21:08 ] Data logger closed
+[ INFO  ] [ 02/26 19:21:08 ] Application closed
+[ INFO  ] [ 03/02 09:48:53 ] Application closing...
+[ INFO  ] [ 03/02 09:48:53 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1488466038538.csv'
+[ INFO  ] [ 03/02 09:48:53 ] Data logger closed
+[ INFO  ] [ 03/02 09:48:53 ] Application closed
+[ INFO  ] [ 03/03 22:21:23 ] Application closing...
+[ INFO  ] [ 03/03 22:21:23 ] Data logger closed
+[ INFO  ] [ 03/03 22:21:23 ] Application closed
+[ INFO  ] [ 03/03 22:33:26 ] Application closing...
+[ INFO  ] [ 03/03 22:33:26 ] Data logger closed
+[ INFO  ] [ 03/03 22:33:26 ] Application closed
+[ INFO  ] [ 03/03 22:50:00 ] Application closing...
+[ INFO  ] [ 03/03 22:50:00 ] Data logger closed
+[ INFO  ] [ 03/03 22:50:00 ] Application closed
+[ INFO  ] [ 03/03 22:57:20 ] Application closing...
+[ INFO  ] [ 03/03 22:57:20 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1488599804826.csv'
+[ INFO  ] [ 03/03 22:57:20 ] Data logger closed
+[ INFO  ] [ 03/03 22:57:20 ] Application closed
+[ INFO  ] [ 03/03 22:58:01 ] Application closing...
+[ INFO  ] [ 03/03 22:58:01 ] Data logger closed
+[ INFO  ] [ 03/03 22:58:01 ] Application closed
+[ INFO  ] [ 03/03 23:03:28 ] Application closing...
+[ INFO  ] [ 03/03 23:03:28 ] Data logger closed
+[ INFO  ] [ 03/03 23:03:28 ] Application closed
+[ INFO  ] [ 03/03 23:10:10 ] Application closing...
+[ INFO  ] [ 03/03 23:10:10 ] Data logger closed
+[ INFO  ] [ 03/03 23:10:10 ] Application closed
+[ INFO  ] [ 03/03 23:11:11 ] Application closing...
+[ INFO  ] [ 03/03 23:11:11 ] Data logger closed
+[ INFO  ] [ 03/03 23:11:11 ] Application closed
+[ INFO  ] [ 03/03 23:12:07 ] Application closing...
+[ INFO  ] [ 03/03 23:12:07 ] Data logger closed
+[ INFO  ] [ 03/03 23:12:07 ] Application closed
+[ INFO  ] [ 03/03 23:17:09 ] Application closing...
+[ INFO  ] [ 03/03 23:17:09 ] Data logger closed
+[ INFO  ] [ 03/03 23:17:09 ] Application closed
+[ INFO  ] [ 03/03 23:21:20 ] Application closing...
+[ INFO  ] [ 03/03 23:21:20 ] Data logger closed
+[ INFO  ] [ 03/03 23:21:20 ] Application closed
+[ INFO  ] [ 03/03 23:29:12 ] Application closing...
+[ INFO  ] [ 03/03 23:29:12 ] Data logger closed
+[ INFO  ] [ 03/03 23:29:12 ] Application closed
+[ INFO  ] [ 03/03 23:41:32 ] Application closing...
+[ INFO  ] [ 03/03 23:41:32 ] Data logger closed
+[ INFO  ] [ 03/03 23:41:32 ] Application closed
+[ INFO  ] [ 03/03 23:45:35 ] Application closing...
+[ INFO  ] [ 03/03 23:45:35 ] Data logger closed
+[ INFO  ] [ 03/03 23:45:35 ] Application closed
+[ INFO  ] [ 03/03 23:54:31 ] Application closing...
+[ INFO  ] [ 03/03 23:54:31 ] Data logger closed
+[ INFO  ] [ 03/03 23:54:31 ] Application closed
+[ INFO  ] [ 03/03 23:55:38 ] Application closing...
+[ INFO  ] [ 03/03 23:55:38 ] Data logger closed
+[ INFO  ] [ 03/03 23:55:38 ] Application closed
+[ INFO  ] [ 03/04 00:03:51 ] Application closing...
+[ INFO  ] [ 03/04 00:03:51 ] Data logger closed
+[ INFO  ] [ 03/04 00:03:51 ] Application closed
+[ INFO  ] [ 03/04 00:10:05 ] Application closing...
+[ INFO  ] [ 03/04 00:10:05 ] Data logger closed
+[ INFO  ] [ 03/04 00:10:05 ] Application closed
+[ INFO  ] [ 03/04 00:10:46 ] Application closing...
+[ INFO  ] [ 03/04 00:10:46 ] Data logger closed
+[ INFO  ] [ 03/04 00:10:46 ] Application closed
+[ INFO  ] [ 03/04 00:16:54 ] Application closing...
+[ INFO  ] [ 03/04 00:16:54 ] Data logger closed
+[ INFO  ] [ 03/04 00:16:54 ] Application closed
+[ INFO  ] [ 03/04 00:22:30 ] Application closing...
+[ INFO  ] [ 03/04 00:22:30 ] Data logger closed
+[ INFO  ] [ 03/04 00:22:30 ] Application closed
+[ INFO  ] [ 03/04 00:25:12 ] Application closing...
+[ INFO  ] [ 03/04 00:25:12 ] Data logger closed
+[ INFO  ] [ 03/04 00:25:12 ] Application closed
+[ INFO  ] [ 03/04 00:26:41 ] Application closing...
+[ INFO  ] [ 03/04 00:26:41 ] Data logger closed
+[ INFO  ] [ 03/04 00:26:41 ] Application closed
+[ INFO  ] [ 03/04 00:33:01 ] Application closing...
+[ INFO  ] [ 03/04 00:33:01 ] Data logger closed
+[ INFO  ] [ 03/04 00:33:01 ] Application closed
+[ INFO  ] [ 03/04 00:33:38 ] Application closing...
+[ INFO  ] [ 03/04 00:33:38 ] Data logger closed
+[ INFO  ] [ 03/04 00:33:38 ] Application closed
+[ INFO  ] [ 03/04 01:11:13 ] Application closing...
+[ INFO  ] [ 03/04 01:11:13 ] Data logger closed
+[ INFO  ] [ 03/04 01:11:13 ] Application closed
+[ INFO  ] [ 03/04 10:47:31 ] Application closing...
+[ INFO  ] [ 03/04 10:47:31 ] Data logger closed
+[ INFO  ] [ 03/04 10:47:31 ] Application closed
+[ INFO  ] [ 03/04 10:54:41 ] Application closing...
+[ INFO  ] [ 03/04 10:54:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1488642465190.csv'
+[ INFO  ] [ 03/04 10:54:41 ] Data logger closed
+[ INFO  ] [ 03/04 10:54:41 ] Application closed
+[ INFO  ] [ 03/04 12:48:24 ] Application closing...
+[ INFO  ] [ 03/04 12:48:24 ] Data logger closed
+[ INFO  ] [ 03/04 12:48:24 ] Application closed
+[ INFO  ] [ 03/04 13:17:54 ] Application closing...
+[ INFO  ] [ 03/04 13:17:54 ] Data logger closed
+[ INFO  ] [ 03/04 13:17:54 ] Application closed
+[ INFO  ] [ 03/04 13:18:41 ] Application closing...
+[ INFO  ] [ 03/04 13:18:41 ] Data logger closed
+[ INFO  ] [ 03/04 13:18:41 ] Application closed
+[ INFO  ] [ 03/04 20:06:05 ] Application closing...
+[ INFO  ] [ 03/04 20:06:05 ] Data logger closed
+[ INFO  ] [ 03/04 20:06:05 ] Application closed
+[ INFO  ] [ 03/04 20:22:10 ] Application closing...
+[ INFO  ] [ 03/04 20:22:10 ] Data logger closed
+[ INFO  ] [ 03/04 20:22:10 ] Application closed
+[ INFO  ] [ 03/04 20:35:21 ] Application closing...
+[ INFO  ] [ 03/04 20:35:21 ] Data logger closed
+[ INFO  ] [ 03/04 20:35:21 ] Application closed
+[ INFO  ] [ 03/04 20:37:42 ] Application closing...
+[ INFO  ] [ 03/04 20:37:42 ] Data logger closed
+[ INFO  ] [ 03/04 20:37:42 ] Application closed
+[ INFO  ] [ 03/04 21:23:24 ] Application closing...
+[ INFO  ] [ 03/04 21:23:24 ] Data logger closed
+[ INFO  ] [ 03/04 21:23:24 ] Application closed
+[ INFO  ] [ 03/04 21:27:31 ] Application closing...
+[ INFO  ] [ 03/04 21:27:31 ] Data logger closed
+[ INFO  ] [ 03/04 21:27:31 ] Application closed
+[ INFO  ] [ 03/04 21:37:41 ] Application closing...
+[ INFO  ] [ 03/04 21:37:41 ] Data logger closed
+[ INFO  ] [ 03/04 21:37:41 ] Application closed
+[ INFO  ] [ 03/04 22:58:27 ] Application closing...
+[ INFO  ] [ 03/04 22:58:27 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1488685443599.csv'
+[ INFO  ] [ 03/04 22:58:27 ] Data logger closed
+[ INFO  ] [ 03/04 22:58:27 ] Application closed
+[ INFO  ] [ 03/05 11:02:41 ] Application closing...
+[ INFO  ] [ 03/05 11:02:41 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1488725751473.csv'
+[ INFO  ] [ 03/05 11:02:41 ] Data logger closed
+[ INFO  ] [ 03/05 11:02:41 ] Application closed
+[ INFO  ] [ 03/05 16:42:43 ] Application closing...
+[ INFO  ] [ 03/05 16:42:43 ] Data logger closed
+[ INFO  ] [ 03/05 16:42:43 ] Application closed
+[ INFO  ] [ 03/08 16:16:34 ] Application closing...
+[ INFO  ] [ 03/08 16:16:34 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489007626741.csv'
+[ INFO  ] [ 03/08 16:16:34 ] Data logger closed
+[ INFO  ] [ 03/08 16:16:34 ] Application closed
+[ INFO  ] [ 03/08 16:18:33 ] Application closing...
+[ INFO  ] [ 03/08 16:18:33 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489007901384.csv'
+[ INFO  ] [ 03/08 16:18:33 ] Data logger closed
+[ INFO  ] [ 03/08 16:18:33 ] Application closed
+[ INFO  ] [ 03/08 16:22:51 ] Application closing...
+[ INFO  ] [ 03/08 16:22:51 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489008091904.csv'
+[ INFO  ] [ 03/08 16:22:51 ] Data logger closed
+[ INFO  ] [ 03/08 16:22:51 ] Application closed
+[ INFO  ] [ 03/08 16:23:12 ] Application closing...
+[ INFO  ] [ 03/08 16:23:12 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489008175514.csv'
+[ INFO  ] [ 03/08 16:23:12 ] Data logger closed
+[ INFO  ] [ 03/08 16:23:12 ] Application closed
+[ INFO  ] [ 03/08 16:25:39 ] Application closing...
+[ INFO  ] [ 03/08 16:25:39 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489008325319.csv'
+[ INFO  ] [ 03/08 16:25:39 ] Data logger closed
+[ INFO  ] [ 03/08 16:25:39 ] Application closed
+[ INFO  ] [ 03/08 16:32:36 ] Application closing...
+[ INFO  ] [ 03/08 16:32:36 ] Data logger closed
+[ INFO  ] [ 03/08 16:32:36 ] Application closed
+[ INFO  ] [ 03/13 19:02:11 ] Application closing...
+[ INFO  ] [ 03/13 19:02:11 ] Data logger closed
+[ INFO  ] [ 03/13 19:02:11 ] Application closed
+[ INFO  ] [ 03/13 19:06:34 ] Application closing...
+[ INFO  ] [ 03/13 19:06:34 ] Data logger closed
+[ INFO  ] [ 03/13 19:06:34 ] Application closed
+[ INFO  ] [ 03/13 19:07:55 ] Application closing...
+[ INFO  ] [ 03/13 19:07:55 ] Data logger closed
+[ INFO  ] [ 03/13 19:07:55 ] Application closed
+[ INFO  ] [ 03/13 19:11:34 ] Application closing...
+[ INFO  ] [ 03/13 19:11:34 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489446669211.csv'
+[ INFO  ] [ 03/13 19:11:34 ] Data logger closed
+[ INFO  ] [ 03/13 19:11:34 ] Application closed
+[ INFO  ] [ 03/13 19:12:02 ] Application closing...
+[ INFO  ] [ 03/13 19:12:02 ] Data logger closed
+[ INFO  ] [ 03/13 19:12:02 ] Application closed
+[ WARN  ] [ 03/13 19:21:57 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 8191.99951171875, greater than 180
+[ INFO  ] [ 03/13 19:22:01 ] Application closing...
+[ INFO  ] [ 03/13 19:22:01 ] Data logger closed
+[ INFO  ] [ 03/13 19:22:01 ] Application closed
+[ WARN  ] [ 03/13 19:23:28 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 8191.99951171875, greater than 180
+[ INFO  ] [ 03/13 19:23:33 ] Application closing...
+[ INFO  ] [ 03/13 19:23:33 ] Data logger closed
+[ INFO  ] [ 03/13 19:23:33 ] Application closed
+[ WARN  ] [ 03/13 19:29:53 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 8191.99951171875, greater than 180
+[ INFO  ] [ 03/13 19:30:03 ] Application closing...
+[ INFO  ] [ 03/13 19:30:03 ] Data logger closed
+[ INFO  ] [ 03/13 19:30:03 ] Application closed
+[ WARN  ] [ 03/13 19:32:37 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 1.3421772E8, greater than 180
+[ WARN  ] [ 03/13 19:36:37 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.605286668914339E38, less than -90
+[ WARN  ] [ 03/13 19:36:55 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = 6.660565162118367E23, greater than 90
+[ INFO  ] [ 03/13 19:37:18 ] Application closing...
+[ INFO  ] [ 03/13 19:37:18 ] Data logger closed
+[ INFO  ] [ 03/13 19:37:18 ] Application closed
+[ WARN  ] [ 03/13 19:38:36 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 1.3421772E8, greater than 180
+[ WARN  ] [ 03/13 19:39:04 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.605286668914339E38, less than -90
+[ INFO  ] [ 03/13 19:39:12 ] Application closing...
+[ INFO  ] [ 03/13 19:39:12 ] Data logger closed
+[ INFO  ] [ 03/13 19:39:12 ] Application closed
+[ WARN  ] [ 03/13 19:42:44 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 1.3421772E8, greater than 180
+[ WARN  ] [ 03/13 19:43:17 ] edu.cornell.rocketry.util.Position#bounds_check failed: latitude = -2.605286668914339E38, less than -90
+[ INFO  ] [ 03/13 19:43:24 ] Application closing...
+[ INFO  ] [ 03/13 19:43:24 ] Data logger closed
+[ INFO  ] [ 03/13 19:43:24 ] Application closed
+[ WARN  ] [ 03/13 19:46:04 ] edu.cornell.rocketry.util.Position#bounds_check failed: longitude = 8191.99951171875, greater than 180
+[ INFO  ] [ 03/13 19:46:13 ] Application closing...
+[ INFO  ] [ 03/13 19:46:13 ] Data logger closed
+[ INFO  ] [ 03/13 19:46:13 ] Application closed
+[ INFO  ] [ 03/13 19:55:21 ] Application closing...
+[ INFO  ] [ 03/13 19:55:21 ] Data logger closed
+[ INFO  ] [ 03/13 19:55:21 ] Application closed
+[ INFO  ] [ 03/13 19:58:11 ] Application closing...
+[ INFO  ] [ 03/13 19:58:11 ] Data logger closed
+[ INFO  ] [ 03/13 19:58:11 ] Application closed
+[ INFO  ] [ 03/19 13:43:48 ] Application closing...
+[ INFO  ] [ 03/19 13:43:48 ] Data logger closed
+[ INFO  ] [ 03/19 13:43:48 ] Application closed
+[ INFO  ] [ 03/19 13:52:13 ] Application closing...
+[ INFO  ] [ 03/19 13:52:13 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489945913908.csv'
+[ INFO  ] [ 03/19 13:52:13 ] Data logger closed
+[ INFO  ] [ 03/19 13:52:13 ] Application closed
+[ INFO  ] [ 03/19 14:26:12 ] Application closing...
+[ INFO  ] [ 03/19 14:26:12 ] Data logger closed
+[ INFO  ] [ 03/19 14:26:12 ] Application closed
+[ INFO  ] [ 03/19 14:27:51 ] Application closing...
+[ INFO  ] [ 03/19 14:27:51 ] Data logger closed
+[ INFO  ] [ 03/19 14:27:51 ] Application closed
+[ INFO  ] [ 03/19 15:00:33 ] Application closing...
+[ INFO  ] [ 03/19 15:00:33 ] Data logger closed
+[ INFO  ] [ 03/19 15:00:33 ] Application closed
+[ INFO  ] [ 03/19 15:03:30 ] Application closing...
+[ INFO  ] [ 03/19 15:03:30 ] Data logger closed
+[ INFO  ] [ 03/19 15:03:30 ] Application closed
+[ INFO  ] [ 03/19 15:28:45 ] Application closing...
+[ INFO  ] [ 03/19 15:28:45 ] edu.cornell.rocketry.util.DataLogger#close() deleted unused log file 'log\tracer_log_1489951684513.csv'
+[ INFO  ] [ 03/19 15:28:45 ] Data logger closed
+[ INFO  ] [ 03/19 15:28:45 ] Application closed
